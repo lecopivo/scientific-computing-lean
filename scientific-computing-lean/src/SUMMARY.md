@@ -6,7 +6,8 @@
 
 - [Working with Arrays](./working-with-arrays.md)
   - [Basic Operations](./working-with-arrays/basics.md)
-  - [What is Array Really?](./working-with-arrays/what-is-array.md)
+  - [Tensor Operations](./working-with-arrays/tensor-operations.md)
+  - [What are Arrays Really?](./working-with-arrays/what-are-arrays.md)
   - [Optimizing Array Expressions](./working-with-arrays/optimizing-arrays.md)
   
 - [Differentiation](./differentiation.md)
