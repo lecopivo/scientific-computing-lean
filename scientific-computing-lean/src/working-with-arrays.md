@@ -1,7 +1,5 @@
 # Working with Arrays
 
-*Give and overview of different data structures in Lean like `Prod`, `List`, `Array`, `DataArray` say that in this chapter we will focus on `DataArray` and alike. Also fixed size vs non-fixed size.*
-
 Scientific computing involves working with large amounts of data. To efficiently handle this data, we need efficient data structures. Programming languages provide a variety of data structures for this purpose. One core data structure is an array, which comes in various forms, including tuples, linked lists, C-like arrays, and multi-dimensional arrays (sometimes called tensors), which are especially important for scientific computing.
 
 In Lean, the `Array X` type can store an array of elements of any type `X`. Arrays are advantageous for their fast element access, with accessing an element `a[i]` having a complexity of `O(1)`. You can create an array in Lean using `#[1.0,2.0,3.0]` or by sequentially adding elements using `(((Array.mkEmpty 3).push 1.0 ).push 2.0).push 3.0`, where `Array.mkEmpty` allows you to specify the initial capacity of the array, and `Array.push` adds elements one by one.
@@ -23,8 +21,8 @@ You can start imperative-style code blocks with `Id.run do` and it allows you to
 
 The great thing about Lean is that the above code actually mutates the array `fib`. Each call of `fib.push` in the Fibonacci function modifies the array directly. This is unlike many purely functional programming languages, where data structures are immutable, and every call to `fib.push` would create a new copy of `fib` with one extra element.
 
-In Lean, `Array X` can hold elements of any type `X`, but it is implemented as an array of pointers. This can be inefficient for performance, especially in scientific computing, where we often need arrays that store elements in a contiguous block of memory. To address this, Lean provides `ByteArray` and `FloatArray`, which allow efficient storage of bytes or floats. However, these are limited in their flexibility. To address the need for arrays of any type `X` with a fixed byte size, *SciLean* introduces `DataArray X`. For example, we can replace `Array` with `DataArray` in the Fibonacci function if we use `UInt64` instead of `Nat`, as `Nat` arbitrary size number and does not have a fixed byte size.
 
+While `Array X` offers the versatility of storing elements of any data type X, this flexibility comes at a performance cost at it is implemented as array of pointers. This especially bad for scientific computing, where we often need arrays that store elements in a contiguous block of memory. To address this, Lean provides `ByteArray` and `FloatArray`, which allow efficient storage of bytes or floats. However, these are limited in their flexibility. To address the need for arrays of any type `X` with a fixed byte size, *SciLean* provides `DataArray X`. For example, we can replace `Array` with `DataArray` in the Fibonacci function if we use `UInt64` instead of `Nat`, as `Nat` arbitrary size number and does not have a fixed byte size.
 ```lean
 def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
     let mut fib : DataArray UInt64 := Array.mkEmpty n
@@ -34,7 +32,6 @@ def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
         fib := fib.push (fib[i-1]! + fib[i-2]!)
     return fib
 ```
-
 `DataArray X` and its variant `DataArrayN X I` are the core array types for scientific computing, and this chapter will explain how to use them effectively.
 
 In Lean, there are other array-like data structures mainly useful for general-purpose programming. One of these is the linked list, `List X`. While it does not offer fast element access, it allows for easy pushing and popping of elements. It is suitable for defining recursive functions. For example, an implementation of Fibonacci numbers using `List` would look like this:
