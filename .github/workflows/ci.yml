@@ -1,0 +1,116 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events for the main branch or for release branches
+  push:
+    branches:
+      - 'master'
+      - 'release/*'
+    tags:
+      - '*'
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Install expect
+      run: sudo apt-get install -y expect
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.10.4
+
+    - name: Setup elan toolchain on this build
+      run: |
+        curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh
+        chmod u+x elan-init.sh
+        ./elan-init.sh -y --default-toolchain none
+
+    - name: Set elan paths
+      run: |
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+    - name: Install lean toolchain for this build
+      run: |
+        cd examples
+        lean --version
+
+    - name: Setup mdBook
+      uses: peaceiris/actions-mdbook@v1
+      with:
+        mdbook-version: '0.4.17'
+
+    - name: Install mdbook-wordcount
+      uses: baptiste0928/cargo-install@v1
+      with:
+        crate: mdbook-wordcount
+        version: latest
+
+    - name: Build example code
+      run: |
+        cd examples
+        lake build
+
+    - name: Build book
+      run: |
+        cd functional-programming-lean
+        mdbook build
+
+    - name: Zip html contents
+      run: |
+        pushd functional-programming-lean/book/
+        zip -rq html.zip html/
+        popd
+
+    - id: deploy-info
+      name: Compute Deployment Metadata
+      run: |
+        set -e
+        python3 -c 'import base64; print("alias="+base64.urlsafe_b64encode(bytes.fromhex("${{github.sha}}")).decode("utf-8").rstrip("="))' >> "$GITHUB_OUTPUT"
+        echo "message=`git log -1 --pretty=format:"%s"`" >> "$GITHUB_OUTPUT"
+
+    - name: Release preview zip if a new tag is pushed
+      uses: softprops/action-gh-release@v1
+      if: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
+      with:
+        files: functional-programming-lean/book/html.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Release bits if a new release tag is pushed
+      uses: peaceiris/actions-gh-pages@v3
+      if: ${{ startsWith(github.ref, 'refs/tags/release-') }}
+      with:
+        publish_dir: functional-programming-lean/book/html
+        publish_branch: gh-pages
+        external_repository: leanprover/functional_programming_in_lean
+        personal_token: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+
+    - name: Deploy to Netlify hosting
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: functional-programming-lean/book/html
+        production-branch: master
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: |
+          ${{ github.event_name == 'pull_request' && format('pr#{0}: {1}', github.event.number, github.event.pull_request.title) || format('ref/{0}: {1}', github.ref_name, steps.deploy-info.outputs.message) }}
+        alias: ${{ steps.deploy-info.outputs.alias }}
+        enable-commit-comment: false
+        enable-pull-request-comment: false
+        github-deployment-environment: "lean-lang.org/functional_programming_lean"
+        fails-without-credentials: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: "4e471a74-81e0-42f2-b27c-ca8c80a34f7c"
