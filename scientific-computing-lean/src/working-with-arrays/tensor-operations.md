@@ -1,8 +1,5 @@
 # Tensor Operations
 
-*doing arithmetics on indices is a bit painful and commond practices and usefull tricks should be explained here*
-*usage of `Fin n`, `ZMod n`, `Icc a b`*
-*show implementation of convolution and many of its variants*
 
 In this chapter we will demonstrate more advanced oprations with arrays like transofmations and reductions. To give a concrete example we will build simple neural network. Note that Lean/*SciLean* is not yet fit for running and training neural networks as it only runs on CPU and the current compiler does not produce the most efficient code. Neverthereless, I belive writing a simple neural network will nicely demonstrate Lean's expresivity. My secrate hope is that this text will motivate someone to write a specialized compiler that will translate subset of Lean to GPUs.
 
@@ -84,6 +81,7 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 #eval ∑ i j, A[i,j]
 #eval ∏ i j, A[i,j]
 ```
+*Note for Mathlib users: For performance reasons SciLean defines sums and products with `IndexType` instead of `Finset`. Therefore this notation is different from the one defined in `BigOperators` namespace.*
 
 Therefore we can define commong matrix operations like matrix-vector multiplication
 ```lean
