@@ -83,7 +83,7 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 ```
 *Note for Mathlib users: For performance reasons SciLean defines sums and products with `IndexType` instead of `Finset`. Therefore this notation is different from the one defined in `BigOperators` namespace.*
 
-Therefore we can define commong matrix operations like matrix-vector multiplication
+We can define commong matrix operations like matrix-vector multiplication
 ```lean
 def matMul {n m : Nat} (A : Float^[n,m]) (x : Float^[m]) :=
   ⊞ i => ∑ j, A[i,j] * x[j]
@@ -136,7 +136,7 @@ In practice, convolution layer takes as input a stack of images `x`, a stack of 
 ```lean
 def conv2d {n m k : Nat} (J : Type) {I : Type} [IndexType I] [IndexType J] [DecidableEq J]
     (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) : Float^[J,n,m] :=
-    ⊞ κ (i : Fin n) (j : Fin m) => b[κ,i,j] + ∑ ii a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
+    ⊞ κ (i : Fin n) (j : Fin m) => b[κ,i,j] + ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
 ```
 TODO: investigate why we need to provide [DecidableEq J] and why we have to give explicit types for `i` and `j`
 As you can see the notation `Float^[I,n,m]` accepts arbitrary types for dimensions. Therefore `Float^[I,n,m]` is identical to `Float^[I,Fin n,Fin m]`. This is very useful when the dimensions have some meaning or structure that is used in the computation.
