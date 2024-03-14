@@ -9,7 +9,7 @@ In this chapter we will demonstrate more advanced oprations with arrays like tra
 
 ## Transformations and Reductions
 
-Another common operation is to transform every element of an array individually. To do that we can write a simple for loop. Let us remind that anytime you want to write an imperative style code you have to start it with `Id.run do` and to modify input `x` mutably we have to introduce a new mutable variable `x'` and assign `x` to it
+Common operation is to transform every element of an array. To do that we can write a simple for loop. Let us remind that anytime you want to write an imperative style code you have to start it with `Id.run do` and to modify input `x` mutably we have to introduce a new mutable variable `x'` and assign `x` to it
 ```lean
 def map {I : Type} [IndexType I] (x : Float^I) (f : Float → Float) := Id.run do
   let mut x' := x
@@ -26,13 +26,13 @@ In fact *SciLean* already provides this function under the name `mapMono`. The m
 ```
 or matrices
 ```lean
-#eval ⊞[1.0,2.0;].mapMono (fun x => sqrt x)
+#eval ⊞[1.0,2.0;3.0,4.0].mapMono (fun x => sqrt x)
 ```
-or higher order array
+or higher rank arrays
 ```lean
 #eval (⊞ (i j k : Fin 2) => (IndexType.toFin (i,j,k)).toFloat).mapMono (fun x => sqrt x)
 ```
-where `IndexType.toFin (i,j,k)` turns structure index of type `Fin 2 × Fin 2 × Fin 2` to linear index of type `Fin 8` and `.toFloat` converts it to `Float` and finally `.map (fun x => sqrt x)` computes square root of every element.
+where `IndexType.toFin (i,j,k)` turns structured index of type `Fin 2 × Fin 2 × Fin 2` to linear index of type `Fin 8`, `.toFloat` converts it to `Float` and finally `.map (fun x => sqrt x)` computes square root of every element.
 Float
 
 Alternative to `mapMono` is `mapIdxMono` which accepts function `f : I → X → X` so you can in addition use the index value to transform the array values. 
@@ -60,7 +60,7 @@ or to find minimal element
 notice that computing the minimal element with `fold` and `init:=0` would give you an incorrect answer.
 
 
-Putting all together we can implement soft-max
+Putting it all together we can implement soft-max
 ```lean
 def softMax {I} [IndexType I]
   (r : Float) (x : Float^I) : Float^I := Id.run do
@@ -124,21 +124,20 @@ where `%` is already doing positive modulo on integers and we again omitted proo
 
 Now we can write one dimensional convolution as
 ```lean
-def conv1d {n k : Nat} (x : Float^[n]) (w : Float^[[-k:k]]) :=
-    ⊞ (i : Fin n) => ∑ j, w[j] * x[i.shift j]
+def conv1d {n k : Nat} (w : Float^[[-k:k]]) (x : Float^[n]) :=
+    ⊞ (i : Fin n) => ∑ j, w[j] * x[i.shift j.1]
 ```
-where `j : Set.Icc (-k) k` is automatically casted to integer when we call `shift`.
 
 This immediatelly generalizes to two dimensions
 ```lean
-def conv2d {n m k : Nat} (x : Float^[n,m]) (w : Float^[[-k:k],[-k:k]]) :=
+def conv2d {n m k : Nat} (w : Float^[[-k:k],[-k:k]]) (x : Float^[n,m]) :=
     ⊞ (i : Fin n) (j : Fin m) => ∑ a b, w[a,b] * x[i.shift a, j.shift b]
 ```
 
-In practice, convolution layer takes as input a stack of images `x`, stack of kernels `w` and bias `b`. Let's index images by an arbitrary type `I` and kernels by `I×J`.
+In practice, convolution layer takes as input a stack of images `x`, a stack of kernels `w` and bias `b`. Let's index images by an arbitrary type `I` and kernels by `J×I`.
 ```lean
-def conv2d {n m k : Nat} {I J : Type} [IndexType I] [IndexType J] [DecidableEq J]
-    (x : Float^[I,n,m]) (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) : Float^[J,n,m] :=
+def conv2d {n m k : Nat} (J : Type) {I : Type} [IndexType I] [IndexType J] [DecidableEq J]
+    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) : Float^[J,n,m] :=
     ⊞ κ (i : Fin n) (j : Fin m) => b[κ,i,j] + ∑ ii a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
 ```
 TODO: investigate why we need to provide [DecidableEq J] and why we have to give explicit types for `i` and `j`
