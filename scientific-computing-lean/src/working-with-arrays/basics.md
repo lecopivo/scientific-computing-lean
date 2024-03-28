@@ -16,12 +16,6 @@ When calling a function, you have to provide only the arguments with normal brac
 ```lean
 #eval dot ⊞[1.0,1.0] ⊞[1.0,1.0,1.0]
 ```
-TODO: FIX ERROR MESSGE FOR THIS - RIGHT NOW IT GIVES INCOMPREHENSIBLE 
-   failed to synthesize instance
-     ArrayTypeNotation (DataArrayN Float (Fin 2)) (Fin 3) (typeOf 1.0)
-     
-TODO: Allow for `X^[*]` notation 
-
 
 Let's back up and talk about the notation `Float^[n]` and how it connects to `DataArray X` we talked about previously. An array `x : Float^[n]` has length `n` and thus can be indexed with number `0..(n-1)`. The type expressing all natural numbers smaller then `n` is denoted with `Fin n`. It is defined as a structure:
 ```lean
@@ -121,3 +115,56 @@ def outerProduct {n m : Float} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] := 
   return { data:= A, h_size:= sorry }
 ```
 Recall that `Float^[n,m]` is just syntax for `DataArrayN Float (Fin n × Fin m)` and `DataArrayN X I` is just a structure holding `data : DataArray X` and a proof `h_size : data.size = card I`. In this case, we provide the matrix `A` and in the second element we should provide a proof that `A.size = card (Fin n × Fin m) = n*m`. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddently invalid.
+
+
+## Reshaping Arrays
+
+Reshaping arrays is a common operation, where you may need to transform an array of one shape into another while preserving its total size. *SciLean* provides several functions for reshaping arrays, allowing you to convert arrays of arbitrary shapes into vectors, matrices, or arrays of higher rank.
+
+```lean
+def reshape1 (x : Float^[I]) (n : Nat)    (h : card I = n)     : Float^[n] := ...
+def reshape2 (x : Float^[I]) (n m : Nat)  (h : card I = n*m)   : Float^[n,m] := ...
+def reshape3 (x : Float^[I]) (n m k: Nat) (h : card I = n*m*k) : Float^[n,m,k] := ...
+...
+```
+
+For example, to create a matrix, you can first create an array and then convert it to a matrix:
+
+```lean
+#check ⊞[(1.0 : Float), 2.0, 3.0, 4.0].reshape2 2 2 (by decide)
+```
+
+Here, we also prove that reshaping an array of size four to a two-by-two matrix is valid by calling the tactic `decide`. This tactic works well with concrete numbers, when variables are involved, feel free to omit the proof with `sorry`.
+
+These reshape functions are concrete instances of a general `reshape` function:
+```lean
+def reshape (x : Float^[I]) (J : Type) [IndexType J] 
+    (h := IndexType.card I = IndexType.card J) : Float^[J] := ...
+```
+which reshapes an array of shape `I` to an array of shape `J`. Using this function for vectors or matrices is cumbersome, as `x.reshape2 n m sorry` is just a shorthand for `x.reshape (Fin n × Fin m) sorry`.
+
+The `reshape` function is also a concrete instance of the more general function `reshapeEquiv`, which reshapes an array of size `I` to an array of size `J` by an arbitrary equivalence `I ≃ J`:
+
+```lean
+def reshapeEquiv (x : Float^[I]) (ι : I ≃ J) : Float^[J] := ...
+```
+
+This function allows you to reshape an array and perform various permutations of its data.
+
+The `reshape` function is implemented with the `reshapeEquiv` function via the natural equivalence between two index types `I` and `J`, where you first convert `i : I` to a flat index `toFin i : Fin (card I)` and then convert it back to a structured index `J` by `fromFin (toFin i) : J`. For this operation to be valid, it is required that `card I = card J`. Here is the implementation of this natural equivalence:
+
+```lean
+open IndexType in
+def naturalEquiv (I J : Type) [IndexType I] [IndexType J] 
+    (h : card I = card J) : I ≃ J := 
+{
+  toFun := fun i => fromFin (h ▸ toFin i),
+  invFun := fun j => fromFin (h ▸ toFin j),
+  left_inv := sorry,
+  right_inv := sorry
+}
+```
+
+To construct an equivalence `I ≃ J`, we need to provide `toFun : I → J`, its inverse `invFun : J → I`, and proofs that they are indeed inverses of each other, which we omit here.
+
+Implementing this equivalence is a bit tricky because we cannot simply call `fromFin (toFin i)`. This is because `toFin i` produces `Fin (card I)`, but for `fromFin` to create an index of type `J`, it would expect `Fin (card J)`. Therefore, we need to convert the flat index `Fin (card I)` to the flat index `Fin (card J)`. In Lean, the notation `h ▸ x` allows you to cast `x : X` to a different type by using the fact `h`. In our particular case, `h ▸ toFin i` produces `Fin (card J)`, which can be passed on to `fromFin` to obtain `J`.

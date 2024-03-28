@@ -22,10 +22,10 @@ You can start imperative-style code blocks with `Id.run do` and it allows you to
 The great thing about Lean is that the above code actually mutates the array `fib`. Each call of `fib.push` in the Fibonacci function modifies the array directly. This is unlike many purely functional programming languages, where data structures are immutable, and every call to `fib.push` would create a new copy of `fib` with one extra element.
 
 
-While `Array X` offers the versatility of storing elements of any data type X, this flexibility comes at a performance cost at it is implemented as array of pointers. This especially bad for scientific computing, where we often need arrays that store elements in a contiguous block of memory. To address this, Lean provides `ByteArray` and `FloatArray`, which allow efficient storage of bytes or floats. However, these are limited in their flexibility. To address the need for arrays of any type `X` with a fixed byte size, *SciLean* provides `DataArray X`. For example, we can replace `Array` with `DataArray` in the Fibonacci function if we use `UInt64` instead of `Nat`, as `Nat` arbitrary size number and does not have a fixed byte size.
+While `Array X` offers the versatility of storing elements of any data type X, this flexibility comes at a performance cost at it is implemented as array of pointers. This is especially bad for scientific computing, where we often need arrays that store elements in a contiguous block of memory. *SciLean* provides `DataArray X` which is an array capable of storing any type `X` with a fixed byte size. We can replace `Array` with `DataArray` in the Fibonacci function if we use `UInt64` instead of `Nat`, as `Nat` arbitrary size number and does not have a fixed byte size.
 ```lean
 def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
-    let mut fib : DataArray UInt64 := Array.mkEmpty n
+    let mut fib : DataArray UInt64 := DataArray.mkEmpty n
     fib := fib.push 0
     fib := fib.push 1
     for i in [2:n] do
@@ -37,13 +37,16 @@ def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
 In Lean, there are other array-like data structures mainly useful for general-purpose programming. One of these is the linked list, `List X`. While it does not offer fast element access, it allows for easy pushing and popping of elements. It is suitable for defining recursive functions. For example, an implementation of Fibonacci numbers using `List` would look like this:
 
 ```lean
-def fibonacci (n : Nat) (l : List Nat) : List Nat :=
-  match n, l with
-  |   0,       l  => l
-  | n+1,       [] => fibonacci n [0]
-  | n+1,    x::[] => fibonacci n [1, x]
-  | n+1, x::y::l  => fibonacci n ((x+y)::x::y::l)
+def fibonacci (n : Nat) : List Nat :=
+  (go n []).reverse
+  where
+    go (n : Nat) (l : List Nat) : List Nat :=
+      match n, l with
+      |   0,       l  => l
+      | n+1,       [] => go n [0]
+      | n+1,    x::[] => go n [1, x]
+      | n+1, x::y::l  => go n ((x+y)::x::y::l)
 ```
 
-Unlike the previous data structures, a pair or product, `Prod X Y` usually written as `X×Y`, allows you to store elements of different types. If you have an element of a product `p : X×Y`, you can access its elements by `p.1` and `p.2`. You can chain pairs to build tuples of arbitrary size. For example, `(3.14, ("hello", 42))` has the type `Float × (String × Nat)`. Lean considers products to be right-associative, so you can omit the brackets and write `(3.14, "hello", 42)` or `Float × String × Nat`. This affects how you actually access elements of `p := (3.14, "hello", 42)`. To get the first element, you write `p.1`, but to access the second element, you have to write `p.2.1`, because `p.2` returns the second element `("hello", 42)` of the pair, and to get the second element of the original tuple `p`, you need to then get the first element of `p.2`.
+The last data structure we will mention here is product type `Prod X Y` usually written as `X×Y`. It allows you to store elements of different types. If you have an element of a product `p : X×Y`, you can access its elements by `p.1` and `p.2`. You can chain pairs to build tuples of arbitrary size. For example, `(3.14, ("hello", 42))` has the type `Float × (String × Nat)`. Lean considers products to be right-associative, so you can omit the brackets and write `(3.14, "hello", 42)` or `Float × String × Nat`. This affects how you actually access elements of `p := (3.14, "hello", 42)`. To get the first element, you write `p.1`, but to access the second element, you have to write `p.2.1`, because `p.2` returns the second element `("hello", 42)` of the pair, and to get the second element of the original tuple `p`, you need to then get the first element of `p.2`.
 
