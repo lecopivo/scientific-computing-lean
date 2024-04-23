@@ -1,1 +1,0 @@
-# What are Arrays Really?

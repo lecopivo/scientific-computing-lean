@@ -1,0 +1,1054 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title.html">Scientific Computing in Lean</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/sorry-friendly-programming.html"><strong aria-hidden="true">1.1.</strong> Sorry Friendly Programming</a></li></ol></li><li class="chapter-item expanded "><a href="working-with-arrays.html"><strong aria-hidden="true">2.</strong> Working with Arrays</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="working-with-arrays/basics.html"><strong aria-hidden="true">2.1.</strong> Basic Operations</a></li><li class="chapter-item expanded "><a href="working-with-arrays/tensor-operations.html"><strong aria-hidden="true">2.2.</strong> Tensor Operations</a></li><li class="chapter-item expanded "><a href="working-with-arrays/abstract-interface.html"><strong aria-hidden="true">2.3.</strong> Abstract Array Interface</a></li><li class="chapter-item expanded "><a href="working-with-arrays/optimizing-arrays.html"><strong aria-hidden="true">2.4.</strong> Optimizing Array Expressions</a></li></ol></li><li class="chapter-item expanded "><a href="differentiation.html"><strong aria-hidden="true">3.</strong> Differentiation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="differentiation/zoo.html"><strong aria-hidden="true">3.1.</strong> Zoo of Differentiation Operators</a></li><li class="chapter-item expanded "><a href="differentiation/new-functions.html"><strong aria-hidden="true">3.2.</strong> Defining New Functions</a></li><li class="chapter-item expanded "><a href="differentiation/theoretical-aspects.html"><strong aria-hidden="true">3.3.</strong> Theoretical Aspects*</a></li></ol></li><li class="chapter-item expanded "><a href="function-transformations.html"><strong aria-hidden="true">4.</strong> Function Transformations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="function-transformations/new-transformation.html"><strong aria-hidden="true">4.1.</strong> Defining New Function Transformation</a></li><li class="chapter-item expanded "><a href="function-transformations/algorithm.html"><strong aria-hidden="true">4.2.</strong> Function Transformation Algorithm*</a></li></ol></li><li class="chapter-item expanded "><a href="problem-transformations.html"><strong aria-hidden="true">5.</strong> Problem Transformations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="problem-transformations/solve-function.html"><strong aria-hidden="true">5.1.</strong> Solve Function</a></li><li class="chapter-item expanded "><a href="problem-transformations/approximation.html"><strong aria-hidden="true">5.2.</strong> Approximation</a></li></ol></li><li class="chapter-item expanded "><a href="differential-equations.html"><strong aria-hidden="true">6.</strong> Differential Equations</a></li><li class="chapter-item expanded "><a href="probabilistic-programming.html"><strong aria-hidden="true">7.</strong> Probabilistic Programming</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="scientific-computing-in-lean"><a class="header" href="#scientific-computing-in-lean">Scientific Computing in Lean</a></h1>
+<p><em>by Tomáš Skřivan</em></p>
+<p>This is a book on using Lean 4 as a programming language for scientific computing. All code samples are tested with Lean 4 release <code>{{#lean_version}}</code>.</p>
+<h2 id="release-history"><a class="header" href="#release-history">Release history</a></h2>
+<h3 id="march-2024"><a class="header" href="#march-2024">March, 2024</a></h3>
+<p>At the beginning there was nothing.</p>
+<h2 id="license"><a class="header" href="#license">License</a></h2>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h2 id="why-lean-for-scientific-computing"><a class="header" href="#why-lean-for-scientific-computing">Why Lean for Scientific Computing?</a></h2>
+<p>If your job involves writing scientific computing software and you're a satisfied user of Python, Julia, R, Matlab, or C/C++, the idea of using Lean, an interactive theorem prover and dependently typed programming language, might seem completely bizarre. Lean is often advertised as a tool that allows you to write programs and prove their correctness, thus completely eliminating bugs. However, the sad truth is that proving the correctness of programs is still very challenging and can feel like an unnecessary hassle. This is especially true in scientific computing, where your primary concern is often whether you've chosen the right model to describe the real world, rather than worrying about minor bugs in your program.</p>
+<p>If you write scientific computing software, you mainly require two things from your programming language: ease of use and performance. High-level programming languages like Python, Julia, R, or Matlab are popular for their ease of use, while languages like C/C++ or Fortran are used when you need maximum performance. Julia is somewhat unique among these languages, as it addresses both of these goals. It is often referred to as &quot;solving the two-language problem,&quot; in contrast to languages like Python, which are essentially glue code between highly optimized C libraries.</p>
+<p>Similar to Julia, the goal of SciLean is to provide a high-level programming language that is also performant for scientific computing. Because Lean is dependently types language and interactive theorem prover it offers completely new opportunities in terms of ease of use and has the potential to reimagine how we write scientific computing software.</p>
+<h3 id="the-role-of-dependent-types"><a class="header" href="#the-role-of-dependent-types">The Role of Dependent Types?</a></h3>
+<p>The main feature of Lean is that it is dependently type language, which allows you to prove mathematical statements or the correctness of programs. While this may not seem very relevant for scientific computing but the ability to formally state what a program is supposed to do is extremely useful. As a library author, you can formally state what your library does, and as a user, you know exactly what to expect. This guarantees that different libraries can be used together without issues and makes refactoring large codebases less painful.</p>
+<p>In a way, this is taking typed programming languages to the next level and the difficulties shares some similarities with the types vs untyped language debate. Typed programming languages gained a bad reputation early on for being bureaucratic, requiring types to be written everywhere and this led to the popularity of untyped programming languages. However, in modern typed programming languages, this bureaucracy is mostly gone and for building and maintaining large-scale libraries, the benefits of types outweigh the downsides.</p>
+<p>Dependently typed languages are currently stuck in this bureaucratic stage, similar to where typed languages were in the past. The key point is that while writing proofs can be very tedious, stating properties of programs is not. The goal of <em>SciLean</em> is to provide a useful library for scientific computing with precisely defined specifications. Only once the library gains popularity and reaches a certain level of stability can we go back and truly prove its full correctness.</p>
+<p>The decision to use Lean over any other dependently typed language is largely due to the existence of a vast library of formalized mathematics <em>Mathlib</em>, supported by a large and enthusiastic community. Scientific software is typically math-heavy, and it can leverage <em>Mathlib</em> to precisely specify the programs we write. A notable example of this is automatic differentiation in <em>SciLean</em>, which utilizes <em>Mathlib</em>'s theorems about differentiation to provide automatic/symbolic differentiation that is guaranteed to be correct.</p>
+<h3 id="benefits-of-interactivity"><a class="header" href="#benefits-of-interactivity">Benefits of Interactivity</a></h3>
+<p>Lean is primarily known as an interactive theorem prover, allowing you to state mathematical statements and iteratively prove them. In your code editor, you can view the goal statement you want to prove and a list of statements you already know to be true. Lean provides a set of tactics that combine known facts to simplify the goal statement until you reach a statement that is trivially true. While this interactive proving may not be directly relevant to scientific computing, the infrastructure enabling it is quite interesting. We will demonstrate how this infrastructure allows us to build an interactive computer algebra system and an interactive compiler/optimizer, which are highly relevant to scientific computing.</p>
+<p>Traditionally, there has been a clear divide between languages focusing on symbolic computations (like Mathematica, Maple, etc.) and numerical computation (like Python, Julia, etc.). The latter often provide libraries for symbolic computations, but there is still a clear division between symbolic code and normal code. In Lean, any piece of code can be treated symbolically, and Lean's interactivity allows you to effectively open an interactive notebook at any point where you can perform symbolic manipulations on your code and paste it back to your source code. Later, we will demonstrate how this approach can be taken to an extreme where you write programs that are purely symbolic and then turn them into executable programs through a series of symbolic manipulations.</p>
+<p>One of the challenges with high-level programming languages is that they heavily rely on compiler optimizations to achieve performant code. However, when these automatic optimizations fail, understanding what went wrong can be quite difficult. An interesting approach to this problem is called &quot;program scheduling&quot;, where you initially write your programs in a straightforward manner and then transform them using a series of commands to a more efficient form. A notable example of this is the domain-specific programming language <em>Halide</em>, which allows you to write high-performance image processing code in this manner.</p>
+<p>By leveraging Lean's interactivity, we can build a similar system where you write your program in a simple way and then interactively rewrite it to a more efficient form. An additional benefit of using Lean is that you can also obtain a proof that you haven't changed the meaning of the program.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sorry-friendly-programming"><a class="header" href="#sorry-friendly-programming">Sorry Friendly Programming</a></h1>
+<p><em>Embrace sorry</em></p>
+<p><em>Argue that using sorry is ok and should be encouraged when writing scientific computing software</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-arrays"><a class="header" href="#working-with-arrays">Working with Arrays</a></h1>
+<p>Scientific computing involves working with large amounts of data. To efficiently handle this data, we need efficient data structures. Programming languages provide a variety of data structures for this purpose. One core data structure is an array, which comes in various forms, including tuples, linked lists, C-like arrays, and multi-dimensional arrays (sometimes called tensors), which are especially important for scientific computing.</p>
+<p>In Lean, the <code>Array X</code> type can store an array of elements of any type <code>X</code>. Arrays are advantageous for their fast element access, with accessing an element <code>a[i]</code> having a complexity of <code>O(1)</code>. You can create an array in Lean using <code>#[1.0,2.0,3.0]</code> or by sequentially adding elements using <code>(((Array.mkEmpty 3).push 1.0 ).push 2.0).push 3.0</code>, where <code>Array.mkEmpty</code> allows you to specify the initial capacity of the array, and <code>Array.push</code> adds elements one by one.</p>
+<p>Lean also supports imperative-style programming, as shown in the example below, which creates an array of Fibonacci numbers:</p>
+<pre><code class="language-lean">def fibonacci (n : Nat) : Array Nat := Id.run do
+    let mut fib : Array Nat := Array.mkEmpty n
+    fib := fib.push 0
+    fib := fib.push 1
+    for i in [2:n] do
+        fib := fib.push (fib[i-1]! + fib[i-2]!)
+    return fib
+</code></pre>
+<p>You can start imperative-style code blocks with <code>Id.run do</code> and it allows you to define mutable variables using <code>let mut a := ...</code>. To access previous elements of <code>fib</code>, we use the <code>a[i]!</code> variant, which allows access to the <code>i</code>-th element of <code>a : Array X</code> using a natural number <code>i : Nat</code>. It's important to ensure that <code>i</code> is within the range of <code>a</code>, as Lean will crash if it's out of bounds. For safe access, you can use <code>a[i]</code>, but in this case, <code>i</code> must be of type <code>Fin a.size</code>, which is a natural number with a proof that it's smaller than the size of <code>a</code>. There are also variants <code>a[i]?</code> and <code>a[i]'proof</code>, which we will discuss later in this chapter.</p>
+<p>The great thing about Lean is that the above code actually mutates the array <code>fib</code>. Each call of <code>fib.push</code> in the Fibonacci function modifies the array directly. This is unlike many purely functional programming languages, where data structures are immutable, and every call to <code>fib.push</code> would create a new copy of <code>fib</code> with one extra element.</p>
+<p>While <code>Array X</code> offers the versatility of storing elements of any data type X, this flexibility comes at a performance cost at it is implemented as array of pointers. This is especially bad for scientific computing, where we often need arrays that store elements in a contiguous block of memory. <em>SciLean</em> provides <code>DataArray X</code> which is an array capable of storing any type <code>X</code> with a fixed byte size. We can replace <code>Array</code> with <code>DataArray</code> in the Fibonacci function if we use <code>UInt64</code> instead of <code>Nat</code>, as <code>Nat</code> arbitrary size number and does not have a fixed byte size.</p>
+<pre><code class="language-lean">def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
+    let mut fib : DataArray UInt64 := DataArray.mkEmpty n
+    fib := fib.push 0
+    fib := fib.push 1
+    for i in [2:n] do
+        fib := fib.push (fib[i-1]! + fib[i-2]!)
+    return fib
+</code></pre>
+<p><code>DataArray X</code> and its variant <code>DataArrayN X I</code> are the core array types for scientific computing, and this chapter will explain how to use them effectively.</p>
+<p>In Lean, there are other array-like data structures mainly useful for general-purpose programming. One of these is the linked list, <code>List X</code>. While it does not offer fast element access, it allows for easy pushing and popping of elements. It is suitable for defining recursive functions. For example, an implementation of Fibonacci numbers using <code>List</code> would look like this:</p>
+<pre><code class="language-lean">def fibonacci (n : Nat) : List Nat :=
+  (go n []).reverse
+  where
+    go (n : Nat) (l : List Nat) : List Nat :=
+      match n, l with
+      |   0,       l  =&gt; l
+      | n+1,       [] =&gt; go n [0]
+      | n+1,    x::[] =&gt; go n [1, x]
+      | n+1, x::y::l  =&gt; go n ((x+y)::x::y::l)
+</code></pre>
+<p>The last data structure we will mention here is product type <code>Prod X Y</code> usually written as <code>X×Y</code>. It allows you to store elements of different types. If you have an element of a product <code>p : X×Y</code>, you can access its elements by <code>p.1</code> and <code>p.2</code>. You can chain pairs to build tuples of arbitrary size. For example, <code>(3.14, (&quot;hello&quot;, 42))</code> has the type <code>Float × (String × Nat)</code>. Lean considers products to be right-associative, so you can omit the brackets and write <code>(3.14, &quot;hello&quot;, 42)</code> or <code>Float × String × Nat</code>. This affects how you actually access elements of <code>p := (3.14, &quot;hello&quot;, 42)</code>. To get the first element, you write <code>p.1</code>, but to access the second element, you have to write <code>p.2.1</code>, because <code>p.2</code> returns the second element <code>(&quot;hello&quot;, 42)</code> of the pair, and to get the second element of the original tuple <code>p</code>, you need to then get the first element of <code>p.2</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-operations"><a class="header" href="#basic-operations">Basic Operations</a></h1>
+<p>What distinguishes Lean from many other programming languages is that Lean is so called dependently typed programming language. This allows us to work with arrays that have their dimensions specified in their type. For example, vector dot product can be defined as</p>
+<pre><code class="language-lean">def dot {n : Nat} (x y : Float^[n]) : Float := ∑ i, x[i] * y[i]
+</code></pre>
+<p>This function accepts the size of the array as an argument <code>n : Nat</code> and then two arrays of the same size <code>n</code>. The meaning of <em>dependently typed</em> is that the type of function argument can depend on the value of another argument. Here the type of <code>x</code> and <code>y</code> is <code>Float^[n]</code> which depends on the first argument <code>n</code>. This is really not possible in ordinary programming languages, some of them allow you to provide the dimension at compile time. In Lean this is not the case, the dimension <code>n</code> can be determined completly at runtime.</p>
+<p>As you can see, one of the nice advantages is that we didn't have to specify the range over which we want to sum at it is automatically infered it should sum over the numbers <code>0..(n-1)</code>.</p>
+<p>We can test the function with</p>
+<pre><code class="language-lean">#eval dot ⊞[1.0,1.0] ⊞[1.0,1.0]
+</code></pre>
+<p>When calling a function, you have to provide only the arguments with normal braces, such as <code>(x y : Float^[n])</code>. Arguments with the curly braces <code>{n : Nat}</code> are implicit and will be infered automatically from the other arguments, from <code>x</code> and <code>y</code> in this case. Lean prevents us from providing arrays of different lenghts </p>
+<pre><code class="language-lean">#eval dot ⊞[1.0,1.0] ⊞[1.0,1.0,1.0]
+</code></pre>
+<p>Let's back up and talk about the notation <code>Float^[n]</code> and how it connects to <code>DataArray X</code> we talked about previously. An array <code>x : Float^[n]</code> has length <code>n</code> and thus can be indexed with number <code>0..(n-1)</code>. The type expressing all natural numbers smaller then <code>n</code> is denoted with <code>Fin n</code>. It is defined as a structure:</p>
+<pre><code class="language-lean">structure Fin (n : Nat) where
+  val  : Nat
+  isLt : val &lt; n
+</code></pre>
+<p>which holds the value <code>val</code> and a proof <code>isLt</code> that the value is infact smaller then <code>n</code>. </p>
+<p><code>Float^[n]</code> is just a syntactic sugar for <code>DataArrayN Float (Fin n)</code> which is  <code>DataArray Float</code> together with a proof that the size of the array is <code>n</code>. In general, <code>Fin n</code> can be replaced with an arbitrary index type <code>I</code>. The definition of <code>DataArrayN</code> is:</p>
+<pre><code class="language-lean">structure DataArrayN (X : Type) (I : Type) where
+  data : DataArray X
+  h_size : card I = data.size
+</code></pre>
+<p>which is an array <code>data</code> with a proof that the array size it equal to the cardinality of the index set <code>I</code>. In the case of <code>I = Fin n</code> we have <code>card (Fin n) = n.</code></p>
+<p>Having the flexibility using an arbitrary type <code>I</code> as index is already sufficient to support arbitrary n-dimensional array. To get matrices we pick <code>I = Fin n × Fin m</code>. In other words matrix is just an array indexed by pair of indices <code>(i,j)</code> where <code>0≤i&lt;n</code> and <code>0≤j&lt;m</code>. Thus <code>DataArrayN Float (Fin n × Fin m)</code> is just a <code>n×m</code> matrix and the syntactic sugar for it is <code>Float^[n,m]</code>. We can generalize this and pick <code>I = Fin n₁ × ... × Fin nᵣ</code> which yields <code>r</code>-dimensional array with dimensions <code>n₁, ..., nᵣ</code>. The syntactic sugar for <code>DataArrayN Float (Fin n₁ × ... × Fin nᵣ)</code> is <code>Float^[n₁, ..., nᵣ]</code>.</p>
+<p>Have a look at chapter 1.4. Structures in Functional Programming in LeanTo learn more about structures </p>
+<p>Let's go over the basic operations on arrays in <em>SciLean</em>. As we mentioned previously you can create <code>List</code> with <code>[a,b,...]</code> or <code>Array</code> with <code>#[a,b,...]</code>. Here we will mainly focus on <code>DataArray</code> that uses <code>⊞[a,b,...]</code> so let's create one</p>
+<pre><code class="language-lean">def u :=  ⊞[1.0, 2.0]
+</code></pre>
+<p>we can access its elements with bracket notation <code>u[i]</code></p>
+<pre><code>#eval u[0]
+#eval u[1]
+</code></pre>
+<p>Lean can leverage the index information in the type of <code>u</code> so when we write </p>
+<pre><code>#eval ∑ i, u[i]
+</code></pre>
+<p>or </p>
+<pre><code>#check fun i =&gt; u[i]
+</code></pre>
+<p>Lean automatically infers the type of <code>i</code></p>
+<p>Similarly we can create a matrix</p>
+<pre><code class="language-lean">def A := ⊞[1.0, 2.0; 3.0, 4.0]
+</code></pre>
+<p>and we can access its elements</p>
+<pre><code class="language-lean">#eval A[0,1]
+</code></pre>
+<p>Because matrix <code>A</code> is just an array indexed by <code>Fin 2 × Fin 2</code> we can also write it as </p>
+<pre><code class="language-lean">#check A[(0,1)]
+</code></pre>
+<p>which might look like an odd quirk of our definition of matrix but hopeful later on you will see that this generality allows us to work with indices that have a proper meaning rather being a meaningless number.</p>
+<p>Popular method for creating arrays in Python is list comprehension. To some capacity this can be viewed as process turning a function, <code>f : Idx → Elem</code>, into an array <code>DataArraN Elem Idx</code>. The notation is very similar to lambda notation <code>fun x =&gt; f x</code></p>
+<pre><code>#check ⊞ i =&gt; f i
+</code></pre>
+<p>Unlike lambda notation, array notation uncurries all of its arguments. This means that <code>⊞ i j =&gt; f i j</code> creates and matrix indexed by <code>(i,j)</code>. For example outer product of two arrays can be defines as</p>
+<pre><code class="language-lean">def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] :=
+  ⊞ i j =&gt; x[i]*y[j]
+</code></pre>
+<p>If you want an array of arrays instead of matrix you would write <code>⊞ i =&gt; (⊞ j =&gt; x[i]*y[j])</code> or <code>⊞ j =&gt; (⊞ i =&gt; x[i]*y[j])</code> depending whether you want the matrix stored as an array of rows or columns.</p>
+<p>Currently this notation does not allow you to do any advanced features like filtering the elements based on some property. If you have a good idea how this should work please submit a proposal.</p>
+<p>Another way to set up a matrix is to set its elements one by one</p>
+<pre><code class="language-lean">def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
+  let mut A : Float^[n,m] := 0
+  for i in IndexType.univ Fin n do
+    for j in IndexType.univ Fin m do
+      A[i,j] := x[i]*y[j]
+  return A
+</code></pre>
+<p>We first create mutable zero matrix and then set every. The function <code>IndexType.univ I</code> creates a range that runs over all the elements of <code>I</code>. When working with matrices, one has to be careful if they are in column major or row major ordering and accordingly iterate over <code>i</code> first and then over <code>j</code>. We will explain later how this is done in <em>SciLean</em> so for now it is safe to just iterate over both indices simultaneously and we get the optimal order</p>
+<pre><code class="language-lean">def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
+  let mut A : Float^[n,m] := 0
+  for (i,j) in (IndexType.univ (Fin n × Fin m)) do
+    A[i,j] := x[i]*y[j]
+  return A
+</code></pre>
+<p>Of course the above implementation of has the drawback that it first initialized the whole matrix to zero and then go over the matrix again and set it up to the correct value. Sometimes it is much more natural to create the matrix element by element. We can create an array with dynamic size and push element one by one. Once we are done we can fix the dimensions of the matrix.</p>
+<pre><code class="language-lean">def outerProduct {n m : Float} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] := Id.run do
+  let mut A : DataArray Float := ⊞[]
+  A := reserve A (n*m)
+  for (i,j) in (IndexType.univ (Fin n × Fin m)) do
+    A := A.push (x[i]*y[j])
+  return { data:= A, h_size:= sorry }
+</code></pre>
+<p>Recall that <code>Float^[n,m]</code> is just syntax for <code>DataArrayN Float (Fin n × Fin m)</code> and <code>DataArrayN X I</code> is just a structure holding <code>data : DataArray X</code> and a proof <code>h_size : data.size = card I</code>. In this case, we provide the matrix <code>A</code> and in the second element we should provide a proof that <code>A.size = card (Fin n × Fin m) = n*m</code>. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddently invalid.</p>
+<h2 id="reshaping-arrays"><a class="header" href="#reshaping-arrays">Reshaping Arrays</a></h2>
+<p>Reshaping arrays is a common operation, where you may need to transform an array of one shape into another while preserving its total size. <em>SciLean</em> provides several functions for reshaping arrays, allowing you to convert arrays of arbitrary shapes into vectors, matrices, or arrays of higher rank.</p>
+<pre><code class="language-lean">def reshape1 (x : Float^[I]) (n : Nat)    (h : card I = n)     : Float^[n] := ...
+def reshape2 (x : Float^[I]) (n m : Nat)  (h : card I = n*m)   : Float^[n,m] := ...
+def reshape3 (x : Float^[I]) (n m k: Nat) (h : card I = n*m*k) : Float^[n,m,k] := ...
+...
+</code></pre>
+<p>For example, to create a matrix, you can first create an array and then convert it to a matrix:</p>
+<pre><code class="language-lean">#check ⊞[(1.0 : Float), 2.0, 3.0, 4.0].reshape2 2 2 (by decide)
+</code></pre>
+<p>Here, we also prove that reshaping an array of size four to a two-by-two matrix is valid by calling the tactic <code>decide</code>. This tactic works well with concrete numbers, when variables are involved, feel free to omit the proof with <code>sorry</code>.</p>
+<p>These reshape functions are concrete instances of a general <code>reshape</code> function:</p>
+<pre><code class="language-lean">def reshape (x : Float^[I]) (J : Type) [IndexType J] 
+    (h := IndexType.card I = IndexType.card J) : Float^[J] := ...
+</code></pre>
+<p>which reshapes an array of shape <code>I</code> to an array of shape <code>J</code>. Using this function for vectors or matrices is cumbersome, as <code>x.reshape2 n m sorry</code> is just a shorthand for <code>x.reshape (Fin n × Fin m) sorry</code>.</p>
+<p>The <code>reshape</code> function is also a concrete instance of the more general function <code>reshapeEquiv</code>, which reshapes an array of size <code>I</code> to an array of size <code>J</code> by an arbitrary equivalence <code>I ≃ J</code>:</p>
+<pre><code class="language-lean">def reshapeEquiv (x : Float^[I]) (ι : I ≃ J) : Float^[J] := ...
+</code></pre>
+<p>This function allows you to reshape an array and perform various permutations of its data.</p>
+<p>The <code>reshape</code> function is implemented with the <code>reshapeEquiv</code> function via the natural equivalence between two index types <code>I</code> and <code>J</code>, where you first convert <code>i : I</code> to a flat index <code>toFin i : Fin (card I)</code> and then convert it back to a structured index <code>J</code> by <code>fromFin (toFin i) : J</code>. For this operation to be valid, it is required that <code>card I = card J</code>. Here is the implementation of this natural equivalence:</p>
+<pre><code class="language-lean">open IndexType in
+def naturalEquiv (I J : Type) [IndexType I] [IndexType J] 
+    (h : card I = card J) : I ≃ J := 
+{
+  toFun := fun i =&gt; fromFin (h ▸ toFin i),
+  invFun := fun j =&gt; fromFin (h ▸ toFin j),
+  left_inv := sorry,
+  right_inv := sorry
+}
+</code></pre>
+<p>To construct an equivalence <code>I ≃ J</code>, we need to provide <code>toFun : I → J</code>, its inverse <code>invFun : J → I</code>, and proofs that they are indeed inverses of each other, which we omit here.</p>
+<p>Implementing this equivalence is a bit tricky because we cannot simply call <code>fromFin (toFin i)</code>. This is because <code>toFin i</code> produces <code>Fin (card I)</code>, but for <code>fromFin</code> to create an index of type <code>J</code>, it would expect <code>Fin (card J)</code>. Therefore, we need to convert the flat index <code>Fin (card I)</code> to the flat index <code>Fin (card J)</code>. In Lean, the notation <code>h ▸ x</code> allows you to cast <code>x : X</code> to a different type by using the fact <code>h</code>. In our particular case, <code>h ▸ toFin i</code> produces <code>Fin (card J)</code>, which can be passed on to <code>fromFin</code> to obtain <code>J</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tensor-operations"><a class="header" href="#tensor-operations">Tensor Operations</a></h1>
+<p>In this chapter, we will demonstrate more advanced operations with arrays, such as transformations and reductions. To provide a concrete example, we will build a simple neural network. It's important to note that Lean/SciLean is not yet suitable for running and training neural networks, as it only runs on CPU and the current compiler does not produce the most efficient code. Nevertheless, I believe that writing a simple neural network will nicely demonstrate Lean's expressivity. My secret hope is that this text will motivate someone to write a specialized compiler that will translate a subset of Lean to GPUs.</p>
+<h2 id="transformations-and-reductions"><a class="header" href="#transformations-and-reductions">Transformations and Reductions</a></h2>
+<p>One common operation is to transform every element of an array. To do that, we can write a simple for loop. Recall that anytime you want to write imperative-style code, you have to start it with <code>Id.run do</code>, and to modify input <code>x</code> mutably, we have to introduce a new mutable variable <code>x'</code> and assign <code>x</code> to it:</p>
+<pre><code class="language-lean">def map {I : Type} [IndexType I] (x : Float^I) (f : Float → Float) := Id.run do
+  let mut x' := x
+  for i in IndexType.univ I do
+    x'[i] := f x'[i]
+  return x'
+</code></pre>
+<p>A new thing here is that we wrote this function polymorphically in the index type <code>I</code>. <code>{I : Type}</code> introduces a new type, and <code>[IndexType I]</code> adds a requirement that <code>I</code> behave as an index. <code>IndexType</code> is a type class that allows us to do a bunch of things with <code>I</code>. We have already seen <code>IndexType.card I</code>, which tells you the number of elements in <code>I</code>. There is also <code>IndexType.toFin</code> and <code>IndexType.fromFin</code>, which convert <code>i : I</code> into <code>toFin i : Fin (card I)</code> and <code>idx : Fin (card I)</code> to <code>fromFin idx : I</code>. So the function <code>toFin</code> allows you to linearize any index <code>I</code>, and it is the core function used to implement <code>DataArrayN</code>, as all elements of an array have to be stored linearly in memory.</p>
+<p>In fact, SciLean already provides this function under the name <code>mapMono</code>. The &quot;mono&quot; stands for the fact that the function <code>f</code> does not change the type; in our case, it accepts and returns <code>Float</code>. Also, this function is defined in the <code>DataArrayN</code> namespace, and because of that, we can use the familiar dot notation <code>x.mapMono</code>. As <code>mapMono</code> is polymorphic in the shape of the array, we can call it on vectors:</p>
+<pre><code class="language-lean">#eval ⊞[1.0,2.0,3.0].mapMono (fun x =&gt; sqrt x)
+</code></pre>
+<p>or matrices:</p>
+<pre><code class="language-lean">#eval ⊞[1.0,2.0;3.0,4.0].mapMono (fun x =&gt; sqrt x)
+</code></pre>
+<p>or higher-rank arrays:</p>
+<pre><code class="language-lean">#eval (⊞ (i j k : Fin 2) =&gt; (IndexType.toFin (i,j,k)).toFloat).mapMono (fun x =&gt; sqrt x)
+</code></pre>
+<p>where <code>IndexType.toFin (i,j,k)</code> turns a structured index of type <code>Fin 2 × Fin 2 × Fin 2</code> to a linear index of type <code>Fin 8</code>, <code>.toFloat</code> converts it to <code>Float</code>, and finally <code>.map (fun x =&gt; sqrt x)</code> computes the square root of every element.</p>
+<p>An alternative to <code>mapMono</code> is <code>mapIdxMono</code>, which accepts a function <code>f : I → X → X</code>, so you can additionally use the index value to transform the array values:</p>
+<pre><code class="language-lean">#eval (0 : Float^[3]) |&gt;.mapIdxMono (fun i _ =&gt; i.toFloat) |&gt;.map (fun x =&gt; sqrt x)
+</code></pre>
+<p>where <code>0 : Float^[3]</code> creates a zero array of size 3, then <code>mapIdxMono (fun i _ =&gt; i.toFloat)</code> initializes every element to the value of its index, and finally <code>map (fun x =&gt; sqrt x)</code> computes the square root of every element.</p>
+<p>The next important operation with arrays is reduction, which runs over elements and reduces them using a provided binary operation. There are two main reductions, <code>x.fold op init</code> and <code>x.reduceD op default</code>. The difference is that <code>fold</code> uses <code>init</code> as the initial value that is updated with elements of the array <code>x</code>, while <code>reduceD</code> uses only the elements of <code>x</code> and returns <code>default</code> if <code>x</code> happens to be empty:</p>
+<pre><code class="language-lean">x.fold op init = (op ... (op (op init x[0]) x[1]) ...n)
+x.reduceD op default = (op ... (op (op x[0] x[1]) x[2]) ...)
+</code></pre>
+<p>There are also versions <code>x.reduce</code> where you do not have to provide the default element, but it is required that the element type <code>X</code> of the array <code>x : X^I</code> has an instance <code>Inhabited X</code>, which allows you to call <code>default : X</code>, returning a default element of <code>X</code>. For example, <code>default : Float</code> returns <code>0.0</code>.</p>
+<p>To sum all elements of an array:</p>
+<pre><code class="language-lean">#eval ⊞[1.0,2.0,3.0].fold (·+·) 0
+</code></pre>
+<p>or to find the minimal element:</p>
+<pre><code class="language-lean">#eval ⊞[(1.0 :Float),2.0,3.0].reduce (min · ·)
+</code></pre>
+<p>notice that computing the minimal element with <code>fold</code> and <code>init:=0</code> would give you an incorrect answer.</p>
+<p>Putting it all together we can implement soft-max</p>
+<pre><code class="language-lean">def softMax {I} [IndexType I]
+  (r : Float) (x : Float^I) : Float^I := Id.run do
+  let m := x.reduce (max · ·)
+  let x := x.map fun x =&gt; x-m
+  let x := x.map fun x =&gt; exp r*x
+  let w := x.reduce (·+·)
+  let x := x.map fun x =&gt; x/w
+  return x
+</code></pre>
+<p>where for numerical stablity we first find the maximal element <code>m</code> and subtract it from all the element. After that we procees with the standard definition of soft max. Of course, this is not the most efficient implementation of softmax. In later chapter, we will show how to transform it to a more efficient version.</p>
+<p>Very common reduction is to sum element or to multiply them. <em>SciLean</em> provides familiar notation for these</p>
+<pre><code>def x := ⊞[1.0,2.0,3.0,4.0]
+def A := ⊞[1.0,2.0;3.0,4.0]
+
+#eval ∑ i, x[i]
+#eval ∏ i, x[i]
+#eval ∑ i j, A[i,j]
+#eval ∏ i j, A[i,j]
+</code></pre>
+<p><em>Note for Mathlib users: For performance reasons SciLean defines sums and products with <code>IndexType</code> instead of <code>Finset</code>. Therefore this notation is different from the one defined in <code>BigOperators</code> namespace.</em></p>
+<p>We can define commong matrix operations like matrix-vector multiplication</p>
+<pre><code class="language-lean">def matMul {n m : Nat} (A : Float^[n,m]) (x : Float^[m]) :=
+  ⊞ i =&gt; ∑ j, A[i,j] * x[j]
+</code></pre>
+<p>or trace</p>
+<pre><code class="language-lean">def trace {n : Nat} (A : Float^[n,n]) :=
+  ∑ i, A[i,i]
+</code></pre>
+<h2 id="convolution-and-operations-on-indices"><a class="header" href="#convolution-and-operations-on-indices">Convolution and Operations on Indices</a></h2>
+<p>The fundamental operation in machine learning is convolution. The first attempt at writing convolution might look like this:</p>
+<pre><code class="language-lean">def conv1d {n k : Nat} (x : Float^[n]) (w : Float^[k]) :=
+    ⊞ (i : Fin n) =&gt; ∑ j, w[j] * x[i-j]
+</code></pre>
+<p>However, this produces an error:</p>
+<pre><code class="language-lean">typeclass instance problem is stuck, it is often due to metavariables
+  HSub (Fin n) (Fin k) ?m.48171
+</code></pre>
+<p>This error arises because Lean can't infer the subtraction operation between the types <code>Fin n</code> and <code>Fin k</code>, which would produce some unknown type <code>?m.48171</code>. This makes sense, what does it mean to subtract <code>j : Fin k</code> from <code>i : Fin n</code>? Because we are accessing elements of <code>x</code>, we probably want the result to be <code>Fin n</code>, but what do we do if <code>i - j</code> is smaller than zero? We need to do something more involved when performing operations on indices that have their range specified in their type.</p>
+<p>Let's step back a bit and look at the type of the kernel <code>w : Float^[k]</code>. We index it with numbers <code>0,...,k-1</code>, but that is not how we usually think of kernels. We would rather index them by <code>-k,...,-1,0,1,...,k</code>. SciLean provides useful notation for this: <code>Float^[[-k:k]]</code>, which stands for <code>DataArrayN Float (Set.Icc (-k) k)</code> and <code>Set.Icc (-k) k</code> is a closed interval with endpoints <code>-k</code> and <code>k</code>. Because here we consider <code>k</code> to be an integer, then <code>Set.Icc (-k) k</code> is exactly the set of <code>-k,...,-1,0,1,...,k</code>. Recall that <code>i : Fin n</code> is a pair of the value <code>i.1 : ℕ</code> and proof <code>i.2 : i.1 &lt; n</code>. Similarly, <code>i : Set.Icc (-k) k</code> is a pair <code>i.1 : ℤ</code> and proof <code>i.2 : -k ≤ i.1 ∧ i.1 ≤ k</code>. The type for a two-dimensional kernel would be <code>Float^[[-k:k],[-k:k]]</code>, which stands for <code>DataArrayN Float (Set.Icc (-k) k × Set.Icc (-k) k)</code>.</p>
+<p>Now, instead of writing <code>i-j</code>, we want to shift the index <code>i : Fin n</code> by the index <code>j</code> and obtain another index of type <code>Fin n</code>. Let's define a general function <code>shift</code> that shifts <code>Fin n</code> by an arbitrary integer:</p>
+<pre><code class="language-lean">def Fin.shift {n} (i : Fin n) (j : ℤ) : Fin n :=
+    { val := ((i.1 + j) % n ).toNat, isLt := sorry }
+</code></pre>
+<p>Here, <code>%</code> is already performing positive modulo on integers, and we again omitted the proof that the result is indeed smaller than <code>n</code>. It is not a hard proof, but the purpose of this text is not to teach you how to prove theorems in Lean but rather how to use Lean as a programming language, and omitting proofs is a perfectly valid approach.</p>
+<p>Now we can write one-dimensional convolution as:</p>
+<pre><code class="language-lean">def conv1d {n k : Nat} (w : Float^[[-k:k]]) (x : Float^[n]) :=
+    ⊞ (i : Fin n) =&gt; ∑ j, w[j] * x[i.shift j.1]
+</code></pre>
+<p>This immediately generalizes to two dimensions:</p>
+<pre><code class="language-lean">def conv2d {n m k : Nat} (w : Float^[[-k:k],[-k:k]]) (x : Float^[n,m]) :=
+    ⊞ (i : Fin n) (j : Fin m) =&gt; ∑ a b, w[a,b] * x[i.shift a, j.shift b]
+</code></pre>
+<p>In practice, a convolutional layer takes as input a stack of images <code>x</code>, a stack of kernels <code>w</code>, and a bias <code>b</code>. Let's index images by an arbitrary type <code>I</code> and kernels by <code>J×I</code>:</p>
+<pre><code class="language-lean">def conv2d {n m k : Nat} (J : Type) {I : Type} [IndexType I] [IndexType J] [DecidableEq J]
+    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) : Float^[J,n,m] :=
+    ⊞ κ (i : Fin n) (j : Fin m) =&gt; b[κ,i,j] + ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
+</code></pre>
+<h2 id="pooling-and-difficulties-with-dependent-types"><a class="header" href="#pooling-and-difficulties-with-dependent-types">Pooling and Difficulties with Dependent Types</a></h2>
+<p>The next piece of neural networks is the pooling layer, a layer that reduces image resolution. Giving a good type to the pooling layer is quite challenging, as we have to divide the image resolution by two. Doing any kinds of operations in types brings out all the complexities of dependent type theory. Yes, dependent types can be really hard, but please do not get discouraged by this section. One has to be careful and not put dependent types everywhere, but when used with care, they can provide lots of benefits without causing too many troubles.</p>
+<p>The canonical example is if you have an index <code>i : Fin (n + m)</code> and you have a function <code>f : Fin (m + n) → Float</code>, you can't simply call <code>f i</code> as <code>Fin (n + m)</code> is not <em>obviously</em> equal to <code>Fin (m + n)</code> because we need to invoke commutativity of addition on natural numbers. We will explain how to deal with this later; for now, let's have a look at the pooling layer.</p>
+<p>Let's start with one dimension. A function that reduces the array size by two by taking the average of <code>x[2*i]</code> and <code>x[2*i+1]</code> is:</p>
+<pre><code class="language-lean">def avgPool (x : Float^[n]) : Float^[n/2] := 
+  ⊞ (i : Fin (n/2)) =&gt;
+    let i₁ : Fin n := ⟨2*i.1, by omega⟩
+    let i₂ : Fin n := ⟨2*i.1+1, by omega⟩
+    0.5 * (x[i₁] + x[i₂])
+</code></pre>
+<p>Given the index of the new array <code>i : Fin (n/2)</code>, we need to produce indices <code>2*i.1</code> and <code>2*i.1+1</code> of the old vector, which have type <code>Fin n</code>. Recall that <code>Fin n</code> is just a pair of natural numbers and a proof that it is smaller than <code>n</code>. So far, we always omitted the proof with <code>sorry</code>, but we do not have to. Here, the proof can be easily done by calling the tactic <code>omega</code>, which is very good at proving index bounds. However, remember when you are writing a program, it is usually a good strategy to inspect all proofs, see if they are plausible, and omit them with <code>sorry</code>. Only once your program is capable of running, you can go back and start filling out the proofs. You can see this as an alternative way of debugging your program.</p>
+<p>Beware! <code>Fin n</code> is endowed with modular arithmetic. Naively calling <code>2*i</code> would multiply <code>i</code> by two and perform modulo by <code>n/2</code>. We do not want that; we have to get the underlying natural number <code>i.1</code> and multiply then by two. For example:</p>
+<pre><code class="language-lean">def i : Fin 10 := 6
+
+#eval 2*i
+#eval 2*i.1
+</code></pre>
+<p>One downside of the <code>avgPool</code> as written above is that if we call it multiple times, we get an array with an ugly type. For example, <code>avgPool (avgPool x)</code> has type <code>Float^[n/2/2]</code>. If we have a size that we already know is divisible by four, the <code>n/2/2</code> does not reduce. For <code>x : Float^[4*n]</code>, the term <code>avgPool (avgPool x)</code> has type <code>Float^[4*n/2/2]</code> and not <code>Float^[n]</code>.</p>
+<p>You might attempt to solve this by writing the type of <code>avgPool</code> as:</p>
+<pre><code class="language-lean">def avgPool (x : Float^[2*n]) : Float^[n] :=
+  ⊞ (i : Fin n) =&gt;
+    let i₁ : Fin (2*n) := ⟨2*i.1, by omega⟩
+    let i₂ : Fin (2*n) := ⟨2*i.1+1, by omega⟩
+    0.5 * (x[i₁] + x[i₂])
+</code></pre>
+<p>Unfortunately, this does not work. Lean's type checking is not smart enough to allow us to call <code>avgPool x</code> for <code>x : Float^[4*m]</code>. It can't figure out that <code>4*m = 2*(2*m)</code> and infer that <code>n = 2*m</code> when calling <code>avgPool</code>. We have to do something else.</p>
+<p>The most flexible way of writing the <code>avgPool</code> function is as follows:</p>
+<pre><code class="language-lean">def avgPool (x : Float^[n]) {m} (h : m = n/2 := by deduce_by norm_num) : Float^[m] :=
+  ⊞ (i : Fin m) =&gt;
+    let i1 : Fin n := ⟨2*i.1, by omega⟩
+    let i2 : Fin n := ⟨2*i.1+1, by omega⟩
+    0.5 * (x[i1] + x[i2])
+</code></pre>
+<p>Here, the output dimension <code>m</code> is implicitly inferred from the proof <code>h : m = n/2</code>. Let's go step by step on what is going on.</p>
+<p>When you call <code>avgPool x</code> for <code>x : Float^[4*k]</code>, the first argument is expected to have type <code>Float^[n]</code>. From this, Lean infers that <code>n = 4*k</code>. The next argument <code>{m}</code> is implicit, so Lean skips it for now as it is supposed to be inferred from the following arguments. Lastly, we have the argument <code>h : m = n/2</code>, which has the default value <code>by deduce_by norm_num</code>. This means, please run the tactic <code>deduce_by norm_num</code> to infer this argument. The tactic <code>deduce_by</code> expects an expression with an undetermined variable, in our case <code>m</code>, and runs <code>norm_num</code> on <code>n/2</code> and assigns the result to <code>m</code>. In this case, <code>4*k/2</code> gets simplified to <code>2*k</code>, and that is the final value of <code>m</code>.</p>
+<p>You might be wondering what happens when <code>n</code> is odd. Because <code>n/2</code> performs natural division, for <code>x : Float^[2*n+1]</code>, calling <code>avgPool x</code> produces an array of type <code>Float^[n]</code>. If you want to prevent calling <code>avgPool</code> on arrays of odd length, you can simply modify the proof obligation to <code>(h : 2*m = n)</code>. This way, you require that <code>n</code> is even, and calling <code>avgPool x</code> with an odd-sized array <code>x</code> will produce an error.</p>
+<p>To build a simple neural network, we need a two-dimensional version of the pooling layer:</p>
+<pre><code class="language-lean">def avgPool2d
+    (x : Float^[I,n₁,n₂]) {m₁ m₂}
+    (h₁ : m₁ = n₁/2 := by deduce_by norm_num)
+    (h₂ : m₂ = n₂/2 := by deduce_by norm_num) : Float^[I,m₁,m₂] :=
+  ⊞ (ι : I) (i : Fin m₁) (j : Fin m₂) =&gt;
+    let i₁ : Fin n₁ := ⟨2*i.1, by omega⟩
+    let i₂ : Fin n₁ := ⟨2*i.1+1, by omega⟩
+    let j₁ : Fin n₂ := ⟨2*j.1, by omega⟩
+    let j₂ : Fin n₂ := ⟨2*j.1+1, by omega⟩
+    0.5 * (x[ι,i₁,j₁] + x[ι,i₁,j₂] + x[ι,i₂,j₁] + x[ι,i₂,j₂])
+</code></pre>
+<h2 id="simple-neural-network"><a class="header" href="#simple-neural-network">Simple Neural Network</a></h2>
+<p>We are almost ready to write a simple neural network. The only missing piece is the dense layer, which is just matrix multiplication followed by addition. We have already shown matrix multiplication previously, but it was only for multiplying by a normal matrix with <code>n</code> rows and <code>m</code> columns. A general dense layer takes a tensor <code>x</code> of any shape, treats it as a flat array of <code>m</code> elements, and multiplies that by an <code>n×m</code> matrix. Because our arrays allow indexing by an arbitrary type <code>I</code>, we do not need to perform this flattening explicitly and can just multiply by the matrix <code>Float^[n,I]</code>.</p>
+<pre><code class="language-lean">def dense (n : Nat) (A : Float^[n,I]) (b : Float^[n]) (x : Float^[I]) : Float^[n] :=
+  ⊞ (i : Fin n) =&gt; b[i] + ∑ j, A[i,j] * x[j]
+</code></pre>
+<p>Finally, we have all the necessary pieces, and we can implement a simple neural network.</p>
+<pre><code class="language-lean">def nnet := fun (w₁,b₁,w₂,b₂,w₃,b₃) (x : Float^[28,28]) =&gt;
+  x |&gt; resize3 1 28 28 (by decide)
+    |&gt; conv2d 1 (Fin 8) w₁ b₁ 
+    |&gt;.mapMono (fun x =&gt; max x 0)
+    |&gt; avgPool2d
+    |&gt; dense 30 w₂ b₂ -- deduce_by does not play well :(
+    |&gt;.mapMono (fun x =&gt; max x 0)
+    |&gt; dense 10 w₃ b₃
+    |&gt; softMax 0.1
+</code></pre>
+<p>When we check the type of <code>nnet</code>, we get:</p>
+<pre><code class="language-lean">Float^[8,1,[-1:1],[-1:1]] × Float^[8,28,28] × Float^[30,8,14,14] × Float^[30] × Float^[10,30] × Float^[10] → Float^[28,28] → Float^[10]
+</code></pre>
+<p>You can see that the type of weights is automatically inferred to be:</p>
+<pre><code class="language-lean">Float^[8,1,[-1:1],[-1:1]] × Float^[8,28,28] × Float^[30,8,14,14] × Float^[30] × Float^[10,30] × Float^[10]
+</code></pre>
+<p>The input image has type <code>Float^[28,28]</code>, and the output is an array of ten elements <code>Float^[10]</code>. As you might have guessed from the dimensions, later in the book, we will train this network to classify handwritten digits from the MNIST database.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="abstract-array-interface"><a class="header" href="#abstract-array-interface">Abstract Array Interface</a></h1>
+<p><em>Explain that array is just something that has coercion to <code>Idx → Elem</code> and supports element modification</em></p>
+<ul>
+<li><em>explain <code>Indexed</code> and <code>ArrayType</code> typelcasses</em></li>
+<li><em>explain <code>IndexType</code></em></li>
+<li><em>writing generic code accepting general arrays</em></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optimizing-array-expressions"><a class="header" href="#optimizing-array-expressions">Optimizing Array Expressions</a></h1>
+<p><em>Show how one can optimize array expressin</em></p>
+<ul>
+<li><em>explain how Lean can be used as interactive compiler</em></li>
+<li><em>simple BLAS oprations like <code>c = a*x + y</code> and turn it into <code>c = map x (fun i xi =&gt; a*xi + y[i]</code></em></li>
+<li><em>issue with multidimensional indices and conversion to linear indices</em></li>
+</ul>
+<p>Lean is an interactive theorems prover and in this chapter we will show how to use Lean as interactive compiler/computer algebra system. An exmaple of common compiler optimization with arrays is loop fusion i.e. merging two loop into one. We will show how to craft such optimizations, expore them interactively and how to automate them. </p>
+<p>We can view program optimization as rerwiting a program into another program that is equal and by equal we mean that for the same input these programs produce the same output. There is a very close parallel to theorem proving. Very often to prove equality <code>x = y</code> we just simplify <code>x</code> to <code>x'</code> and <code>y</code> to <code>y'</code> and if <code>x'</code> happends to be identical to <code>y'</code> we have just proven that <code>x = y</code>. Lean provides a general pupose expression simplifier, called <code>simp</code>, which has a database of rewrite rules and tries to apply them to subexpression. </p>
+<p>For example, in Lean there is theorem that adding zero does not change the value. </p>
+<pre><code>@[simp] theorem Nat.add_zero (n : Nat) : n + 0 = n := rfl
+</code></pre>
+<p>Adding this attribute <code>@[simp]</code> adds this theorem to the <code>simp</code>'s database of theorems it tries to apply. </p>
+<p>We can simplify any expression <code>e</code> by <code>e rewrite_by simp</code></p>
+<pre><code>#check (0 + 5 + 0) rewrite_by simp
+</code></pre>
+<p>which returns <code>5 : ℕ</code> i.e. all the zero adition has been eliminated. We can actually inspect what did the simplifier did by turning on some options</p>
+<pre><code>set_option trace.Meta.Tactic.simp.rewrite true in
+#check (0 + 5 + 0) rewrite_by simp
+</code></pre>
+<p>produces</p>
+<pre><code>[Meta.Tactic.simp.rewrite] @zero_add:1000, 0 + 5 ==&gt; 5
+[Meta.Tactic.simp.rewrite] @add_zero:1000, 5 + 0 ==&gt; 5
+</code></pre>
+<p>So we can see that the simplifier first simplifies the subexpression <code>0 + 5</code> to <code>5</code> and then <code>5 + 0</code> to <code>5</code>.</p>
+<p>The simplifier has many options and configurations. By default <code>simp</code> uses all the theorems marked with <code>simp</code>. Often it is usefull to narrow it down to only a specific set of theorems. You can call <code>simp only</code> which does not use any theorems at all, it just preforms basic lambda claclus reductions, like beta reduction which turns <code>(fun x =&gt; f x) y</code> to <code>f y</code>. To give explicit set of theorems to use use squared brackets <code>simp only [add_zero]</code></p>
+<pre><code>#check (0 + 5 + 0) rewrite_by simp only [add_zero]
+</code></pre>
+<p>produces <code>0 + 5</code> as only the rewrite by <code>add_zero</code> is allowed. </p>
+<p>What does this have to do with programs optimization? Consider this theorem</p>
+<pre><code>theorem mapMono_mapMono {I} [IndexType I] (x : Float^[I]) (f g : Float → Float) :
+    (x.mapMono f |&gt;.mapMono g) = x.mapMono fun x =&gt; f (g x) := ...
+</code></pre>
+<p>which fuses two <code>mapMono</code> into one. </p>
+<p>Recall <code>softMax</code> from previous chapter</p>
+<pre><code>def softMax {I} [IndexType I]
+  (r : Float) (x : Float^[I]) : Float^[I] := Id.run do
+  let m := x.reduce (max · ·)
+  let x := x.mapMono fun x =&gt; x-m
+  let x := x.mapMono fun x =&gt; exp r*x
+  let w := x.reduce (·+·)
+  let x := x.mapMono fun x =&gt; x/w
+  return x
+</code></pre>
+<p>We can defined &quot;optimized&quot; version </p>
+<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
+    (softMax r x) rewrite_by unfold softmax; simp only [mapMono_mapMono]
+</code></pre>
+<p>where we first unfold the definition of <code>softMax</code> by <code>unfold softMax</code> and then apply the theorem <code>mapMono_mapMono</code> through simplifier. If you plase cursor at the and of <code>simp only [mapMono_mapMono]</code> you will see the resulting expression</p>
+<pre><code>Id.run
+    (pure
+      (DataArrayN.mapMono x fun x_1 =&gt;
+        exp r *
+            (x_1 /
+              DataArrayN.reduce (DataArrayN.mapMono x fun x_2 =&gt; exp r * x_2 - DataArrayN.reduce x fun x x_3 =&gt; max x x_3)
+                fun x x_2 =&gt; x + x_2) -
+          DataArrayN.reduce x fun x x_2 =&gt; max x x_2))
+</code></pre>
+<p>This is a bit of an incomprehensible mess. The issue is that <code>simp</code> by default destroys let bindings. This is because <code>simp</code> was originally devised for simplifying expressions not programs. To keep let bindings intact we can turn on zeta reduction <code>(config:={zeta:=false})</code></p>
+<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
+    (softMax r x) rewrite_by unfold softmax; simp (config:={zeta:=false, }) only [mapMono_mapMono]
+</code></pre>
+<p>but now the theorem can't be applied as the let bindings are blocking it.</p>
+<p>Dealing correctly with let bindings a tricky problem and right now we will just do it manually. We can call <code>let_unfold x</code> which will destroy the first let binding with the name <code>x</code>. </p>
+<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
+    (softMax r x) 
+    rewrite_by 
+      unfold softmax
+      let_unfold x
+      simp (config:={zeta:=false}) only [mapMono_mapMono]
+</code></pre>
+<p>The result is</p>
+<pre><code>Id.run
+    (let m := x.reduce fun x x_1 =&gt; max x x_1;
+    let x := x.mapMono fun x =&gt; exp r * x - m;
+    let w := x.reduce fun x x_1 =&gt; x + x_1;
+    let x := x.mapMono fun x =&gt; x / w;
+    pure x)
+</code></pre>
+<p>...</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="differentiation"><a class="header" href="#differentiation">Differentiation</a></h1>
+<p><em>automatic and symbolic differentiation is a key building block for scientific computing software</em></p>
+<p>The backbone of any numerical/scientific/machine learning software is
+an automatic and/or symbolic differentiation. In SciLean, automatic and
+symbolic differentiation is build on top of these two operators:</p>
+<ol>
+<li>
+<p>Differential <code>∂ : (X → Y) → (X → X → Y)</code></p>
+</li>
+<li>
+<p>Adjoint <code>†: (X → Y) → (Y → X)</code></p>
+</li>
+</ol>
+<p>The differential <code>∂</code> tells us how much does the function <code>f : X → Y</code>
+changes in the direction <code>dx : X</code> at the point <code>x : X</code>. The usual
+mathematical definition is:</p>
+<p>(
+\partial \texttt{f x dx} := \lim_{h \rightarrow 0} \frac{f(x + dx) - f(x)}{h}
+)</p>
+<p><code>$$ \frac{1}{3} $$</code></p>
+<p>Because mathlib is not yet ported to Lean 4 this definition is not used
+in SciLean. Right now, the differential <code>∂</code> is just postulated to exist.</p>
+<p>The adjoint <code>†</code> is just well known matrix transposition. Thus for real
+valued matrix <code>A</code></p>
+<p>.. math:: (A^\dagger)<em>{ij} = A</em>{ji}</p>
+<p>..</p>
+<p>For a general linear map <code>A : X → Y</code> between two Hilbert spaces <code>X</code> and <code>Y</code>,
+the adjoint is defined via</p>
+<p>.. math :: \langle A x, y \rangle = \langle x, A^\dagger y \rangle  \qquad , \forall x \in X, ,y \in Y</p>
+<p>-/</p>
+<p>/-!</p>
+<p>We will show that these two operators give a rise to a whole zoo of operators</p>
+<ol>
+<li>
+<p>Differential <code>∂ : (X → Y) → (X → X → Y)</code></p>
+</li>
+<li>
+<p>Adjoint <code>†: (X → Y) → (Y → X)</code></p>
+</li>
+<li>
+<p>Adjoint Differential <code>∂† : (X → Y) → (X → Y → X)</code></p>
+</li>
+<li>
+<p>Derivative <code>ⅆ : (ℝ → X) → (ℝ → X)</code></p>
+</li>
+<li>
+<p>Gradient <code>∇ : (X → ℝ) → (X → X)</code></p>
+</li>
+<li>
+<p>Divergence <code>∇· : (X → X) → (X → ℝ)</code></p>
+</li>
+<li>
+<p>Forward Mode AD <code>fwdDiff : (X → Y) → (X → X×(X → Y))</code></p>
+</li>
+<li>
+<p>Reverse Mode AD <code>revDiff : (X → Y) → (X → X×(Y → X))</code></p>
+</li>
+<li>
+<p>Dual Number AD <code>dualDiff : (X → Y) → (X×X → Y×Y)</code></p>
+</li>
+</ol>
+<p>-/</p>
+<p>/-!</p>
+<h1 id="differential"><a class="header" href="#differential">Differential</a></h1>
+<p>-/</p>
+<p>section Differential</p>
+<p>/-!</p>
+<p>The simples possible example: What is the differential of identity function?</p>
+<p>-/</p>
+<p>#check (∂ λ x : ℝ =&gt; x)
+rewrite_by (simp; trace_state /- .unfold -/ )</p>
+<p>/-!</p>
+<p>As expected the change of identity function is just <code>dx</code> and it does not depend
+on the position <code>x</code>.</p>
+<p>(Note: The SciLean's custom notation <code>x:term rewrite_by t:convSeq</code>
+applies tactic <code>t</code> on the term <code>x</code>. This notation confuses the <code>#check</code>
+command. To see the actual result it is better to use the <code>trace_state</code>
+tactic. TODO: Add a document explaining the technical detail of <code>rewrite_by</code>
+notation. TODO: Add delaborator for terms created with <code>AutoImpl</code>)</p>
+<p>Another way to check that the differential is computed correctly</p>
+<p>-/</p>
+<p>example : (∂ λ x : ℝ =&gt; x) = (λ x dx =&gt; dx) := by simp</p>
+<p>/-!</p>
+<p>This has the disadvantages that we need to know the result beforehand.</p>
+<p>Few more basic derivatives: of a constant, quadratic function, sine</p>
+<p>-/</p>
+<p>#check (∂ λ x : ℝ =&gt; (1 : ℝ))
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>#check (∂ λ x : ℝ =&gt; x * x)
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>#check (∂ λ x : ℝ =&gt; Math.sin x)
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<p>The result <code>fun x dx =&gt; dx * x + x * dx</code> is slightly undesirable. We
+would like to get <code>fun x dx =&gt; 2 * dx * x</code>. Such algebraic manipulation
+is within the scope of mathlib's tactics so we will wait for mathlib
+port to Lean 4.</p>
+<p>-/</p>
+<p>/-!</p>
+<p>Let's introduce few generic functions  to demonstrate some general differentiation
+results</p>
+<p>-/
+variable {X Y Z : Type} [Vec X] [Vec Y] [Vec Z]
+variable (f : Y → Z) [IsSmooth f]
+variable (g : X → Y) [IsSmooth g]</p>
+<p>/-!</p>
+<p>The most crucial tool when computing derivatives is the chain rule, as a proof</p>
+<p>-/</p>
+<p>example : (∂ λ x =&gt; f (g x)) = (λ x dx =&gt; ∂ f (g x) (∂ g x dx)) :=
+by simp</p>
+<p>/-!</p>
+<p>Or as a symbolic computation</p>
+<p>-/</p>
+<p>#check (∂ λ x =&gt; f (g x))
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<p>Another common rule is the product rule</p>
+<p>-/</p>
+<p>variable (ϕ ψ : ℝ → ℝ) [IsSmooth ϕ] [IsSmooth ψ]</p>
+<p>#check (∂ λ x =&gt; ϕ x * ψ x)
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<h2 id="derivative"><a class="header" href="#derivative">Derivative</a></h2>
+<p>The standard notion of derivative takes a function from reals to reals, <code>f : ℝ → ℝ</code>,
+and produces again a function from, usually denoted with <code>f' : ℝ → ℝ</code>.</p>
+<p>The differential <code>∂</code> does not fit this. The well know result that
+derivative of exponential is exponential <code>exp' = exp</code> can't be expressed as
+easily with differential.</p>
+<p>The naive statement does not even typecheck</p>
+<p>-/</p>
+<p>#check_failure ∂ Math.exp = Math.exp</p>
+<p>/-!</p>
+<p>The <code>exp' = exp</code> is this slightly cumbersome statement</p>
+<p>-/</p>
+<p>example : (λ t =&gt; ∂ Math.exp t 1) = Math.exp := by simp</p>
+<p>/-!</p>
+<p>For this reason we introduce a new operator, derivative <code>ⅆ : (ℝ → X) → (ℝ → X)</code>.
+Which is defines as follows</p>
+<p>-/</p>
+<p>example (f : ℝ → X) : ⅆ f = λ t =&gt; ∂ f t 1 :=
+by simp</p>
+<p>/-!</p>
+<p>Now we have</p>
+<p>-/</p>
+<p>example : ⅆ Math.exp = Math.exp := by simp</p>
+<p>/-!</p>
+<p>(TODO: Right now simplifier needs to unfold <code>derivative</code>. Fix it!)</p>
+<p>We provide convenient notation, <code>ⅆ t, f t</code> and <code>ⅆ (t:=t₀), f t</code>, for
+taking derivative with a respect to an explicit variable.</p>
+<p>-/
+section DerivativeNotation</p>
+<pre><code>variable (f : ℝ → X) (t₀ : ℝ)
+
+-- effectively translates `t,` to `λ t =&gt;`
+example : (ⅆ t, f t) = ⅆ (λ t =&gt; f t ) := by rfl
+
+-- similar as above but also applies `t₀`
+example : (ⅆ (t:=t₀), f t) = ⅆ (λ t =&gt; f t) t₀ := by rfl
+</code></pre>
+<p>end DerivativeNotation</p>
+<p>/-!</p>
+<p>..</p>
+<p>The notation <code>ⅆ (t:=t₀), f t</code> tries to mimick the mathematical notation</p>
+<p>.. math:: \frac{d}{dt}\bigg\rvert_{t=t_0} f(t)</p>
+<p>-/</p>
+<p>/-!</p>
+<h2 id="debugging-differentiation"><a class="header" href="#debugging-differentiation">Debugging Differentiation</a></h2>
+<p>Sometimes the differentiation is not doing what we expect. It is crucial
+to know how to figure out what went wrong.</p>
+<p>To demonstrate this, let's introduce a function <code>h</code> but without the smoothness
+proof i.e. we do not introduce <code>[IsSmooth h]</code></p>
+<p>-/</p>
+<p>variable (h : X → Y)</p>
+<p>/-!</p>
+<p>Now the chain rule for <code>f</code> and <code>h</code> fails</p>
+<p>-/</p>
+<p>example : (∂ λ x =&gt; f (h x)) = (λ x dx =&gt; ∂ f (h x) (∂ h x dx)) :=
+by simp   -- no progress
+admit  -- we have to give up</p>
+<p>/-!</p>
+<p>We have to use the <code>admit</code> tactic to close the goal as <code>simp</code> is unable
+to do it right now.</p>
+<p>The problem is that <code>simp</code> can't apply chain rule because it is missing
+the proof of smoothness of <code>h</code>. To figure this out, we turn on the option
+<code>trace.Meta.Tactic.simp.discharge</code></p>
+<p>-/</p>
+<p>set_option trace.Meta.Tactic.simp.discharge true in
+example : (∂ λ x =&gt; f (h x)) = (λ x dx =&gt; ∂ f (h x) (∂ h x dx)) :=
+by simp; admit</p>
+<p>/-!</p>
+<p>If you click on <code>simp</code>, one of the messages will be</p>
+<p>::</p>
+<p>[Meta.Tactic.simp.discharge] SciLean.diff_of_comp, failed to synthesize instance
+SciLean.IsSmooth fun x =&gt; h x</p>
+<p>(TODO: currently there is tons of crap that should not be there)</p>
+<p>If we provide the smoothness proof we can observe all rewrites by turning on
+<code>trace.Meta.Tactic.simp.rewrite</code></p>
+<p>-/</p>
+<p>variable [IsSmooth h]</p>
+<p>set_option trace.Meta.Tactic.simp.rewrite true in
+example : (∂ λ x =&gt; f (h x)) = (λ x dx =&gt; ∂ f (h x) (∂ h x dx)) :=
+by simp</p>
+<p>/-!</p>
+<p>Now <code>simp</code> shows the application of the chain rule</p>
+<p>::</p>
+<p>[Meta.Tactic.simp.rewrite] SciLean.diff_of_comp:99, ∂fun x =&gt;
+f (h x) ==&gt; fun x dx =&gt; SciLean.differential f (h x) (SciLean.differential (fun x =&gt; h x) x dx)</p>
+<p>A bit more complicated computation</p>
+<p>-/</p>
+<p>set_option trace.Meta.Tactic.simp.rewrite true in
+#check (∂ λ x : ℝ =&gt; x * Math.exp (x*x) + x)
+rewrite_by
+(simp; trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<p>Clicking on <code>simp</code> reveals fairly long list of rewrites.</p>
+<p>-/</p>
+<p>end Differential</p>
+<p>/-!</p>
+<h1 id="defining-differentiable-function"><a class="header" href="#defining-differentiable-function">Defining Differentiable Function</a></h1>
+<p>Sometimes we want to define our own differentiable functions</p>
+<p>-/</p>
+<p>def square (x : ℝ) := x * x</p>
+<p>/-!</p>
+<p>We might be surprized that differentiating this function does not work</p>
+<p>-/</p>
+<p>example : (∂ square) = (λ x dx =&gt; dx * x + x * dx) :=
+by
+simp  -- this does nothing as we know nothing about <code>square</code>
+unfold square  -- unfold definition of <code>square</code>
+simp  -- now it works</p>
+<p>/-!</p>
+<p>Manually unfolding every definition can get tedious. To circumvent that,
+we can annotate the definition of <code>square</code> to indicate that it is
+differentiable.</p>
+<p>-/</p>
+<p>def square_v1 (x : ℝ) : ℝ := x * x
+argument x
+isSmooth, diff</p>
+<p>/-!</p>
+<p>(TODO: When using <code>def</code> with annotations, we <strong>have to</strong> explicitly specify
+the return type. Remove this limitation or add a warning when the
+return type is missing.)</p>
+<p>The <code>argument x</code> specifies that everything that follows concerns the
+argument <code>x</code>. The <code>isSmooth</code> generates proof that <code>square_v1</code> is
+smooth in the argument <code>x</code> and <code>diff</code> defines a new function
+<code>square_v1.arg_x.diff</code> that is the function's differential.</p>
+<p>There are few variants that are useful when full automation fails or
+produces undesirable results.</p>
+<p>-/</p>
+<p>def square_v2 (x : ℝ) : ℝ := x * x
+argument x
+-- specify how to prove smoothness
+isSmooth := by unfold square_v2; infer_instance,
+-- specify what the differential is and how to prove it
+diff := 2 * dx * x by simp[diff, square_v2]; funext x dx; ring</p>
+<p>def square_v3 (x : ℝ) : ℝ := x * x
+argument x
+-- proof is done automatically
+isSmooth,
+-- specify how to compute differential
+diff by simp[square_v3]</p>
+<p>/-!</p>
+<p>Defining a new function, <code>square_v1.arg_x.diff</code> for the differential
+can be undesirable. Sometimes we want <code>∂ square</code> to directly simplify
+to <code>λ x dx =&gt; dx * x + x * dx</code>. To achieve this, we use <code>diff_simp</code>
+instead of <code>diff</code>.</p>
+<p>-/</p>
+<p>def square_v4 (x : ℝ) : ℝ := x * x
+argument x
+isSmooth,
+diff_simp by simp[square_v4]</p>
+<p>/-!</p>
+<p>The <code>diff_simp</code> annotation allows the same variants as <code>diff</code>.</p>
+<p>Proof that the second derivative is <code>2</code>. We have to do manual unfolding
+when working with <code>square_v3</code> but with <code>square_v4</code> the proof is immediate</p>
+<p>-/</p>
+<p>example : (λ x =&gt; ∂ ∂ square_v2 x 1 1) = (λ x =&gt; 2) :=
+by
+simp  -- simp gets stopped on <code>square_v3.arg_x.diff</code>
+unfold square_v2.arg_x.diff -- manually unfold definition
+simp  -- we can continue with computation</p>
+<p>example : (λ x =&gt; ∂ ∂ square_v4 x 1 1) = (λ x =&gt; 2) :=
+by
+simp  -- done immediately</p>
+<p>/-!</p>
+<p>We missed our chance to add annotations to the original function <code>square</code>.
+We can add additional annotations later on with <code>function_properties</code>.</p>
+<p>-/</p>
+<p>function_properties square (x : ℝ) : ℝ
+argument x
+isSmooth, diff_simp</p>
+<p>-- now we can differentiate <code>square</code>
+example : ∂ square = λ x dx =&gt; dx * x + x * dx := by simp</p>
+<p>/-!</p>
+<p>The keyword <code>function_properties</code> works exactly like <code>def</code> with annotations
+but you do not provide the function definition <code>:= ...</code>. Argument types
+and order have to match exactly the original definition but the argument
+names do not have to be the same.</p>
+<p>-/</p>
+<p>/-!</p>
+<h2 id="multiple-arguments"><a class="header" href="#multiple-arguments">Multiple Arguments</a></h2>
+<p>(TODO: Explain how annotations work with multiple arguments. The current
+behavior is a bit limiting, so I should rewrite how they work before
+I write this section.)</p>
+<p>-/</p>
+<p>/-!</p>
+<h2 id="how-do-annotations-work"><a class="header" href="#how-do-annotations-work">How Do Annotations Work?</a></h2>
+<p>The <code>isSmooth</code> and <code>diff</code> annotations might appear mysterious but they
+are simple macros.</p>
+<p>This definition
+-/</p>
+<p>def cube (x : ℝ) : ℝ := x * x * x
+argument x
+isSmooth := by unfold cube; infer_instance,
+diff := 3 * dx * x * x by simp[diff,cube]; funext x dx; ring</p>
+<p>/-!</p>
+<p>Is unfolded to (we have to use a new identifier <code>cube_v1</code> as <code>cube</code> is
+already defined)</p>
+<p>-/</p>
+<p>def cube_v1 (x : ℝ) : ℝ := x * x * x</p>
+<p>-- proof of smoothness
+instance cube_v1.arg_x.isSmooth : IsSmooth (λ x =&gt; cube_v1 x) :=
+by unfold cube_v1; infer_instance</p>
+<p>-- differential definition
+def cube_v1.arg_x.diff (x dx : ℝ) : ℝ := 3 * dx * x * x</p>
+<p>-- simplifier rule
+@[simp]
+theorem cube_v1.arg_x.diff_simp
+: ∂ cube_v1 = cube_v1.arg_x.diff :=
+by simp[diff,cube_v1]; funext x dx; ring</p>
+<p>/-!</p>
+<p>Using <code>diff_simp</code> annotation does not define <code>cube_v1.arg_x.diff</code> and
+the simp theorem states directly <code>∂ cube_v1 = λ x dx =&gt; 3 * dx * x * x</code>.</p>
+<p>-/</p>
+<p>/-!</p>
+<h1 id="adjoint-differential"><a class="header" href="#adjoint-differential">Adjoint Differential</a></h1>
+<p>Finding the minimum of a function <code>f : X → ℝ</code> with gradient descent
+requires function's gradient <code>∇ f : X → X</code>.</p>
+<p>However, can we compute the gradient just with the differential <code>∂</code>?
+No we can't! We need an adjoint <code>†</code> too!</p>
+<p>The differential <code>∂ f x</code> at point <code>x</code> is a linear function <code>X → R</code>.
+When we take an adjoint and apply one we get an element of <code>X</code>. That
+is the gradient of <code>f</code> at <code>x</code>!</p>
+<p>In finite dimension, we can think about differential <code>∂ f x</code> is a row vector.
+To get a column vector we have to transpose it i.e. take its adjoint.</p>
+<p>For general function <code>f : X → Y</code>, we define adjoint differential
+<code>∂† : (X → Y) → (X → Y → X)</code> as <code>∂† f x dy := (∂ f x)† dy</code></p>
+<p>Taking adjoint makes sense only for functions between Hilbert spaces.
+Let's introduce few of those</p>
+<p>-/</p>
+<p>section AdjointDifferential</p>
+<p>variable {X Y Z} [Hilbert X] [Hilbert Y] [Hilbert Z]</p>
+<p>/-!</p>
+<p>To stress the definition of adjoint differential</p>
+<p>-/</p>
+<p>example (f : X → Y) : ∂† f = λ x dy =&gt; (∂ f x)† dy := by rfl</p>
+<p>/-!</p>
+<p>Similarly to derivative <code>ⅆ</code>, we define a specialized operator gradient <code>∇</code>
+for real valued functions over any Hilbert space</p>
+<p>-/</p>
+<p>example (f : X → ℝ) : ∇ f = λ x =&gt; (∂ f x)† 1 := by rfl</p>
+<p>/-!</p>
+<p>The important result is that the gradient of squared norm <code>∥x∥²</code> is <code>2*x</code></p>
+<p>-/</p>
+<p>#check (∇ (x : X), ∥x∥²)
+rewrite_by
+(simp; trace_state)  /- .unfold -/</p>
+<p>/-!</p>
+<p>(TODO: Make sure we do not need to unfold gradient and hold here`)</p>
+<p>Another fun result is that the gradient of <code>⟪A x, x⟫</code> is <code>(A† + A) x</code></p>
+<p>-/</p>
+<p>variable (A : X → X) [HasAdjDiff A] [IsLin A]</p>
+<p>#check (∇ x, ⟪A x, x⟫)
+rewrite_by
+(simp[adjointDifferential]; trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<p>(TODO: Ughh, this requires too many assumptions on A and too many unfolding`)</p>
+<p>Similar to chain rule for differential, we have a chain rule for the adjoint
+differential but the composition is in reverse</p>
+<p>-/</p>
+<p>variable (f : Y → Z) [HasAdjDiff f]
+variable (g : X → Y) [HasAdjDiff g]</p>
+<p>example : (∂† λ x =&gt; f (g x)) = (λ x dz =&gt; ∂† g x (∂† f (g x) dz)) :=
+by simp</p>
+<p>/-!</p>
+<p>(TODO: Explain what <code>HasAdjDiff f</code> is)</p>
+<p>-/</p>
+<p>/-!</p>
+<h2 id="euler-lagrange-equations"><a class="header" href="#euler-lagrange-equations">Euler-Lagrange Equations</a></h2>
+<p>Let's write down Euler-Lagrange equations to demonstrate SciLean's notation
+in a bit complicated scenario.</p>
+<p>They are usually written in the following way</p>
+<p>.. math:: \frac{d}{dt} \frac{\partial}{\partial \dot x} L(x(t),\dot x(t)) - \frac{\partial}{\partial x} L(x(t),\dot x(t)) = 0</p>
+<p>However, the partial derivative notation is really ambiguous. Thus a bit
+more explicit form is</p>
+<p>.. math:: \frac{d}{ds}\bigg\rvert_{s=t} \frac{\partial}{\partial v}\bigg\rvert_{v=\dot y(s)} L(y(s),v) - \frac{\partial}{\partial x}\bigg\rvert_{x=y(t)} L(x, \dot y(t)) = 0</p>
+<p>And this form can be written in SciLean relatively nicely.</p>
+<p>-/</p>
+<p>variable (L : X → X → ℝ)  -- Lagrangian
+variable (y : ℝ → X)      -- trajectory
+variable (t : ℝ)          -- time</p>
+<p>#check
+ⅆ (s:=t), ∇ (v:=ⅆ y s), L (y s) v - ∇ (x:=y t), L x (ⅆ y t) = 0</p>
+<p>/-!</p>
+<p>Let's plug in a Lagrangian for a particle in a potential field and hopefully
+we get the correct equations of motion.</p>
+<p>-/
+def L' (ϕ : X → ℝ) (m : ℝ) (x v : X) := 1/2<em>m</em>∥v∥² - ϕ x</p>
+<p>variable [IsSmooth y]  -- trajectory is smooth
+variable (ϕ : X → ℝ)  [HasAdjDiff ϕ]
+variable (m : ℝ) -- mass</p>
+<p>#check
+(ⅆ (s:=t), ∇ (v:=ⅆ y s), L' ϕ m (y s) v
+-
+∇ (x:=y t), L' ϕ m x (ⅆ y t))
+rewrite_by
+(-- Currently broken :(
+-- simp
+-- simp[gradient,hold]
+-- simp[derivative]
+trace_state) /- .unfold -/</p>
+<p>/-!</p>
+<p>(TODO: Make sure we get these rewrite to make the result look nicer</p>
+<p><code>2 * (1/2) = 1</code></p>
+<p><code>differential (∂y) t 1 1 = ⅆ (ⅆ y) t</code></p>
+<p><code>adjointDifferential (fun x =&gt; ϕ x) (y t) (-1) = - ∇ ϕ (y t)</code>)</p>
+<p>The result is (with the TODO rewrites) <code>m * ⅆ (ⅆ y) t + ∇ ϕ (y t)</code> which
+exactly corresponds to the equation of a particle in a potential field <code>ϕ</code></p>
+<p>.. math:: m \ddot y(t) = - \nabla \phi (y(t))</p>
+<p>-/</p>
+<p>end AdjointDifferential</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="zoo-of-differentiation-operators"><a class="header" href="#zoo-of-differentiation-operators">Zoo of Differentiation Operators</a></h1>
+<p><em>go over <code>∂ ∂&gt; &lt;∂ ∇</code> and <code>!</code> variants</em></p>
+<ul>
+<li><em>explain default scalar and explain scalar version of differential operators</em></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="defining-new-functions"><a class="header" href="#defining-new-functions">Defining New Functions</a></h1>
+<p><em>how to make sure that newly defined function plays well with AD</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="theoretical-aspects"><a class="header" href="#theoretical-aspects">Theoretical Aspects*</a></h1>
+<p><em>uncover the lid behind <code>∂ ∂&gt; &lt;∂ ∇</code> and explain differences between <code>cderiv</code> vs <code>fderiv</code> and explain the reasoning for them</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="function-transformations"><a class="header" href="#function-transformations">Function Transformations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="defining-new-function-transformation"><a class="header" href="#defining-new-function-transformation">Defining New Function Transformation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="function-transformation-algorithm"><a class="header" href="#function-transformation-algorithm">Function Transformation Algorithm*</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="problem-transformations"><a class="header" href="#problem-transformations">Problem Transformations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="solve-function"><a class="header" href="#solve-function">Solve Function</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="approximation"><a class="header" href="#approximation">Approximation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="differential-equations"><a class="header" href="#differential-equations">Differential Equations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="probabilistic-programming"><a class="header" href="#probabilistic-programming">Probabilistic Programming</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
