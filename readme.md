@@ -1,9 +1,6 @@
 # Scientific Computing in Lean
 
-Working in progress book on scientific computing in Lean/documentation for [SciLean](https://github.com/lecopivo/SciLean) library.
-
-You can read the book [here](https://lecopivo.github.io/scientific-computing-lean/).
-
+Working in progress book [Scientific Computing in Lean](https://lecopivo.github.io/scientific-computing-lean/).
 
 To try the code download and build SciLean with: 
 ```
