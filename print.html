@@ -439,20 +439,20 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 </code></pre>
 <p>Unfortunately, this does not work. Lean's type checking is not smart enough to allow us to call <code>avgPool x</code> for <code>x : Float^[4*m]</code>. It can't figure out that <code>4*m = 2*(2*m)</code> and infer that <code>n = 2*m</code> when calling <code>avgPool</code>. We have to do something else.</p>
 <p>The most flexible way of writing the <code>avgPool</code> function is as follows:</p>
-<pre><code class="language-lean">def avgPool (x : Float^[n]) {m} (h : m = n/2 := by deduce_by norm_num) : Float^[m] :=
+<pre><code class="language-lean">def avgPool (x : Float^[n]) {m} (h : m = n/2 := by infer_var) : Float^[m] :=
   ⊞ (i : Fin m) =&gt;
     let i1 : Fin n := ⟨2*i.1, by omega⟩
     let i2 : Fin n := ⟨2*i.1+1, by omega⟩
     0.5 * (x[i1] + x[i2])
 </code></pre>
 <p>Here, the output dimension <code>m</code> is implicitly inferred from the proof <code>h : m = n/2</code>. Let's go step by step on what is going on.</p>
-<p>When you call <code>avgPool x</code> for <code>x : Float^[4*k]</code>, the first argument is expected to have type <code>Float^[n]</code>. From this, Lean infers that <code>n = 4*k</code>. The next argument <code>{m}</code> is implicit, so Lean skips it for now as it is supposed to be inferred from the following arguments. Lastly, we have the argument <code>h : m = n/2</code>, which has the default value <code>by deduce_by norm_num</code>. This means, please run the tactic <code>deduce_by norm_num</code> to infer this argument. The tactic <code>deduce_by</code> expects an expression with an undetermined variable, in our case <code>m</code>, and runs <code>norm_num</code> on <code>n/2</code> and assigns the result to <code>m</code>. In this case, <code>4*k/2</code> gets simplified to <code>2*k</code>, and that is the final value of <code>m</code>.</p>
+<p>When you call <code>avgPool x</code> for <code>x : Float^[4*k]</code>, the first argument is expected to have type <code>Float^[n]</code>. From this, Lean infers that <code>n = 4*k</code>. The next argument <code>{m}</code> is implicit, so Lean skips it for now as it is supposed to be inferred from the following arguments. Lastly, we have the argument <code>h : m = n/2</code>, which has the default value <code>by infer_var</code>. The tactic <code>infer_var</code> expects an expression with an undetermined variable, in our case <code>m</code>, and runs normalization on <code>n/2</code> and assigns the result to <code>m</code>. In this case, <code>4*k/2</code> gets simplified to <code>2*k</code>, and that is the final value of <code>m</code>.</p>
 <p>You might be wondering what happens when <code>n</code> is odd. Because <code>n/2</code> performs natural division, for <code>x : Float^[2*n+1]</code>, calling <code>avgPool x</code> produces an array of type <code>Float^[n]</code>. If you want to prevent calling <code>avgPool</code> on arrays of odd length, you can simply modify the proof obligation to <code>(h : 2*m = n)</code>. This way, you require that <code>n</code> is even, and calling <code>avgPool x</code> with an odd-sized array <code>x</code> will produce an error.</p>
 <p>To build a simple neural network, we need a two-dimensional version of the pooling layer:</p>
 <pre><code class="language-lean">def avgPool2d
     (x : Float^[I,n₁,n₂]) {m₁ m₂}
-    (h₁ : m₁ = n₁/2 := by deduce_by norm_num)
-    (h₂ : m₂ = n₂/2 := by deduce_by norm_num) : Float^[I,m₁,m₂] :=
+    (h₁ : m₁ = n₁/2 := by infer_var)
+    (h₂ : m₂ = n₂/2 := by infer_var) : Float^[I,m₁,m₂] :=
   ⊞ (ι : I) (i : Fin m₁) (j : Fin m₂) =&gt;
     let i₁ : Fin n₁ := ⟨2*i.1, by omega⟩
     let i₂ : Fin n₁ := ⟨2*i.1+1, by omega⟩
@@ -471,7 +471,7 @@ def A := ⊞[1.0,2.0;3.0,4.0]
     |&gt; conv2d 1 (Fin 8) w₁ b₁ 
     |&gt;.mapMono (fun x =&gt; max x 0)
     |&gt; avgPool2d
-    |&gt; dense 30 w₂ b₂ -- deduce_by does not play well :(
+    |&gt; dense 30 w₂ b₂
     |&gt;.mapMono (fun x =&gt; max x 0)
     |&gt; dense 10 w₃ b₃
     |&gt; softMax 0.1
