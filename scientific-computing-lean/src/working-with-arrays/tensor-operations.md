@@ -201,7 +201,7 @@ Unfortunately, this does not work. Lean's type checking is not smart enough to a
 The most flexible way of writing the `avgPool` function is as follows:
 
 ```lean
-def avgPool (x : Float^[n]) {m} (h : m = n/2 := by deduce_by norm_num) : Float^[m] :=
+def avgPool (x : Float^[n]) {m} (h : m = n/2 := by infer_var) : Float^[m] :=
   ⊞ (i : Fin m) =>
     let i1 : Fin n := ⟨2*i.1, by omega⟩
     let i2 : Fin n := ⟨2*i.1+1, by omega⟩
@@ -210,7 +210,7 @@ def avgPool (x : Float^[n]) {m} (h : m = n/2 := by deduce_by norm_num) : Float^[
 
 Here, the output dimension `m` is implicitly inferred from the proof `h : m = n/2`. Let's go step by step on what is going on.
 
-When you call `avgPool x` for `x : Float^[4*k]`, the first argument is expected to have type `Float^[n]`. From this, Lean infers that `n = 4*k`. The next argument `{m}` is implicit, so Lean skips it for now as it is supposed to be inferred from the following arguments. Lastly, we have the argument `h : m = n/2`, which has the default value `by deduce_by norm_num`. This means, please run the tactic `deduce_by norm_num` to infer this argument. The tactic `deduce_by` expects an expression with an undetermined variable, in our case `m`, and runs `norm_num` on `n/2` and assigns the result to `m`. In this case, `4*k/2` gets simplified to `2*k`, and that is the final value of `m`.
+When you call `avgPool x` for `x : Float^[4*k]`, the first argument is expected to have type `Float^[n]`. From this, Lean infers that `n = 4*k`. The next argument `{m}` is implicit, so Lean skips it for now as it is supposed to be inferred from the following arguments. Lastly, we have the argument `h : m = n/2`, which has the default value `by infer_var`. The tactic `infer_var` expects an expression with an undetermined variable, in our case `m`, and runs normalization on `n/2` and assigns the result to `m`. In this case, `4*k/2` gets simplified to `2*k`, and that is the final value of `m`.
 
 You might be wondering what happens when `n` is odd. Because `n/2` performs natural division, for `x : Float^[2*n+1]`, calling `avgPool x` produces an array of type `Float^[n]`. If you want to prevent calling `avgPool` on arrays of odd length, you can simply modify the proof obligation to `(h : 2*m = n)`. This way, you require that `n` is even, and calling `avgPool x` with an odd-sized array `x` will produce an error.
 
@@ -219,8 +219,8 @@ To build a simple neural network, we need a two-dimensional version of the pooli
 ```lean
 def avgPool2d
     (x : Float^[I,n₁,n₂]) {m₁ m₂}
-    (h₁ : m₁ = n₁/2 := by deduce_by norm_num)
-    (h₂ : m₂ = n₂/2 := by deduce_by norm_num) : Float^[I,m₁,m₂] :=
+    (h₁ : m₁ = n₁/2 := by infer_var)
+    (h₂ : m₂ = n₂/2 := by infer_var) : Float^[I,m₁,m₂] :=
   ⊞ (ι : I) (i : Fin m₁) (j : Fin m₂) =>
     let i₁ : Fin n₁ := ⟨2*i.1, by omega⟩
     let i₂ : Fin n₁ := ⟨2*i.1+1, by omega⟩
@@ -246,7 +246,7 @@ def nnet := fun (w₁,b₁,w₂,b₂,w₃,b₃) (x : Float^[28,28]) =>
     |> conv2d 1 (Fin 8) w₁ b₁ 
     |>.mapMono (fun x => max x 0)
     |> avgPool2d
-    |> dense 30 w₂ b₂ -- deduce_by does not play well :(
+    |> dense 30 w₂ b₂
     |>.mapMono (fun x => max x 0)
     |> dense 10 w₃ b₃
     |> softMax 0.1
