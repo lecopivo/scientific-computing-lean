@@ -206,10 +206,17 @@
 </code></pre>
 <p>Explicitly mentioning the type of the index <code>ij : Fin n × Fin m</code> highlights that this function again creates the problematic product type. We want to iterate this sum over the range <code>0,...,n*m-1</code> and use this linear index to access the matrices.</p>
 <pre><code class="language-lean">def_optimize matDot by
-  rw[sum_linearize] -- rewrite `sum` over `Fin n × Fin m` to `fold` over `Fin (n*m)`
-  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get] -- unfold several layers of abstraction for `get` function
-  simp only [toFin_fromFin] -- simplify `toFin (fromFin i)` to `i`
-  simp only [Fin.cast, IndexType.card] -- clean up some expressions
+  -- rewrite `sum` over `Fin n × Fin m` to `fold` over `Fin (n*m)`
+  rw[sum_linearize]
+
+  -- unfold several layers of abstraction for `get` function
+  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get]
+
+  -- simplify `toFin (fromFin i)` to `i`
+  simp only [toFin_fromFin]
+
+  -- clean up some expressions
+  simp only [Fin.cast,IndexType.card]
 </code></pre>
 <p>This optimization results in:</p>
 <pre><code class="language-lean">∑ (i : Fin (n*m)), A.data.get ⟨↑i,⋯⟩ * B.data.get ⟨↑i,⋯⟩
