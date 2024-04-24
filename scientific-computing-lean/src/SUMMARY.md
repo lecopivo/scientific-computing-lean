@@ -3,7 +3,7 @@
 [Scientific Computing in Lean](./title.md)
 - [Introduction](./introduction.md)
   - [Sorry Friendly Programming]() <!-- (./introduction/sorry-friendly-programming.md) -->
-
+  - [Setting Up Lean and SciLean](./installation.md) <!-- (./introduction/sorry-friendly-programming.md) -->
 - [Working with Arrays](./working-with-arrays.md)
   - [Basic Operations](./working-with-arrays/basics.md)
   - [Tensor Operations](./working-with-arrays/tensor-operations.md)
