@@ -491,85 +491,82 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 <li><em>writing generic code accepting general arrays</em></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="optimizing-array-expressions"><a class="header" href="#optimizing-array-expressions">Optimizing Array Expressions</a></h1>
-<p><em>Show how one can optimize array expressin</em></p>
-<ul>
-<li><em>explain how Lean can be used as interactive compiler</em></li>
-<li><em>simple BLAS oprations like <code>c = a*x + y</code> and turn it into <code>c = map x (fun i xi =&gt; a*xi + y[i]</code></em></li>
-<li><em>issue with multidimensional indices and conversion to linear indices</em></li>
-</ul>
-<p>Lean is an interactive theorems prover and in this chapter we will show how to use Lean as interactive compiler/computer algebra system. An exmaple of common compiler optimization with arrays is loop fusion i.e. merging two loop into one. We will show how to craft such optimizations, expore them interactively and how to automate them. </p>
-<p>We can view program optimization as rerwiting a program into another program that is equal and by equal we mean that for the same input these programs produce the same output. There is a very close parallel to theorem proving. Very often to prove equality <code>x = y</code> we just simplify <code>x</code> to <code>x'</code> and <code>y</code> to <code>y'</code> and if <code>x'</code> happends to be identical to <code>y'</code> we have just proven that <code>x = y</code>. Lean provides a general pupose expression simplifier, called <code>simp</code>, which has a database of rewrite rules and tries to apply them to subexpression. </p>
-<p>For example, in Lean there is theorem that adding zero does not change the value. </p>
-<pre><code>@[simp] theorem Nat.add_zero (n : Nat) : n + 0 = n := rfl
+<p>Lean is an interactive theorem prover. In this chapter, we will demonstrate how to use Lean as an interactive compiler or computer algebra system. We will focus on a common compiler optimization with arrays: loop fusion, which involves merging two loops into one. We will show how to craft such optimizations, explore them interactively, and discuss how to automate them.</p>
+<p>Program optimization can be seen as rewriting a program into another program that is equivalent. By &quot;equivalent,&quot; we mean that for the same input, these programs produce the same output. There is a close parallel to theorem proving. Often, to prove equality <code>x = y</code>, we simplify <code>x</code> to <code>x'</code> and <code>y</code> to <code>y'</code>. If <code>x'</code> is identical to <code>y'</code>, we have proven that <code>x = y</code>. Lean provides a general-purpose expression simplifier called <code>simp</code>, which has a database of rewrite rules and tries to apply them to subexpressions.</p>
+<p>For example, in Lean, there is a theorem stating that adding zero does not change the value:</p>
+<pre><code class="language-lean">@[simp] theorem Nat.add_zero (n : Nat) : n + 0 = n := rfl
 </code></pre>
-<p>Adding this attribute <code>@[simp]</code> adds this theorem to the <code>simp</code>'s database of theorems it tries to apply. </p>
-<p>We can simplify any expression <code>e</code> by <code>e rewrite_by simp</code></p>
-<pre><code>#check (0 + 5 + 0) rewrite_by simp
+<p>Adding the attribute <code>@[simp]</code> adds this theorem to the <code>simp</code> database of theorems it tries to apply.</p>
+<p>We can simplify any expression <code>e</code> by using <code>e rewrite_by simp</code>:</p>
+<pre><code class="language-lean">#check (0 + 5 + 0) rewrite_by simp
 </code></pre>
-<p>which returns <code>5 : ℕ</code> i.e. all the zero adition has been eliminated. We can actually inspect what did the simplifier did by turning on some options</p>
-<pre><code>set_option trace.Meta.Tactic.simp.rewrite true in
+<p>This returns <code>5 : ℕ</code>, showing that all the zero additions have been eliminated. We can inspect what the simplifier did by turning on some options:</p>
+<pre><code class="language-lean">set_option trace.Meta.Tactic.simp.rewrite true in
 #check (0 + 5 + 0) rewrite_by simp
 </code></pre>
-<p>produces</p>
+<p>This produces:</p>
 <pre><code>[Meta.Tactic.simp.rewrite] @zero_add:1000, 0 + 5 ==&gt; 5
 [Meta.Tactic.simp.rewrite] @add_zero:1000, 5 + 0 ==&gt; 5
 </code></pre>
-<p>So we can see that the simplifier first simplifies the subexpression <code>0 + 5</code> to <code>5</code> and then <code>5 + 0</code> to <code>5</code>.</p>
-<p>The simplifier has many options and configurations. By default <code>simp</code> uses all the theorems marked with <code>simp</code>. Often it is usefull to narrow it down to only a specific set of theorems. You can call <code>simp only</code> which does not use any theorems at all, it just preforms basic lambda claclus reductions, like beta reduction which turns <code>(fun x =&gt; f x) y</code> to <code>f y</code>. To give explicit set of theorems to use use squared brackets <code>simp only [add_zero]</code></p>
-<pre><code>#check (0 + 5 + 0) rewrite_by simp only [add_zero]
+<p>We can see that the simplifier first simplifies the subexpression <code>0 + 5</code> to <code>5</code> and then <code>5 + 0</code> to <code>5</code>.</p>
+<p>The simplifier has many options and configurations. By default, <code>simp</code> uses all the theorems marked with <code>simp</code>. However, it is often useful to narrow it down to a specific set of theorems. You can do this by using <code>simp only</code>, which does not use any theorems at all, performing only basic lambda calculus reductions, like beta reduction, which turns <code>(fun x =&gt; f x) y</code> into <code>f y</code>. To explicitly specify a set of theorems to use, use square brackets:</p>
+<pre><code class="language-lean">#check (0 + 5 + 0) rewrite_by simp only [add_zero]
 </code></pre>
-<p>produces <code>0 + 5</code> as only the rewrite by <code>add_zero</code> is allowed. </p>
-<p>What does this have to do with programs optimization? Consider this theorem</p>
-<pre><code>theorem mapMono_mapMono {I} [IndexType I] (x : Float^[I]) (f g : Float → Float) :
-    (x.mapMono f |&gt;.mapMono g) = x.mapMono fun x =&gt; f (g x) := ...
+<p>This produces <code>0 + 5</code>, as only the rewrite rule <code>add_zero</code> is allowed.</p>
+<h2 id="loop-fusion"><a class="header" href="#loop-fusion">Loop Fusion</a></h2>
+<p>This theorem illustrates the concept of loop fusion, which is relevant to program optimization. Consider the theorem:</p>
+<pre><code class="language-lean">theorem mapMono_mapMono {I} [IndexType I] (x : Float^[I]) (f g : Float → Float) :
+    (x.mapMono f |&gt;.mapMono g) = x.mapMono fun x =&gt; g (f x) := ...
 </code></pre>
-<p>which fuses two <code>mapMono</code> into one. </p>
-<p>Recall <code>softMax</code> from previous chapter</p>
-<pre><code>def softMax {I} [IndexType I]
-  (r : Float) (x : Float^[I]) : Float^[I] := Id.run do
-  let m := x.reduce (max · ·)
-  let x := x.mapMono fun x =&gt; x-m
-  let x := x.mapMono fun x =&gt; exp r*x
-  let w := x.reduce (·+·)
-  let x := x.mapMono fun x =&gt; x/w
-  return x
+<p>This theorem shows that two <code>mapMono</code> operations can be fused into one. The function <code>mapMono</code> can be implemented with a for loop, so this theorem states that two for loops can be merged into one.</p>
+<p>In numerical linear algebra, a common operation is computing <code>a•x+y</code> for <code>a : Float</code>, <code>x</code> and <code>y</code> of type <code>Float^[n]</code>. Scalar multiplication and addition on <code>Float^[n]</code> can be implemented using <code>mapMono</code>, which means that <code>a•x+y</code> contains two loops that can be fused together using the above theorem.</p>
+<pre><code class="language-lean">def saxpy {n} (a : Float) (x y : Float^[n]) := (a•x+y)
+  rewrite_by
+    simp only [HAdd.hAdd, Add.add, HSMul.hSMul, SMul.smul]
+    simp only [mapMono_mapIdxMono]
 </code></pre>
-<p>We can defined &quot;optimized&quot; version </p>
-<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
-    (softMax r x) rewrite_by unfold softmax; simp only [mapMono_mapMono]
+<p>The <code>saxpy</code> function computes <code>a•x+y</code>, and by adding <code>rewrite_by ...</code>, we rewrite <code>a•x+y</code> to:</p>
+<pre><code class="language-lean">x.mapIdxMono fun i x =&gt; a * x + y[i]
 </code></pre>
-<p>where we first unfold the definition of <code>softMax</code> by <code>unfold softMax</code> and then apply the theorem <code>mapMono_mapMono</code> through simplifier. If you plase cursor at the and of <code>simp only [mapMono_mapMono]</code> you will see the resulting expression</p>
-<pre><code>Id.run
-    (pure
-      (DataArrayN.mapMono x fun x_1 =&gt;
-        exp r *
-            (x_1 /
-              DataArrayN.reduce (DataArrayN.mapMono x fun x_2 =&gt; exp r * x_2 - DataArrayN.reduce x fun x x_3 =&gt; max x x_3)
-                fun x x_2 =&gt; x + x_2) -
-          DataArrayN.reduce x fun x x_2 =&gt; max x x_2))
+<p>The first <code>simp only</code> command unfolds the definitions of all the arithmetic operations, revealing the use of <code>mapMono</code> and <code>mapIdxMono</code> used to implement arithmetic operations on arrays. The syntax <code>x + y</code> is just a syntactic sugar for <code>HAdd.hAdd x y</code>. If you want to see the actual definitions, you can add <code>set_option pp.notation false</code> somewhere in your file.</p>
+<p>Sometimes, it's useful to keep the default or naive implementation of a function intact and only instruct the compiler to use the optimized version when compiling the code. This can be achieved using the <code>def_optimize</code> command.</p>
+<p>For example, let's define a naive version of <code>saxpy</code>:</p>
+<pre><code class="language-lean">def saxpy_naive {n} (a : Float) (x y : Float^[n]) := a•x+y
 </code></pre>
-<p>This is a bit of an incomprehensible mess. The issue is that <code>simp</code> by default destroys let bindings. This is because <code>simp</code> was originally devised for simplifying expressions not programs. To keep let bindings intact we can turn on zeta reduction <code>(config:={zeta:=false})</code></p>
-<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
-    (softMax r x) rewrite_by unfold softmax; simp (config:={zeta:=false, }) only [mapMono_mapMono]
+<p>To instruct the compiler to replace <code>saxpy_naive</code> with the optimized version, we use the <code>def_optimize</code> command:</p>
+<pre><code class="language-lean">def_optimize saxpy_naive by
+  simp only [HAdd.hAdd, Add.add, HSMul.hSMul, SMul.smul]
+  simp only [mapMono_mapIdxMono]
 </code></pre>
-<p>but now the theorem can't be applied as the let bindings are blocking it.</p>
-<p>Dealing correctly with let bindings a tricky problem and right now we will just do it manually. We can call <code>let_unfold x</code> which will destroy the first let binding with the name <code>x</code>. </p>
-<pre><code>def softMax_optimized {I} [IndexType I] (r : Float) (x : Float^[I]) := 
-    (softMax r x) 
-    rewrite_by 
-      unfold softmax
-      let_unfold x
-      simp (config:={zeta:=false}) only [mapMono_mapMono]
+<p>This command creates a new definition <code>saxpy_naive.optimized</code>, which is an optimized version of <code>saxpy_naive</code>. It also creates a new theorem called <code>saxpy_naive.optimize_rule</code>, which states that <code>saxpy_naive = saxpy_naive.optimized</code> and marks it with the <code>@[csimp]</code> attribute. The <code>csimp</code> attribute is similar to <code>simp</code>, but it stands for &quot;compiler simp,&quot; and the corresponding theorems are only applied during compilation.</p>
+<h2 id="optimizing-array-indexing"><a class="header" href="#optimizing-array-indexing">Optimizing Array Indexing</a></h2>
+<p>Our approach to arrays, allowing indexing with an arbitrary type <code>I</code>, incurs a performance cost as the current Lean compiler can't optimize all layers of abstraction away. However, the flexibility of Lean enables us to engineer such optimizations ourselves without needing to modify the compiler.</p>
+<p>Consider matrix-vector multiplication:</p>
+<pre><code class="language-lean">def matVecMul {n m} (A : Float^[n,m]) (x : Float^[m]) := ⊞ i =&gt; ∑ j, A[i,j] * x[j]
 </code></pre>
-<p>The result is</p>
-<pre><code>Id.run
-    (let m := x.reduce fun x x_1 =&gt; max x x_1;
-    let x := x.mapMono fun x =&gt; exp r * x - m;
-    let w := x.reduce fun x x_1 =&gt; x + x_1;
-    let x := x.mapMono fun x =&gt; x / w;
-    pure x)
+<p>Recall that <code>Float^[n,m]</code> stands for <code>DataArrayN Float (Fin n × Fin m)</code>, a data structure indexed by <code>Fin n × Fin m</code>. The generic type <code>A × B</code> presents an issue because currently, any product type is implemented as a pair of pointers. Therefore, the index access <code>A[i,j]</code> first constructs the index <code>(i,j)</code>, which is a pair of pointers to <code>i</code> and <code>j</code>, stored somewhere on the heap. This is highly inefficient. We want to rewrite <code>A[i,j]</code> to <code>A.data.get (i*m+j)</code>, computing the linear index <code>i*m+j</code> and avoiding the construction of the product <code>(i,j)</code>.</p>
+<pre><code class="language-lean">def_optimize matVecMul by
+  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get, IndexType.toFin, id,
+             Fin.pair, IndexType.fromFin, Fin.cast, IndexType.card]
 </code></pre>
-<p>...</p>
+<p>This optimization results in:</p>
+<pre><code class="language-lean">⊞ i =&gt; ∑ j, A.data.get ⟨↑i * m + ↑j, ⋯⟩ * x.data.get ⟨↑j, ⋯⟩
+</code></pre>
+<p>The optimization simply forces the inlining of the mentioned functions. To simplify this process, there is a tactic <code>optimize_index_access</code> that calls <code>simp</code> with the appropriate settings and theorems.</p>
+<p>Next, let's consider the dot product of two matrices:</p>
+<pre><code class="language-lean">def matDot {n m} (A B : Float^[n,m]) := ∑ (ij : Fin n × Fin m), A[ij] * B[ij]
+</code></pre>
+<p>Explicitly mentioning the type of the index <code>ij : Fin n × Fin m</code> highlights that this function again creates the problematic product type. We want to iterate this sum over the range <code>0,...,n*m-1</code> and use this linear index to access the matrices.</p>
+<pre><code class="language-lean">def_optimize matDot by
+  rw[sum_linearize] -- rewrite `sum` over `Fin n × Fin m` to `fold` over `Fin (n*m)`
+  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get] -- unfold several layers of abstraction for `get` function
+  simp only [toFin_fromFin] -- simplify `toFin (fromFin i)` to `i`
+  simp only [Fin.cast, IndexType.card] -- clean up some expressions
+</code></pre>
+<p>This optimization results in:</p>
+<pre><code class="language-lean">∑ (i : Fin (n*m)), A.data.get ⟨↑i,⋯⟩ * B.data.get ⟨↑i,⋯⟩
+</code></pre>
+<p>This can also be achieved by calling the <code>optimize_index_access</code> tactic in a single line.</p>
 
                     </main>
 
