@@ -117,10 +117,17 @@ Explicitly mentioning the type of the index `ij : Fin n × Fin m` highlights tha
 
 ```lean
 def_optimize matDot by
-  rw[sum_linearize] -- rewrite `sum` over `Fin n × Fin m` to `fold` over `Fin (n*m)`
-  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get] -- unfold several layers of abstraction for `get` function
-  simp only [toFin_fromFin] -- simplify `toFin (fromFin i)` to `i`
-  simp only [Fin.cast, IndexType.card] -- clean up some expressions
+  -- rewrite `sum` over `Fin n × Fin m` to `fold` over `Fin (n*m)`
+  rw[sum_linearize]
+
+  -- unfold several layers of abstraction for `get` function
+  simp only [GetElem.getElem, LeanColls.GetElem'.get, DataArrayN.get]
+
+  -- simplify `toFin (fromFin i)` to `i`
+  simp only [toFin_fromFin]
+
+  -- clean up some expressions
+  simp only [Fin.cast,IndexType.card]
 ```
 
 This optimization results in:
