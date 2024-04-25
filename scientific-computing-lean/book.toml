@@ -7,6 +7,9 @@ title = "Scientific Computing in Lean"
 
 [build]
 
+[output.html]
+git-repository-url = "https://github.com/lecopivo/scientific-computing-lean"
+
 # [preprocessor.buildexamples]
 # command = "python -X utf8 scripts/build-examples.py"
 # before = ["leanexample", "commands"]
