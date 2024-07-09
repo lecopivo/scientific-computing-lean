@@ -78,7 +78,7 @@ def softMax {I} [IndexType I]
   let x := x.map fun x => x/w
   return x
 ```
-where for numerical stablity we first find the maximal element `m` and subtract it from all the element. After that we procees with the standard definition of soft max. Of course, this is not the most efficient implementation of softmax. In later chapter, we will show how to transform it to a more efficient version.
+where for numerical stability we first find the maximal element `m` and subtract it from all the element. After that we proceed with the standard definition of soft max. Of course, this is not the most efficient implementation of softmax. In later chapter, we will show how to transform it to a more efficient version.
 
 
 Very common reduction is to sum element or to multiply them. *SciLean* provides familiar notation for these
@@ -93,7 +93,7 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 ```
 *Note for Mathlib users: For performance reasons SciLean defines sums and products with `IndexType` instead of `Finset`. Therefore this notation is different from the one defined in `BigOperators` namespace.*
 
-We can define commong matrix operations like matrix-vector multiplication
+We can define common matrix operations like matrix-vector multiplication
 ```lean
 def matMul {n m : Nat} (A : Float^[n,m]) (x : Float^[m]) :=
   ⊞ i => ∑ j, A[i,j] * x[j]
