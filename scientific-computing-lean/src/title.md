@@ -4,7 +4,7 @@
 
 Work in progress book on using Lean 4 as a programming language for scientific computing. Also serves as reference for [SciLean](www.github.com/lecopivo/SciLean) library.
 
-This book in its current form is a draft and is subject to change. Code might not work, explanations might be incomplete or incorrect. Procced with caution. 
+This book in its current form is a draft and is subject to change. Code might not work, explanations might be incomplete or incorrect. Proceed with caution. 
 
 ## Release history
 
