@@ -145,12 +145,12 @@
 <p>What distinguishes Lean from many other programming languages is that Lean is so called dependently typed programming language. This allows us to work with arrays that have their dimensions specified in their type. For example, vector dot product can be defined as</p>
 <pre><code class="language-lean">def dot {n : Nat} (x y : Float^[n]) : Float := ∑ i, x[i] * y[i]
 </code></pre>
-<p>This function accepts the size of the array as an argument <code>n : Nat</code> and then two arrays of the same size <code>n</code>. The meaning of <em>dependently typed</em> is that the type of function argument can depend on the value of another argument. Here the type of <code>x</code> and <code>y</code> is <code>Float^[n]</code> which depends on the first argument <code>n</code>. This is really not possible in ordinary programming languages, some of them allow you to provide the dimension at compile time. In Lean this is not the case, the dimension <code>n</code> can be determined completly at runtime.</p>
-<p>As you can see, one of the nice advantages is that we didn't have to specify the range over which we want to sum at it is automatically infered it should sum over the numbers <code>0..(n-1)</code>.</p>
+<p>This function accepts the size of the array as an argument <code>n : Nat</code> and then two arrays of the same size <code>n</code>. The meaning of <em>dependently typed</em> is that the type of function argument can depend on the value of another argument. Here the type of <code>x</code> and <code>y</code> is <code>Float^[n]</code> which depends on the first argument <code>n</code>. This is really not possible in ordinary programming languages, some of them allow you to provide the dimension at compile time. In Lean this is not the case, the dimension <code>n</code> can be determined completely at runtime.</p>
+<p>As you can see, one of the nice advantages is that we didn't have to specify the range over which we want to sum at it is automatically inferred it should sum over the numbers <code>0..(n-1)</code>.</p>
 <p>We can test the function with</p>
 <pre><code class="language-lean">#eval dot ⊞[1.0,1.0] ⊞[1.0,1.0]
 </code></pre>
-<p>When calling a function, you have to provide only the arguments with normal braces, such as <code>(x y : Float^[n])</code>. Arguments with the curly braces <code>{n : Nat}</code> are implicit and will be infered automatically from the other arguments, from <code>x</code> and <code>y</code> in this case. Lean prevents us from providing arrays of different lenghts </p>
+<p>When calling a function, you have to provide only the arguments with normal braces, such as <code>(x y : Float^[n])</code>. Arguments with the curly braces <code>{n : Nat}</code> are implicit and will be infered automatically from the other arguments, from <code>x</code> and <code>y</code> in this case. Lean prevents us from providing arrays of different lengths </p>
 <pre><code class="language-lean">#eval dot ⊞[1.0,1.0] ⊞[1.0,1.0,1.0]
 </code></pre>
 <p>Let's back up and talk about the notation <code>Float^[n]</code> and how it connects to <code>DataArray X</code> we talked about previously. An array <code>x : Float^[n]</code> has length <code>n</code> and thus can be indexed with number <code>0..(n-1)</code>. The type expressing all natural numbers smaller then <code>n</code> is denoted with <code>Fin n</code>. It is defined as a structure:</p>
@@ -158,7 +158,7 @@
   val  : Nat
   isLt : val &lt; n
 </code></pre>
-<p>which holds the value <code>val</code> and a proof <code>isLt</code> that the value is infact smaller then <code>n</code>. </p>
+<p>which holds the value <code>val</code> and a proof <code>isLt</code> that the value is in fact smaller then <code>n</code>. </p>
 <p><code>Float^[n]</code> is just a syntactic sugar for <code>DataArrayN Float (Fin n)</code> which is  <code>DataArray Float</code> together with a proof that the size of the array is <code>n</code>. In general, <code>Fin n</code> can be replaced with an arbitrary index type <code>I</code>. The definition of <code>DataArrayN</code> is:</p>
 <pre><code class="language-lean">structure DataArrayN (X : Type) (I : Type) where
   data : DataArray X
@@ -223,7 +223,7 @@
     A := A.push (x[i]*y[j])
   return { data:= A, h_size:= sorry }
 </code></pre>
-<p>Recall that <code>Float^[n,m]</code> is just syntax for <code>DataArrayN Float (Fin n × Fin m)</code> and <code>DataArrayN X I</code> is just a structure holding <code>data : DataArray X</code> and a proof <code>h_size : data.size = card I</code>. In this case, we provide the matrix <code>A</code> and in the second element we should provide a proof that <code>A.size = card (Fin n × Fin m) = n*m</code>. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddently invalid.</p>
+<p>Recall that <code>Float^[n,m]</code> is just syntax for <code>DataArrayN Float (Fin n × Fin m)</code> and <code>DataArrayN X I</code> is just a structure holding <code>data : DataArray X</code> and a proof <code>h_size : data.size = card I</code>. In this case, we provide the matrix <code>A</code> and in the second element we should provide a proof that <code>A.size = card (Fin n × Fin m) = n*m</code>. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddenly invalid.</p>
 <h2 id="reshaping-arrays"><a class="header" href="#reshaping-arrays">Reshaping Arrays</a></h2>
 <p>Reshaping arrays is a common operation, where you may need to transform an array of one shape into another while preserving its total size. <em>SciLean</em> provides several functions for reshaping arrays, allowing you to convert arrays of arbitrary shapes into vectors, matrices, or arrays of higher rank.</p>
 <pre><code class="language-lean">def reshape1 (x : Float^[I]) (n : Nat)    (h : card I = n)     : Float^[n] := ...

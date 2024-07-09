@@ -188,7 +188,7 @@ x.reduceD op default = (op ... (op (op x[0] x[1]) x[2]) ...)
   let x := x.map fun x =&gt; x/w
   return x
 </code></pre>
-<p>where for numerical stablity we first find the maximal element <code>m</code> and subtract it from all the element. After that we procees with the standard definition of soft max. Of course, this is not the most efficient implementation of softmax. In later chapter, we will show how to transform it to a more efficient version.</p>
+<p>where for numerical stability we first find the maximal element <code>m</code> and subtract it from all the element. After that we proceed with the standard definition of soft max. Of course, this is not the most efficient implementation of softmax. In later chapter, we will show how to transform it to a more efficient version.</p>
 <p>Very common reduction is to sum element or to multiply them. <em>SciLean</em> provides familiar notation for these</p>
 <pre><code>def x := ⊞[1.0,2.0,3.0,4.0]
 def A := ⊞[1.0,2.0;3.0,4.0]
@@ -199,7 +199,7 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 #eval ∏ i j, A[i,j]
 </code></pre>
 <p><em>Note for Mathlib users: For performance reasons SciLean defines sums and products with <code>IndexType</code> instead of <code>Finset</code>. Therefore this notation is different from the one defined in <code>BigOperators</code> namespace.</em></p>
-<p>We can define commong matrix operations like matrix-vector multiplication</p>
+<p>We can define common matrix operations like matrix-vector multiplication</p>
 <pre><code class="language-lean">def matMul {n m : Nat} (A : Float^[n,m]) (x : Float^[m]) :=
   ⊞ i =&gt; ∑ j, A[i,j] * x[j]
 </code></pre>
