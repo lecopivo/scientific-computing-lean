@@ -4,15 +4,15 @@ What distinguishes Lean from many other programming languages is that Lean is so
 ```lean
 def dot {n : Nat} (x y : Float^[n]) : Float := ∑ i, x[i] * y[i]
 ```
-This function accepts the size of the array as an argument `n : Nat` and then two arrays of the same size `n`. The meaning of *dependently typed* is that the type of function argument can depend on the value of another argument. Here the type of `x` and `y` is `Float^[n]` which depends on the first argument `n`. This is really not possible in ordinary programming languages, some of them allow you to provide the dimension at compile time. In Lean this is not the case, the dimension `n` can be determined completly at runtime.
+This function accepts the size of the array as an argument `n : Nat` and then two arrays of the same size `n`. The meaning of *dependently typed* is that the type of function argument can depend on the value of another argument. Here the type of `x` and `y` is `Float^[n]` which depends on the first argument `n`. This is really not possible in ordinary programming languages, some of them allow you to provide the dimension at compile time. In Lean this is not the case, the dimension `n` can be determined completely at runtime.
 
-As you can see, one of the nice advantages is that we didn't have to specify the range over which we want to sum at it is automatically infered it should sum over the numbers `0..(n-1)`.
+As you can see, one of the nice advantages is that we didn't have to specify the range over which we want to sum at it is automatically inferred it should sum over the numbers `0..(n-1)`.
 
 We can test the function with
 ```lean
 #eval dot ⊞[1.0,1.0] ⊞[1.0,1.0]
 ```
-When calling a function, you have to provide only the arguments with normal braces, such as `(x y : Float^[n])`. Arguments with the curly braces `{n : Nat}` are implicit and will be infered automatically from the other arguments, from `x` and `y` in this case. Lean prevents us from providing arrays of different lenghts 
+When calling a function, you have to provide only the arguments with normal braces, such as `(x y : Float^[n])`. Arguments with the curly braces `{n : Nat}` are implicit and will be infered automatically from the other arguments, from `x` and `y` in this case. Lean prevents us from providing arrays of different lengths 
 ```lean
 #eval dot ⊞[1.0,1.0] ⊞[1.0,1.0,1.0]
 ```
@@ -23,7 +23,7 @@ structure Fin (n : Nat) where
   val  : Nat
   isLt : val < n
 ```
-which holds the value `val` and a proof `isLt` that the value is infact smaller then `n`. 
+which holds the value `val` and a proof `isLt` that the value is in fact smaller then `n`. 
 
 `Float^[n]` is just a syntactic sugar for `DataArrayN Float (Fin n)` which is  `DataArray Float` together with a proof that the size of the array is `n`. In general, `Fin n` can be replaced with an arbitrary index type `I`. The definition of `DataArrayN` is:
 ```lean
@@ -114,7 +114,7 @@ def outerProduct {n m : Float} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] := 
     A := A.push (x[i]*y[j])
   return { data:= A, h_size:= sorry }
 ```
-Recall that `Float^[n,m]` is just syntax for `DataArrayN Float (Fin n × Fin m)` and `DataArrayN X I` is just a structure holding `data : DataArray X` and a proof `h_size : data.size = card I`. In this case, we provide the matrix `A` and in the second element we should provide a proof that `A.size = card (Fin n × Fin m) = n*m`. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddently invalid.
+Recall that `Float^[n,m]` is just syntax for `DataArrayN Float (Fin n × Fin m)` and `DataArrayN X I` is just a structure holding `data : DataArray X` and a proof `h_size : data.size = card I`. In this case, we provide the matrix `A` and in the second element we should provide a proof that `A.size = card (Fin n × Fin m) = n*m`. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize you program and all your proofs are suddenly invalid.
 
 
 ## Reshaping Arrays

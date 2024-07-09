@@ -240,7 +240,7 @@ taking derivative with a respect to an explicit variable.
 
 ..
 
-The notation `ⅆ (t:=t₀), f t` tries to mimick the mathematical notation
+The notation `ⅆ (t:=t₀), f t` tries to mimic the mathematical notation
 
 .. math:: \frac{d}{dt}\bigg\rvert_{t=t_0} f(t)
 
