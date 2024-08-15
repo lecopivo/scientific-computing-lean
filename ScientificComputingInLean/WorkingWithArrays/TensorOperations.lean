@@ -175,7 +175,7 @@ def trace {n : Nat} (A : Float^[n,n]) :=
   ∑ i, A[i,i]
 ```
 
-## Convolution and Operations on Indices
+# Convolution and Operations on Indices
 
 
 The fundamental operation in machine learning is convolution. The first attempt at writing convolution might look like this:
@@ -232,7 +232,7 @@ def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
     ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
 ```
 
-## Pooling and Difficulties with Dependent Types
+# Pooling and Difficulties with Dependent Types
 
 The next piece of neural networks is the pooling layer, a layer that reduces image resolution. Giving a good type to the pooling layer is quite challenging, as we have to divide the image resolution by two. Doing any kinds of operations in types brings out all the complexities of dependent type theory. Yes, dependent types can be really hard, but please do not get discouraged by this section. One has to be careful and not put dependent types everywhere, but when used with care, they can provide lots of benefits without causing too many troubles.
 
@@ -317,7 +317,7 @@ def avgPool2d
     -- 0.0
 ```
 
-### Simple Neural Network
+# Simple Neural Network
 
 We are almost ready to write a simple neural network. The only missing piece is the dense layer, which is just matrix multiplication followed by addition. We have already shown matrix multiplication previously, but it was only for multiplying by a normal matrix with `n` rows and `m` columns. A general dense layer takes a tensor `x` of any shape, treats it as a flat array of `m` elements, and multiplies that by an `n×m` matrix. Because our arrays allow indexing by an arbitrary type `I`, we do not need to perform this flattening explicitly and can just multiply by the matrix `Float^[n,I]`.
 
