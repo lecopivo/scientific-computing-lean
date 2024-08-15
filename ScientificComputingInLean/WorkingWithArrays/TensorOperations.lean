@@ -135,7 +135,7 @@ where for numerical stablity we first find the maximal element `m` and subtract 
 Very common reduction is to sum element or to multiply them. *SciLean* provides familiar notation for these
 ```lean
 def x := ⊞[1.0,2.0,3.0,4.0]
-def A := ⊞[1.0,2.0;3.0,4.0]
+def B := ⊞[1.0,2.0;3.0,4.0]
 ```
 ```lean (name:=arraysum)
 #eval ∑ i, x[i]
@@ -150,19 +150,19 @@ def A := ⊞[1.0,2.0;3.0,4.0]
 24.000000
 ```
 ```lean (name:=matrixsum)
-#eval ∑ i j, A[i,j]
+#eval ∑ i j, B[i,j]
 ```
 ```leanOutput matrixsum
 10.000000
 ```
 ```lean (name:=matrixprod)
-#eval ∏ i j, A[i,j]
+#eval ∏ i j, B[i,j]
 ```
 ```leanOutput matrixprod
 24.000000
 ```
 
-**Note for Mathlib users: For performance reasons SciLean defines sums and products with `IndexType` instead of `Finset`. Therefore this notation is different from the one defined in `BigOperators` namespace.**
+*Note for Mathlib users: For performance reasons SciLean defines sums and products with `IndexType` instead of `Finset`. Therefore this notation is different from the one defined in `BigOperators` namespace.*
 
 We can define commong matrix operations like matrix-vector multiplication
 ```lean
@@ -202,7 +202,7 @@ def Fin.shift {n} (i : Fin n) (j : ℤ) : Fin n :=
     { val := ((Int.ofNat i.1 + j) % n ).toNat, isLt := sorry_proof }
 ```
 
-Here, `%` is already performing positive modulo on integers, and we again omitted the proof that the result is indeed smaller than `n`. It is not a hard proof, but the purpose of this text is not to teach you how to prove theorems in Lean but rather how to use Lean as a programming language, and omitting proofs is a perfectly valid approach.
+Here, `%` is positive modulo on integers, and we again omitted the proof that the result is indeed smaller than `n`. It is not a hard proof, but the purpose of this text is not to teach you how to prove theorems in Lean but rather how to use Lean as a programming language, and omitting proofs is a perfectly valid approach.
 
 Now we can write one-dimensional convolution as:
 
@@ -222,9 +222,14 @@ In practice, a convolutional layer takes as input a stack of images `x`, a stack
 
 ```lean
 open SciLean
-def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type} [IndexType I] [IndexType J] [DecidableEq J]
-    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) : Float^[J,n,m] :=
-    ⊞ κ (i : Fin n) (j : Fin m) => b[κ,i,j] + ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
+def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
+    [IndexType I] [IndexType J] [DecidableEq J]
+    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) :
+    Float^[J,n,m] :=
+  ⊞ κ (i : Fin n) (j : Fin m) =>
+    b[κ,i,j]
+    +
+    ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
 ```
 
 ## Pooling and Difficulties with Dependent Types
@@ -334,19 +339,23 @@ def nnet := fun (w₁,b₁,w₂,b₂,w₃,b₃) (x : Float^[28,28]) =>
     |> dense 30 w₂ b₂
     |>.mapMono (fun x => max x 0)
     |> dense 10 w₃ b₃
-    -- |> softMax 0.1
+    |> softMax 0.1
 ```
 
-When we check the type of `nnet`, we get:
+When we check the type of `nnet`:
 
-```lean
+```lean (name:=nnettype)
 #check nnet
 ```
-
-You can see that the type of weights is automatically inferred to be:
-
+```leanOutput nnettype
+nnet :
+  Float^[8, 1, ↑(Set.Icc (-↑1) ↑1), ↑(Set.Icc (-↑1) ↑1)] ×
+      Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10] →
+    Float^[28, 28] → Float^[10]
 ```
-Float^[8,1,[-1:1],[-1:1]] × Float^[8,28,28] × Float^[30,8,14,14] × Float^[30] × Float^[10,30] × Float^[10]
-```
+
+You can see that the type of all the weights is automatically inferred.
+
+TODO: improve unexpander for `↑(Set.Icc (-↑1) ↑1)`
 
 The input image has type `Float^[28,28]`, and the output is an array of ten elements `Float^[10]`. As you might have guessed from the dimensions, later in the book, we will train this network to classify handwritten digits from the MNIST database.

@@ -138,7 +138,7 @@ variable (f : Fin 10 → Float)
 ⊞ i => f i : Float^[10]
 ```
 Unlike lambda notation, array notation uncurries all of its arguments. This means that `⊞ i j => f i j` creates and matrix indexed by `(i,j)`. For example outer product of two arrays can be defines as
-```lean
+```lean (keep:=false)
 def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] :=
   ⊞ i j => x[i]*y[j]
 ```
@@ -146,9 +146,9 @@ If you want an array of arrays instead of matrix you would write `⊞ i => (⊞ 
 
 
 Another way to set up a matrix is to set its elements one by one
-```lean
+```lean (keep:=false)
 open SciLean
-def outerProduct' {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
+def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
   let mut A : Float^[n,m] := 0
   for i in fullRange (Fin n) do
     for j in fullRange (Fin m) do
@@ -166,9 +166,9 @@ def outerProduct'' {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
 ```
 
 Of course the above implementation of has the drawback that it first initialized the whole matrix to zero and then go over the matrix again and set it up to the correct value. Sometimes it is much more natural to create the matrix element by element. We can create an array with dynamic size and push element one by one. Once we are done we can fix the dimensions of the matrix.
-```lean
+```lean (keep:=false)
 open SciLean
-def outerProduct''' {n m : Nat}
+def outerProduct {n m : Nat}
     (x : Float^[n]) (y : Float^[m]) : Float^[n,m] := Id.run do
   let mut A : DataArray Float := default
   A := A.reserve (n*m)

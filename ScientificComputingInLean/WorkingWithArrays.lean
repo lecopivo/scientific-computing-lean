@@ -4,6 +4,7 @@ import SciLean
 import ScientificComputingInLean.Meta
 import ScientificComputingInLean.WorkingWithArrays.BasicOperations
 import ScientificComputingInLean.WorkingWithArrays.TensorOperations
+import ScientificComputingInLean.WorkingWithArrays.OptimizingArrays
 
 open Verso.Genre Manual
 open Lean.MessageSeverity
@@ -86,5 +87,8 @@ def fibonacci (n : Nat) : List Nat :=
 The last data structure we will mention here is product type `Prod X Y` usually written as `X×Y`. It allows you to store elements of different types. If you have an element of a product `p : X×Y`, you can access its elements by `p.1` and `p.2`. You can chain pairs to build tuples of arbitrary size. For example, `(3.14, ("hello", 42))` has the type {lean}`Float × (String × Nat)`. Lean considers products to be right-associative, so you can omit the brackets and write {lean}`(3.14, "hello", 42)` or {lean}`Float × String × Nat`. This affects how you actually access elements of `p := (3.14, "hello", 42)`. To get the first element, you write `p.1`, but to access the second element, you have to write `p.2.1`, because `p.2` returns the second element {lean}`("hello", 42)` of the pair, and to get the second element of the original tuple `p`, you need to then get the first element of `p.2`.
 
 
+{include ScientificComputingInLean.WorkingWithArrays.BasicOperations}
 
 {include ScientificComputingInLean.WorkingWithArrays.TensorOperations}
+
+{include ScientificComputingInLean.WorkingWithArrays.OptimizingArrays}
