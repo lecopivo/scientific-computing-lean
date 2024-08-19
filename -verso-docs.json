@@ -123,9 +123,58 @@
  "26": "<code>fibonacci (n : ℕ) : List ℕ</code>",
  "25":
  "<code class=\"docstring\">Pattern matching. `match e, ... with | p, ... =&gt; f | ...` matches each given\nterm `e` against each pattern `p` of a match alternative. When all patterns\nof an alternative match, the `match` term evaluates to the value of the\ncorresponding right-hand side `f` with the pattern variables bound to the\nrespective matched values.\nIf used as `match h : e, ... with | p, ... =&gt; f | ...`, `h : e = p` is available\nwithin `f`.\n\nWhen not constructing a proof, `match` does not automatically substitute variables\nmatched on in dependent variables' types. Use `match (generalizing := true) ...` to\nenforce this.\n\nSyntax quotations can also be used in a pattern match.\nThis matches a `Syntax` value against quotations, pattern variables, or `_`.\n\nQuoted identifiers only match identical identifiers - custom matching such as by the preresolved\nnames only should be done explicitly.\n\n`Syntax.atom`s are ignored during matching by default except when part of a built-in literal.\nFor users introducing new atoms, we recommend wrapping them in dedicated syntax kinds if they\nshould participate in matching.\nFor example, in\n```lean\nsyntax \"c\" (\"foo\" &lt;|&gt; \"bar\") ...\n```\n`foo` and `bar` are indistinguishable during matching, but in\n```lean\nsyntax foo := \"foo\"\nsyntax \"c\" (foo &lt;|&gt; \"bar\") ...\n```\nthey are not.\n</code>",
+ "249": "<code>sim : IO Unit</code>",
+ "248": "<code><span class=\"literal string\">\"\"</span> : String</code>",
+ "247":
+ "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "246": "<code><span class=\"literal string\">\"o\"</span> : String</code>",
+ "245":
+ "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "244":
+ "<code>Unit : Type</code><span class=\"sep\"></span><code class=\"docstring\">The unit type, the canonical type with one element, named `unit` or `()`.\nIn other words, it describes only a single value, which consists of said constructor applied\nto no arguments whatsoever.\nThe `Unit` type is similar to `void` in languages derived from C.\n\n`Unit` is actually defined as `PUnit.{1}` where `PUnit` is the universe\npolymorphic version. The `Unit` should be preferred over `PUnit` where possible to avoid\nunnecessary universe parameters.\n\nIn functional programming, `Unit` is the return type of things that \"return\nnothing\", since a type with one element conveys no additional information.\nWhen programming with monads, the type `m Unit` represents an action that has\nsome side effects but does not return a value, while `m α` would be an action\nthat has side effects and returns a value of type `α`.\n</code>",
+ "243": "<code>IO : Type → Type</code>",
+ "242": "<code>_root_.sim : IO Unit</code>",
+ "241":
+ "<code>solver (m k : Float) :\n  SciLean.Approx (Filter.atTop.prod ⊤)\n    (SciLean.odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "240": "<code>ℕ × Unit</code>",
  "24": "<code>List ℕ</code>",
+ "239":
+ "<code>solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "238":
+ "<code>Filter.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A filter `F` on a type `α` is a collection of sets of `α` which contains the whole `α`,\nis upwards-closed, and is stable under intersection. We do not forbid this collection to be\nall sets of `α`. </code>",
+ "237":
+ "<code class=\"docstring\">This tactic eliminates `limit` from an expression that you are approximating\n\nFor example, for goal\n\n```\n  ⊢ Approx _ (x + limit n → ∞, (1 + x/n)^n)\n```\n\ncalling `approx_limit n := &lt;proof&gt;` produces goal\n\n```\n  n : Nat\n  ⊢ Approx _ (x + (1 + x/n)^n)\n```\n\nwhere `&lt;proof&gt;` is a proof that this approximation is indeed valid\n\nWarning: The validity proof is not completely correct right now\n</code>",
+ "236":
+ "<code>SciLean.odeSolveFixedStep.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} (stepper : R → R → X → X) (steps : ℕ)\n  (t₁ t₂ : R) (x₀ : X) : X</code>",
+ "235":
+ "<code>SciLean.rungeKutta4.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (tₙ Δt : R) (xₙ : X) : X</code>",
+ "234":
+ "<code>SciLean.odeSolve_fixed_dt.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} [NormedAddCommGroup X] [NormedSpace R X]\n  {f : R → X → X} (stepper : (R → X → X) → R → R → X → X) (h : HasUniqueOdeSolution f ∧ IsOdeStepper f (stepper f)) :\n  odeSolve f = fun t₀ t x₀ =&gt; limit n → ∞, odeSolveFixedStep (stepper f) n t₀ t x₀</code>",
+ "233":
+ "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
+ "232":
+ "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `true`), performs zeta reduction of let expressions.\nThat is, `let x := v; e[x]` reduces to `e[v]`.\nSee also `zetaDelta`.\n</code>",
+ "231":
+ "<code class=\"docstring\">Optional configuration option for tactics </code>",
+ "230":
+ "<code class=\"docstring\">`simp_rw` functions as a mix of `simp` and `rw`. Like `rw`, it applies each\nrewrite rule in the given order, but like `simp` it repeatedly applies these\nrules and also under binders like `∀ x, ...`, `∃ x, ...` and `fun x ↦...`.\nUsage:\n\n- `simp_rw [lemma_1, ..., lemma_n]` will rewrite the goal by applying the\n  lemmas in that order. A lemma preceded by `←` is applied in the reverse direction.\n- `simp_rw [lemma_1, ..., lemma_n] at h₁ ... hₙ` will rewrite the given hypotheses.\n- `simp_rw [...] at *` rewrites in the whole context: all hypotheses and the goal.\n\nLemmas passed to `simp_rw` must be expressions that are valid arguments to `simp`.\nFor example, neither `simp` nor `rw` can solve the following, but `simp_rw` can:\n\n```lean\nexample {a : ℕ}\n    (h1 : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)\n    (h2 : ∀ a b : ℕ, a ≤ b ↔ ∀ c, c &lt; a → c &lt; b) :\n    (∀ b, a - 1 ≤ b) = ∀ b c : ℕ, c &lt; a → c &lt; b + 1 := by\n  simp_rw [h1, h2]\n```\n</code>",
  "23":
  "<code>List.reverse.{u} {α : Type u} (as : List α) : List α</code><span class=\"sep\"></span><code class=\"docstring\">`O(|as|)`. Reverse of a list:\n* `[1, 2, 3, 4].reverse = [4, 3, 2, 1]`\n\nNote that because of the \"functional but in place\" optimization implemented by Lean's compiler,\nthis function works without any allocations provided that the input list is unshared:\nit simply walks the linked list and reverses all the node pointers.\n</code>",
+ "229":
+ "<code>Inv.inv.{u} {α : Type u} [self : Inv α] : α → α</code><span class=\"sep\"></span><code class=\"docstring\">Invert an element of α. </code>",
+ "228":
+ "<code>HPow.hPow.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HPow α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a ^ b` computes `a` to the power of `b`.\nThe meaning of this notation is type-dependent. </code>",
+ "227": "<code>Float × Float</code>",
+ "226":
+ "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
+ "225": "<code>H (m k x p : Float) : Float</code>",
+ "224":
+ "<code class=\"docstring\">* `unfold id` unfolds definition `id`.\n* `unfold id1 id2 ...` is equivalent to `unfold id1; unfold id2; ...`.\n\nFor non-recursive definitions, this tactic is identical to `delta`.\nFor definitions by pattern matching, it uses \"equation lemmas\" which are\nautogenerated for each match arm.\n</code>",
+ "223":
+ "<code>_root_.solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "222":
+ "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
+ "221": "<code>_root_.H (m k x p : Float) : Float</code>",
  "220": "<code>_root_.matDot' {n m : ℕ} (A B : Float^[n, m]) : Float</code>",
  "22": "<code>fibonacci.go (n : ℕ) (l : List ℕ) : List ℕ</code>",
  "219": "<code>matDot.optimized {n m : ℕ} (A B : Float^[n, m]) : Float</code>",
