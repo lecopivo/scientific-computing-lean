@@ -3,6 +3,7 @@ import Verso.Genre.Manual
 -- import ScientificComputingInLean.Basic
 import ScientificComputingInLean.Intro
 import ScientificComputingInLean.WorkingWithArrays
+import ScientificComputingInLean.Examples
 
 open Verso.Genre Manual
 
@@ -17,3 +18,5 @@ authors := ["Tomáš Skřivan"]
 {include ScientificComputingInLean.Intro}
 
 {include ScientificComputingInLean.WorkingWithArrays}
+
+{include ScientificComputingInLean.Examples}
