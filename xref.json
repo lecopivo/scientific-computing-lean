@@ -1,0 +1,143 @@
+{"Verso.Genre.Manual.section":
+ {"Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Transformations-and-Reductions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Transformations-and-Reductions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations",
+     "Transformations and Reductions"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations",
+     "Simple Neural Network"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Pooling-and-Difficulties-with-Dependent-Types":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Pooling-and-Difficulties-with-Dependent-Types",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations",
+     "Pooling and Difficulties with Dependent Types"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations",
+     "Convolution and Operations on Indices"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions--Optimizing-Array-Indexing":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions--Optimizing-Array-Indexing",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Optimizing Array Expressions",
+     "Optimizing Array Indexing"],
+    "address": "/Working-with-Arrays/Optimizing-Array-Expressions"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions--Loop-Fusion":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions--Loop-Fusion",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Optimizing Array Expressions",
+     "Loop Fusion"],
+    "address": "/Working-with-Arrays/Optimizing-Array-Expressions"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Optimizing-Array-Expressions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Optimizing Array Expressions"],
+    "address": "/Working-with-Arrays/Optimizing-Array-Expressions"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations--Reshaping-Arrays":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations--Reshaping-Arrays",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Basic Operations",
+     "Reshaping Arrays"],
+    "address": "/Working-with-Arrays/Basic-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Basic Operations",
+     "Exercises"],
+    "address": "/Working-with-Arrays/Basic-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations":
+  [{"id": "Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations",
+    "data":
+    ["Scientific Computing in Lean", "Working with Arrays", "Basic Operations"],
+    "address": "/Working-with-Arrays/Basic-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays":
+  [{"id": "Scientific-Computing-in-Lean--Working-with-Arrays",
+    "data": ["Scientific Computing in Lean", "Working with Arrays"],
+    "address": "/Working-with-Arrays"}],
+  "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--The-Role-of-Dependent-Types":
+  [{"id":
+    "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--The-Role-of-Dependent-Types",
+    "data":
+    ["Scientific Computing in Lean",
+     "Introduction",
+     "Introduction",
+     "Why Lean for Scientific Computing?",
+     "The Role of Dependent Types?"],
+    "address": "/Introduction/Introduction"}],
+  "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--Benefits-of-Interactivity":
+  [{"id":
+    "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--Benefits-of-Interactivity",
+    "data":
+    ["Scientific Computing in Lean",
+     "Introduction",
+     "Introduction",
+     "Why Lean for Scientific Computing?",
+     "Benefits of Interactivity"],
+    "address": "/Introduction/Introduction"}],
+  "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing":
+  [{"id":
+    "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing",
+    "data":
+    ["Scientific Computing in Lean",
+     "Introduction",
+     "Introduction",
+     "Why Lean for Scientific Computing?"],
+    "address": "/Introduction/Introduction"}],
+  "Scientific-Computing-in-Lean--Introduction--Introduction":
+  [{"id": "Scientific-Computing-in-Lean--Introduction--Introduction",
+    "data": ["Scientific Computing in Lean", "Introduction", "Introduction"],
+    "address": "/Introduction/Introduction"}],
+  "Scientific-Computing-in-Lean--Introduction--About":
+  [{"id": "Scientific-Computing-in-Lean--Introduction--About",
+    "data": ["Scientific Computing in Lean", "Introduction", "About"],
+    "address": "/Introduction/About"}],
+  "Scientific-Computing-in-Lean--Introduction":
+  [{"id": "Scientific-Computing-in-Lean--Introduction",
+    "data": ["Scientific Computing in Lean", "Introduction"],
+    "address": "/Introduction"}],
+  "Scientific-Computing-in-Lean":
+  [{"id": "Scientific-Computing-in-Lean",
+    "data": ["Scientific Computing in Lean"],
+    "address": ""}]}}
