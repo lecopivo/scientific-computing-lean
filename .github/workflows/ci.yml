@@ -40,7 +40,7 @@ jobs:
       - name: Download cached build
         run: lake exe cache get
       - name: Build SciLean
-        run: lake exe sclean --directory _out/
+        run: lake exe sclean --depth 2
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
