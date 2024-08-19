@@ -1,6 +1,3 @@
-functional-programming-lean/book
+/.lake
 *~
-*#
-.#*
-
-/scientific-computing-lean/book/
+/_out/
