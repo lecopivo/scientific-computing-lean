@@ -1,4 +1,3 @@
-import Verso.Genre.Manual
 import ScientificComputingInLean.Meta
 import SciLean
 

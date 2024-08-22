@@ -1,5 +1,4 @@
 import ScientificComputingInLean
-import Verso.Genre.Manual
 
 import DemoTextbook
 

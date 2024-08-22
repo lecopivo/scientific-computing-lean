@@ -1,11 +1,6 @@
-import Verso.Genre.Manual
-import SciLean
-
-
 import ScientificComputingInLean.Examples.HarmonicOscillator
 
 open Verso.Genre Manual
-open Lean.MessageSeverity
 
 set_option pp.rawOnError true
 set_option linter.hashCommand false

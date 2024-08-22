@@ -1,12 +1,7 @@
-import Verso.Genre.Manual
-import DemoTextbook.Exts.Exercises
-
-import Std.Data.HashMap
-
+import VersoManual
 import SciLean
 
 open Verso.Genre Manual
-open DemoTextbook.Exts (lean)
 
 set_option pp.rawOnError true
 set_option linter.hashCommand false

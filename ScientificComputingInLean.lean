@@ -1,6 +1,3 @@
-import Verso.Genre.Manual
-
--- import ScientificComputingInLean.Basic
 import ScientificComputingInLean.Intro
 import ScientificComputingInLean.WorkingWithArrays
 import ScientificComputingInLean.Examples

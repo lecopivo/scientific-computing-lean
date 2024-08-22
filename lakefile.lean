@@ -22,4 +22,4 @@ lean_exe sclean where
 
 require verso from git "https://github.com/leanprover/verso.git" @ "main"
 
-require scilean from git "https://github.com/lecopivo/scilean.git" @ "reorganize"
+require scilean from git "https://github.com/lecopivo/scilean.git" @ "master"

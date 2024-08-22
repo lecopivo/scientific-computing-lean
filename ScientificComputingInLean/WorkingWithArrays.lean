@@ -1,7 +1,3 @@
-import Verso.Genre.Manual
-import SciLean
-
-import ScientificComputingInLean.Meta
 import ScientificComputingInLean.WorkingWithArrays.BasicOperations
 import ScientificComputingInLean.WorkingWithArrays.TensorOperations
 import ScientificComputingInLean.WorkingWithArrays.OptimizingArrays
