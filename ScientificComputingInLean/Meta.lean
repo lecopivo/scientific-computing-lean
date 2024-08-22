@@ -781,3 +781,10 @@ def ffi.descr : BlockDescr where
       }}
   toTeX := some <| fun _goI goB _ _ contents =>
     contents.mapM goB -- TODO
+
+
+open Verso Doc Elab in
+@[code_block_expander latex]
+def latex : CodeBlockExpander
+  | _args, str => do
+    return #[(← `(Doc.Block.para #[Doc.Inline.text s!"$${$str}$$"]))]

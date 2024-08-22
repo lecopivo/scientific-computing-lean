@@ -12,14 +12,6 @@ open SciLean
 
 set_default_scalar Float
 
-open Verso Doc Elab
--- open SubVerso.Highlighting Highlighted
-
-@[code_block_expander latex]
-def latex : CodeBlockExpander
-  | _args, str => do
-    return #[(← `(Doc.Block.para #[Doc.Inline.text s!"$${$str}$$"]))]
-
 #doc (Manual) "Harmonic Oscillator" =>
 
 Let's demonstrate basic capabilities of SciLean on a simple program simulating harmonic oscillator. The energy/Hamiltonian of harmonic oscillator is
