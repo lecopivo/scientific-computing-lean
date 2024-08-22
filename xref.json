@@ -145,6 +145,52 @@
   [{"id": "Scientific-Computing-in-Lean--Examples",
     "data": ["Scientific Computing in Lean", "Examples"],
     "address": "/Examples"}],
+  "Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Introduction",
+     "Notation for Derivative"],
+    "address": "/Differentiation/Introduction"}],
+  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Simple-Kinematics":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Simple-Kinematics",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Introduction",
+     "Derivative Examples",
+     "Simple Kinematics"],
+    "address": "/Differentiation/Introduction"}],
+  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Newtons-solver":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Newtons-solver",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Introduction",
+     "Derivative Examples",
+     "Newton's solver"],
+    "address": "/Differentiation/Introduction"}],
+  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Introduction",
+     "Derivative Examples"],
+    "address": "/Differentiation/Introduction"}],
+  "Scientific-Computing-in-Lean--Differentiation--Introduction":
+  [{"id": "Scientific-Computing-in-Lean--Differentiation--Introduction",
+    "data": ["Scientific Computing in Lean", "Differentiation", "Introduction"],
+    "address": "/Differentiation/Introduction"}],
+  "Scientific-Computing-in-Lean--Differentiation":
+  [{"id": "Scientific-Computing-in-Lean--Differentiation",
+    "data": ["Scientific Computing in Lean", "Differentiation"],
+    "address": "/Differentiation"}],
   "Scientific-Computing-in-Lean":
   [{"id": "Scientific-Computing-in-Lean",
     "data": ["Scientific Computing in Lean"],

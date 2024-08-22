@@ -118,63 +118,94 @@
  "29": "<code><span class=\"literal string\">\"hello\"</span> : String</code>",
  "28":
  "<code>String : Type</code><span class=\"sep\"></span><code class=\"docstring\">`String` is the type of (UTF-8 encoded) strings.\n\nThe compiler overrides the data representation of this type to a byte sequence,\nand both `String.utf8ByteSize` and `String.length` are cached and O(1).\n</code>",
+ "271": "<code>sim : IO Unit</code>",
+ "270": "<code><span class=\"literal string\">\"\"</span> : String</code>",
  "27":
  "<code>Float : Type</code><span class=\"sep\"></span><code class=\"docstring\">Native floating point type, corresponding to the IEEE 754 *binary64* format\n(`double` in C or `f64` in Rust). </code>",
+ "269":
+ "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "268": "<code><span class=\"literal string\">\"o\"</span> : String</code>",
+ "267":
+ "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "266":
+ "<code>Unit : Type</code><span class=\"sep\"></span><code class=\"docstring\">The unit type, the canonical type with one element, named `unit` or `()`.\nIn other words, it describes only a single value, which consists of said constructor applied\nto no arguments whatsoever.\nThe `Unit` type is similar to `void` in languages derived from C.\n\n`Unit` is actually defined as `PUnit.{1}` where `PUnit` is the universe\npolymorphic version. The `Unit` should be preferred over `PUnit` where possible to avoid\nunnecessary universe parameters.\n\nIn functional programming, `Unit` is the return type of things that \"return\nnothing\", since a type with one element conveys no additional information.\nWhen programming with monads, the type `m Unit` represents an action that has\nsome side effects but does not return a value, while `m α` would be an action\nthat has side effects and returns a value of type `α`.\n</code>",
+ "265": "<code>IO : Type → Type</code>",
+ "264": "<code>_root_.sim : IO Unit</code>",
+ "263":
+ "<code>solver (m k : Float) :\n  SciLean.Approx (Filter.atTop.prod ⊤)\n    (SciLean.odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "262": "<code>ℕ × Unit</code>",
+ "261":
+ "<code>solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "260":
+ "<code>Filter.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A filter `F` on a type `α` is a collection of sets of `α` which contains the whole `α`,\nis upwards-closed, and is stable under intersection. We do not forbid this collection to be\nall sets of `α`. </code>",
  "26": "<code>fibonacci (n : ℕ) : List ℕ</code>",
+ "259":
+ "<code class=\"docstring\">This tactic eliminates `limit` from an expression that you are approximating\n\nFor example, for goal\n\n```\n  ⊢ Approx _ (x + limit n → ∞, (1 + x/n)^n)\n```\n\ncalling `approx_limit n := &lt;proof&gt;` produces goal\n\n```\n  n : Nat\n  ⊢ Approx _ (x + (1 + x/n)^n)\n```\n\nwhere `&lt;proof&gt;` is a proof that this approximation is indeed valid\n\nWarning: The validity proof is not completely correct right now\n</code>",
+ "258":
+ "<code>SciLean.odeSolveFixedStep.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} (stepper : R → R → X → X) (steps : ℕ)\n  (t₁ t₂ : R) (x₀ : X) : X</code>",
+ "257":
+ "<code>SciLean.rungeKutta4.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (tₙ Δt : R) (xₙ : X) : X</code>",
+ "256":
+ "<code>SciLean.odeSolve_fixed_dt.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} [NormedAddCommGroup X] [NormedSpace R X]\n  {f : R → X → X} (stepper : (R → X → X) → R → R → X → X) (h : HasUniqueOdeSolution f ∧ IsOdeStepper f (stepper f)) :\n  odeSolve f = fun t₀ t x₀ =&gt; limit n → ∞, odeSolveFixedStep (stepper f) n t₀ t x₀</code>",
+ "255":
+ "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
+ "254":
+ "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `true`), performs zeta reduction of let expressions.\nThat is, `let x := v; e[x]` reduces to `e[v]`.\nSee also `zetaDelta`.\n</code>",
+ "253":
+ "<code class=\"docstring\">Optional configuration option for tactics </code>",
+ "252":
+ "<code class=\"docstring\">`simp_rw` functions as a mix of `simp` and `rw`. Like `rw`, it applies each\nrewrite rule in the given order, but like `simp` it repeatedly applies these\nrules and also under binders like `∀ x, ...`, `∃ x, ...` and `fun x ↦...`.\nUsage:\n\n- `simp_rw [lemma_1, ..., lemma_n]` will rewrite the goal by applying the\n  lemmas in that order. A lemma preceded by `←` is applied in the reverse direction.\n- `simp_rw [lemma_1, ..., lemma_n] at h₁ ... hₙ` will rewrite the given hypotheses.\n- `simp_rw [...] at *` rewrites in the whole context: all hypotheses and the goal.\n\nLemmas passed to `simp_rw` must be expressions that are valid arguments to `simp`.\nFor example, neither `simp` nor `rw` can solve the following, but `simp_rw` can:\n\n```lean\nexample {a : ℕ}\n    (h1 : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)\n    (h2 : ∀ a b : ℕ, a ≤ b ↔ ∀ c, c &lt; a → c &lt; b) :\n    (∀ b, a - 1 ≤ b) = ∀ b c : ℕ, c &lt; a → c &lt; b + 1 := by\n  simp_rw [h1, h2]\n```\n</code>",
+ "251": "<code>Float × Float</code>",
+ "250":
+ "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
  "25":
  "<code class=\"docstring\">Pattern matching. `match e, ... with | p, ... =&gt; f | ...` matches each given\nterm `e` against each pattern `p` of a match alternative. When all patterns\nof an alternative match, the `match` term evaluates to the value of the\ncorresponding right-hand side `f` with the pattern variables bound to the\nrespective matched values.\nIf used as `match h : e, ... with | p, ... =&gt; f | ...`, `h : e = p` is available\nwithin `f`.\n\nWhen not constructing a proof, `match` does not automatically substitute variables\nmatched on in dependent variables' types. Use `match (generalizing := true) ...` to\nenforce this.\n\nSyntax quotations can also be used in a pattern match.\nThis matches a `Syntax` value against quotations, pattern variables, or `_`.\n\nQuoted identifiers only match identical identifiers - custom matching such as by the preresolved\nnames only should be done explicitly.\n\n`Syntax.atom`s are ignored during matching by default except when part of a built-in literal.\nFor users introducing new atoms, we recommend wrapping them in dedicated syntax kinds if they\nshould participate in matching.\nFor example, in\n```lean\nsyntax \"c\" (\"foo\" &lt;|&gt; \"bar\") ...\n```\n`foo` and `bar` are indistinguishable during matching, but in\n```lean\nsyntax foo := \"foo\"\nsyntax \"c\" (foo &lt;|&gt; \"bar\") ...\n```\nthey are not.\n</code>",
- "249": "<code>sim : IO Unit</code>",
- "248": "<code><span class=\"literal string\">\"\"</span> : String</code>",
+ "249": "<code>H (m k x p : Float) : Float</code>",
+ "248":
+ "<code>_root_.solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
  "247":
- "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
- "246": "<code><span class=\"literal string\">\"o\"</span> : String</code>",
+ "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
+ "246": "<code>_root_.H (m k x p : Float) : Float</code>",
  "245":
- "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "<code class=\"docstring\">Tactic for evaluating expressions in *commutative* (semi)rings, allowing for variables in the\nexponent.\n\n* `ring!` will use a more aggressive reducibility setting to determine equality of atoms.\n* `ring1` fails if the target is not an equality.\n\nFor example:\n```\nexample (n : ℕ) (m : ℤ) : 2^(n+1) * m = 2 * 2^n * m := by ring\nexample (a b : ℤ) (n : ℕ) : (a + b)^(n + 2) = (a^2 + b^2 + a * b + b * a) * (a + b)^n := by ring\nexample (x y : ℕ) : x + id y = y + id x := by ring!\n```\n</code>",
  "244":
- "<code>Unit : Type</code><span class=\"sep\"></span><code class=\"docstring\">The unit type, the canonical type with one element, named `unit` or `()`.\nIn other words, it describes only a single value, which consists of said constructor applied\nto no arguments whatsoever.\nThe `Unit` type is similar to `void` in languages derived from C.\n\n`Unit` is actually defined as `PUnit.{1}` where `PUnit` is the universe\npolymorphic version. The `Unit` should be preferred over `PUnit` where possible to avoid\nunnecessary universe parameters.\n\nIn functional programming, `Unit` is the return type of things that \"return\nnothing\", since a type with one element conveys no additional information.\nWhen programming with monads, the type `m Unit` represents an action that has\nsome side effects but does not return a value, while `m α` would be an action\nthat has side effects and returns a value of type `α`.\n</code>",
- "243": "<code>IO : Type → Type</code>",
- "242": "<code>_root_.sim : IO Unit</code>",
- "241":
- "<code>solver (m k : Float) :\n  SciLean.Approx (Filter.atTop.prod ⊤)\n    (SciLean.odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
- "240": "<code>ℕ × Unit</code>",
+ "<code class=\"docstring\">The goal of `field_simp` is to reduce an expression in a field to an expression of the form `n / d`\nwhere neither `n` nor `d` contains any division symbol, just using the simplifier (with a carefully\ncrafted simpset named `field_simps`) to reduce the number of division symbols whenever possible by\niterating the following steps:\n\n- write an inverse as a division\n- in any product, move the division to the right\n- if there are several divisions in a product, group them together at the end and write them as a\n  single division\n- reduce a sum to a common denominator\n\nIf the goal is an equality, this simpset will also clear the denominators, so that the proof\ncan normally be concluded by an application of `ring`.\n\n`field_simp [hx, hy]` is a short form for\n`simp (disch := field_simp_discharge) [-one_div, -one_divp, -mul_eq_zero, hx, hy, field_simps]`\n\nNote that this naive algorithm will not try to detect common factors in denominators to reduce the\ncomplexity of the resulting expression. Instead, it relies on the ability of `ring` to handle\ncomplicated expressions in the next step.\n\nAs always with the simplifier, reduction steps will only be applied if the preconditions of the\nlemmas can be checked. This means that proofs that denominators are nonzero should be included. The\nfact that a product is nonzero when all factors are, and that a power of a nonzero number is\nnonzero, are included in the simpset, but more complicated assertions (especially dealing with sums)\nshould be given explicitly. If your expression is not completely reduced by the simplifier\ninvocation, check the denominators of the resulting expression and provide proofs that they are\nnonzero to enable further progress.\n\nTo check that denominators are nonzero, `field_simp` will look for facts in the context, and\nwill try to apply `norm_num` to close numerical goals.\n\nThe invocation of `field_simp` removes the lemma `one_div` from the simpset, as this lemma\nworks against the algorithm explained above. It also removes\n`mul_eq_zero : x * y = 0 ↔ x = 0 ∨ y = 0`, as `norm_num` can not work on disjunctions to\nclose goals of the form `24 ≠ 0`, and replaces it with `mul_ne_zero : x ≠ 0 → y ≠ 0 → x * y ≠ 0`\ncreating two goals instead of a disjunction.\n\nFor example,\n```lean\nexample (a b c d x y : ℂ) (hx : x ≠ 0) (hy : y ≠ 0) :\n    a + b / x + c / x^2 + d / x^3 = a + x⁻¹ * (y * b / y + (d / x + c) / x) := by\n  field_simp\n  ring\n```\n\nMoreover, the `field_simp` tactic can also take care of inverses of units in\na general (commutative) monoid/ring and partial division `/ₚ`, see `Algebra.Group.Units`\nfor the definition. Analogue to the case above, the lemma `one_divp` is removed from the simpset\nas this works against the algorithm. If you have objects with an `IsUnit x` instance like\n`(x : R) (hx : IsUnit x)`, you should lift them with\n`lift x to Rˣ using id hx; rw [IsUnit.unit_of_val_units] clear hx`\nbefore using `field_simp`.\n\nSee also the `cancel_denoms` tactic, which tries to do a similar simplification for expressions\nthat have numerals in denominators.\nThe tactics are not related: `cancel_denoms` will only handle numeric denominators, and will try to\nentirely remove (numeric) division from the expression by multiplying by a factor.\n</code>",
+ "243":
+ "<code>Inv.inv.{u} {α : Type u} [self : Inv α] : α → α</code><span class=\"sep\"></span><code class=\"docstring\">Invert an element of α. </code>",
+ "242":
+ "<code>Ne.{u} {α : Sort u} (a b : α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`a ≠ b`, or `Ne a b` is defined as `¬ (a = b)` or `a = b → False`,\nand asserts that `a` and `b` are not equal.\n</code>",
+ "241": "<code>NewtonSecondLaw (m : ℝ) (x F : ℝ → ℝ) : Prop</code>",
+ "240": "<code>m ≠ 0</code>",
  "24": "<code>List ℕ</code>",
- "239":
- "<code>solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "239": "<code>_root_.NewtonSecondLaw (m : ℝ) (x F : ℝ → ℝ) : Prop</code>",
  "238":
- "<code>Filter.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A filter `F` on a type `α` is a collection of sets of `α` which contains the whole `α`,\nis upwards-closed, and is stable under intersection. We do not forbid this collection to be\nall sets of `α`. </code>",
+ "<code>newtonSolve (steps : ℕ) (x₀ : Float) (f : Float → Float) {f' : Float → Float}\n  (hf : f' = ∂ f := by unfold deriv; fun_trans; infer_var ) : Float</code>",
  "237":
- "<code class=\"docstring\">This tactic eliminates `limit` from an expression that you are approximating\n\nFor example, for goal\n\n```\n  ⊢ Approx _ (x + limit n → ∞, (1 + x/n)^n)\n```\n\ncalling `approx_limit n := &lt;proof&gt;` produces goal\n\n```\n  n : Nat\n  ⊢ Approx _ (x + (1 + x/n)^n)\n```\n\nwhere `&lt;proof&gt;` is a proof that this approximation is indeed valid\n\nWarning: The validity proof is not completely correct right now\n</code>",
- "236":
- "<code>SciLean.odeSolveFixedStep.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} (stepper : R → R → X → X) (steps : ℕ)\n  (t₁ t₂ : R) (x₀ : X) : X</code>",
+ "<code class=\"docstring\">* `unfold id` unfolds definition `id`.\n* `unfold id1 id2 ...` is equivalent to `unfold id1; unfold id2; ...`.\n\nFor non-recursive definitions, this tactic is identical to `delta`.\nFor definitions by pattern matching, it uses \"equation lemmas\" which are\nautogenerated for each match arm.\n</code>",
+ "236": "<code>autoParam (f' = ∂ f) _auto✝</code>",
  "235":
- "<code>SciLean.rungeKutta4.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (tₙ Δt : R) (xₙ : X) : X</code>",
- "234":
- "<code>SciLean.odeSolve_fixed_dt.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} [NormedAddCommGroup X] [NormedSpace R X]\n  {f : R → X → X} (stepper : (R → X → X) → R → R → X → X) (h : HasUniqueOdeSolution f ∧ IsOdeStepper f (stepper f)) :\n  odeSolve f = fun t₀ t x₀ =&gt; limit n → ∞, odeSolveFixedStep (stepper f) n t₀ t x₀</code>",
- "233":
- "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
- "232":
- "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `true`), performs zeta reduction of let expressions.\nThat is, `let x := v; e[x]` reduces to `e[v]`.\nSee also `zetaDelta`.\n</code>",
- "231":
- "<code class=\"docstring\">Optional configuration option for tactics </code>",
+ "<code>_root_.newtonSolve (steps : ℕ) (x₀ : Float) (f : Float → Float) {f' : Float → Float}\n  (hf : f' = ∂ f := by unfold deriv; fun_trans; infer_var ) : Float</code>",
+ "234": "<code>mySqrt (steps : ℕ) (y : Float) : Float</code>",
+ "233": "<code>ℕ</code>",
+ "232": "<code>Std.Range : Type</code>",
+ "231": "<code>Std.Range</code>",
  "230":
- "<code class=\"docstring\">`simp_rw` functions as a mix of `simp` and `rw`. Like `rw`, it applies each\nrewrite rule in the given order, but like `simp` it repeatedly applies these\nrules and also under binders like `∀ x, ...`, `∃ x, ...` and `fun x ↦...`.\nUsage:\n\n- `simp_rw [lemma_1, ..., lemma_n]` will rewrite the goal by applying the\n  lemmas in that order. A lemma preceded by `←` is applied in the reverse direction.\n- `simp_rw [lemma_1, ..., lemma_n] at h₁ ... hₙ` will rewrite the given hypotheses.\n- `simp_rw [...] at *` rewrites in the whole context: all hypotheses and the goal.\n\nLemmas passed to `simp_rw` must be expressions that are valid arguments to `simp`.\nFor example, neither `simp` nor `rw` can solve the following, but `simp_rw` can:\n\n```lean\nexample {a : ℕ}\n    (h1 : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)\n    (h2 : ∀ a b : ℕ, a ≤ b ↔ ∀ c, c &lt; a → c &lt; b) :\n    (∀ b, a - 1 ≤ b) = ∀ b c : ℕ, c &lt; a → c &lt; b + 1 := by\n  simp_rw [h1, h2]\n```\n</code>",
+ "<code>deriv.{u, v} {𝕜 : Type u} [NontriviallyNormedField 𝕜] {F : Type v} [NormedAddCommGroup F] [NormedSpace 𝕜 F] (f : 𝕜 → F)\n  (x : 𝕜) : F</code><span class=\"sep\"></span><code class=\"docstring\">Derivative of `f` at the point `x`, if it exists.  Zero otherwise.\n\nIf the derivative exists (i.e., `∃ f', HasDerivAt f f' x`), then\n`f x' = f x + (x' - x) • deriv f x + o(x' - x)` where `x'` converges to `x`.\n</code>",
  "23":
  "<code>List.reverse.{u} {α : Type u} (as : List α) : List α</code><span class=\"sep\"></span><code class=\"docstring\">`O(|as|)`. Reverse of a list:\n* `[1, 2, 3, 4].reverse = [4, 3, 2, 1]`\n\nNote that because of the \"functional but in place\" optimization implemented by Lean's compiler,\nthis function works without any allocations provided that the input list is unshared:\nit simply walks the linked list and reverses all the node pointers.\n</code>",
- "229":
- "<code>Inv.inv.{u} {α : Type u} [self : Inv α] : α → α</code><span class=\"sep\"></span><code class=\"docstring\">Invert an element of α. </code>",
- "228":
- "<code>HPow.hPow.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HPow α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a ^ b` computes `a` to the power of `b`.\nThe meaning of this notation is type-dependent. </code>",
- "227": "<code>Float × Float</code>",
- "226":
- "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
- "225": "<code>H (m k x p : Float) : Float</code>",
+ "229": "<code>_root_.mySqrt (steps : ℕ) (y : Float) : Float</code>",
+ "228": "<code>ℝ × ℝ → ℝ</code>",
+ "227": "<code>ℝ → ℝ</code>",
+ "226": "<code>ℝ × ℝ</code>",
+ "225":
+ "<code>HSub.hSub.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HSub α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a - b` computes the difference of `a` and `b`.\nThe meaning of this notation is type-dependent.\n* For natural numbers, this operator saturates at 0: `a - b = 0` when `a ≤ b`. </code>",
  "224":
- "<code class=\"docstring\">* `unfold id` unfolds definition `id`.\n* `unfold id1 id2 ...` is equivalent to `unfold id1; unfold id2; ...`.\n\nFor non-recursive definitions, this tactic is identical to `delta`.\nFor definitions by pattern matching, it uses \"equation lemmas\" which are\nautogenerated for each match arm.\n</code>",
+ "<code>HPow.hPow.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HPow α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a ^ b` computes `a` to the power of `b`.\nThe meaning of this notation is type-dependent. </code>",
  "223":
- "<code>_root_.solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
- "222":
- "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
- "221": "<code>_root_.H (m k x p : Float) : Float</code>",
+ "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
+ "222": "<code>ℝ</code>",
+ "221":
+ "<code>fderiv.{u_6, u_7, u_8} (𝕜 : Type u_6) [NontriviallyNormedField 𝕜] {E : Type u_7} [NormedAddCommGroup E]\n  [NormedSpace 𝕜 E] {F : Type u_8} [NormedAddCommGroup F] [NormedSpace 𝕜 F] (f : E → F) (x : E) : E →L[𝕜] F</code><span class=\"sep\"></span><code class=\"docstring\">If `f` has a derivative at `x`, then `fderiv 𝕜 f x` is such a derivative. Otherwise, it is\nset to `0`. </code>",
  "220": "<code>_root_.matDot' {n m : ℕ} (A B : Float^[n, m]) : Float</code>",
  "22": "<code>fibonacci.go (n : ℕ) (l : List ℕ) : List ℕ</code>",
  "219": "<code>matDot.optimized {n m : ℕ} (A B : Float^[n, m]) : Float</code>",
