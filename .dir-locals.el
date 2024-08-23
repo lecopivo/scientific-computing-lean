@@ -3,7 +3,8 @@
 
 ((lean4-mode . ((fill-column . 80)
                 (show-trailing-whitespace . t)
-                (eval . (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))))
+                (eval . (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)
+                (visual-line-fill-column-mode . t)))))
 
 
 
