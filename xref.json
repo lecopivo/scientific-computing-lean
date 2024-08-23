@@ -145,48 +145,79 @@
   [{"id": "Scientific-Computing-in-Lean--Examples",
     "data": ["Scientific Computing in Lean", "Examples"],
     "address": "/Examples"}],
-  "Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative":
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation-for-Derivative":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative",
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation-for-Derivative",
     "data":
     ["Scientific Computing in Lean",
      "Differentiation",
-     "Introduction",
+     "Symbolic Differentiation",
      "Notation for Derivative"],
-    "address": "/Differentiation/Introduction"}],
-  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Simple-Kinematics":
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Missing-Derivative-Rules":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Simple-Kinematics",
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Missing-Derivative-Rules",
     "data":
     ["Scientific Computing in Lean",
      "Differentiation",
-     "Introduction",
-     "Derivative Examples",
-     "Simple Kinematics"],
-    "address": "/Differentiation/Introduction"}],
-  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Newtons-solver":
+     "Symbolic Differentiation",
+     "Missing Derivative Rules"],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Newtons-solver",
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient",
     "data":
     ["Scientific Computing in Lean",
      "Differentiation",
-     "Introduction",
+     "Symbolic Differentiation",
+     "Gradient"],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Symbolic Differentiation",
+     "Differentiating Division, Log, Sqrt, ..."],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Newtons-solver":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Newtons-solver",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Symbolic Differentiation",
      "Derivative Examples",
      "Newton's solver"],
-    "address": "/Differentiation/Introduction"}],
-  "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples":
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Kinematics":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples",
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Kinematics",
     "data":
     ["Scientific Computing in Lean",
      "Differentiation",
-     "Introduction",
+     "Symbolic Differentiation",
+     "Derivative Examples",
+     "Kinematics"],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Symbolic Differentiation",
      "Derivative Examples"],
-    "address": "/Differentiation/Introduction"}],
-  "Scientific-Computing-in-Lean--Differentiation--Introduction":
-  [{"id": "Scientific-Computing-in-Lean--Differentiation--Introduction",
-    "data": ["Scientific Computing in Lean", "Differentiation", "Introduction"],
-    "address": "/Differentiation/Introduction"}],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Symbolic Differentiation"],
+    "address": "/Differentiation/Symbolic-Differentiation"}],
   "Scientific-Computing-in-Lean--Differentiation":
   [{"id": "Scientific-Computing-in-Lean--Differentiation",
     "data": ["Scientific Computing in Lean", "Differentiation"],

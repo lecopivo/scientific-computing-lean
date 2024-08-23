@@ -694,11 +694,17 @@ window.onload = () => {
           <li>
             <a href="../Differentiation#Scientific-Computing-in-Lean--Differentiation">Differentiation</a><ol>
               <li>
-                <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction">Introduction</a><ol>
+                <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation">Symbolic Differentiation</a><ol>
                   <li>
-                    <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative">Notation for Derivative</a></li>
+                    <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation-for-Derivative">Notation for Derivative</a></li>
                   <li>
-                    <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples">Derivative Examples</a></li>
+                    <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples">Derivative Examples</a></li>
+                  <li>
+                    <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient">Gradient</a></li>
+                  <li>
+                    <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Missing-Derivative-Rules">Missing Derivative Rules</a></li>
+                  <li>
+                    <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-">Differentiating Division, Log, Sqrt, ...</a></li>
                   </ol>
                 </li>
               </ol>
@@ -714,19 +720,102 @@ window.onload = () => {
       <main><section>
           <h1>
             Differentiation</h1>
+          <p>
+            We will cover these topics</p>
+          <ol start="1">
+            <li>
+              <p>
+                symbolic differentiations</p>
+              </li>
+            <li>
+              <p>
+                automatic differentiations, forward and reverse mode AD</p>
+              </li>
+            <li>
+              <p>
+                function transformations and how AD works in SciLean</p>
+              <ul>
+                <li>
+                  <p>
+                    exersices: define new function transformations:</p>
+                  <ul>
+                    <li>
+                      <p>
+                        vectorize <code>(X → Y) → (X^[n] → Y^[n])</code></p>
+                      </li>
+                    <li>
+                      <p>
+                        vectorized version of fwdFDeriv
+      fwdFDerivVec <code>(X → Y) → (X×X^[n] → Y×Y^[n])</code></p>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            <li>
+              <p>
+                working with user defined functions and structurs</p>
+              <ul>
+                <li>
+                  <p>
+                    polymorphics functions</p>
+                  </li>
+                <li>
+                  <p>
+                    higher order functions</p>
+                  </li>
+                <li>
+                  <p>
+                    recursive functions</p>
+                  </li>
+                </ul>
+              </li>
+            <li>
+              <p>
+                differentiating tensor expressions</p>
+              <ul>
+                <li>
+                  <p>
+                    explain the problem</p>
+                  </li>
+                <li>
+                  <p>
+                    current solution</p>
+                  </li>
+                <li>
+                  <p>
+                    sparse update and structure sharing problem</p>
+                  </li>
+                </ul>
+              </li>
+            <li>
+              <p>
+                differentiating imperative and monadic code</p>
+              </li>
+            <li>
+              <p>
+                variational calclus</p>
+              </li>
+            </ol>
           <ol class="section-toc">
             <li>
-              <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction">Introduction</a><ol>
+              <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation">Symbolic Differentiation</a><ol>
                 <li>
-                  <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Notation-for-Derivative">Notation for Derivative</a></li>
+                  <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation-for-Derivative">Notation for Derivative</a></li>
                 <li>
-                  <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples">Derivative Examples</a><ol>
+                  <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples">Derivative Examples</a><ol>
                     <li>
-                      <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Newtons-solver">Newton's solver</a></li>
+                      <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Newtons-solver">Newton's solver</a></li>
                     <li>
-                      <a href="../Differentiation/Introduction#Scientific-Computing-in-Lean--Differentiation--Introduction--Derivative-Examples--Simple-Kinematics">Simple Kinematics</a></li>
+                      <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Examples--Kinematics">Kinematics</a></li>
                     </ol>
                   </li>
+                <li>
+                  <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient">Gradient</a></li>
+                <li>
+                  <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Missing-Derivative-Rules">Missing Derivative Rules</a></li>
+                <li>
+                  <a href="../Differentiation/Symbolic-Differentiation#Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-">Differentiating Division, Log, Sqrt, ...</a></li>
                 </ol>
               </li>
             </ol>
