@@ -39,7 +39,7 @@ variable (n : Nat) (x : ℝ)
 Add a link to an interactive code editor and encourage reader to differentiate more complicated expressions involving sin, cos, exp, ... but warn about log or division.
 :::
 
-# Notation for Derivative
+# Notation
 
 Writing `fderiv ℝ (fun x => f x)` is somewhat tedious so *SciLean* makes our life easier by introducing a nice notation `∂ x, f x` for differentiating `(f x)` w.r.t. `x`.
 
@@ -121,7 +121,61 @@ There is nothing stopping us from applying derivative multiple times to compute 
 fun x => 2 : ℝ → ℝ
 ```
 
-# Derivative Examples
+
+## Exercises
+
+1. For a function of two arguments `f x y` write a derivative at `x:=x₀` and `y:=y₀` w.r.t 
+  - the first argument
+  - the second argument
+  - both arguments at the same time
+
+```lean
+variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
+#check ∂ (x:=x₀), (f x y₀)
+#check ∂ (f · y₀) x₀
+-- both notations are identical
+example : (∂ (x:=x₀), (f x y₀)) = (∂ (f · y₀) x₀) := by rfl
+
+#check ∂ (y:=y₀), (f x₀ y)
+#check ∂ (f x₀ ·) y₀
+example : (∂ (y:=y₀), (f x₀ y)) = (∂ (f x₀ ·) y₀) := by rfl
+
+#check ∂ ((x,y):=(x₀,y₀)), f x y
+#check ∂ (fun (x,y) => f x y) (x₀, y₀)
+#check ∂ (↿f) (x₀, y₀)
+example : (∂ ((x,y):=(x₀,y₀)), f x y) = (∂ (fun (x,y) => f x y) (x₀, y₀)) := by rfl
+example : (∂ ((x,y):=(x₀,y₀)), f x y) = (∂ (↿f) (x₀, y₀)) := by rfl
+```
+
+2. second derivative of `f x y` 
+
+```lean
+variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
+#check ∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)
+#check ∂ (∂ (f · y₀)) x₀
+example : (∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)) = (∂ (∂ (f · y₀)) x₀) := by rfl
+
+#check ∂ (y':=y₀), ∂ (y'':=y'), (f x₀ y'')
+#check ∂ (∂ (f x₀ ·)) y₀
+
+#check ∂ ((x,y):=(x₀,y₀)), f x y
+#check ∂ (fun (x,y) => f x y) (x₀, y₀)
+#check ∂ (↿f) (x₀, y₀)
+```
+
+
+3. One dimensional Euler-Lagrange equation
+
+```lean
+variable (L : ℝ → ℝ → ℝ) (x : ℝ → ℝ) (t : ℝ)
+
+---    d/dt       ∂/∂v          L x v      - ∂/∂x      
+#check 
+  let v := ∂ x
+  ∂ (t':=t), (∂ (v':=v t), L (x t) v') - ∂ (x':=x t), L x' (v t)
+```
+
+# Examples
 
 Let's put computing derivatives to some practical use. We will demonstrate how to use *SciLean* symbolic differentiations to solve few common tasks in scientific computing and physics.
 
@@ -155,9 +209,8 @@ In {lean}`mySqrt` we should use `(∂! f x)` notation but unfortunatelly it is c
 
 You might feel a bit unconfortable here are we are differentiating a function defined on floating point numbers. If you think that can't be formally correct then you are right. We will discuss this issue in a later chapter "Working with Real Numbers".
 
-::: TODO
 
-Exercise
+### Exercises
 1. try to solve different equations, for example `exp x = y` to obtain `log`, `x*exp x = y` to obtain Lambert W function or some polynomial.
 
 2. measure relative,\\(\\left| \\frac\{f(x\_n)\}\{x\_n\} \\right| \\), and absolute error \\( \\left| f(x\_n) \\right| \\) and use them for stopping criteria.
@@ -176,8 +229,6 @@ def newtonSolve (steps : Nat) (x₀ : Float)
 
 #eval newtonSolve 10 1.0 (fun x => x^2 - 2.0)
 ```
-:::
-
 
 
 ## Kinematics
@@ -215,9 +266,8 @@ example (m f : ℝ) (hm : m ≠ 0) :
 
 
 
-::: TODO
 
-Exercises:
+### Exercises
 
 1. show that trajectory `x := fun t => (cos t, sin t)` satisfies differential equation `∂ x t = (- (x t).2, (x t).1)`
 
@@ -254,7 +304,25 @@ example (m k : ℝ) :
 
 Warning: Right now `fun_trans` uses theorems that use sorry thus the theorem is not fully proven.
 
-:::
+3. show that `u = fun t x => sin (x - t)` is solution to wave equation, 1D and n-D
+
+```latex
+\frac{\partial^2 u}{\partial t^2} = \frac{\partial^2 u}{\partial x^2}
+```
+
+```lean
+open SciLean Scalar
+def WaveEquation (u : ℝ → ℝ → ℝ) := ∀ x t, (∂ (∂ (u · x)) t) = (∂ (∂ (u t ·)) x)
+
+example : 
+    WaveEquation (fun t x => sin (x - t)) := by
+  unfold WaveEquation deriv
+  fun_trans
+
+```
+
+4. solution to heat equation
+
 
 # Gradient
 
@@ -323,10 +391,7 @@ variable (x₀ y : ℝ×ℝ)
 y : ℝ × ℝ
 ```
 
-
-::: TODO
-
-Exercises
+## Exercises
 
 1. Previously we computed \\(\\sqrt\{y\}\\) using Newton's method. Similarly we can {lean}`mySqrt` Compute `sqrt y` using gradient descent by minimizing objective function `f := fun x => (x^2 - y)^2`
 
@@ -341,10 +406,25 @@ variable (n : Nat) (x y : Float^[2]^[n])
 
 #check (∇ (A : Float^[2,2]), ∑ i, ‖(⊞ i' => ∑ j, A[i',j] * x[i][j]) - y[i]‖₂²) rewrite_by unfold SciLean.fgradient; fun_trans; unfold SciLean.revFDerivProj; fun_trans
 ```
-:::
+
+3. Evalute gradient of `x[0]`, `‖x‖₂²`, `⟪x,y⟫` for `x y : Float^[3]` or for `A : Float^[3,3]`
+
+4. Euler-Lagrange equation in arbitrary dimension and show that for lagrangian `L x v := 1/2 * m * ‖v‖₂² - φ x` the Euler-Langran equation is `m * ∂ (∂ x) t = - ∇ φ x`
+
+```lean
+set_default_scalar ℝ
+variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
+
+variable (L : X → X → ℝ) (x : ℝ → X) (t : ℝ)
+
+#check 
+  let v := ∂ x
+  ∂ (t':=t), (∇ (v':=v t), L (x t) v') - ∇ (x':=x t), L x' (v t)
+```
 
 
-# Missing Derivative Rules
+
+# Derivative Rules
 
 ```lean (show:=false)
 set_default_scalar ℝ
@@ -547,3 +627,20 @@ Figuring out the right tactic like `intro x; nlinarith [norm2_nonneg ℝ x]` can
 Create unsafe mode differentiation which assumes that everything works out. Effectivelly this requires discharger that recognize commong goals that should be sorries or postponed.
 
 :::
+
+## Exercises
+
+1. gradient of energy for n-body system, newton's potential, lenard jones potential
+  - do it for two particles 
+  - do it for n-particles
+
+2. signed distance function 
+  - compute gradient of sphere sdf
+  - compute mean and gaussian curvature of sphere
+
+  - pick SDF from https://iquilezles.org/articles/distfunctions/
+    - most of them involve functions that are not differentiable everywhere
+    - compute derivative in unsafe mode
+    - figure out the minimal condition under which it is differentiable
+      
+
