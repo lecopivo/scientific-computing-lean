@@ -152,10 +152,10 @@
  "<code>SciLean.DataArrayN.curry {α : Type} [pd : SciLean.PlainDataType α] {ι : Type} [SciLean.IndexType ι] {κ : Type}\n  [SciLean.IndexType κ] [Inhabited α] (x : α^[ι, κ]) : α^[κ]^[ι]</code>",
  "357":
  "<code>vectorize {X Y : Type} [SciLean.PlainDataType X] [SciLean.PlainDataType Y] (I : Type) [SciLean.IndexType I]\n  (f : X → Y) : X^[I] → Y^[I]</code>",
- "356": "<code>Float^[10, 5]</code>",
- "355":
+ "356": "<code>Float^[5]</code>",
+ "355": "<code>Float^[10, 5]</code>",
+ "354":
  "<code>_root_.matMul (A : Float^[10, 5]) (y : Float^[5]) : Float^[10]</code>",
- "354": "<code>Float^[5]</code>",
  "353": "<code>Sub Y</code>",
  "352":
  "<code>Sub.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The homogeneous version of `HSub`: `a - b : α` where `a b : α`. </code>",
