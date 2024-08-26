@@ -79,7 +79,7 @@ example : ↿(∂> (f ∘ g)) = ↿(∂> f) ∘ ↿(∂> g) := by fun_trans[Func
 In SciLean it is the theorem {lean}`SciLean.FwdFDeriv.comp_rule`.
 
 
-## Autodiff vs fun\_trans
+## autodiff vs fun\_trans
 
 So far we have been using the tactic `fun_trans` to compute derivatives. You might have notices that `fun_trans` removes all let bindings from the expression. For example
 ```lean (name:=derivwithfuntrans)
@@ -187,7 +187,7 @@ Talk about
 1. what is forward pass and reverse pass
 2. memory requirements of reverse mode
 3. forward mode vs reverse mode 
-
+4. relation to vjp jvp convention
 ::: 
 
 
@@ -199,7 +199,7 @@ Talk about
 
 3. SDF projection
   - sphere
-  - pick something from 
+  - pick something from
     https://iquilezles.org/articles/distfunctions/
 
 

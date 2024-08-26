@@ -1,6 +1,7 @@
 import ScientificComputingInLean.Meta
 import ScientificComputingInLean.Differentiation.Basic
 import ScientificComputingInLean.Differentiation.AutomaticDifferentiation
+import ScientificComputingInLean.Differentiation.FunctionTransformation
 import SciLean
 
 open Verso.Genre Manual
@@ -39,3 +40,5 @@ We will cover these topics
 {include ScientificComputingInLean.Differentiation.Basic}
 
 {include ScientificComputingInLean.Differentiation.AutomaticDifferentiation}
+
+{include ScientificComputingInLean.Differentiation.FunctionTransformation}

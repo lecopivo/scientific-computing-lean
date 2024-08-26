@@ -7,6 +7,8 @@ set_option pp.rawOnError true
 set_option linter.hashCommand false
 set_option linter.haveLet 0
 
+set_option maxHeartbeats 1000000
+
 open Lean.MessageSeverity
 open SciLean
 
@@ -125,6 +127,7 @@ fun x => 2 : ℝ → ℝ
 ## Exercises
 
 1. For a function of two arguments `f x y` write a derivative at `x:=x₀` and `y:=y₀` w.r.t 
+  
   - the first argument
   - the second argument
   - both arguments at the same time
@@ -139,12 +142,19 @@ example : (∂ (x:=x₀), (f x y₀)) = (∂ (f · y₀) x₀) := by rfl
 #check ∂ (y:=y₀), (f x₀ y)
 #check ∂ (f x₀ ·) y₀
 example : (∂ (y:=y₀), (f x₀ y)) = (∂ (f x₀ ·) y₀) := by rfl
+```
 
-#check ∂ ((x,y):=(x₀,y₀)), f x y
-#check ∂ (fun (x,y) => f x y) (x₀, y₀)
-#check ∂ (↿f) (x₀, y₀)
-example : (∂ ((x,y):=(x₀,y₀)), f x y) = (∂ (fun (x,y) => f x y) (x₀, y₀)) := by rfl
-example : (∂ ((x,y):=(x₀,y₀)), f x y) = (∂ (↿f) (x₀, y₀)) := by rfl
+For function `(g : ℝ×ℝ → ℝ)`
+```lean
+variable (g : ℝ×ℝ → ℝ) (x₀ y₀ : ℝ)
+
+-- derivative with respect to the first variable
+#check ∂ (xy:=(x₀,y₀);(1,0)), g xy
+#check ∂ g (x₀,y₀) (1,0)
+
+-- derivative with respect to the second variable
+#check ∂ (xy:=(x₀,y₀);(0,1)), g xy
+#check ∂ g (x₀,y₀) (0,1)
 ```
 
 2. second derivative of `f x y` 
@@ -153,18 +163,17 @@ example : (∂ ((x,y):=(x₀,y₀)), f x y) = (∂ (↿f) (x₀, y₀)) := by rf
 variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 #check ∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)
 #check ∂ (∂ (f · y₀)) x₀
-example : (∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)) = (∂ (∂ (f · y₀)) x₀) := by rfl
 
 #check ∂ (y':=y₀), ∂ (y'':=y'), (f x₀ y'')
 #check ∂ (∂ (f x₀ ·)) y₀
-
-#check ∂ ((x,y):=(x₀,y₀)), f x y
-#check ∂ (fun (x,y) => f x y) (x₀, y₀)
-#check ∂ (↿f) (x₀, y₀)
 ```
 
 
 3. One dimensional Euler-Lagrange equation
+
+```latex
+\frac{d}{dt} \frac{\partial L}{\partial \dot x}(x(t),\dot x(t)) -  \frac{\partial L}{\partial x}(x(t), \dot x(t))
+```
 
 ```lean
 variable (L : ℝ → ℝ → ℝ) (x : ℝ → ℝ) (t : ℝ)
@@ -420,6 +429,22 @@ variable (L : X → X → ℝ) (x : ℝ → X) (t : ℝ)
 #check 
   let v := ∂ x
   ∂ (t':=t), (∇ (v':=v t), L (x t) v') - ∇ (x':=x t), L x' (v t)
+
+-- variable (φ : X → ℝ) (hφ : Differentiable ℝ φ)
+
+-- noncomputable
+-- def EulerLagrange (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) :=
+--   let v := ∂ x
+--   ∂ (t':=t), (∇ (v':=v t), L (x t) v') - ∇ (x':=x t), L x' (v t)
+
+-- noncomputable
+-- def NewtonsLaw (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) :=
+--   m • (∂ (∂ x) t) + (∇ φ (x t))
+
+-- example :
+--   EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
+--   =
+--   NewtonsLaw m φ x t := by unfold EulerLagrange NewtonsLaw; fun_trans
 ```
 
 
@@ -478,7 +503,11 @@ and add a theorem that the derivative of {lean}`foo` is equal to {lean}`foo_deri
 ```lean
 open SciLean
 @[fun_trans]
-theorem foo_deriv_rule : fderiv ℝ foo = fun x => fun dx =>L[ℝ] dx • foo_deriv x := by unfold foo foo_deriv; ext x; fun_trans
+theorem foo_deriv_rule : 
+    fderiv ℝ foo 
+    = 
+    fun x => fun dx =>L[ℝ] dx • foo_deriv x := by 
+  unfold foo foo_deriv; ext x; fun_trans
 ```
 
 Because {lean}`foo_deriv_rule` is marked with `fun_trans` attribute it will be used when we try to differentiate `foo` now
@@ -509,9 +538,9 @@ set_option trace.Meta.Tactic.fun_trans true in
           Differentiable ℝ fun x0 => foo x0
 ...
 ```
-The trace will reveal that `fun_trans` tries to apply composition(chain) rule {lean}`SciLean.fderiv.comp_rule` but it fails as it can't prove {lean}`Differentiable ℝ fun x0 => foo x0`. We need another theorem stating that {lean}`foo` is differentiable function. Mathlib has a tactic `fun_prop` that can prove differentiability and many other function properties like linearity, continuity, measurability etc. and `fun_trans` uses this tactic to ensure it can apply chain rule.
+The trace reveals that `fun_trans` tries to apply composition(chain) rule {lean}`SciLean.fderiv.comp_rule` but it fails as it can't prove {lean}`Differentiable ℝ fun x0 => foo x0`. We need another theorem stating that {lean}`foo` is differentiable function. Mathlib has a tactic `fun_prop` that can prove differentiability and many other function properties like linearity, continuity, measurability etc. and `fun_trans` uses this tactic to ensure it can apply chain rule.
 
-Therefore we need to add `fun_prop` theorem for {lean}`foo`
+We need to add `fun_prop` theorem for {lean}`foo`
 ```lean
 @[fun_prop]
 theorem foo_differentiable : Differentiable ℝ foo := by unfold foo; fun_prop
@@ -535,7 +564,7 @@ It generates these theorems and definition
 #print foo.arg_x.fderiv
 #check foo.arg_x.fderiv_rule
 ```
-The problem of writing appropriate theorems for `fun_trans` and `fun_prop` is quite involve problem and will be discussed in future chapter.
+The problem of writing appropriate theorems for `fun_trans` and `fun_prop` is quite involved problem and will be discussed in future chapter.
 
 
 
