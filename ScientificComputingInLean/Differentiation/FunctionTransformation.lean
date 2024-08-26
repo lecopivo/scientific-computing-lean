@@ -55,7 +55,7 @@ Also `F` should preserve identity
 ```latex
 F(\text{id}) = \text{id}
 ```
-where \\( \\text\\{id\\} \\) is some generalized notion of identity function
+where \\( \\text\{id\} \\) is some generalized notion of identity function
 
 ```lean
 example : (fderiv ℝ (fun x : ℝ => x)) = (fun _ => fun dx =>L[ℝ] dx) := by fun_trans
