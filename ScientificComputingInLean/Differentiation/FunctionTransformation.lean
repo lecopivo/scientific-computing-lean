@@ -87,6 +87,13 @@ Note: This function is similar to JAX's vmap
 
 Unlike previous function transformations, {lean}`vectorize` is computable function. Thus we can actually evaluate `vectorize f` for any computable `f`. However, the default implementation might not be ideal as `⊞ i => ...` always allocates new memory but for example `vectorize exp x` should modify the array `x` inplace.
 
+One motivation behing defining function transformation vectorize is to extend function `(f : Float → Float)` to `(vectorize (Fin 4) f : Float^[4] → Float^[4])` and utilize SIMD operations.
+
+Another motivation is to define a variant of forward mode derivative 
+```
+def fwdFDerivVec R I f x dx := (f x, vectorize I (fderiv R f x) dx)
+```
+i.e. it takes a point `x : X` and array of direction `dx : X^[I]` and computes the function value `f x` and array of output directions `⊞ i => fderiv R f x dx[i]`. One aplication of this function transformation is to compute the full jacobian. For `X = R^[n]` we can take `dx : R^[n]^[n]` to be an array of basis vectors. Then `(fwdFDerivVec R (Fin n) f x dx).2` is the full jacobian of `f` at point `x`.
 
 ## Lambda Theorems
 
@@ -103,8 +110,7 @@ theorem vectorize.id_rule :
   unfold vectorize; ext i; simp
 
 theorem vectorize.const_rule (y : Y) : 
-    vectorize I (fun x : X => y) = fun _ => ⊞ _ => y := by
-  unfold vectorize; ext i; simp
+    vectorize I (fun _ : X => y) = fun _ => ⊞ _ => y := by rfl
 
 theorem vectorize.comp_rule (f : Y → Z) (g : X → Y): 
     vectorize I (fun x : X => f (g x)) = fun x => vectorize I f (vectorize I g x) := by
@@ -135,19 +141,19 @@ theorem vectorize.prod_mk_rule (f : X → Y) (g : X → Z) :
   vectorize I (fun x => (f x, g x))
   =
   fun (x : X^[I]) =>
-    ⊞ i => (f (x[i]), g (x[i])) := by unfold vectorize; ext x i <;> simp
+    ⊞ i => (f (x[i]), g (x[i])) := by rfl
 
 theorem vectorize.fst_rule (f : X → Y×Z) :
   vectorize I (fun x => (f x).1)
   =
   fun (x : X^[I]) => 
-    ⊞ i => (f (x[i])).1 := by unfold vectorize; ext x i <;> simp
+    ⊞ i => (f (x[i])).1 := by rfl
 
 theorem vectorize.snd_rule (f : X → Y×Z) :
   vectorize I (fun x => (f x).2)
   =
   fun (x : X^[I]) => 
-    ⊞ i => (f x[i]).2 := by unfold vectorize; ext x i <;> simp
+    ⊞ i => (f x[i]).2 := by rfl
 
 theorem vectorize.add_rule [Add Y] (f g : X → Y) :
   vectorize I (fun x => f x + g x)
@@ -171,7 +177,6 @@ theorem vectorize.sub_rule [Sub Y] (f g : X → Y) :
 
 ```lean (keep := false)
 set_default_scalar Float
-variable (y : Float^[5])
 def matMul (A : Float^[10,5]) (y : Float^[5]) := 
   vectorize (Fin 10) (⟪·,y⟫) A.curry
 ```
