@@ -97,129 +97,167 @@
  "<code>BasicOperations.DataArrayN.h_size {X I : Type} [PlainDataType X] [IndexType I] (self : DataArrayN X I) :\n  size I = self.data.size</code>",
  "42":
  "<code>BasicOperations.DataArrayN.data {X I : Type} [PlainDataType X] [IndexType I] (self : DataArrayN X I) : DataArray X</code>",
+ "411": "<code>sim : IO Unit</code>",
+ "410": "<code><span class=\"literal string\">\"\"</span> : String</code>",
  "41": "<code>SciLean.IndexType.{u} (I : Type u) : Type u</code>",
+ "409":
+ "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "408": "<code><span class=\"literal string\">\"o\"</span> : String</code>",
+ "407":
+ "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
+ "406": "<code>IO : Type → Type</code>",
+ "405": "<code>_root_.sim : IO Unit</code>",
+ "404":
+ "<code>solver (m k : Float) :\n  SciLean.Approx (Filter.atTop.prod ⊤)\n    (SciLean.odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "403": "<code>ℕ × Unit</code>",
+ "402":
+ "<code>solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "401":
+ "<code>Filter.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A filter `F` on a type `α` is a collection of sets of `α` which contains the whole `α`,\nis upwards-closed, and is stable under intersection. We do not forbid this collection to be\nall sets of `α`. </code>",
+ "400":
+ "<code class=\"docstring\">This tactic eliminates `limit` from an expression that you are approximating\n\nFor example, for goal\n\n```\n  ⊢ Approx _ (x + limit n → ∞, (1 + x/n)^n)\n```\n\ncalling `approx_limit n := &lt;proof&gt;` produces goal\n\n```\n  n : Nat\n  ⊢ Approx _ (x + (1 + x/n)^n)\n```\n\nwhere `&lt;proof&gt;` is a proof that this approximation is indeed valid\n\nWarning: The validity proof is not completely correct right now\n</code>",
  "40":
  "<code>SciLean.PlainDataType (α : Type) : Type</code><span class=\"sep\"></span><code class=\"docstring\">This rougly corresponds to Plain Old Data(POD)/Passive Data known from OOP\n\nwiki: https://en.wikipedia.org/wiki/Passive_data_structure\n\nWe distinguish between two main types of POD. `BitType` a type that is smaller or equal to a byte and `ByteType` that takes up multiple bytes. The main motivation is an efficient storage of `Array Bool` where `Bool` takes up only a single bit, so we can fit 8 bools into a single byte and achieve significant memore reduction.\n\nPotentially surprising edge case is array of fixed length, i.e. the type `{a : Array α // a.size = n}`. It is `PlainDataType` if `α` is `PlainDataType`. However, `Array α` is not `PlainDataType`, even if `α` is `PlainDataType`, as it does not have a fixed byte size.\n</code>",
  "4": "<code>ℕ</code>",
+ "399":
+ "<code>SciLean.odeSolveFixedStep.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} (stepper : R → R → X → X) (steps : ℕ)\n  (t₁ t₂ : R) (x₀ : X) : X</code>",
+ "398":
+ "<code>SciLean.rungeKutta4.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (tₙ Δt : R) (xₙ : X) : X</code>",
+ "397":
+ "<code>SciLean.odeSolve_fixed_dt.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} [NormedAddCommGroup X] [NormedSpace R X]\n  {f : R → X → X} (stepper : (R → X → X) → R → R → X → X) (h : HasUniqueOdeSolution f ∧ IsOdeStepper f (stepper f)) :\n  odeSolve f = fun t₀ t x₀ =&gt; limit n → ∞, odeSolveFixedStep (stepper f) n t₀ t x₀</code>",
+ "396":
+ "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
+ "395":
+ "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `true`), performs zeta reduction of let expressions.\nThat is, `let x := v; e[x]` reduces to `e[v]`.\nSee also `zetaDelta`.\n</code>",
+ "394":
+ "<code class=\"docstring\">Optional configuration option for tactics </code>",
+ "393":
+ "<code class=\"docstring\">`simp_rw` functions as a mix of `simp` and `rw`. Like `rw`, it applies each\nrewrite rule in the given order, but like `simp` it repeatedly applies these\nrules and also under binders like `∀ x, ...`, `∃ x, ...` and `fun x ↦...`.\nUsage:\n\n- `simp_rw [lemma_1, ..., lemma_n]` will rewrite the goal by applying the\n  lemmas in that order. A lemma preceded by `←` is applied in the reverse direction.\n- `simp_rw [lemma_1, ..., lemma_n] at h₁ ... hₙ` will rewrite the given hypotheses.\n- `simp_rw [...] at *` rewrites in the whole context: all hypotheses and the goal.\n\nLemmas passed to `simp_rw` must be expressions that are valid arguments to `simp`.\nFor example, neither `simp` nor `rw` can solve the following, but `simp_rw` can:\n\n```lean\nexample {a : ℕ}\n    (h1 : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)\n    (h2 : ∀ a b : ℕ, a ≤ b ↔ ∀ c, c &lt; a → c &lt; b) :\n    (∀ b, a - 1 ≤ b) = ∀ b c : ℕ, c &lt; a → c &lt; b + 1 := by\n  simp_rw [h1, h2]\n```\n</code>",
+ "392": "<code>Float × Float</code>",
+ "391":
+ "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
+ "390": "<code>H (m k x p : Float) : Float</code>",
  "39": "<code>Type</code>",
- "383": "<code>sim : IO Unit</code>",
- "382": "<code><span class=\"literal string\">\"\"</span> : String</code>",
- "381":
- "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
- "380": "<code><span class=\"literal string\">\"o\"</span> : String</code>",
+ "389":
+ "<code>_root_.solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "388":
+ "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
+ "387": "<code>_root_.H (m k x p : Float) : Float</code>",
+ "386":
+ "<code>SciLean.DataArrayN.curry {α : Type} [pd : SciLean.PlainDataType α] {ι : Type} [SciLean.IndexType ι] {κ : Type}\n  [SciLean.IndexType κ] [Inhabited α] (x : α^[ι, κ]) : α^[κ]^[ι]</code>",
+ "385":
+ "<code>vectorize {X Y : Type} [SciLean.PlainDataType X] [SciLean.PlainDataType Y] (I : Type) [SciLean.IndexType I]\n  (f : X → Y) : X^[I] → Y^[I]</code>",
+ "384": "<code>Float^[5]</code>",
+ "383": "<code>Float^[10, 5]</code>",
+ "382":
+ "<code>_root_.matMul (A : Float^[10, 5]) (y : Float^[5]) : Float^[10]</code>",
+ "381": "<code>Sub Y</code>",
+ "380":
+ "<code>Sub.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The homogeneous version of `HSub`: `a - b : α` where `a b : α`. </code>",
  "38":
  "<code>BasicOperations.DataArrayN (X I : Type) [PlainDataType X] [IndexType I] : Type</code>",
  "379":
- "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
- "378": "<code>IO : Type → Type</code>",
- "377": "<code>_root_.sim : IO Unit</code>",
+ "<code>vectorize.sub_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] [Sub Y] (f g : X → Y) :\n  (vectorize I fun x =&gt; f x - g x) = fun x =&gt;\n    let y := vectorize I f x;\n    let z := vectorize I g x;\n    y - z</code>",
+ "378": "<code>Add Y</code>",
+ "377":
+ "<code>Add.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The homogeneous version of `HAdd`: `a + b : α` where `a b : α`. </code>",
  "376":
- "<code>solver (m k : Float) :\n  SciLean.Approx (Filter.atTop.prod ⊤)\n    (SciLean.odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
- "375": "<code>ℕ × Unit</code>",
- "374":
- "<code>solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "<code>vectorize.add_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] [Add Y] (f g : X → Y) :\n  (vectorize I fun x =&gt; f x + g x) = fun x =&gt;\n    let y := vectorize I f x;\n    let z := vectorize I g x;\n    y + z</code>",
+ "375":
+ "<code>vectorize.snd_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Z] {I : Type} [IndexType I] (f : X → Y × Z) :\n  (vectorize I fun x =&gt; (f x).2) = fun x =&gt; ⊞ i =&gt; (f x[i]).2</code>",
+ "374": "<code>X → Y × Z</code>",
  "373":
- "<code>Filter.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A filter `F` on a type `α` is a collection of sets of `α` which contains the whole `α`,\nis upwards-closed, and is stable under intersection. We do not forbid this collection to be\nall sets of `α`. </code>",
- "372":
- "<code class=\"docstring\">This tactic eliminates `limit` from an expression that you are approximating\n\nFor example, for goal\n\n```\n  ⊢ Approx _ (x + limit n → ∞, (1 + x/n)^n)\n```\n\ncalling `approx_limit n := &lt;proof&gt;` produces goal\n\n```\n  n : Nat\n  ⊢ Approx _ (x + (1 + x/n)^n)\n```\n\nwhere `&lt;proof&gt;` is a proof that this approximation is indeed valid\n\nWarning: The validity proof is not completely correct right now\n</code>",
+ "<code>vectorize.fst_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] (f : X → Y × Z) :\n  (vectorize I fun x =&gt; (f x).1) = fun x =&gt; ⊞ i =&gt; (f x[i]).1</code>",
+ "372": "<code>X → Z</code>",
  "371":
- "<code>SciLean.odeSolveFixedStep.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} (stepper : R → R → X → X) (steps : ℕ)\n  (t₁ t₂ : R) (x₀ : X) : X</code>",
- "370":
- "<code>SciLean.rungeKutta4.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (tₙ Δt : R) (xₙ : X) : X</code>",
+ "<code>vectorize.prod_mk_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : X → Y) (g : X → Z) : (vectorize I fun x =&gt; (f x, g x)) = fun x =&gt; ⊞ i =&gt; (f x[i], g x[i])</code>",
+ "370": "<code>Lean.Elab.Term.deprecated.oldSectionVars</code>",
  "37":
  "<code>BasicOperations.Fin.isLt {n : ℕ} (self : Fin n) : self.val &lt; n</code>",
- "369":
- "<code>SciLean.odeSolve_fixed_dt.{u_1} {R : Type u_1} [RCLike R] {X : Type u_1} [NormedAddCommGroup X] [NormedSpace R X]\n  {f : R → X → X} (stepper : (R → X → X) → R → R → X → X) (h : HasUniqueOdeSolution f ∧ IsOdeStepper f (stepper f)) :\n  odeSolve f = fun t₀ t x₀ =&gt; limit n → ∞, odeSolveFixedStep (stepper f) n t₀ t x₀</code>",
- "368":
- "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
- "367":
- "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `true`), performs zeta reduction of let expressions.\nThat is, `let x := v; e[x]` reduces to `e[v]`.\nSee also `zetaDelta`.\n</code>",
- "366":
- "<code class=\"docstring\">Optional configuration option for tactics </code>",
+ "369": "<code>X × Y</code>",
+ "368": "<code>Z^[I]</code>",
+ "367": "<code>Y^[I]</code>",
+ "366": "<code>X → Y → Z</code>",
  "365":
- "<code class=\"docstring\">`simp_rw` functions as a mix of `simp` and `rw`. Like `rw`, it applies each\nrewrite rule in the given order, but like `simp` it repeatedly applies these\nrules and also under binders like `∀ x, ...`, `∃ x, ...` and `fun x ↦...`.\nUsage:\n\n- `simp_rw [lemma_1, ..., lemma_n]` will rewrite the goal by applying the\n  lemmas in that order. A lemma preceded by `←` is applied in the reverse direction.\n- `simp_rw [lemma_1, ..., lemma_n] at h₁ ... hₙ` will rewrite the given hypotheses.\n- `simp_rw [...] at *` rewrites in the whole context: all hypotheses and the goal.\n\nLemmas passed to `simp_rw` must be expressions that are valid arguments to `simp`.\nFor example, neither `simp` nor `rw` can solve the following, but `simp_rw` can:\n\n```lean\nexample {a : ℕ}\n    (h1 : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)\n    (h2 : ∀ a b : ℕ, a ≤ b ↔ ∀ c, c &lt; a → c &lt; b) :\n    (∀ b, a - 1 ≤ b) = ∀ b c : ℕ, c &lt; a → c &lt; b + 1 := by\n  simp_rw [h1, h2]\n```\n</code>",
- "364": "<code>Float × Float</code>",
- "363":
- "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
- "362": "<code>H (m k x p : Float) : Float</code>",
- "361":
- "<code>_root_.solver (m k : Float) :\n  Approx (Filter.atTop.prod ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "<code>vectorize.let_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : X → Y → Z) (g : X → Y) :\n  (vectorize I fun x =&gt;\n      let y := g x;\n      f x y) =\n    fun x =&gt;\n    let y := vectorize I g x;\n    let z := vectorize I (fun xy =&gt; f xy.1 xy.2) (⊞ i =&gt; (x[i], y[i]));\n    z</code>",
+ "364": "<code>PlainDataType Z</code>",
+ "363": "<code>Y → Z</code>",
+ "362":
+ "<code>vectorize.comp_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : Y → Z) (g : X → Y) : (vectorize I fun x =&gt; f (g x)) = fun x =&gt; vectorize I f (vectorize I g x)</code>",
+ "361": "<code>PlainDataType Y</code>",
  "360":
- "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
+ "<code>vectorize.const_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] (y : Y) :\n  (vectorize I fun x =&gt; y) = fun x =&gt; ⊞ x =&gt; y</code>",
  "36": "<code>BasicOperations.Fin.val {n : ℕ} (self : Fin n) : ℕ</code>",
- "359": "<code>_root_.H (m k x p : Float) : Float</code>",
+ "359": "<code>PlainDataType X</code>",
  "358":
- "<code>SciLean.DataArrayN.curry {α : Type} [pd : SciLean.PlainDataType α] {ι : Type} [SciLean.IndexType ι] {κ : Type}\n  [SciLean.IndexType κ] [Inhabited α] (x : α^[ι, κ]) : α^[κ]^[ι]</code>",
+ "<code>vectorize.id_rule {X : Type} [PlainDataType X] {I : Type} [IndexType I] : (vectorize I fun x =&gt; x) = fun x =&gt; x</code>",
  "357":
- "<code>vectorize {X Y : Type} [SciLean.PlainDataType X] [SciLean.PlainDataType Y] (I : Type) [SciLean.IndexType I]\n  (f : X → Y) : X^[I] → Y^[I]</code>",
- "356": "<code>Float^[5]</code>",
- "355": "<code>Float^[10, 5]</code>",
+ "<code>vectorize {X Y : Type} [PlainDataType X] [PlainDataType Y] (I : Type) [IndexType I] (f : X → Y) : X^[I] → Y^[I]</code>",
+ "356": "<code>X^[I]</code>",
+ "355":
+ "<code>_root_.vectorize {X Y : Type} [PlainDataType X] [PlainDataType Y] (I : Type) [IndexType I] (f : X → Y) : X^[I] → Y^[I]</code>",
  "354":
- "<code>_root_.matMul (A : Float^[10, 5]) (y : Float^[5]) : Float^[10]</code>",
- "353": "<code>Sub Y</code>",
+ "<code>mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a</code>",
+ "353": "<code>IsContinuousLinearMap ℝ B</code>",
  "352":
- "<code>Sub.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The homogeneous version of `HSub`: `a - b : α` where `a b : α`. </code>",
- "351":
- "<code>vectorize.sub_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] [Sub Y] (f g : X → Y) :\n  (vectorize I fun x =&gt; f x - g x) = fun x =&gt;\n    let y := vectorize I f x;\n    let z := vectorize I g x;\n    y - z</code>",
- "350": "<code>Add Y</code>",
+ "<code>SciLean.IsContinuousLinearMap.{u_1, u_2, u_3} (R : Type u_1) [Semiring R] {X : Type u_2} [TopologicalSpace X]\n  [AddCommMonoid X] [Module R X] {Y : Type u_3} [TopologicalSpace Y] [AddCommMonoid Y] [Module R Y] (f : X → Y) : Prop</code>",
+ "351": "<code>IsContinuousLinearMap ℝ A</code>",
+ "350":
+ "<code>SciLean.revFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace K X]\n  [CompleteSpace X] {Y : Type u_3} [NormedAddCommGroup Y] [AdjointSpace K Y] [CompleteSpace Y] (f : X → Y) (x : X) :\n  Y × (Y → X)</code>",
  "35": "<code>BasicOperations.Fin (n : ℕ) : Type</code>",
  "349":
- "<code>Add.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The homogeneous version of `HAdd`: `a + b : α` where `a b : α`. </code>",
+ "<code>SciLean.FwdFDeriv.comp_rule.{u_1, u_2, u_3, u_4} {K : Type u_1} [RCLike K] {X : Type u_4} [NormedAddCommGroup X]\n  [NormedSpace K X] {Y : Type u_2} [NormedAddCommGroup Y] [NormedSpace K Y] {Z : Type u_3} [NormedAddCommGroup Z]\n  [NormedSpace K Z] (f : Y → Z) (g : X → Y) (hf : Differentiable K f) (hg : Differentiable K g) :\n  ∂&gt; x, f (g x) = fun x dx =&gt;\n    let ydy := ∂&gt; g x dx;\n    let zdz := ∂&gt; f ydy.1 ydy.2;\n    zdz</code>",
  "348":
- "<code>vectorize.add_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] [Add Y] (f g : X → Y) :\n  (vectorize I fun x =&gt; f x + g x) = fun x =&gt;\n    let y := vectorize I f x;\n    let z := vectorize I g x;\n    y + z</code>",
+ "<code>Function.HasUncurry.uncurry.{u_5, u_6, u_7} {α : Type u_5} {β : outParam (Type u_6)} {γ : outParam (Type u_7)}\n  [self : Function.HasUncurry α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">Uncurrying operator. The most generic use is to recursively uncurry. For instance\n`f : α → β → γ → δ` will be turned into `↿f : α × β × γ → δ`. One can also add instances\nfor bundled maps. </code>",
  "347":
- "<code>vectorize.snd_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Z] {I : Type} [IndexType I] (f : X → Y × Z) :\n  (vectorize I fun x =&gt; (f x).2) = fun x =&gt; ⊞ i =&gt; (f x[i]).2</code>",
- "346": "<code>X → Y × Z</code>",
+ "<code>Function.comp.{u, v, w} {α : Sort u} {β : Sort v} {δ : Sort w} (f : β → δ) (g : α → β) : α → δ</code><span class=\"sep\"></span><code class=\"docstring\">Function composition is the act of pipelining the result of one function, to the input of another, creating an entirely new function.\nExample:\n```\n#eval Function.comp List.reverse (List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nYou can use the notation `f ∘ g` as shorthand for `Function.comp f g`.\n```\n#eval (List.reverse ∘ List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nA simpler way of thinking about it, is that `List.reverse ∘ List.drop 2`\nis equivalent to `fun xs =&gt; List.reverse (List.drop 2 xs)`,\nthe benefit is that the meaning of composition is obvious,\nand the representation is compact.\n</code>",
+ "346": "<code>Differentiable ℝ g</code>",
  "345":
- "<code>vectorize.fst_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] (f : X → Y × Z) :\n  (vectorize I fun x =&gt; (f x).1) = fun x =&gt; ⊞ i =&gt; (f x[i]).1</code>",
- "344": "<code>X → Z</code>",
- "343":
- "<code>vectorize.prod_mk_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : X → Y) (g : X → Z) : (vectorize I fun x =&gt; (f x, g x)) = fun x =&gt; ⊞ i =&gt; (f x[i], g x[i])</code>",
- "342": "<code>Lean.Elab.Term.deprecated.oldSectionVars</code>",
- "341": "<code>X × Y</code>",
- "340": "<code>Z^[I]</code>",
+ "<code>SciLean.fwdFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace K X]\n  {Y : Type u_3} [NormedAddCommGroup Y] [NormedSpace K Y] (f : X → Y) (x dx : X) : Y × Y</code>",
+ "344":
+ "<code>SciLean.adjointFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace K X]\n  [CompleteSpace X] {Y : Type u_3} [NormedAddCommGroup Y] [AdjointSpace K Y] [CompleteSpace Y] (f : X → Y) (x : X)\n  (dy : Y) : X</code>",
+ "343": "<code>Y</code>",
+ "342": "<code>CompleteSpace Y</code>",
+ "341": "<code>AdjointSpace 𝕜 Y</code>",
+ "340": "<code>AdjointSpace 𝕜 X</code>",
  "34":
  "<code class=\"docstring\">`namespace &lt;id&gt;` opens a section with label `&lt;id&gt;` that influences naming and name resolution inside\nthe section:\n* Declarations names are prefixed: `def seventeen : ℕ := 17` inside a namespace `Nat` is given the\n  full name `Nat.seventeen`.\n* Names introduced by `export` declarations are also prefixed by the identifier.\n* All names starting with `&lt;id&gt;.` become available in the namespace without the prefix. These names\n  are preferred over names introduced by outer namespaces or `open`.\n* Within a namespace, declarations can be `protected`, which excludes them from the effects of\n  opening the namespace.\n\nAs with `section`, namespaces can be nested and the scope of a namespace is terminated by a\ncorresponding `end &lt;id&gt;` or the end of the file.\n\n`namespace` also acts like `section` in delimiting the scope of `variable`, `open`, and other scoped commands.\n</code>",
- "339": "<code>Y^[I]</code>",
- "338": "<code>X → Y → Z</code>",
- "337":
- "<code>vectorize.let_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : X → Y → Z) (g : X → Y) :\n  (vectorize I fun x =&gt;\n      let y := g x;\n      f x y) =\n    fun x =&gt;\n    let y := vectorize I g x;\n    let z := vectorize I (fun xy =&gt; f xy.1 xy.2) (⊞ i =&gt; (x[i], y[i]));\n    z</code>",
- "336": "<code>PlainDataType Z</code>",
- "335": "<code>Y → Z</code>",
- "334":
- "<code>vectorize.comp_rule {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z] {I : Type} [IndexType I]\n  (f : Y → Z) (g : X → Y) : (vectorize I fun x =&gt; f (g x)) = fun x =&gt; vectorize I f (vectorize I g x)</code>",
- "333": "<code>PlainDataType Y</code>",
- "332": "<code>Y</code>",
- "331":
- "<code>vectorize.const_rule {X Y : Type} [PlainDataType X] [PlainDataType Y] {I : Type} [IndexType I] (y : Y) :\n  (vectorize I fun x =&gt; y) = fun x =&gt; ⊞ x =&gt; y</code>",
- "330": "<code>PlainDataType X</code>",
+ "339": "<code>Type ?u.824</code>",
+ "338":
+ "<code>InnerProductSpace.{u_4, u_5} (𝕜 : Type u_4) (E : Type u_5) [RCLike 𝕜] [SeminormedAddCommGroup E] : Type (max u_4 u_5)</code><span class=\"sep\"></span><code class=\"docstring\">A (pre) inner product space is a vector space with an additional operation called inner product.\nThe (semi)norm could be derived from the inner product, instead we require the existence of a\nseminorm and the fact that `‖x‖^2 = re ⟪x, x⟫` to be able to put instances on `𝕂` or product spaces.\n\nNote that `NormedSpace` does not assume that `‖x‖=0` implies `x=0` (it is rather a seminorm).\n\nTo construct a seminorm from an inner product, see `PreInnerProductSpace.ofCore`.\n</code>",
+ "337": "<code>NormedSpace 𝕜 Y</code>",
+ "336": "<code>NormedAddCommGroup Y</code>",
+ "335": "<code>NormedSpace 𝕜 X</code>",
+ "334": "<code>RCLike 𝕜</code>",
+ "333": "<code>Differentiable 𝕜 g</code>",
+ "332": "<code>Differentiable 𝕜 f</code>",
+ "331": "<code>Type u_3</code>",
+ "330": "<code>X → Y</code>",
  "33": "<code>dot {n : ℕ} (x y : Float^[n]) : Float</code>",
- "329":
- "<code>vectorize.id_rule {X : Type} [PlainDataType X] {I : Type} [IndexType I] : (vectorize I fun x =&gt; x) = fun x =&gt; x</code>",
+ "329": "<code>Type ?u.155</code>",
  "328":
- "<code>vectorize {X Y : Type} [PlainDataType X] [PlainDataType Y] (I : Type) [IndexType I] (f : X → Y) : X^[I] → Y^[I]</code>",
- "327": "<code>X^[I]</code>",
- "326": "<code>X → Y</code>",
+ "<code>RCLike.{u_1} (K : semiOutParam (Type u_1)) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">This typeclass captures properties shared by ℝ and ℂ, with an API that closely matches that of ℂ.\n</code>",
+ "327":
+ "<code>NormedSpace.{u_6, u_7} (𝕜 : Type u_6) (E : Type u_7) [NormedField 𝕜] [SeminormedAddCommGroup E] : Type (max u_6 u_7)</code><span class=\"sep\"></span><code class=\"docstring\">A normed space over a normed field is a vector space endowed with a norm which satisfies the\nequality `‖c • x‖ = ‖c‖ ‖x‖`. We require only `‖c • x‖ ≤ ‖c‖ ‖x‖` in the definition, then prove\n`‖c • x‖ = ‖c‖ ‖x‖` in `norm_smul`.\n\nNote that since this requires `SeminormedAddCommGroup` and not `NormedAddCommGroup`, this\ntypeclass can be used for \"semi normed spaces\" too, just as `Module` can be used for\n\"semi modules\". </code>",
+ "326":
+ "<code>add_assoc.{u_1} {G : Type u_1} [AddSemigroup G] (a b c : G) : a + b + c = a + (b + c)</code>",
  "325":
- "<code>_root_.vectorize {X Y : Type} [PlainDataType X] [PlainDataType Y] (I : Type) [IndexType I] (f : X → Y) : X^[I] → Y^[I]</code>",
+ "<code>smul_add.{u_1, u_4} {M : Type u_1} {A : Type u_4} [AddZeroClass A] [DistribSMul M A] (a : M) (b₁ b₂ : A) :\n  a • (b₁ + b₂) = a • b₁ + a • b₂</code>",
  "324":
- "<code>mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a</code>",
- "323": "<code>IsContinuousLinearMap ℝ B</code>",
- "322":
- "<code>SciLean.IsContinuousLinearMap.{u_1, u_2, u_3} (R : Type u_1) [Semiring R] {X : Type u_2} [TopologicalSpace X]\n  [AddCommMonoid X] [Module R X] {Y : Type u_3} [TopologicalSpace Y] [AddCommMonoid Y] [Module R Y] (f : X → Y) : Prop</code>",
- "321": "<code>IsContinuousLinearMap ℝ A</code>",
- "320":
- "<code>SciLean.revFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace K X]\n  [CompleteSpace X] {Y : Type u_3} [NormedAddCommGroup Y] [AdjointSpace K Y] [CompleteSpace Y] (f : X → Y) (x : X) :\n  Y × (Y → X)</code>",
+ "<code>add_smul.{u_2, u_5} {R : Type u_2} {M : Type u_5} [Semiring R] [AddCommMonoid M] [Module R M] (r s : R) (x : M) :\n  (r + s) • x = r • x + s • x</code>",
+ "323": "<code>Module 𝕜 X</code>",
+ "322": "<code>AddCommGroup X</code>",
+ "321": "<code>Field 𝕜</code>",
+ "320": "<code>Type u_2</code>",
  "32": "<code>Fin n</code>",
- "319":
- "<code>SciLean.FwdFDeriv.comp_rule.{u_1, u_2, u_3, u_4} {K : Type u_1} [RCLike K] {X : Type u_4} [NormedAddCommGroup X]\n  [NormedSpace K X] {Y : Type u_2} [NormedAddCommGroup Y] [NormedSpace K Y] {Z : Type u_3} [NormedAddCommGroup Z]\n  [NormedSpace K Z] (f : Y → Z) (g : X → Y) (hf : Differentiable K f) (hg : Differentiable K g) :\n  ∂&gt; x, f (g x) = fun x dx =&gt;\n    let ydy := ∂&gt; g x dx;\n    let zdz := ∂&gt; f ydy.1 ydy.2;\n    zdz</code>",
- "318":
- "<code>Function.HasUncurry.uncurry.{u_5, u_6, u_7} {α : Type u_5} {β : outParam (Type u_6)} {γ : outParam (Type u_7)}\n  [self : Function.HasUncurry α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">Uncurrying operator. The most generic use is to recursively uncurry. For instance\n`f : α → β → γ → δ` will be turned into `↿f : α × β × γ → δ`. One can also add instances\nfor bundled maps. </code>",
+ "319": "<code>𝕜</code>",
+ "318": "<code>Type ?u.11</code>",
  "317":
- "<code>Function.comp.{u, v, w} {α : Sort u} {β : Sort v} {δ : Sort w} (f : β → δ) (g : α → β) : α → δ</code><span class=\"sep\"></span><code class=\"docstring\">Function composition is the act of pipelining the result of one function, to the input of another, creating an entirely new function.\nExample:\n```\n#eval Function.comp List.reverse (List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nYou can use the notation `f ∘ g` as shorthand for `Function.comp f g`.\n```\n#eval (List.reverse ∘ List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nA simpler way of thinking about it, is that `List.reverse ∘ List.drop 2`\nis equivalent to `fun xs =&gt; List.reverse (List.drop 2 xs)`,\nthe benefit is that the meaning of composition is obvious,\nand the representation is compact.\n</code>",
- "316": "<code>Differentiable ℝ g</code>",
+ "<code>Field.{u} (K : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A `Field` is a `CommRing` with multiplicative inverses for nonzero elements.\n\nAn instance of `Field K` includes maps `ratCast : ℚ → K` and `qsmul : ℚ → K → K`.\nThose two fields are needed to implement the `DivisionRing K → Algebra ℚ K` instance since we need\nto control the specific definitions for some special cases of `K` (in particular `K = ℚ` itself).\nSee also note [forgetful inheritance].\n\nIf the field has positive characteristic `p`, our division by zero convention forces\n`ratCast (1 / p) = 1 / 0 = 0`. </code>",
+ "316":
+ "<code>Module.{u, v} (R : Type u) (M : Type v) [Semiring R] [AddCommMonoid M] : Type (max u v)</code><span class=\"sep\"></span><code class=\"docstring\">A module is a generalization of vector spaces to a scalar semiring.\nIt consists of a scalar semiring `R` and an additive monoid of \"vectors\" `M`,\nconnected by a \"scalar multiplication\" operation `r • x : M`\n(where `r : R` and `x : M`) with some natural associativity and\ndistributivity axioms similar to those on a ring. </code>",
  "315":
- "<code>SciLean.fwdFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace K X]\n  {Y : Type u_3} [NormedAddCommGroup Y] [NormedSpace K Y] (f : X → Y) (x dx : X) : Y × Y</code>",
+ "<code>AddCommGroup.{u} (G : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">An additive commutative group is an additive group with commutative `(+)`. </code>",
  "314":
  "<code>SciLean.norm2_nonneg.{u_1, u_2} (R : Type u_1) [RealScalar R] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace R X]\n  (x : X) : 0 ≤ ‖x‖₂²</code>",
  "313":
