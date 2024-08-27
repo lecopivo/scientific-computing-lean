@@ -673,3 +673,64 @@ Create unsafe mode differentiation which assumes that everything works out. Effe
     - figure out the minimal condition under which it is differentiable
       
 
+# Abstract Vector Spaces
+
+In calculus we usually consider only functions \\((f : \\mathbb\{R\}^n \\rightarrow \\mathbb\{R\}^m) \\). The issue is that on computers the type \\( \\mathbb\{R\}^n \\) can have multiple different realizations. For example \\( \\mathbb\{R\}^3 \\) can be modeled by `Float×Float×Float`, `Float^[3]` or `Float×Float^[2]`. They are all equivalent but in code we have to explicitely convert between these types. For this reason it is better to work with abstract vector spaces instead of with \\( \\mathbb\{R\}^n \\).
+
+Fortunately mathlib's derivative {lean}`fderiv` is already defined for a function `(f : X → Y)` between two abstract vector spaces `X` and `Y` over a field `𝕜`. Mathlib's way of introducing an abstract vector space is rather involved and we need to spend some time talking about it. This presentation will be rather simplified. For interested reader we provide references at the end of this section that go over mathlib's algebraic stracutes in more detail.
+
+A vector space `X` is a set with operations `+,-,•,0` such that 
+```
+  ∀ (x y z : X), x + (y + z) = (x + y) + z
+  ∀ (x y : X), x + y = y + x
+  ∀ (x : X), x + 0 = 0
+  ∀ (x : X), x + (-x) = 0
+
+  ∀ (r s : 𝕜) (x : X), r • (s • x) = (r * s) • x(
+  ∀ (x : X), 1 • x = x
+  ∀ (r : 𝕜) (x y : X), r • (x + y) = r • x + r • y
+  ∀ (r s : 𝕜) (x : X), (r + s) • x = r • x + s • x
+```
+in mathlib the axioms talking about addition and negation are captured by the type class {lean}`AddCommGroup` and the aximps talking about scalar multiplication are captured by the type class {lean}`Module`. Therefore if we want to introduce a new abstract vector space over a field `R` we have to introduce these variables
+```lean
+variable 
+  {𝕜} [Field 𝕜]
+  {X} [AddCommGroup X] [Module 𝕜 X]
+
+example (s r : 𝕜) (x y : X) : 
+    (s + r) • (x + y) = s • x + r • x + s • y + r • y := by 
+  simp only [add_smul,smul_add,add_assoc]
+```
+
+When we want to differentiate a function `(f : X → Y)` between two vector spaces we also need that `X` and `Y` are equiped with a norm. For this purpose there is {lean}`NormedAddCommGroup` which equips {lean}`AddCommGroup` with a norm and guarantees that it compatible with addition and negation, and {lean}`NormedSpace` which equips {lean}`Module` with a norm and guarentees that it is compatible with scalar multiplication. Furthermore, we have to restric to a filed `𝕜` that is either real numbers `ℝ` or complex numbers `ℂ`. The type class {lean}`RCLike` states exactly that. Therefore when we work with derivative in general setting the code usually looks like this
+```lean
+variable 
+  {𝕜} [RCLike 𝕜]
+  {X} [NormedAddCommGroup X] [NormedSpace 𝕜 X]
+  {Y} [NormedAddCommGroup Y] [NormedSpace 𝕜 Y]
+
+set_default_scalar 𝕜
+
+example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g) :
+    (∂ x, (f x + g x)) = (∂ f) + (∂ g) := by ext x dx; fun_trans
+```
+
+
+When working with gradients we also need inner product as {lean}`adjoint` is defined through inner product. Unfortunately, here we diverge from mathlib a little bit. Mathlib defines {lean}`InnerProductSpace` which equips {lean}`NormedSpace` with inner product. Understandably {lean}`InnerProductSpace` requires that the `⟪x,x⟫ = ‖x‖²` however mathlib made the unfortunate decision by definin norm on produce spaces as `‖(x,y)‖ = max ‖x‖ ‖y‖` which is incompatible with the inner product structure. Therefore type like `ℝ×ℝ` can't be equiped with {lean}`InnerProductSpace`. Because of these issues, SciLean introduces {lean}`AdjointSpace` which is almost identical to {lean}`InnerProductSpace` but it only requires that the norm induced by inner product is equivalend to the existing norm i.e. `∃ (c d : ℝ⁺), ∀ x, c * ⟪x,x⟫ ≤ ‖x‖^2 ≤ d * ⟪x,x⟫`. SciLean also introduces L₂-norm `‖x‖₂ := sqrt ⟪x,x⟫` which you have seen already. Therfore when we work with gradient in general setting the code usually looks like this
+```lean
+open SciLean
+variable 
+  {𝕜} [RCLike 𝕜]
+  {X} [NormedAddCommGroup X] [AdjointSpace 𝕜 X] [CompleteSpace X]
+  {Y} [NormedAddCommGroup Y] [AdjointSpace 𝕜 Y] [CompleteSpace Y]
+
+set_default_scalar 𝕜
+
+example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g) :
+    (∇ x, (f x + g x)) = (∇ f) + (∇ g) := by 
+  ext x; unfold adjointFDeriv; fun_trans
+```
+
+
+
+For interested reader we recommend reading the chapter [Hierachies](https://leanprover-community.github.io/mathematics_in_lean/C07_Hierarchies.html) from [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/index.html) which explains how mathlib approaches algebraic hierachies like monoids, groups or modules. After reading that we recommend reading [Differential Calculus in Normed Spaces](https://leanprover-community.github.io/mathematics_in_lean/C10_Differential_Calculus.html#differential-calculus-in-normed-spaces) which 
