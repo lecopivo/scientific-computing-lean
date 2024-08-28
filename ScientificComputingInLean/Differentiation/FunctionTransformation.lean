@@ -70,113 +70,125 @@ example : (adjoint ℝ (fun x : ℝ => x)) = fun x => x := by fun_trans
 
 # User Defined Function Transformation
 
-Let's demonstrate `fun_trans` capability by defining a new function transformation `vectorize`
-
+Let's demonstrate `fun_trans` capability by defining a slight variant of forward mode derivative
 ```lean
-
 open SciLean
 variable 
-  {X Y : Type} [PlainDataType X] [PlainDataType Y]
+  (R) [RCLike R]
+  {X} [NormedAddCommGroup X] [NormedSpace R X]
+  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
 
 @[fun_trans]
-def vectorize (I : Type) [IndexType I] (f : X → Y) : X^[I] → Y^[I] := fun x => ⊞ i => f (x[i])
+noncomputable
+def fwdFDeriv' (f : X → Y) : X×X → Y×Y := 
+  fun xdx => (f xdx.1, fderiv R f xdx.1 xdx.2)
 ```
-This function takes a function `(f : X → Y)` and creates a function mapping arrays of `X` to arrays of `Y` by calling `f` on every element. To indicete that such high order function should be treated as function transformation we have to add the attribute `@[fun_trans]`
+The only difference is that {lean}`fwdFDeriv'` is uncurried version of {lean}`fwdFDeriv`.
 
-Note: This function is similar to JAX's vmap 
+My marking the definition with `@[fun_trans]` attribute we let Lean know that it is a function transformation. For `fun_trans` to work properly with this newly defined function transformation we have to state its transformation rules/theorems. There are couple types
+1. Lambda theorems.
+  Theorems about basic lambda terms like indentity `fun x => x`, constant `fun x => y`, composition `fun x => f (g x)` and few more.
+2. Function theorems.
+  Theorems about functions like addition, multiplication etc.
+3. Free variable theorems.
+  These theorems usually state a transformation rule under some special condition. Like derivative of linear function is the function itself.
+4. Morphism theorems.
+  Theorems about bundled morphisms. These are very special theorems that 
+  
+# Lambda Theorems
 
-Unlike previous function transformations, {lean}`vectorize` is computable function. Thus we can actually evaluate `vectorize f` for any computable `f`. However, the default implementation might not be ideal as `⊞ i => ...` always allocates new memory but for example `vectorize exp x` should modify the array `x` inplace.
-
-One motivation behing defining function transformation vectorize is to extend function `(f : Float → Float)` to `(vectorize (Fin 4) f : Float^[4] → Float^[4])` and utilize SIMD operations.
-
-Another motivation is to define a variant of forward mode derivative 
+The tactic `fun_trans` transforms a complicated functions by first decomposing them into a sequence of function compositions and then transforms each of those function separetely. For example when we want to transform function {lean}`(fun (x : ℝ) => ((2*x) + x)^2)` then `fun_trans` effectivelly rewrites it as
+```lean
+example :
+  (fun (x : ℝ) => ((2*x) + x)^2)
+  =
+  (fun x => x^2) ∘ (fun (x,y) => x + y) ∘ (fun x => (2*x,x)) := by rfl
 ```
-def fwdFDerivVec R I f x dx := (f x, vectorize I (fderiv R f x) dx)
-```
-i.e. it takes a point `x : X` and array of direction `dx : X^[I]` and computes the function value `f x` and array of output directions `⊞ i => fderiv R f x dx[i]`. One aplication of this function transformation is to compute the full jacobian. For `X = R^[n]` we can take `dx : R^[n]^[n]` to be an array of basis vectors. Then `(fwdFDerivVec R (Fin n) f x dx).2` is the full jacobian of `f` at point `x`.
+Therefore `fun_trans` needs to know how to handle transfoming composition but also to transform `(fun x => (2*x,x))` it ineeds to know how to transform pairing of two functions `fun x => 2*x` and `fun x => x`. 
 
-## Lambda Theorems
+Lambda theorems are responsible for reducing the problem of transforming function like {lean}`(fun (x : ℝ) => ((2*x) + x)^2)` into transformation of all the elementary functions `(fun x => x^2)`, `(fun (x,y) => x+y)` and `(fun x => 2*x)`. Those are handled by function theorems and we will talk about those a bit later.
 
+There are six basic lambda theorems saying how lambda terms are transformed
 
+1. Identity rule for transforming `fun (x : X) => x`
+2. Constant rule for transforming `fun (x : X) => y`
+3. Composition rule for transforming `fun (x : X) => f (g x)`
+4. Let rule for transforming `fun (x : X) => let y := g x; f x y`
+5. Apply rule for transforming `fun (f : X → Y) => f x`
+6. Pi rule for transforming `fun (x : X) (y : Y) => f x y`
 
+There are also three theorems about product type which technically speaking fall under the category of "function theorems" but they are so fundamental that we list them here
+
+7. Product rule for transforming `fun (x : X) => (f x, g x)`
+8. First projection rule for transforming `fun (xy : X×Y) => xy.1`
+9. Second projection rule for transforming `fun (xy : X×Y) => xy.2`
+
+The collection of these theorems allows `fun_trans` to transform any complicated lambda expression if it can transform all the atomic functions in the lambda expression.
+
+Let us give an example of few lambda theorems for {lean}`fwdFDeriv'`
 ```lean
 open SciLean
 variable 
-  {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z]
-  {I : Type} [IndexType I] 
+  {R} [RCLike R]
+  {X} [NormedAddCommGroup X] [NormedSpace R X]
+  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
+  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
 
-theorem vectorize.id_rule : 
-    vectorize I (fun x : X => x) = fun x => x := by
-  unfold vectorize; ext i; simp
+theorem fwdFDeriv'.id_rule : 
+    fwdFDeriv' R (fun x : X => x) = fun xdx => xdx := by
+  unfold fwdFDeriv'; fun_trans
 
-theorem vectorize.const_rule (y : Y) : 
-    vectorize I (fun _ : X => y) = fun _ => ⊞ _ => y := by rfl
-
-theorem vectorize.comp_rule (f : Y → Z) (g : X → Y): 
-    vectorize I (fun x : X => f (g x)) = fun x => vectorize I f (vectorize I g x) := by
-  unfold vectorize; ext i; simp
-
-theorem vectorize.let_rule (f : X → Y → Z) (g : X → Y): 
-    vectorize I (fun x : X => let y := g x; f x y)
+theorem fwdFDeriv'.comp_rule 
+    (f : Y → Z) (g : X → Y) 
+    (hf : Differentiable R f) (hg : Differentiable R g) : 
+    fwdFDeriv' R (fun x : X => f (g x)) 
     = 
-    fun x =>
-      let y := vectorize I g x
-      let z := vectorize I (fun xy : X×Y => f xy.1 xy.2) (⊞ i => (x[i],y[i]))
-      z := by
-  unfold vectorize; ext i; simp
+    fun xdx => 
+      let ydy := fwdFDeriv' R g xdx
+      fwdFDeriv' R f ydy := by
+  unfold fwdFDeriv'; fun_trans
+
+theorem fwdFDeriv'.pi_rule {I} [IndexType I]
+    (f : X → I → Y) (hf : ∀ i, Differentiable R (f · i)) : 
+    fwdFDeriv' R (fun (x : X) (i : I) => f x i) 
+    = 
+    fun xdx => 
+      let ydy := fun i => fwdFDeriv' R (f · i) xdx
+      (fun i => (ydy i).1, fun i => (ydy i).2) := by
+  unfold fwdFDeriv'; simp [fderiv.pi_rule f hf]
 ```
 
+## Exercises
 
-## Function Theorems
+1. Write down the constant lambda theorems of {lean}`fwdFDeriv'`
+2. Write down the produce and projection lambda theorems of {lean}`fwdFDeriv'`
+3. Write down the apply lambda theorems of {lean}`fwdFDeriv'`. 
+  Hint: You want to write it for a function `fun (f : I → X) => f i` where `I` has instance of `[IndexType I]` (probably only `[Fintype I]` is enough)
+4. Write down the let lambda theorems of {lean}`fwdFDeriv'`. 
+  Pay attention the the use of let bindings on the right hand side. Careful use of let bindings is important for the efficiency of the resulting code. Also you do not want to differentiate `f` w.r.t. to `x` and `y` separetely but rather differentiate it w.r.t. `x` and `y` simultatinously.
 
 
-```lean
-open SciLean
-set_option deprecated.oldSectionVars true
-variable 
-  {X Y Z : Type} [PlainDataType X] [PlainDataType Y] [PlainDataType Z]
-  {I : Type} [IndexType I] 
-
-theorem vectorize.prod_mk_rule (f : X → Y) (g : X → Z) :
-  vectorize I (fun x => (f x, g x))
-  =
-  fun (x : X^[I]) =>
-    ⊞ i => (f (x[i]), g (x[i])) := by rfl
-
-theorem vectorize.fst_rule (f : X → Y×Z) :
-  vectorize I (fun x => (f x).1)
-  =
-  fun (x : X^[I]) => 
-    ⊞ i => (f (x[i])).1 := by rfl
-
-theorem vectorize.snd_rule (f : X → Y×Z) :
-  vectorize I (fun x => (f x).2)
-  =
-  fun (x : X^[I]) => 
-    ⊞ i => (f x[i]).2 := by rfl
-
-theorem vectorize.add_rule [Add Y] (f g : X → Y) :
-  vectorize I (fun x => f x + g x)
-  =
-  fun x =>
-    let y := vectorize I f x
-    let z := vectorize I g x
-    y + z := by unfold vectorize; ext i; simp
-
-theorem vectorize.sub_rule [Sub Y] (f g : X → Y) :
-  vectorize I (fun x => f x - g x)
-  =
-  fun x =>
-    let y := vectorize I f x
-    let z := vectorize I g x
-    y - z := by unfold vectorize; ext i; simp
-```
+# Function Theorems
 
 
 
+## Simple vs Compositional Form
 
-```lean (keep := false)
-set_default_scalar Float
-def matMul (A : Float^[10,5]) (y : Float^[5]) := 
-  vectorize (Fin 10) (⟪·,y⟫) A.curry
-```
+
+## User Defined Functions
+
+# Free Variable Theorems
+
+
+# Morphism Theorems
+
+
+
+# Advanced Function Theorems
+
+
+## Polymorphic Functions
+
+## High Order Functions
+
+## Recursive Functions

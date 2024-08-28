@@ -13,6 +13,7 @@ import SubVerso.Examples
 import ScientificComputingInLean.Meta.Basic
 import ScientificComputingInLean.Meta.Figure
 import ScientificComputingInLean.Meta.Syntax
+import ScientificComputingInLean.Meta.Solution
 
 open Lean Elab
 open Verso ArgParse Doc Elab Genre.Manual Html Code Highlighted.WebAssets

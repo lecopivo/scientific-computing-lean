@@ -14,7 +14,7 @@ where
   config := {
     extraFiles := [("static", "static")],
     extraCss := ["/static/theme.css", "/static/inter/inter.css", "/static/firacode/fira_code.css", "/static/katex/katex.min.css"],
-    extraJs := ["/static/katex/katex.min.js", "/static/math.js","http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
+    extraJs := ["/static/katex/katex.min.js", "/static/math.js", "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
     emitTeX := false
     emitHtmlSingle := false
   }

@@ -7,6 +7,8 @@ set_option pp.rawOnError true
 set_option linter.hashCommand false
 set_option linter.haveLet 0
 
+set_option maxHeartbeats 1000000
+
 open Lean.MessageSeverity
 
 open SciLean
@@ -230,6 +232,46 @@ def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
     +
     ∑ ι a b, w[κ,ι,a,b] * x[ι, i.shift a, j.shift b]
 ```
+
+## Exercises
+
+1. Generalize the function {lean}`Fin.shift`. Mathlib usues notation `x+ᵥy` for "shifting" `(y : Y)` by `(x : X)`. This operation is provided by the typeclass `VAdd X Y`. Define instance `VAdd ℤ (Fin n)` for adding an integer `(j : ℤ)` to number `(i : Fin n)` that wraps around on overflow or underlow. Feel free to use `sorry` for proving that the result is indeed in `Fin n`. Further define `VAdd (Set.Icc a b) (Fin n)` for `(a b : ℤ)` and `VAdd J I → VAdd J' I' → VAdd (J×J') (I×I')`.
+
+::: Solution
+```lean
+open SciLean
+instance (n : ℕ) : VAdd ℤ (Fin n) := 
+  ⟨fun j i => ⟨((Int.ofNat i.1 + j)%n).toNat, sorry_proof⟩⟩
+
+instance (a b : ℤ) (n : ℕ) : VAdd (Set.Icc a b) (Fin n) := 
+  ⟨fun j i => j.1 +ᵥ i⟩
+
+open SciLean
+instance {I I' J J'} [VAdd J I] [VAdd J' I'] : VAdd (J×J') (I×I') := 
+  ⟨fun (j,j') (i,i') => (j+ᵥi, j'+ᵥi')⟩
+```
+:::
+
+2. Implement General convolution for arbitrary rank tensors
+
+::: Solution
+```lean
+open SciLean
+def convNd {J : Type} [IndexType J] {I : Type} [IndexType I] [VAdd J I]
+    (w : Float^[J]) (x : Float^[I]) : Float^[I] := 
+  ⊞ (i : I) => ∑ j, w[j] * x[j +ᵥ i]
+
+variable (w : Float^[[-1:1],[-1:1],[-1:1]]) (x : Float^[10,10,10])
+
+#check convNd w x
+
+-- #eval convNd (⊞ (i j k : Set.Icc (-1) 1) => 1.0/(1.0 + |Float.ofInt i.1| + |Float.ofInt j.1| + |Float.ofInt k.1|))
+--               (⊞ (i j k : Fin 5) => if i.1 = j.1 ∧ j.1 = k.1 then 1.0 else 0.0)
+```
+::: 
+
+3. Generalize the above to a proper general convolution layer which accepts stack of filters, images and biases. Similarly to what we have done to  {lean}`conv2d` previously.
+
 
 # Pooling and Difficulties with Dependent Types
 

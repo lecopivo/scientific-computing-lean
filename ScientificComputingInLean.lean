@@ -2,6 +2,7 @@ import ScientificComputingInLean.Intro
 import ScientificComputingInLean.WorkingWithArrays
 import ScientificComputingInLean.Differentiation
 import ScientificComputingInLean.Examples
+import ScientificComputingInLean.Meta.Solution
 
 open Verso.Genre Manual
 
@@ -12,6 +13,19 @@ set_option pp.rawOnError true
 %%%
 authors := ["Tomáš Skřivan"]
 %%%
+
+::: Solution
+
+hihi
+
+:::
+
+
+::: TODO
+
+hoho
+
+:::
 
 {include ScientificComputingInLean.Intro}
 

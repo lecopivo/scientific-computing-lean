@@ -7,7 +7,7 @@ set_option pp.rawOnError true
 set_option linter.hashCommand false
 set_option linter.haveLet 0
 
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 1000000000
 
 open Lean.MessageSeverity
 open SciLean
@@ -126,39 +126,40 @@ fun x => 2 : ℝ → ℝ
 
 ## Exercises
 
-1. For a function of two arguments `f x y` write a derivative at `x:=x₀` and `y:=y₀` w.r.t 
-  
-  - the first argument
-  - the second argument
-  - both arguments at the same time
+1. Express first derivative of `f : ℝ → ℝ → ℝ` in the first and the second argument. Also express derivative in both arguments at the same time.
 
+::: Solution
 ```lean
 variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
+
+-- first argument
 #check ∂ (x:=x₀), (f x y₀)
 #check ∂ (f · y₀) x₀
--- both notations are identical
-example : (∂ (x:=x₀), (f x y₀)) = (∂ (f · y₀) x₀) := by rfl
 
+-- second agument
 #check ∂ (y:=y₀), (f x₀ y)
 #check ∂ (f x₀ ·) y₀
-example : (∂ (y:=y₀), (f x₀ y)) = (∂ (f x₀ ·) y₀) := by rfl
-```
 
-For function `(g : ℝ×ℝ → ℝ)`
+-- both arguments
+#check ∂ ((x,y):=(x₀,y₀)), f x y
+```
+:::
+
+2. For `(g : ℝ×ℝ → ℝ)`, express derivative of `g (x,y)` in `x`.
+
+::: Solution
 ```lean
 variable (g : ℝ×ℝ → ℝ) (x₀ y₀ : ℝ)
 
--- derivative with respect to the first variable
 #check ∂ (xy:=(x₀,y₀);(1,0)), g xy
 #check ∂ g (x₀,y₀) (1,0)
-
--- derivative with respect to the second variable
-#check ∂ (xy:=(x₀,y₀);(0,1)), g xy
-#check ∂ g (x₀,y₀) (0,1)
+#check ∂ (x:=x₀), g (x,y₀)
 ```
+:::
 
-2. second derivative of `f x y` 
+3. Express second derivatives of `f : ℝ → ℝ → ℝ` in the first and the second argument.
 
+::: Solution
 ```lean
 variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 #check ∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)
@@ -167,22 +168,38 @@ variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 #check ∂ (y':=y₀), ∂ (y'':=y'), (f x₀ y'')
 #check ∂ (∂ (f x₀ ·)) y₀
 ```
+:::
 
+4. Let \\(L(t,x)\\) be a function of time and space and `y(t)` a function of time. Express \\( \\frac\{d\}\{dt\} L(t, y(t)) \\) and \\( \\frac\{\\partial\}\{\\partial t\} L(t, y(t)) \\) in Lean. What is the difference between these two expressions? 
 
-3. One dimensional Euler-Lagrange equation
+::: Solution
+```lean
+variable (L : ℝ → ℝ → ℝ) (y : ℝ → ℝ) (t : ℝ)
+
+-- d/dt L
+#check ∂ (t':=t), L t' (y t')
+
+-- ∂/∂t L
+#check ∂ (t':=t), L t' (y t)
+```
+Because SciLean's notation forces you to be a bit more explicit, there is no need to distinguish between \\( \\frac\{d\}\{dt\} \\) and \\( \\frac\{\\partial\}\{\\partial t\} \\). Lots of pain and suffering has been infliced on generations of physics students because of the ambiguity of partial derivative notation.
+:::
+
+4. Express one dimensional Euler-Lagrange equation in Lean
 
 ```latex
 \frac{d}{dt} \frac{\partial L}{\partial \dot x}(x(t),\dot x(t)) -  \frac{\partial L}{\partial x}(x(t), \dot x(t))
 ```
 
+::: Solution
 ```lean
 variable (L : ℝ → ℝ → ℝ) (x : ℝ → ℝ) (t : ℝ)
 
----    d/dt       ∂/∂v          L x v      - ∂/∂x      
 #check 
   let v := ∂ x
-  ∂ (t':=t), (∂ (v':=v t), L (x t) v') - ∂ (x':=x t), L x' (v t)
+  ∂ (t':=t), (∂ (v':=v t'), L (x t') v') - ∂ (x':=x t), L x' (v t)
 ```
+:::
 
 # Examples
 
@@ -220,12 +237,14 @@ You might feel a bit unconfortable here are we are differentiating a function de
 
 
 ### Exercises
+
 1. try to solve different equations, for example `exp x = y` to obtain `log`, `x*exp x = y` to obtain Lambert W function or some polynomial.
 
 2. measure relative,\\(\\left| \\frac\{f(x\_n)\}\{x\_n\} \\right| \\), and absolute error \\( \\left| f(x\_n) \\right| \\) and use them for stopping criteria.
 
 3. A difficult exercise is to define a general `newtonSolve` function that takes an arbitrary function `f : Float → Float` and uring elaboration synthesizes its derivative. Add multiple hints, 1. use `infer_var` trick, 2. state explicitly how the arguments should look like
 
+::: Solution
 ```lean
 set_default_scalar Float
 def newtonSolve (steps : Nat) (x₀ : Float)
@@ -238,7 +257,7 @@ def newtonSolve (steps : Nat) (x₀ : Float)
 
 #eval newtonSolve 10 1.0 (fun x => x^2 - 2.0)
 ```
-
+::: 
 
 ## Kinematics
 
@@ -280,22 +299,28 @@ example (m f : ℝ) (hm : m ≠ 0) :
 
 1. show that trajectory `x := fun t => (cos t, sin t)` satisfies differential equation `∂ x t = (- (x t).2, (x t).1)`
 
+::: Solution
 ```lean
 open SciLean Scalar
 def ode (x : ℝ → ℝ×ℝ) := ∀ t, deriv x t = (- (x t).2, (x t).1)
 
 example : ode (fun t => (cos t, sin t)) := by unfold ode deriv; fun_trans
 ```
+:::
 
-2. show that trajectory `x := fun t => sin (ω*t)` correspond to the force `f := fun t => - k * x t` with `ω = sqrt (k/m)`
+2. Show that trajectory \\(x(t) = \\sin(\\omega t) \\) corresponds to the force \\(f(x) = - k x \\) with \\(\\omega = \\sqrt\{(k/m)\} \\)
 
-Hint: After differentiation you will have to show that \\(m \\sqrt\{\\frac\{k\}\{m\}\}^2 = k\\). Unfortunatelly Lean is not yet very powerful computer algebra system. So you can finish the proof with
+::: Hint
+After differentiation you will have to show that \\(m \\sqrt\{\\frac\{k\}\{m\}\}^2 = k\\). Unfortunatelly Lean is not yet very powerful computer algebra system. So you can finish the proof with
 ```
   ring_nf --  m * (sqrt (k / m) * (sqrt (k / m) ==> m * sqrt (k * m⁻¹) ^ 2
   have h : m * sqrt (k * m⁻¹) ^ 2 = k := sorry_proof
   simp[h]
 ```
 where we call `ring_nf` to clean up the expression, then we just assume that ` m * sqrt (k * m⁻¹) ^ 2` is equal to `k` and finally we can finish the proof by running simp
+::: 
+
+::: Solution
 ```lean
 open SciLean Scalar
 
@@ -310,18 +335,19 @@ example (m k : ℝ) :
   have h : m * sqrt (k * m⁻¹) ^ 2 = k := sorry_proof
   simp[h]
 ```
+:::
 
-Warning: Right now `fun_trans` uses theorems that use sorry thus the theorem is not fully proven.
 
-3. show that `u = fun t x => sin (x - t)` is solution to wave equation, 1D and n-D
-
+3. Show that \\(u(t,x) = sin(x-t)\\) is a solution to the wave equation
 ```latex
 \frac{\partial^2 u}{\partial t^2} = \frac{\partial^2 u}{\partial x^2}
 ```
 
+::: Solution
 ```lean
 open SciLean Scalar
-def WaveEquation (u : ℝ → ℝ → ℝ) := ∀ x t, (∂ (∂ (u · x)) t) = (∂ (∂ (u t ·)) x)
+def WaveEquation (u : ℝ → ℝ → ℝ) := 
+  ∀ x t, (∂ (∂ (u · x)) t) = (∂ (∂ (u t ·)) x)
 
 example : 
     WaveEquation (fun t x => sin (x - t)) := by
@@ -329,6 +355,7 @@ example :
   fun_trans
 
 ```
+:::
 
 4. solution to heat equation
 
@@ -402,51 +429,82 @@ y : ℝ × ℝ
 
 ## Exercises
 
-1. Previously we computed \\(\\sqrt\{y\}\\) using Newton's method. Similarly we can {lean}`mySqrt` Compute `sqrt y` using gradient descent by minimizing objective function `f := fun x => (x^2 - y)^2`
+1. Compute gradient of `x[0]`, `‖x‖₂²`, `⟪x,y⟫` for `x y : Float^[3]` and gradient of `A[0,1]`, `‖A‖₂²`, `⟪A,B⟫` for `A B : Float^[2,2]`. Also evaluate those results for some concrete values.
 
-2. Linear regression via gradient descent
-   `x : Float^[2]^[n]` `y : Float^[2]^[n]`
-   `fun := fun (A : Float^[2,2]) => ∑ i, ‖ ⊞ i' => ∑ j, A[i',j] * x[i][j] - y[i]‖₂²`
+::: Solution
 
 ```lean
 set_default_scalar Float
 
-variable (n : Nat) (x y : Float^[2]^[n])
+#eval ∇! (x:=⊞[1.0,2.0,3.0]), x[0]
+#eval ∇! (x:=⊞[1.0,2.0,3.0]), ‖x‖₂²
+#eval ∇! (x:=⊞[1.0,2.0,3.0]), ⟪x, ⊞[0.0,1.0,0.0]⟫
 
-#check (∇ (A : Float^[2,2]), ∑ i, ‖(⊞ i' => ∑ j, A[i',j] * x[i][j]) - y[i]‖₂²) rewrite_by unfold SciLean.fgradient; fun_trans; unfold SciLean.revFDerivProj; fun_trans
+def matrix1 := ⊞[1.0,2.0;3.0,4.0]
+
+#eval ∇! (A:=matrix1), A[0,1]
+#eval ∇! (A:=matrix1), ‖A‖₂²
+#eval ∇! (A:=matrix1), ⟪A, ⊞[0.0,1.0;0.0,0.0]⟫
+```
+:::
+
+
+2. Previously we computed \\(\\sqrt\{y\}\\) using Newton's method. Similarly we can {lean}`mySqrt` Compute `sqrt y` using gradient descent by minimizing objective function `f := fun x => (x^2 - y)^2`
+
+::: TODO
+Add solution to gradient descent
+:::
+
+3. Linear regression via gradient descent. Find matrix \\( A \\in \\mathbb\{R\}^\{2\\times 2\} \\) that for given data \\( x\_i, y\_i \\in \\mathbb\{R\}^2 \\) minimizes
+```latex
+A = \text{argmin}_B \sum_i \| B x_i - y_i \|^2
 ```
 
-3. Evalute gradient of `x[0]`, `‖x‖₂²`, `⟪x,y⟫` for `x y : Float^[3]` or for `A : Float^[3,3]`
-
-4. Euler-Lagrange equation in arbitrary dimension and show that for lagrangian `L x v := 1/2 * m * ‖v‖₂² - φ x` the Euler-Langran equation is `m * ∂ (∂ x) t = - ∇ φ x`
+::: Solution
 
 ```lean
+set_default_scalar Float
+
+def linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2,2] := 
+  let loss := fun (A : Float^[2,2]) =>  
+    ∑ i, ‖(⊞ i' => ∑ j, A[i',j] * x[i][j]) - y[i]‖₂²
+  sorry
+```
+:::
+
+4. Write down Euler-Lagrange equation over abstract vector space `X` and show that for lagrangian `L x v := 1/2 * m * ‖v‖₂² - φ x` the Euler-Langran equation is `m * ∂ (∂ x) t = - ∇ φ x`
+
+Either define the Lagrangian over `ℝ×ℝ`, `L : ℝ×ℝ → ℝ×ℝ → ℝ` or you can introduce abstract vector space `X` using this variable command
+```lean 
+variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
+```
+The explanation of these typeclasses will be discussed in the last section "Abstract Vector Spaces".
+
+::: Solution
+```lean
 set_default_scalar ℝ
+open SciLean
 variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
 
-variable (L : X → X → ℝ) (x : ℝ → X) (t : ℝ)
-
-#check 
+noncomputable
+def EulerLagrange (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) :=
   let v := ∂ x
-  ∂ (t':=t), (∇ (v':=v t), L (x t) v') - ∇ (x':=x t), L x' (v t)
+  ∂ (t':=t), (∇ (v':=v t'), L (x t') v') - ∇ (x':=x t), L x' (v t)
 
--- variable (φ : X → ℝ) (hφ : Differentiable ℝ φ)
+noncomputable
+def NewtonsLaw (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) :=
+  m • (∂ (∂ x) t) + (∇ φ (x t))
 
--- noncomputable
--- def EulerLagrange (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) :=
---   let v := ∂ x
---   ∂ (t':=t), (∇ (v':=v t), L (x t) v') - ∇ (x':=x t), L x' (v t)
-
--- noncomputable
--- def NewtonsLaw (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) :=
---   m • (∂ (∂ x) t) + (∇ φ (x t))
-
--- example :
---   EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
---   =
---   NewtonsLaw m φ x t := by unfold EulerLagrange NewtonsLaw; fun_trans
+-- example 
+--     (x : ℝ → X) (hx : ContDiff ℝ ⊤ x)
+--     (φ : X → ℝ) (hφ : Differentiable ℝ φ) :
+--     EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
+--     =
+--     NewtonsLaw m φ x t := by 
+--   unfold EulerLagrange NewtonsLaw deriv fgradient; fun_trans [smul_smul]
+--   sorry
 ```
-
+:::
 
 
 # Derivative Rules
@@ -716,7 +774,7 @@ example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g
 ```
 
 
-When working with gradients we also need inner product as {lean}`adjoint` is defined through inner product. Unfortunately, here we diverge from mathlib a little bit. Mathlib defines {lean}`InnerProductSpace` which equips {lean}`NormedSpace` with inner product. Understandably {lean}`InnerProductSpace` requires that the `⟪x,x⟫ = ‖x‖²` however mathlib made the unfortunate decision by definin norm on produce spaces as `‖(x,y)‖ = max ‖x‖ ‖y‖` which is incompatible with the inner product structure. Therefore type like `ℝ×ℝ` can't be equiped with {lean}`InnerProductSpace`. Because of these issues, SciLean introduces {lean}`AdjointSpace` which is almost identical to {lean}`InnerProductSpace` but it only requires that the norm induced by inner product is equivalend to the existing norm i.e. `∃ (c d : ℝ⁺), ∀ x, c * ⟪x,x⟫ ≤ ‖x‖^2 ≤ d * ⟪x,x⟫`. SciLean also introduces L₂-norm `‖x‖₂ := sqrt ⟪x,x⟫` which you have seen already. Therfore when we work with gradient in general setting the code usually looks like this
+When working with gradients we also need inner product as {lean}`adjoint` is defined through inner product. Unfortunately, here we diverge from mathlib a little bit. Mathlib defines {lean}`InnerProductSpace` which equips {lean}`NormedSpace` with inner product. Understandably {lean}`InnerProductSpace` requires that the `⟪x,x⟫ = ‖x‖²` however mathlib made the unfortunate decision by definin norm on produce spaces as `‖(x,y)‖ = max ‖x‖ ‖y‖` which is incompatible with the inner product structure. Therefore type like `ℝ×ℝ` can't be equiped with {lean}`InnerProductSpace`. Because of these issues, SciLean introduces {lean}`AdjointSpace` which is almost identical to {lean}`InnerProductSpace` but it only requires that the norm induced by inner product is equivalend to the existing norm i.e. `∃ (c d : ℝ⁺), ∀ x, c * ⟪x,x⟫ ≤ ‖x‖^2 ≤ d * ⟪x,x⟫`. On {lean}`AdjointSpace` SciLean  introduces L₂-norm `‖x‖₂ := sqrt ⟪x,x⟫` which you have seen already and it is the norm you most likely want to use instead of the default norm `‖x‖`. Therfore when we work with gradient in general setting the code usually looks like this
 ```lean
 open SciLean
 variable 
@@ -733,4 +791,4 @@ example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g
 
 
 
-For interested reader we recommend reading the chapter [Hierachies](https://leanprover-community.github.io/mathematics_in_lean/C07_Hierarchies.html) from [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/index.html) which explains how mathlib approaches algebraic hierachies like monoids, groups or modules. After reading that we recommend reading [Differential Calculus in Normed Spaces](https://leanprover-community.github.io/mathematics_in_lean/C10_Differential_Calculus.html#differential-calculus-in-normed-spaces) which 
+For interested reader we recommend reading the chapter [Hierachies](https://leanprover-community.github.io/mathematics_in_lean/C07_Hierarchies.html) from [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/index.html) which explains how mathlib approaches algebraic hierachies like monoids, groups or modules. After reading that we recommend reading [Differential Calculus in Normed Spaces](https://leanprover-community.github.io/mathematics_in_lean/C10_Differential_Calculus.html#differential-calculus-in-normed-spaces) which how {lean}`NormedSpace` is structured.
