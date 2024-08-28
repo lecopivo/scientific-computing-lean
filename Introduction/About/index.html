@@ -15,6 +15,40 @@
     <link rel="stylesheet" href="../../static/katex/katex.min.css">
     <link rel="stylesheet" href="../../-verso-css/tippy-border.css">
     <style>
+div.collapsible-hint {
+  margin: 5px 0;
+}
+
+div.collapsible-hint-header {
+  padding: 2px;
+  font-size: medium;
+  cursor: pointer;
+  position: relative;
+}
+
+div.collapsible-hint-header::after {
+  content: "⊢";
+  position: absolute;
+  left: 50px;
+  transition: transform 0.3s ease;
+}
+
+div.collapsible-hint-content {
+  border: 1px solid white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+div.collapsible-hint.expanded .collapsible-hint-content {
+  max-height: 500px; /* Adjust this value depending on the content's height */
+  border: 1px solid lightgrey;
+}
+
+div.collapsible-hint.expanded .collapsible-hint-header::after {
+  transform: rotate(90deg); /* Rotate to show ">" when expanded */
+}
+</style><style>
 
 .hl.lean {
   white-space: pre;
@@ -470,6 +504,40 @@ div.TODO::before {
   font-weight: bold;
   transform: rotate(-90deg) translate(-2em);
 }
+</style><style>
+div.collapsible {
+  margin: 5px 0;
+}
+
+div.collapsible-header {
+  padding: 2px;
+  font-size: medium;
+  cursor: pointer;
+  position: relative;
+}
+
+div.collapsible-header::after {
+  content: "⊢";
+  position: absolute;
+  left: 60px;
+  transition: transform 0.3s ease;
+}
+
+div.collapsible-content {
+  border: 1px solid white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+div.collapsible.expanded .collapsible-content {
+  max-height: 500px; /* Adjust this value depending on the content's height */
+  border: 1px solid lightgrey;
+}
+
+div.collapsible.expanded .collapsible-header::after {
+  transform: rotate(90deg); /* Rotate to show ">" when expanded */
+}
 </style><script>
       
 window.onload = () => {
@@ -723,6 +791,16 @@ window.onload = () => {
                 <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation">Function Transformation</a><ol>
                   <li>
                     <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation">User Defined Function Transformation</a></li>
+                  <li>
+                    <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems">Lambda Theorems</a></li>
+                  <li>
+                    <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems">Function Theorems</a></li>
+                  <li>
+                    <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems">Free Variable Theorems</a></li>
+                  <li>
+                    <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Morphism-Theorems">Morphism Theorems</a></li>
+                  <li>
+                    <a href="../../Differentiation/Function-Transformation#Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems">Advanced Function Theorems</a></li>
                   </ol>
                 </li>
               </ol>

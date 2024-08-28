@@ -26,6 +26,16 @@
      "Tensor Operations",
      "Pooling and Difficulties with Dependent Types"],
     "address": "/Working-with-Arrays/Tensor-Operations"}],
+  "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "Working with Arrays",
+     "Tensor Operations",
+     "Convolution and Operations on Indices",
+     "Exercises"],
+    "address": "/Working-with-Arrays/Tensor-Operations"}],
   "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices":
   [{"id":
     "Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Convolution-and-Operations-on-Indices",
@@ -279,26 +289,6 @@
      "Differentiation",
      "Symbolic Differentiation"],
     "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation--Lambda-Theorems":
-  [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation--Lambda-Theorems",
-    "data":
-    ["Scientific Computing in Lean",
-     "Differentiation",
-     "Function Transformation",
-     "User Defined Function Transformation",
-     "Lambda Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation--Function-Theorems":
-  [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation--Function-Theorems",
-    "data":
-    ["Scientific Computing in Lean",
-     "Differentiation",
-     "Function Transformation",
-     "User Defined Function Transformation",
-     "Function Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
   "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation":
   [{"id":
     "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation",
@@ -307,6 +297,111 @@
      "Differentiation",
      "Function Transformation",
      "User Defined Function Transformation"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Morphism-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Morphism-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Morphism Theorems"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Lambda Theorems",
+     "Exercises"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Lambda Theorems"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Function Theorems",
+     "User Defined Functions"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--Simple-vs-Compositional-Form":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--Simple-vs-Compositional-Form",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Function Theorems",
+     "Simple vs Compositional Form"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Function Theorems"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Free Variable Theorems"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Advanced Function Theorems",
+     "Recursive Functions"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Advanced Function Theorems",
+     "Polymorphic Functions"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Advanced Function Theorems",
+     "High Order Functions"],
+    "address": "/Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "Differentiation",
+     "Function Transformation",
+     "Advanced Function Theorems"],
     "address": "/Differentiation/Function-Transformation"}],
   "Scientific-Computing-in-Lean--Differentiation--Function-Transformation":
   [{"id":
