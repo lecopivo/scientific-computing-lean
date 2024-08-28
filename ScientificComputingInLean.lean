@@ -14,18 +14,51 @@ set_option pp.rawOnError true
 authors := ["Tomáš Skřivan"]
 %%%
 
-::: Solution
+The Plan 🙂
 
-hihi
+1. Arrays
 
-:::
+2. Differentiations
 
+3. Equations, optimization and their approximation
+  - inverse function
+  - general approximation
+  - nonlinear equations - newton solver    
+  - linear equations - todo: add eigen bindings
+  - minimization - min function
+  - differentiation equations and minimizations
+    - differentiating inverse function
+    - implicit differentiation
+    - differentiating minimization problem
+  
+4. Differential equations
+  - odesolve
+  - numerical methods
+  - differentiating ode solutions
 
-::: TODO
+5. Geometry
+  - shapes
+  - level sets and SDFs
+  - bounding balls and squares
 
-hoho
+6. probabilistic programming
+  - samplers
+  - differentiating probabilistic programs
+  - differentiating parametric discontinuities
+  - random programs with traces
 
-:::
+7. Tactic overview
+  - fun\_trans
+  - fun\_prop
+  - infer\_var
+  - data\_synth
+  - lsimp
+  - rsimp
+  - optimize_index_access
+  
+
+8. Examples
+
 
 {include ScientificComputingInLean.Intro}
 
