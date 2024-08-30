@@ -14,7 +14,7 @@ open Lean.MessageSeverity
 
 open SciLean
 
-#doc (Manual) "Differentiation" =>
+#doc (Manual) "🚧 Differentiation" =>
 
 
 We will cover these topics
