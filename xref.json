@@ -155,351 +155,351 @@
   [{"id": "Scientific-Computing-in-Lean--Examples",
     "data": ["Scientific Computing in Lean", "Examples"],
     "address": "/Examples"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation--Exercises":
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Notation",
      "Exercises"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Notation",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Notation"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient--Exercises":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Gradient--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Gradient--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Gradient",
      "Exercises"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Gradient":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Gradient",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Gradient",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Gradient"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Newtons-solver--Exercises":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Newtons-solver--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Newtons-solver--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Newtons-solver--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Examples",
      "Newton's solver",
      "Exercises"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Newtons-solver":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Newtons-solver":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Newtons-solver",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Newtons-solver",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Examples",
      "Newton's solver"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Kinematics--Exercises":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Kinematics--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Kinematics--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Kinematics--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Examples",
      "Kinematics",
      "Exercises"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Kinematics":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Kinematics":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples--Kinematics",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples--Kinematics",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Examples",
      "Kinematics"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Examples",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Examples",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Examples"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt---Exercises":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt---Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt---Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt---Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Differentiating Division, Log, Sqrt, ...",
      "Exercises"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Differentiating-Division-Log-Sqrt-",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Differentiating Division, Log, Sqrt, ..."],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Rules":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Derivative-Rules":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Derivative-Rules",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Derivative-Rules",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Derivative Rules"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Abstract-Vector-Spaces":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Abstract-Vector-Spaces":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation--Abstract-Vector-Spaces",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Abstract-Vector-Spaces",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation",
      "Abstract Vector Spaces"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Symbolic-Differentiation",
+    "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Symbolic Differentiation"],
-    "address": "/Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation":
+    "address": "/-Differentiation/Symbolic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--User-Defined-Function-Transformation":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--User-Defined-Function-Transformation",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--User-Defined-Function-Transformation",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "User Defined Function Transformation"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Morphism-Theorems":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Morphism-Theorems":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Morphism-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Morphism-Theorems",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Morphism Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Lambda-Theorems":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Lambda-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Lambda-Theorems",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Lambda Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Function Theorems",
      "User Defined Functions"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--Exercises":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Function Theorems",
      "Exercises"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Function-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Function Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Free Variable Theorems",
      "Exercises"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Free-Variable-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Free Variable Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Advanced Function Theorems",
      "Recursive Functions"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Polymorphic-Functions",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Advanced Function Theorems",
      "Polymorphic Functions"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Advanced Function Theorems",
      "High Order Functions"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Advanced Function Theorems",
      "Compositional form"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation--Advanced-Function-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation",
      "Advanced Function Theorems"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Function-Transformation":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Function-Transformation",
+    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Function Transformation"],
-    "address": "/Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises":
+    "address": "/-Differentiation/Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Reverse Mode",
      "Exercises"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Reverse-Mode":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Reverse-Mode",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Reverse Mode"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--autodiff-vs-funtrans":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--autodiff-vs-funtrans":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--autodiff-vs-funtrans",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--autodiff-vs-funtrans",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Forward Mode",
      "autodiff vs fun_trans"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--Relation-to-Dual-Numbers-":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--Relation-to-Dual-Numbers-":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--Relation-to-Dual-Numbers-",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--Relation-to-Dual-Numbers-",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Forward Mode",
      "Relation to Dual Numbers "],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--Exercises":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--Exercises":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode--Exercises",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Forward Mode",
      "Exercises"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Forward-Mode",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Forward-Mode",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Forward Mode"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Derivatives-of-Neural-Network-Layers":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Derivatives-of-Neural-Network-Layers":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation--Derivatives-of-Neural-Network-Layers",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Derivatives-of-Neural-Network-Layers",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation",
      "Derivatives of Neural Network Layers"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation":
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation":
   [{"id":
-    "Scientific-Computing-in-Lean--Differentiation--Automatic-Differentiation",
+    "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation",
     "data":
     ["Scientific Computing in Lean",
-     "Differentiation",
+     "🚧 Differentiation",
      "Automatic Differentiation"],
-    "address": "/Differentiation/Automatic-Differentiation"}],
-  "Scientific-Computing-in-Lean--Differentiation":
-  [{"id": "Scientific-Computing-in-Lean--Differentiation",
-    "data": ["Scientific Computing in Lean", "Differentiation"],
-    "address": "/Differentiation"}],
+    "address": "/-Differentiation/Automatic-Differentiation"}],
+  "Scientific-Computing-in-Lean---Differentiation":
+  [{"id": "Scientific-Computing-in-Lean---Differentiation",
+    "data": ["Scientific Computing in Lean", "🚧 Differentiation"],
+    "address": "/-Differentiation"}],
   "Scientific-Computing-in-Lean":
   [{"id": "Scientific-Computing-in-Lean",
     "data": ["Scientific Computing in Lean"],
