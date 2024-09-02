@@ -1,6 +1,5 @@
-import VersoManual
 import SciLean
-import Manual.Meta
+import ScientificComputingInLean.Meta
 
 open Verso.Genre Manual
 

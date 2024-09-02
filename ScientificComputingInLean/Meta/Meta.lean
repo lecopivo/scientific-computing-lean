@@ -1,3 +1,6 @@
+import Lean.Elab.Command
+import Lean.Elab.InfoTree
+
 import Verso
 import Verso.Doc.ArgParse
 import Verso.Doc.Elab.Monad
@@ -7,13 +10,11 @@ import Verso.Code
 import SubVerso.Highlighting
 import SubVerso.Examples
 
-import ScientificComputingInLean.Meta.Basic
-import ScientificComputingInLean.Meta.Example
-import ScientificComputingInLean.Meta.Figure
-import ScientificComputingInLean.Meta.Latex
-import ScientificComputingInLean.Meta.Lean
-import ScientificComputingInLean.Meta.Solution
-import ScientificComputingInLean.Meta.Syntax
+import Manual.Meta.Basic
+import Manual.Meta.Example
+import Manual.Meta.Figure
+import Manual.Meta.Lean
+import Manual.Meta.Syntax
 
 open Lean Elab
 open Verso ArgParse Doc Elab Genre.Manual Html Code Highlighted.WebAssets
