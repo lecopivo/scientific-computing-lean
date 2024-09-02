@@ -15,8 +15,8 @@ open SciLean
 
 set_default_scalar ℝ
 
-#doc (Manual) "Function Transformation" =>
 
+#doc (Manual) "Function Transformation" =>
 
 In this chapter we will look under the lid of the tactic `fun_trans`, a tactic for general function transformation. Explain the main idea behind it, how to define your own function transformations and how does it work internally.
 
@@ -70,10 +70,10 @@ This categorical viewpoint on automatic differentiation is inspired by the paper
 ```lean (show:=false)
 open SciLean Scalar
 variable 
-  {R} [RealScalar R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
+  {R : Type} [RealScalar R]
+  {X : Type} [NormedAddCommGroup X] [NormedSpace R X]
+  {Y : Type} [NormedAddCommGroup Y] [NormedSpace R Y]
+  {Z : Type} [NormedAddCommGroup Z] [NormedSpace R Z]
 ```
 
 Let's demonstrate `fun_trans` capability by defining a slight variant of forward mode derivative
@@ -393,4 +393,60 @@ theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional
 
 
 
+```lean
+@[fun_trans]
+theorem DataArrayN.mapMonoHAdd.hAdd.arg_xf.fwdFDeriv'_rule 
+    [PlainDataType X] {I : Type} [IndexType I]
+    (x : W → X^[I]) (hx : Differentiable R x) 
+    (f : W → X → X) (hf : Differentiable R fun (w,x) => f w x) :
+    (fwdFDeriv' R fun w : W => (x w).mapMono (f w))
+    =
+    fun wdw => 
+      let xdx := fwdFDeriv' R x wdw
+      sorry := sorry
+```
+
+
+We can't even state the simple version of this theorems 
+
+
 ## Recursive Functions
+
+
+
+```lean 
+
+def applyNTimes (n : Nat) (f : X → X) (x : X) := 
+  match n with
+  | 0 => x
+  | n+1 => applyNTimes n f (f x)
+
+def_fun_prop (n : Nat) (f : X → X) (hf : Differentiable R f) :
+    Differentiable R (applyNTimes n f) by 
+  induction n <;> fun_prop[applyNTimes]
+
+set_default_scalar R
+-- TODO: make this work
+-- def_fun_trans (n : Nat) (f : X → X) (hf : Differentiable R f) :
+--     (∂> x, applyNTimes n f x) by 
+--   induction n n' f' eq
+--   · fun_trans [applyNTimes]
+--   · fun_trans [applyNTimes]
+
+variable (n : ℕ)
+#check (∂> x, applyNTimes n (fun y : R => y^2) x) 
+  rewrite_by
+    induction n n' f' eq
+    · fun_trans [applyNTimes]
+    · fun_trans [applyNTimes]
+
+
+-- variable (n : ℕ)
+-- #check (fderiv ℝ (fun x => applyNTimes n (fun x : ℝ => x^2) x)) 
+--   rewrite_by
+--     induction n n' f' eq
+--     · fun_trans [applyNTimes]
+--     · fun_trans [applyNTimes]
+```
+
+Making `applyNTimes` differentiable in `f` is still work in progress.
