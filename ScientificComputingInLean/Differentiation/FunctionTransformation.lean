@@ -67,18 +67,27 @@ This categorical viewpoint on automatic differentiation is inspired by the paper
 
 # User Defined Function Transformation
 
-Let's demonstrate `fun_trans` capability by defining a slight variant of forward mode derivative
-```lean
-open SciLean
+```lean (show:=false)
+open SciLean Scalar
 variable 
-  (R) [RCLike R]
+  {R} [RealScalar R]
   {X} [NormedAddCommGroup X] [NormedSpace R X]
   {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
+  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
+```
 
+Let's demonstrate `fun_trans` capability by defining a slight variant of forward mode derivative
+```lean (show := false)
+variable (R)
+```
+```lean
 @[fun_trans]
 noncomputable
 def fwdFDeriv' (f : X → Y) : X×X → Y×Y := 
   fun xdx => (f xdx.1, fderiv R f xdx.1 xdx.2)
+```
+```lean (show := false)
+variable {R}
 ```
 The only difference is that {lean}`fwdFDeriv'` is uncurried version of {lean}`fwdFDeriv`.
 
@@ -124,13 +133,6 @@ The collection of these theorems allows `fun_trans` to transform any complicated
 
 Let us give an example of few lambda theorems for {lean}`fwdFDeriv'`
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
-
 theorem fwdFDeriv'.id_rule : 
     fwdFDeriv' R (fun x : X => x) = fun xdx => xdx := by
   unfold fwdFDeriv'; fun_trans
@@ -159,12 +161,6 @@ theorem fwdFDeriv'.pi_rule {I} [IndexType I]
 1. Write down the constant lambda theorems of {lean}`fwdFDeriv'`
 ::: Solution
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-
 @[fun_trans]
 theorem fwdFDeriv'.const_rule (y : Y) :
   fwdFDeriv' R (fun x : X => y) 
@@ -175,13 +171,6 @@ theorem fwdFDeriv'.const_rule (y : Y) :
 2. Write down the product and projection lambda theorems of {lean}`fwdFDeriv'`. Hint: The product rule should be formulated for `(fun x : X => (g x, f x))` where `g` and `f` are differentiable functions. The projection rule can be formulated for `(fun (xy : X×Y) => xy.1)`
 ::: Solution
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
-
 @[fun_trans]
 theorem Prod.mk.arg_fstsnd.fwdFDeriv'_rule 
    (g : X → Y) (f : X → Z) 
@@ -213,14 +202,8 @@ theorem Prod.snd.arg_self.fwdFDeriv'_rule
   Hint: Writhe the rule for the function `fun (f : I → X) => f i` where `I` has instance of `[IndexType I]`.
 ::: Solution
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {I} [IndexType I]
-
 @[fun_trans]
-theorem fwdFDeriv'.apply_rule (i : I) :
+theorem fwdFDeriv'.apply_rule {I} [IndexType I] (i : I) :
     fwdFDeriv' R (fun (f : I → X) => f i) 
     =
     fun fdf => (fdf.1 i, fdf.2 i) := by 
@@ -232,13 +215,6 @@ theorem fwdFDeriv'.apply_rule (i : I) :
   Pay attention the the use of let bindings on the right hand side. Careful use of let bindings is important for the efficiency of the resulting code. Also you do not want to differentiate `f` w.r.t. to `x` and `y` separetely but rather differentiate it w.r.t. `x` and `y` simultatinously.
 ::: Solution
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-  {Z} [NormedAddCommGroup Z] [NormedSpace R Z]
-
 @[fun_trans]
 theorem fwdFDeriv'.let_rule
     (f : X → Y → Z) (hf : Differentiable R (fun (x,y) => f x y))
@@ -260,11 +236,6 @@ Once we postulate all the lambda theorems for a new function transformation we h
 
 Let's start with a function theorem for negation is it is a function of a single argument
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-
 @[fun_trans]
 theorem Neg.neg.arg_a0.fwdFDeriv'_rule :
     fwdFDeriv' R (fun x : X => - x)
@@ -275,11 +246,6 @@ theorem Neg.neg.arg_a0.fwdFDeriv'_rule :
 
 For a function of two or more arguments we just uncurry the function sufficiently and furmulate the theorem as for a function of single argument. For example the transformation rule for addition is
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-
 @[fun_trans]
 theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule :
     (fwdFDeriv' R fun xy : X×X => xy.1 + xy.2)
@@ -291,16 +257,10 @@ theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule :
 
 Let's define function in three arguments
 ```lean
-open SciLean Scalar
-variable {R} [RealScalar R]
-
 def fun1 (x y z : R) := exp x * sin (z + y) + z
 ```
 We do not have to state the transformation rule in all of its arguments at the same time. 
 ```lean
-open SciLean Scalar
-variable {R} [RealScalar R]
-
 @[fun_trans]
 theorem fun1.arg_xz.fwdFDeriv'_rule (y : R) :
     fwdFDeriv' R (fun (xz : R×R) => fun1 xz.1 y xz.2)
@@ -310,15 +270,10 @@ theorem fun1.arg_xz.fwdFDeriv'_rule (y : R) :
        exp x * (dz * cos (z + y)) + dx * exp x * sin (z + y) + dz) := by 
   unfold fwdFDeriv' fun1; fun_trans
 ```
-Writing rules for user defined functions like {lean}`fun1` is tedious and because {lean}`fun1` is defined in terms of known function the right hands side of this rule should be automatically generated anyway. We will discuss this how to do this a bit later. Here we just wanted to demonstrate that you can indeed formulate the transformation rule only for a subset of the input arguments. The important rule is that the order of the arguments should be maintained e.g. the left hand side should *not* be `fwdFDeriv' R (fun (zx : R×R) => fun1 zx.2 y zx.1)`.
+Writing rules for user defined functions like {name}`fun1` is tedious and because {name}`fun1` is defined in terms of known function the right hands side of this rule should be automatically generated anyway. We will discuss this how to do this a bit later. Here we just wanted to demonstrate that you can indeed formulate the transformation rule only for a subset of the input arguments. The important rule is that the order of the arguments should be maintained e.g. the left hand side should *not* be `fwdFDeriv' R (fun (zx : R×R) => fun1 zx.2 y zx.1)`.
 
 In some cases the rule can get a bit tricky and there might be additional requirements on the arguments. The canonical example is division, `x / y`, which can be differentiated only if we divide by non zero `y`. In this case, the theorem can't be stated as a function in `((x,y),(dx,dy))` anymore. We have to fix particular value and require that the `y` is non zero. 
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-
 @[fun_trans]
 theorem HDiv.hDiv.arg_a0a1.fwdFDeriv'_rule_simple 
     (xydxy : (R×R)×(R×R)) (h : xydxy.1.2 ≠ 0) :
@@ -344,11 +299,6 @@ Define
 Often we can write down a function transformation rule for a whole class of functions at once. The canonical example of this is that the derivative of liner function is the function itself. For {lean}`fwdFDeriv'` this is whould be
 ```lean
 open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-
 @[fun_trans]
 theorem fwdFDeriv'.linear_rule 
     (f : X → Y) (hf : IsContinuousLinearMap R f) :
@@ -368,12 +318,6 @@ These theorems are potentially dangerous as the left hand side of the theorem ca
 1. Write down free variable theorem for differentiating affine function.
 ::: Solution
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace R Y]
-
 @[fun_trans]
 theorem fwdFDeriv'.affine_rule 
     (f : X → Y) (hf : IsAffineMap R f) (hf' : Continuous f) :
@@ -408,11 +352,7 @@ make the proof trivial i.e. `unfold fwdFDeriv' R f; fun_trans`
 
 There is also an alternative way of fomulating function theorems in so called "compositional form". The idea is that we introduce and auxiliary type `W` and parametrize every of the function with this type. The "compositional form" of negation theorem
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {W} [NormedAddCommGroup W] [NormedSpace R W]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
+variable {W} [NormedAddCommGroup W] [NormedSpace R W]
 
 @[fun_trans]
 theorem Neg.neg.arg_a0.fwdFDeriv'_rule_compositional 
@@ -436,12 +376,6 @@ This form is also called "uncurried form" as the left hand side contains uncurri
 
 The "compositional form" of this theorem is
 ```lean
-open SciLean
-variable 
-  {R} [RCLike R]
-  {W} [NormedAddCommGroup W] [NormedSpace R W]
-  {X} [NormedAddCommGroup X] [NormedSpace R X]
-
 @[fun_trans]
 theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional 
     (f g : W → X) (hf : Differentiable R f) (hg : Differentiable R g) :
@@ -455,8 +389,8 @@ theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional
 
 
 
-## Polymorphic Functions
-
 ## High Order Functions
+
+
 
 ## Recursive Functions

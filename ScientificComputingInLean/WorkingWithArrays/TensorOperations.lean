@@ -30,7 +30,7 @@ def map {I : Type} [IndexType I] (x : Float^[I]) (f : Float → Float) := Id.run
   return x'
 ```
 
-A new thing here is that we wrote this function polymorphically in the index type `I`. `{I : Type}` introduces a new type, and `[IndexType I]` adds a requirement that `I` behave as an index. `IndexType` is a type class that allows us to do a bunch of things with `I`. We have already seen `IndexType.card I`, which tells you the number of elements in `I`. There is also `IndexType.toFin` and `IndexType.fromFin`, which convert `i : I` into `toFin i : Fin (card I)` and `idx : Fin (card I)` to `fromFin idx : I`. So the function `toFin` allows you to linearize any index `I`, and it is the core function used to implement `DataArrayN`, as all elements of an array have to be stored linearly in memory.
+A new thing here is that we wrote this function polymorphically in the index type `I`. `{I : Type}` introduces a new type, and `[IndexType I]` adds a requirement that `I` behaves as an index. `IndexType` is a type class that allows us to do a bunch of things with `I`. We have already seen `size I`, which tells you the number of elements in `I`. There is also `IndexType.toFin` and `IndexType.fromFin`, which convert `i : I` into `toFin i : Fin (size I)` and `idx : Fin (size I)` to `fromFin idx : I`. So the function `toFin` allows you to linearize any index `I`, and it is the core function used to implement `DataArrayN`, as all elements of an array have to be stored linearly in memory.
 
 In fact, SciLean already provides this function under the name `mapMono`. The "mono" stands for the fact that the function `f` does not change the type; in our case, it accepts and returns `Float`. Also, this function is defined in the `DataArrayN` namespace, and because of that, we can use the familiar dot notation `x.mapMono`. As `mapMono` is polymorphic in the shape of the array, we can call it on vectors:
 
@@ -83,14 +83,14 @@ open SciLean Scalar
 
 where `0 : Float^[3]` creates a zero array of size 3, then `mapIdxMono (fun i _ => i.toFloat)` initializes every element to the value of its index, and finally `map (fun x => sqrt x)` computes the square root of every element.
 
-The next important operation with arrays is reduction, which runs over elements and reduces them using a provided binary operation. There are two main reductions, `x.foldl op init` and `x.reduceD op default`. The difference is that {lean}`DataArrayN.foldl` uses `init` as the initial value that is updated with elements of the array `x`, while {lean}`DataArrayN.reduceD` uses only the elements of `x` and returns `default` if `x` happens to be empty:
+The next important operation with arrays is reduction, which runs over elements and reduces them using a provided binary operation. There are two main reductions, `x.foldl op init` and `x.reduceD op default`. The difference is that {name}`SciLean.DataArrayN.foldl` uses `init` as the initial value that is updated with elements of the array `x`, while {name}`SciLean.DataArrayN.reduceD` uses only the elements of `x` and returns `default` if `x` happens to be empty:
 
 ```
 x.fold op init = (op ... (op (op init x[0]) x[1]) ...n)
 x.reduceD op default = (op ... (op (op x[0] x[1]) x[2]) ...)
 ```
 
-There are also versions `x.reduce` where you do not have to provide the default element, but it is required that the element type `X` of the array `x : X^I` has an instance {lean}`Inhabited`, which allows you to call {lean}`default`, returning a default element of `X`. For example, {lean}`(default : Float)` returns `0.0`.
+There are also versions `x.reduce` where you do not have to provide the default element, but it is required that the element type `X` of the array `x : X^I` has an instance {name}`Inhabited`, which allows you to call {name}`Inhabited.default`, returning a default element of `X`. For example, {lean}`(default : Float)` returns `0.0`.
 
 To sum all elements of an array:
 

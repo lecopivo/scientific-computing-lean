@@ -45,7 +45,8 @@ Add a link to an interactive code editor and encourage reader to differentiate m
 
 Writing `fderiv ℝ (fun x => f x)` is somewhat tedious so *SciLean* makes our life easier by introducing a nice notation `∂ x, f x` for differentiating `(f x)` w.r.t. `x`.
 
-Before we explore this notation further we have to mention that  {lean}`fderiv` can also compute complex derivatives with {lean}`fderiv ℂ` instead of {lean}`fderiv ℝ`. However, most of the time we work exclusively with real derivative so we can inform Lean that the default choce of the scalar field are real numbers using the following command
+
+Before we explore this notation further we have to mention that  {lean}`fderiv` can also compute complex derivatives with {lean}`@fderiv ℂ` instead of {lean}`@fderiv ℝ`. However, most of the time we work exclusively with real derivative so we can inform Lean that the default choce of the scalar field are real numbers using the following command
 ```lean
 set_default_scalar ℝ
 ```
@@ -380,15 +381,12 @@ variable (f : X → ℝ) (x : X)
 
 To obtain gradient we take an adjoint and evaluate it at one. This is exactly how gradient is defined.
 ```lean
-open SciLean
-variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
 variable (f : X → ℝ) (x : X)
 example : (∇ f x) = adjoint ℝ (∂ f x) 1 := by rfl
 ```
 
 This coincides with the standard notion of gradient that it is a vector of all its partial derivatives. For example for `n=2` we have
 ```lean
-open SciLean
 variable {n : Nat} (f : ℝ×ℝ → ℝ) (hf : Differentiable ℝ f) (x y : ℝ)
 example : (∇ f (x,y)) = (∂ (x':=x), f (x',y), ∂ (y':=y), f (x,y')) := sorry_proof
 ```
@@ -475,7 +473,7 @@ def linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2,2] :=
 4. Write down Euler-Lagrange equation over abstract vector space `X` and show that for lagrangian `L x v := 1/2 * m * ‖v‖₂² - φ x` the Euler-Langran equation is `m * ∂ (∂ x) t = - ∇ φ x`
 
 Either define the Lagrangian over `ℝ×ℝ`, `L : ℝ×ℝ → ℝ×ℝ → ℝ` or you can introduce abstract vector space `X` using this variable command
-```lean 
+```
 variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
 ```
 The explanation of these typeclasses will be discussed in the last section "Abstract Vector Spaces".
@@ -483,8 +481,6 @@ The explanation of these typeclasses will be discussed in the last section "Abst
 ::: Solution
 ```lean
 set_default_scalar ℝ
-open SciLean
-variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
 
 noncomputable
 def EulerLagrange (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) :=
@@ -550,7 +546,7 @@ states that there are no derivative theorems for {lean}`foo`. The next line
 ```
   [Meta.Tactic.fun_trans] candidate fvar theorems: [isContinuousLinearMap_fderiv]
 ```
-states that there is a potentially applicable theorem {lean}`isContinuousLinearMap_fderiv` which can differentiate linear functions. However the next few lines report that applying this theorem failed as `fun_trans` can't prove that `foo` is (continuous) linear map.
+states that there is a potentially applicable theorem {name}`isContinuousLinearMap_fderiv` which can differentiate linear functions. However the next few lines report that applying this theorem failed as `fun_trans` can't prove that `foo` is (continuous) linear map.
 
 
 To remedy this problem we can define derivative of {lean}`foo`
@@ -596,7 +592,7 @@ set_option trace.Meta.Tactic.fun_trans true in
           Differentiable ℝ fun x0 => foo x0
 ...
 ```
-The trace reveals that `fun_trans` tries to apply composition(chain) rule {lean}`SciLean.fderiv.comp_rule` but it fails as it can't prove {lean}`Differentiable ℝ fun x0 => foo x0`. We need another theorem stating that {lean}`foo` is differentiable function. Mathlib has a tactic `fun_prop` that can prove differentiability and many other function properties like linearity, continuity, measurability etc. and `fun_trans` uses this tactic to ensure it can apply chain rule.
+The trace reveals that `fun_trans` tries to apply composition(chain) rule {name}`SciLean.fderiv.comp_rule` but it fails as it can't prove {lean}`Differentiable ℝ fun x0 => foo x0`. We need another theorem stating that {lean}`foo` is differentiable function. Mathlib has a tactic `fun_prop` that can prove differentiability and many other function properties like linearity, continuity, measurability etc. and `fun_trans` uses this tactic to ensure it can apply chain rule.
 
 We need to add `fun_prop` theorem for {lean}`foo`
 ```lean
@@ -644,7 +640,7 @@ We did not get expected `-x⁻²`. When differentiation, or any tactic, is not d
 set_option trace.Meta.Tactic.fun_trans true in
 #check ∂! (x:ℝ), 1/x
 ```
-and the beggining of the trace is saying that `fun_trans` tried to apply theorem {lean}`HDiv.hDiv.arg_a0a1.fderiv_rule_at` however it failed to discharge `x ≠ 0`
+and the beggining of the trace is saying that `fun_trans` tried to apply theorem {name}`HDiv.hDiv.arg_a0a1.fderiv_rule_at` however it failed to discharge `x ≠ 0`
 ```
 [Meta.Tactic.fun_trans] [❌] ∂ (x:=x), 1 / x
   [Meta.Tactic.fun_trans] candidate theorems for HDiv.hDiv: [HDiv.hDiv.arg_a0a1.fderiv_rule_at]
@@ -733,6 +729,7 @@ Create unsafe mode differentiation which assumes that everything works out. Effe
 
 # Abstract Vector Spaces
 
+
 In calculus we usually consider only functions \\((f : \\mathbb\{R\}^n \\rightarrow \\mathbb\{R\}^m) \\). The issue is that on computers the type \\( \\mathbb\{R\}^n \\) can have multiple different realizations. For example \\( \\mathbb\{R\}^3 \\) can be modeled by `Float×Float×Float`, `Float^[3]` or `Float×Float^[2]`. They are all equivalent but in code we have to explicitely convert between these types. For this reason it is better to work with abstract vector spaces instead of with \\( \\mathbb\{R\}^n \\).
 
 Fortunately mathlib's derivative {lean}`fderiv` is already defined for a function `(f : X → Y)` between two abstract vector spaces `X` and `Y` over a field `𝕜`. Mathlib's way of introducing an abstract vector space is rather involved and we need to spend some time talking about it. This presentation will be rather simplified. For interested reader we provide references at the end of this section that go over mathlib's algebraic stracutes in more detail.
@@ -749,38 +746,54 @@ A vector space `X` is a set with operations `+,-,•,0` such that
   ∀ (r : 𝕜) (x y : X), r • (x + y) = r • x + r • y
   ∀ (r s : 𝕜) (x : X), (r + s) • x = r • x + s • x
 ```
-in mathlib the axioms talking about addition and negation are captured by the type class {lean}`AddCommGroup` and the aximps talking about scalar multiplication are captured by the type class {lean}`Module`. Therefore if we want to introduce a new abstract vector space over a field `R` we have to introduce these variables
+in mathlib the axioms talking about addition and negation are captured by the type class {name}`AddCommGroup` and the aximps talking about scalar multiplication are captured by the type class {name}`Module`. Therefore if we want to introduce a new abstract vector space over a field `R` we have to introduce these variables
+
+```lean (show := false)
+section AbstractVectroSpacesSec1
+```
 ```lean
 variable 
-  {𝕜} [Field 𝕜]
-  {X} [AddCommGroup X] [Module 𝕜 X]
+  {𝕜 : Type} [Field 𝕜]
+  {X : Type} [AddCommGroup X] [Module 𝕜 X]
 
 example (s r : 𝕜) (x y : X) : 
     (s + r) • (x + y) = s • x + r • x + s • y + r • y := by 
   simp only [add_smul,smul_add,add_assoc]
 ```
+```lean (show := false)
+end AbstractVectroSpacesSec1
+```
 
-When we want to differentiate a function `(f : X → Y)` between two vector spaces we also need that `X` and `Y` are equiped with a norm. For this purpose there is {lean}`NormedAddCommGroup` which equips {lean}`AddCommGroup` with a norm and guarantees that it compatible with addition and negation, and {lean}`NormedSpace` which equips {lean}`Module` with a norm and guarentees that it is compatible with scalar multiplication. Furthermore, we have to restric to a filed `𝕜` that is either real numbers `ℝ` or complex numbers `ℂ`. The type class {lean}`RCLike` states exactly that. Therefore when we work with derivative in general setting the code usually looks like this
+When we want to differentiate a function `(f : X → Y)` between two vector spaces we also need that `X` and `Y` are equiped with a norm. For this purpose there is {name}`NormedAddCommGroup` which equips {name}`AddCommGroup` with a norm and guarantees that it compatible with addition and negation, and {name}`NormedSpace` which equips {name}`Module` with a norm and guarentees that it is compatible with scalar multiplication. Furthermore, we have to restric to a filed `𝕜` that is either real numbers `ℝ` or complex numbers `ℂ`. The type class {name}`RCLike` states exactly that. Therefore when we work with derivative in general setting the code usually looks like this
+```lean (show := false)
+section AbstractVectroSpacesSec2
+```
 ```lean
 variable 
-  {𝕜} [RCLike 𝕜]
-  {X} [NormedAddCommGroup X] [NormedSpace 𝕜 X]
-  {Y} [NormedAddCommGroup Y] [NormedSpace 𝕜 Y]
+  {𝕜 : Type} [RCLike 𝕜]
+  {X : Type} [NormedAddCommGroup X] [NormedSpace 𝕜 X]
+  {Y : Type} [NormedAddCommGroup Y] [NormedSpace 𝕜 Y]
 
 set_default_scalar 𝕜
 
 example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g) :
     (∂ x, (f x + g x)) = (∂ f) + (∂ g) := by ext x dx; fun_trans
 ```
+```lean (show := false)
+end AbstractVectroSpacesSec2
+```
 
 
-When working with gradients we also need inner product as {lean}`adjoint` is defined through inner product. Unfortunately, here we diverge from mathlib a little bit. Mathlib defines {lean}`InnerProductSpace` which equips {lean}`NormedSpace` with inner product. Understandably {lean}`InnerProductSpace` requires that the `⟪x,x⟫ = ‖x‖²` however mathlib made the unfortunate decision by definin norm on produce spaces as `‖(x,y)‖ = max ‖x‖ ‖y‖` which is incompatible with the inner product structure. Therefore type like `ℝ×ℝ` can't be equiped with {lean}`InnerProductSpace`. Because of these issues, SciLean introduces {lean}`AdjointSpace` which is almost identical to {lean}`InnerProductSpace` but it only requires that the norm induced by inner product is equivalend to the existing norm i.e. `∃ (c d : ℝ⁺), ∀ x, c * ⟪x,x⟫ ≤ ‖x‖^2 ≤ d * ⟪x,x⟫`. On {lean}`AdjointSpace` SciLean  introduces L₂-norm `‖x‖₂ := sqrt ⟪x,x⟫` which you have seen already and it is the norm you most likely want to use instead of the default norm `‖x‖`. Therfore when we work with gradient in general setting the code usually looks like this
+When working with gradients we also need inner product as {name}`adjoint` is defined through inner product. Unfortunately, here we diverge from mathlib a little bit. Mathlib defines {name}`InnerProductSpace` which equips {name}`NormedSpace` with inner product. Understandably {name}`InnerProductSpace` requires that the `⟪x,x⟫ = ‖x‖²` however mathlib made the unfortunate decision by definin norm on produce spaces as `‖(x,y)‖ = max ‖x‖ ‖y‖` which is incompatible with the inner product structure. Therefore type like `ℝ×ℝ` can't be equiped with {name}`InnerProductSpace`. Because of these issues, SciLean introduces {name}`AdjointSpace` which is almost identical to {name}`InnerProductSpace` but it only requires that the norm induced by inner product is equivalend to the existing norm i.e. `∃ (c d : ℝ⁺), ∀ x, c * ⟪x,x⟫ ≤ ‖x‖^2 ≤ d * ⟪x,x⟫`. On {name}`AdjointSpace` SciLean  introduces L₂-norm `‖x‖₂ := sqrt ⟪x,x⟫` which you have seen already and it is the norm you most likely want to use instead of the default norm `‖x‖`. Therfore when we work with gradient in general setting the code usually looks like this
+```lean (show := false)
+section AbstractVectroSpacesSec3
+```
 ```lean
 open SciLean
 variable 
-  {𝕜} [RCLike 𝕜]
-  {X} [NormedAddCommGroup X] [AdjointSpace 𝕜 X] [CompleteSpace X]
-  {Y} [NormedAddCommGroup Y] [AdjointSpace 𝕜 Y] [CompleteSpace Y]
+  {𝕜 : Type} [RCLike 𝕜]
+  {X : Type} [NormedAddCommGroup X] [AdjointSpace 𝕜 X] [CompleteSpace X]
+  {Y : Type} [NormedAddCommGroup Y] [AdjointSpace 𝕜 Y] [CompleteSpace Y]
 
 set_default_scalar 𝕜
 
@@ -788,7 +801,10 @@ example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g
     (∇ x, (f x + g x)) = (∇ f) + (∇ g) := by 
   ext x; unfold adjointFDeriv; fun_trans
 ```
+```lean (show := false)
+end AbstractVectroSpacesSec3
+```
 
 
 
-For interested reader we recommend reading the chapter [Hierachies](https://leanprover-community.github.io/mathematics_in_lean/C07_Hierarchies.html) from [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/index.html) which explains how mathlib approaches algebraic hierachies like monoids, groups or modules. After reading that we recommend reading [Differential Calculus in Normed Spaces](https://leanprover-community.github.io/mathematics_in_lean/C10_Differential_Calculus.html#differential-calculus-in-normed-spaces) which how {lean}`NormedSpace` is structured.
+For interested reader we recommend reading the chapter [Hierachies](https://leanprover-community.github.io/mathematics_in_lean/C07_Hierarchies.html) from [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/index.html) which explains how mathlib approaches algebraic hierachies like monoids, groups or modules. After reading that we recommend reading [Differential Calculus in Normed Spaces](https://leanprover-community.github.io/mathematics_in_lean/C10_Differential_Calculus.html#differential-calculus-in-normed-spaces) which how {name}`NormedSpace` is structured.

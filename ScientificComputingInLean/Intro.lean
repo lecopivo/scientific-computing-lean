@@ -1,5 +1,6 @@
 import VersoManual
 import SciLean
+import Manual.Meta
 
 open Verso.Genre Manual
 

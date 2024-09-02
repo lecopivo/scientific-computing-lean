@@ -34,6 +34,7 @@ For example, in Lean, there is a theorem stating that adding zero does not chang
 ```lean
 namespace OptimizingArrays
 @[simp] theorem Nat.add_zero (n : Nat) : n + 0 = n := rfl
+end OptimizingArrays
 ```
 Adding the attribute `@[simp]` adds this theorem to the `simp` database of theorems it tries to apply.
 
@@ -83,7 +84,7 @@ theorem mapMono_mapIdxMono {I : Type} [IndexType I]
 
 This theorem shows that two `mapMono` operations can be fused into one. The function `mapMono` can be implemented with a for loop, so this theorem states that two for loops can be merged into one.
 
-In numerical linear algebra, a common operation is computing `a•x+y` for `a : Float`, `x` and `y` of type `Float^[n]`. Scalar multiplication and addition on `Float^[n]` can be implemented using {lean}`ArrayType.mapMono`, which means that `a•x+y` contains two loops that can be fused together using the above theorem.
+In numerical linear algebra, a common operation is computing `a•x+y` for `a : Float`, `x` and `y` of type `Float^[n]`. Scalar multiplication and addition on `Float^[n]` can be implemented using {lean}`@ArrayType.mapMono`, which means that `a•x+y` contains two loops that can be fused together using the above theorem.
 
 ```lean
 open SciLean
