@@ -15,7 +15,6 @@ open SciLean
 
 set_default_scalar ℝ
 
-
 #doc (Manual) "Function Transformation" =>
 
 In this chapter we will look under the lid of the tactic `fun_trans`, a tactic for general function transformation. Explain the main idea behind it, how to define your own function transformations and how does it work internally.
@@ -392,6 +391,24 @@ theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional
 ## High Order Functions
 
 
+```lean
+
+@[fun_trans]
+def applyTwice (f : X → X) (x : X) := f (f x)
+
+def_fun_prop (n : Nat) 
+    (f : W → X → X) (hf : Differentiable R (↿f))
+    (x : W → X) (hx : Differentiable R x) :
+    Differentiable R (fun w => applyTwice (f w) (x w)) by 
+  fun_prop[applyTwice]
+
+-- def_fun_trans (n : Nat) 
+--     (f : W → X → X) (hf : Differentiable R (↿f))
+--     (x : W → X) (hx : Differentiable R x) :
+--     Differentiable R (fun w => applyTwice (f w) (x w)) by 
+--   fun_prop[applyTwice]
+```
+
 
 ```lean
 @[fun_trans]
@@ -401,9 +418,12 @@ theorem DataArrayN.mapMonoHAdd.hAdd.arg_xf.fwdFDeriv'_rule
     (f : W → X → X) (hf : Differentiable R fun (w,x) => f w x) :
     (fwdFDeriv' R fun w : W => (x w).mapMono (f w))
     =
-    fun wdw => 
-      let xdx := fwdFDeriv' R x wdw
-      sorry := sorry
+    fun (w,dw) => 
+      let xdx := fwdFDeriv' R x (w,dw)
+      (xdx.1.mapMono (f w),
+       xdx.2.mapIdxMono (fun (i : I) (dxi : X) => 
+         let xi := xdx.1[i]
+         (fwdFDeriv' R (↿f) ((w,xi),(dw,dxi))).2)) := sorry_proof
 ```
 
 
@@ -435,6 +455,17 @@ set_default_scalar R
 
 variable (n : ℕ)
 #check (∂> x, applyNTimes n (fun y : R => y^2) x) 
+  rewrite_by
+    induction n n' f' eq
+    · fun_trans [applyNTimes]
+    · fun_trans [applyNTimes]
+
+
+variable (n : ℕ) (f : R → R) (f' : R → R → R) 
+  (hf : Differentiable R f) 
+  (hf' : (fwdFDeriv R f) = f') 
+
+#check (∂> x, applyNTimes n f x) 
   rewrite_by
     induction n n' f' eq
     · fun_trans [applyNTimes]
