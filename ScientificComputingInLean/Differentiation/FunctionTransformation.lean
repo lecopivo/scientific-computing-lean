@@ -461,15 +461,15 @@ variable (n : ℕ)
     · fun_trans [applyNTimes]
 
 
-variable (n : ℕ) (f : R → R) (f' : R → R → R) 
-  (hf : Differentiable R f) 
-  (hf' : (fwdFDeriv R f) = f') 
+-- variable (n : ℕ) (f : R → R) (f' : R → R → R) 
+--   (hf : Differentiable R f) 
+--   (hf' : (fwdFDeriv R f) = f') 
 
-#check (∂> x, applyNTimes n f x) 
-  rewrite_by
-    induction n n' f' eq
-    · fun_trans [applyNTimes]
-    · fun_trans [applyNTimes]
+-- #check (∂> x, applyNTimes n f x) 
+--   rewrite_by
+--     induction n n' f' eq
+--     · fun_trans [applyNTimes]
+--     · fun_trans [applyNTimes]
 
 
 -- variable (n : ℕ)
