@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>About</title><link rel="stylesheet" href="../../book.css">
+    <title>Derivative Rules</title><link rel="stylesheet" href="../../book.css">
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
     <script src="../../static/katex/katex.min.js"></script>
     <script src="../../static/math.js"></script>
@@ -853,11 +853,64 @@ window.onload = () => {
         </nav>
       <main><section>
           <h1>
-            About</h1>
-          <p>
-            Work in progress book on using Lean 4 as a programming language for scientific computing. Also serves as reference for <a href="www.github.com/lecopivo/SciLean">SciLean</a> library.</p>
-          <p>
-            This book in its current form is a draft and is subject to change. Code might not work, explanations might be incomplete or incorrect. Procced with caution.</p>
+            Derivative Rules</h1>
+          <section>
+            <h2 id="Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Basic-Rules">
+              Basic Rules</h2>
+            <p>
+              Repeat again what needs to be done and state that it can be done with <code>def_fun_trans</code> and <code>def_fun_prop</code></p>
+            <p>
+              simple vs compositional form</p>
+            </section>
+          <section>
+            <h2 id="Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Rules-with-Conditions">
+              Rules with Conditions</h2>
+            <p>
+              How to state rules with condition on the arguments</p>
+            </section>
+          <section>
+            <h2 id="Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Higher-Order-Functions">
+              Higher Order Functions</h2>
+            <p>
+              How to state rules for higherder functions like</p>
+            <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-599">def</span> <span class="const token" data-binding="const-applyTwice'" data-verso-hover="370">applyTwice'</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.9" data-verso-hover="371">f</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.5" data-verso-hover="372">X</span> <span class="unknown token" data-binding="">→</span> <span class="var token" data-binding="var-_uniq.5" data-verso-hover="372">X</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.11" data-verso-hover="271">x</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.5" data-verso-hover="372">X</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.5" data-verso-hover="372">X</span> <span class="unknown token" data-binding="">:=</span> <span class="var token" data-binding="var-_uniq.9" data-verso-hover="371">f</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.9" data-verso-hover="371">f</span> <span class="var token" data-binding="var-_uniq.11" data-verso-hover="271">x</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code></section>
+          <section>
+            <h2 id="Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Recursive-Functions">
+              Recursive Functions</h2>
+            <p>
+              How to compute derivatives for recursive functions</p>
+            <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-740">def</span> <span class="const token" data-binding="const-applyNTimes'" data-verso-hover="373">applyNTimes'</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.9" data-verso-hover="4">n</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Nat" data-verso-hover="5">Nat</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.13" data-verso-hover="371">f</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.7" data-verso-hover="372">X</span> <span class="unknown token" data-binding="">→</span> <span class="var token" data-binding="var-_uniq.7" data-verso-hover="372">X</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.15" data-verso-hover="271">x</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.7" data-verso-hover="372">X</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.7" data-verso-hover="372">X</span> <span class="unknown token" data-binding="">:=</span> 
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.match-799" data-verso-hover="25">match</span> <span class="var token" data-binding="var-_uniq.9" data-verso-hover="4">n</span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.match-799" data-verso-hover="25">with</span>
+  <span class="unknown token" data-binding="">|</span> <span class="unknown token" data-binding="">0</span> <span class="unknown token" data-binding="">=&gt;</span> <span class="var token" data-binding="var-_uniq.15" data-verso-hover="271">x</span>
+  <span class="unknown token" data-binding="">|</span> <span class="var token" data-binding="var-_uniq.132" data-verso-hover="4">n</span><span class="unknown token" data-binding="">+</span><span class="unknown token" data-binding="">1</span> <span class="unknown token" data-binding="">=&gt;</span> <span class="const token" data-binding="const-applyNTimes'" data-verso-hover="373">applyNTimes'</span> <span class="var token" data-binding="var-_uniq.132" data-verso-hover="4">n</span> <span class="var token" data-binding="var-_uniq.13" data-verso-hover="371">f</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.13" data-verso-hover="371">f</span> <span class="var token" data-binding="var-_uniq.15" data-verso-hover="271">x</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code></section>
+          <section>
+            <h2 id="Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Custom-Structures">
+              Custom Structures</h2>
+            <p>
+              How to define custom structure, add vector space structure and automatically generate all the rules for its projections.</p>
+            <p>
+              Generating it for this structure should be easy</p>
+            <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-1062">structure</span> <span class="const token" data-binding="const-Float2" data-verso-hover="374">Float2</span> <span class="keyword token" data-binding="kw-occ-null-1079">where</span>
+  <span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Float2.x" data-verso-hover="375">x</span> <span class="const token" data-binding="const-Float2.y" data-verso-hover="376">y</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Float" data-verso-hover="27">Float</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code><p>
+              This is more complicated</p>
+            <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-1139">structure</span> <span class="const token" data-binding="const-Vec2" data-verso-hover="377">Vec2</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span> <span class="unknown token" data-binding="">:</span> <span class="sort token" data-binding="">Type</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-RCLike" data-verso-hover="344">RCLike</span> <span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span><span class="unknown token" data-binding="">]</span> <span class="keyword token" data-binding="kw-occ-null-1176">where</span>
+  <span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Vec2.x" data-verso-hover="378">x</span> <span class="const token" data-binding="const-Vec2.y" data-verso-hover="379">y</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span><span class="unknown token" data-binding="">)</span>
+
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-1195">structure</span> <span class="const token" data-binding="const-Vec2'" data-verso-hover="380">Vec2'</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.419" data-verso-hover="39">R</span> <span class="unknown token" data-binding="">:</span> <span class="sort token" data-binding="">Type</span><span class="unknown token" data-binding="">)</span> <span class="keyword token" data-binding="kw-occ-null-1222">where</span>
+  <span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Vec2'.x" data-verso-hover="381">x</span> <span class="const token" data-binding="const-Vec2'.y" data-verso-hover="382">y</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.419" data-verso-hover="39">R</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code><p>
+              This is really hard to do automatically</p>
+            <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-1293">structure</span> <span class="const token" data-binding="const-Sphere" data-verso-hover="383">Sphere</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="39">X</span> <span class="unknown token" data-binding="">:</span> <span class="sort token" data-binding="">Type</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-RCLike" data-verso-hover="344">RCLike</span> <span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span><span class="unknown token" data-binding="">]</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-NormedAddCommGroup" data-verso-hover="266">NormedAddCommGroup</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="39">X</span><span class="unknown token" data-binding="">]</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-NormedSpace" data-verso-hover="343">NormedSpace</span> <span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="39">X</span><span class="unknown token" data-binding="">]</span> <span class="keyword token" data-binding="kw-occ-null-1375">where</span>
+  <span class="const token" data-binding="const-Sphere.r" data-verso-hover="384">r</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.2" data-verso-hover="39">R</span>
+  <span class="const token" data-binding="const-Sphere.c" data-verso-hover="385">c</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="39">X</span>
+
+<span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-1398">structure</span> <span class="const token" data-binding="const-Sphere'" data-verso-hover="386">Sphere'</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.674" data-verso-hover="39">R</span> <span class="var token" data-binding="var-_uniq.676" data-verso-hover="39">X</span> <span class="unknown token" data-binding="">:</span> <span class="sort token" data-binding="">Type</span><span class="unknown token" data-binding="">)</span> <span class="keyword token" data-binding="kw-occ-null-1429">where</span>
+  <span class="const token" data-binding="const-Sphere'.r" data-verso-hover="387">r</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.674" data-verso-hover="39">R</span>
+  <span class="const token" data-binding="const-Sphere'.c" data-verso-hover="388">c</span> <span class="unknown token" data-binding="">:</span> <span class="var token" data-binding="var-_uniq.676" data-verso-hover="39">X</span>
+<span class="unknown token" data-binding=""></span></code></section>
           </section>
         </main></div>
     </body>

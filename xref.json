@@ -155,6 +155,190 @@
   [{"id": "Scientific-Computing-in-Lean--Examples",
     "data": ["Scientific Computing in Lean", "Examples"],
     "address": "/Examples"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Morphism-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Morphism-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Morphism Theorems"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Lambda-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Lambda-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Lambda Theorems"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--User-Defined-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--User-Defined-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Function Theorems",
+     "User Defined Functions"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Function Theorems",
+     "Exercises"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Function Theorems"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Free Variable Theorems",
+     "Exercises"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Free Variable Theorems"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Recursive-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Recursive-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Advanced Function Theorems",
+     "Recursive Functions"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--High-Order-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--High-Order-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Advanced Function Theorems",
+     "High Order Functions"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Compositional-form":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Compositional-form",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Advanced Function Theorems",
+     "Compositional form"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation",
+     "Advanced Function Theorems"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "User Defined Function Transformation"],
+    "address":
+    "/-Function-Transformation/User-Defined-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Quotient-Intermezzo":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Quotient-Intermezzo",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "Expression Compiler",
+     "Compiling from Lean to Expressions",
+     "Quotient Intermezzo"],
+    "address": "/-Function-Transformation/Expression-Compiler"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "Expression Compiler",
+     "Compiling from Lean to Expressions",
+     "Exercises"],
+    "address": "/-Function-Transformation/Expression-Compiler"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Back-to-Compilation":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Back-to-Compilation",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "Expression Compiler",
+     "Compiling from Lean to Expressions",
+     "Back to Compilation"],
+    "address": "/-Function-Transformation/Expression-Compiler"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "Expression Compiler",
+     "Compiling from Lean to Expressions"],
+    "address": "/-Function-Transformation/Expression-Compiler"}],
+  "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler":
+  [{"id":
+    "Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Function Transformation",
+     "Expression Compiler"],
+    "address": "/-Function-Transformation/Expression-Compiler"}],
+  "Scientific-Computing-in-Lean---Function-Transformation":
+  [{"id": "Scientific-Computing-in-Lean---Function-Transformation",
+    "data": ["Scientific Computing in Lean", "🚧 Function Transformation"],
+    "address": "/-Function-Transformation"}],
+  "Scientific-Computing-in-Lean---Differentiation--Variational-Calculus":
+  [{"id":
+    "Scientific-Computing-in-Lean---Differentiation--Variational-Calculus",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Differentiation",
+     "Variational Calculus"],
+    "address": "/-Differentiation/Variational-Calculus"}],
   "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation--Exercises":
   [{"id":
     "Scientific-Computing-in-Lean---Differentiation--Symbolic-Differentiation--Notation--Exercises",
@@ -289,128 +473,108 @@
      "🚧 Differentiation",
      "Symbolic Differentiation"],
     "address": "/-Differentiation/Symbolic-Differentiation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--User-Defined-Function-Transformation":
+  "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Reverse-Derivative-Monad":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--User-Defined-Function-Transformation",
+    "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Reverse-Derivative-Monad",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "User Defined Function Transformation"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Morphism-Theorems":
+     "Imperative and Monadic Code",
+     "Reverse Derivative Monad"],
+    "address": "/-Differentiation/Imperative-and-Monadic-Code"}],
+  "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Forward-Derivative-Monad":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Morphism-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Forward-Derivative-Monad",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Morphism Theorems"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Lambda-Theorems":
+     "Imperative and Monadic Code",
+     "Forward Derivative Monad"],
+    "address": "/-Differentiation/Imperative-and-Monadic-Code"}],
+  "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Differentiable-Monad":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Lambda-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Differentiable-Monad",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Lambda Theorems"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions":
+     "Imperative and Monadic Code",
+     "Differentiable Monad"],
+    "address": "/-Differentiation/Imperative-and-Monadic-Code"}],
+  "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Control-flow":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--User-Defined-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code--Control-flow",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Function Theorems",
-     "User Defined Functions"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--Exercises":
+     "Imperative and Monadic Code",
+     "Control flow"],
+    "address": "/-Differentiation/Imperative-and-Monadic-Code"}],
+  "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Imperative-and-Monadic-Code",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Function Theorems",
-     "Exercises"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems":
+     "Imperative and Monadic Code"],
+    "address": "/-Differentiation/Imperative-and-Monadic-Code"}],
+  "Scientific-Computing-in-Lean---Differentiation--Differentiating-Array-Expressions":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Function-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Differentiating-Array-Expressions",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Function Theorems"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises":
+     "Differentiating Array Expressions"],
+    "address": "/-Differentiation/Differentiating-Array-Expressions"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Rules-with-Conditions":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems--Exercises",
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Rules-with-Conditions",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Free Variable Theorems",
-     "Exercises"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems":
+     "Derivative Rules",
+     "Rules with Conditions"],
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Recursive-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Free-Variable-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Recursive-Functions",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Free Variable Theorems"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions":
-  [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Recursive-Functions",
-    "data":
-    ["Scientific Computing in Lean",
-     "🚧 Differentiation",
-     "Function Transformation",
-     "Advanced Function Theorems",
+     "Derivative Rules",
      "Recursive Functions"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions":
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Higher-Order-Functions":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--High-Order-Functions",
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Higher-Order-Functions",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Advanced Function Theorems",
-     "High Order Functions"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form":
+     "Derivative Rules",
+     "Higher Order Functions"],
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Custom-Structures":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems--Compositional-form",
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Custom-Structures",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Advanced Function Theorems",
-     "Compositional form"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems":
+     "Derivative Rules",
+     "Custom Structures"],
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Basic-Rules":
   [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation--Advanced-Function-Theorems",
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Basic-Rules",
     "data":
     ["Scientific Computing in Lean",
      "🚧 Differentiation",
-     "Function Transformation",
-     "Advanced Function Theorems"],
-    "address": "/-Differentiation/Function-Transformation"}],
-  "Scientific-Computing-in-Lean---Differentiation--Function-Transformation":
-  [{"id":
-    "Scientific-Computing-in-Lean---Differentiation--Function-Transformation",
+     "Derivative Rules",
+     "Basic Rules"],
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules":
+  [{"id": "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules",
     "data":
-    ["Scientific Computing in Lean",
-     "🚧 Differentiation",
-     "Function Transformation"],
-    "address": "/-Differentiation/Function-Transformation"}],
+    ["Scientific Computing in Lean", "🚧 Differentiation", "Derivative Rules"],
+    "address": "/-Differentiation/Derivative-Rules"}],
   "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises":
   [{"id":
     "Scientific-Computing-in-Lean---Differentiation--Automatic-Differentiation--Reverse-Mode--Exercises",
