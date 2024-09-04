@@ -105,7 +105,7 @@
    "type": "git",
    "subDir": null,
    "scope": "",
-   "rev": "061b9649f9d750b746a8032e1f188c27c2945b4c",
+   "rev": "cdc4100e4d143de345e7f110daae8be9cffd38a1",
    "name": "scilean",
    "manifestFile": "lake-manifest.json",
    "inputRev": "master",

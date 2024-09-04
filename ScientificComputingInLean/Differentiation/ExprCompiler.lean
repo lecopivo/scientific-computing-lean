@@ -1,5 +1,6 @@
 import ScientificComputingInLean.Meta
 import SciLean
+import SciLean.Data.Fintype.Quotient
 
 open Verso.Genre Manual
 
@@ -46,15 +47,6 @@ def add {n : Nat} : Function 2 (fun _ => n) n :=
 {
   val := fun xs => xs 0 + xs 1
   name := `add
-}
-```
-or scalar multiplication
-```lean
-def smul {n : Nat} : 
-  Function 2 (fun i => match i with | ⟨0,_⟩ => 1 | ⟨1,_⟩ => n) n := 
-{
-  val := fun xs => (xs 0)[0] • xs 1
-  name := `smul
 }
 ```
 
@@ -162,11 +154,26 @@ def compile (f : Float^[m] → Float^[n]) : ExprRepr 1 (fun _ => m) n :=
 Unfortunatelly this definition has a serious flaw. For a function `(f : Float^[m] → Float^[n])` there can be multiple expressions `ExprRepr` representing this function. Therefore `compile f` is not really uniquelly defined and as it is we would not be able to prove anything about this funciton.
 
 The usuall mathematical remedy is to work with equivalence classes of all the expressions that represent the same function. This might sound a bit bizare for any practical purposes but we are in luck because Lean has first class support for quotient types. We can define `Expr r ns m` as equivalence class of all the expressions `e : Expr r ns m` such that they have the same interpretation as lean functions.
+
+To define `Expr` we first have to equip {name}`ExprRepr` with a natural notion of equivalence i.e. `e` and `e'` are equivalent if their Lean interpretations are the same. The typeclass {name}`Setoid` execatly captures that fact that a type has a natural notion of a equivalence.
 ```lean
-def Expr (r ns m) := Quot (fun (e e' : ExprRepr r ns m) => e.toLean = e'.toLean)
+instance {r ns m} : Setoid (ExprRepr r ns m) where
+  r := fun e e' => e.toLean = e'.toLean
+  iseqv := by constructor <;> aesop
+```
+
+Once we have {name}`Setoid` structure on {name}`ExprRepr` we can quotion define `Expr` using {name}`Quotient`.
+```lean
+def Expr (r ns m) := Quotient (α:=ExprRepr r ns m) (by infer_instance)
 ```
 
 ## Quotient Intermezzo
+
+::: TODO
+
+Rewrite this subsection to also use {name}`Quotient`.
+
+:::
 
 In general, for a relation `(r : X → X → Prop)` the type `Quot r` will create a quotient of `X` along the relation `r`. (More preciselly, `Quot r` is a quotient of `X` along the smallest relation containing `r`). Working with quotient is actually very common in programming. For example, we can represent multisets of natural numbers `List Nat` but we have two options how to maintain the multiset invariant. Either work with lists that are sorted
 ```lean
@@ -197,6 +204,7 @@ def MultiSetV2.sum (s : MultiSetV2) : Nat :=
 ```
 As we are not too interested in proving things in this book we just omit the proof with `sorry_proof` but this anytime we use `Quot.lift` to work with `(s : MultiSetV2)` through its list representation we are reminded that such function should be independent on the particular odering of the list.
 
+One big advantage of the second approach to multisets is that it does not use ordering on the numbers therefore we can have a multiset of objects that can't be ordered.
 
 Lasty, for an element `(x : X)` and relation `r : X → X → Prop` we can create and element of the quotient `Quot r` with `Quot.mk r x`. Usually we omit `r` as it can be infered from the context. 
 
@@ -217,45 +225,127 @@ noncomputable
 def compile (f : Float^[m] → Float^[n]) : Expr 1 (fun _ => m) n :=
   if h : ∃ (e : ExprRepr 1 (fun _ => m) n), 
            f = (fun x => e.toLean (fun _ => x)) then
-    Quot.mk _ (choose h)
+    ⟦choose h⟧
   else
-    Quot.mk _ (.const _ _ default)
+    ⟦.const _ _ default⟧
 ```
 
-Working with {name}`Quot.mk` and {name}`Quot.lift` is tedious so often we want to define the same function that live on the original type as on the quotient type. In our case we want to define analogues of  {name}`ExprRepr.var`, {name}`ExprRepr.fn`, {name}`ExprRepr.const`, {name}`ExprRepr.comp` on {name}`Expr`.
+Working with {name}`Quot.mk` and {name}`Quot.lift` is tedious so often we want to define the same function that live on the original type as on the quotient type. In our case we want to define analogues of  {name}`ExprRepr.var`, {name}`ExprRepr.fn`, {name}`ExprRepr.const` and {name}`ExprRepr.comp` on {name}`Expr`.
 
 The first three are very easy
 ```lean
 def Expr.var (r : Nat) (ns : Fin r → Nat) (i : Fin r) : Expr r ns (ns i) :=
-  Quot.mk _ (.var r ns i)
+  ⟦.var r ns i⟧
 
 def Expr.fn (f : Function r ns m) : Expr r ns m :=
-  Quot.mk _ (.fn f)
+  ⟦.fn f⟧
 
 def Expr.const (r : Nat) (ns : Fin r → Nat) (c : Constant m) : Expr r ns m :=
-  Quot.mk _ (.const r ns c)
+  ⟦.const r ns c⟧
 ```
 
-The next two are a bit harder as then should accept {name}`Expr` as input therefore we need to use {name}`Quot.lift` to define the function on the representan `ExprRepr` and then show it is independent.
+The last one is quite a bit harder as it accepts {name}`Expr` as input therefore we need to use {name}`Quot.lift` to define the function on the representan `ExprRepr` and then show it is independent.
 ```lean
-def Quot.liftForallOn {I} {X : I → Type}
-  {r : (i : I) → X i → X i → Prop}
-  (xs : (i : I) → Quot (r i))
-  (f : ((i : I) → X i) → Y)
-  (h : ∀ (xs xs' : (i : I) → X i), (∀ i, r i (xs i) (xs' i)) → f xs = f xs') : Y := sorry
-
-
 def Expr.comp (f : Expr s ms k) (g : (i : Fin s) → Expr r ns (ms i)) : 
     Expr r ns k :=
   f.lift (fun frepr =>
-    (Quot.liftForallOn g (fun gsrepr => 
-      Quot.mk _ (.comp frepr gsrepr)) sorry_proof)) sorry_proof
-    -- g.lift (fun grepr =>
-    --   ⟦.comp frepr grepr⟧)
-    --   (by intro a b h;
-    --       apply (Equivalence.quot_mk_eq_iff sorry_proof _ _).2;
-    --       simp[Expr.Repr.toLean,h]))
-    -- (by intro a b h; simp; congr; funext gr;
-    --     apply (Equivalence.quot_mk_eq_iff sorry_proof _ _).2;
-    --     simp[Expr.Repr.toLean,h])
+    (Quotient.finLiftOn g (fun gsrepr => 
+      ⟦.comp frepr gsrepr⟧) 
+    (by sorry_proof))) 
+  (by sorry_proof)
+```
+
+
+
+We can start writing function transformation theorems
+```lean
+@[fun_trans]
+theorem compile.id_rule : 
+  compile (fun x : Float^[n] => x) = .var 1 (fun _ => n) 0 := sorry_proof
+```
+
+```lean
+@[fun_trans]
+theorem compile.comp_rule 
+  (f : Float^[m] → Float^[k]) (g : Float^[n] → Float^[m]) : 
+  compile (fun x => f (g x)) 
+  = 
+  let f' := compile f
+  let g' := compile g
+  .comp f' ![g'] := sorry_proof
+```
+Note that the {name}`Expr.comp` function accepts a "lazy-array" of all the functions that should be composed with `f`, one function for every argument of `f`. That is why `g'` is passed as `![g']` which creates "lazy-array" e.g. {lean}`![1,2,3]`.
+
+::: TODO
+
+As stated these theorems are false. We should add a predicate that function is compilable `IsCompilable f`.
+
+:::
+
+
+Function transformation theorem for addition
+```lean
+@[fun_trans]
+theorem compile.add_rule 
+  (f g : Float^[n] → Float^[m]) : 
+  compile (fun x => f x + g x) 
+  = 
+  let f' := compile f
+  let g' := compile g
+  .comp (.fn add) ![f',g'] := sorry_proof
+```
+
+
+Right the function {name}`compile` accepts only functions between `Float^[n]` however the index access function or scalar multiplication works with `Float`. 
+We could make {name}`compile` to work with function between general types but that would get a bit too complicated of what we want to show right now. Therefore for now we just define alternative version of index access and scalar multiplication that work with {lean}`Float^[1]` rather then with {lean}`Float`.
+
+
+The alternative index access function `get'` return `Float^[1]`
+```lean
+def SciLean.DataArrayN.get' (x : Float^[n]) (i : Fin n) : Float^[1] := ⊞[x[i]]
+
+def proj {n : Nat} (i : Fin n) : Function 1 (fun _ => n) 1 :=
+{
+  val := fun xs => (xs 0).get' i
+  name := `proj |>.appendAfter (toString i)
+}
+
+@[fun_trans]
+theorem compile.proj_rule (f : Float^[n] → Float^[m]) (i : Fin m) :
+    compile (fun x => (f x).get' i)
+    =
+    let f' := compile f
+    .comp (.fn (proj i)) ![f'] := sorry_proof
+```
+
+The alternative scalar multiplication between `Float^[1]` and `Float^[n]`
+```lean
+local instance : SMul (Float^[1]) (Float^[n]) := ⟨fun r x => r[0] • x⟩
+
+def smul {n : Nat} : 
+    Function 2 (fun i => match i with | ⟨0,_⟩ => 1 | ⟨1,_⟩ => n) n :=
+{
+  val := fun xs => (xs 0) • (xs 1)
+  name := `smul
+}
+
+@[fun_trans]
+theorem compile.smul_rule 
+    (f : Float^[n] → Float^[1]) (g : Float^[n] → Float^[m]) :
+    compile (fun x => (f x) • (g x))
+    =
+    let f' := compile f
+    let g' := compile g
+    .comp (.fn smul) (fun i => match i with | ⟨0,_⟩ => f' | ⟨1,_⟩ => g') :=
+  sorry_proof
+```
+
+
+Now we are ready to compile some function
+
+
+```lean
+#eval (compile (fun x : Float^[2] => 
+                    (x.get' 0)•(x.get' 0) + (x.get' 1)•(x.get' 2)))
+   rewrite_by fun_trans |>.unquot.toCppCode "normSq"
 ```
