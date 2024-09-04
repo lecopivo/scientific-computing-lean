@@ -29,7 +29,7 @@ How to state rules with condition on the arguments
 How to state rules for higherder functions like
 
 ```lean
-def applyTwice (f : X → X) (x : X) : X := f (f x)
+def applyTwice' (f : X → X) (x : X) : X := f (f x)
 ```
 
 
@@ -37,10 +37,10 @@ def applyTwice (f : X → X) (x : X) : X := f (f x)
 
 How to compute derivatives for recursive functions
 ```lean
-def applyNTimes (n : Nat) (f : X → X) (x : X) : X := 
+def applyNTimes' (n : Nat) (f : X → X) (x : X) : X := 
   match n with
   | 0 => x
-  | n+1 => applyNTimes n f (f x)
+  | n+1 => applyNTimes' n f (f x)
 ```
 
 

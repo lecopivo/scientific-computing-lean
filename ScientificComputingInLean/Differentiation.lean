@@ -2,6 +2,7 @@ import ScientificComputingInLean.Meta
 import ScientificComputingInLean.Differentiation.Basic
 import ScientificComputingInLean.Differentiation.AutomaticDifferentiation
 import ScientificComputingInLean.Differentiation.DerivativeRules
+import ScientificComputingInLean.Differentiation.ArrayExpr
 import ScientificComputingInLean.Differentiation.Imperative
 import ScientificComputingInLean.Differentiation.Variational
 

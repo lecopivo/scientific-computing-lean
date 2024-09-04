@@ -18,11 +18,11 @@ open SciLean
 
 Talk about how to compute expressions like these
 ```latex
-\delta_u \integral \| \nabla u(x) \| \, dx
+\delta_u \int \| \nabla u(x) \| \, dx
 ```
 or
 ```latex
-\delta_x \integral L(t,x(t),\dot x(t)) \, dt
+\delta_x \int  L(t,x(t),\dot x(t)) \, dt
 ```
 
 
