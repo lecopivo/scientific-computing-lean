@@ -1,6 +1,7 @@
 import ScientificComputingInLean.Intro
 import ScientificComputingInLean.WorkingWithArrays
 import ScientificComputingInLean.Differentiation
+import ScientificComputingInLean.FunctionTransformation
 import ScientificComputingInLean.Examples
 import ScientificComputingInLean.Meta.Solution
 
@@ -65,5 +66,7 @@ The Plan 🙂
 {include ScientificComputingInLean.WorkingWithArrays}
 
 {include ScientificComputingInLean.Differentiation}
+
+{include ScientificComputingInLean.FunctionTransformation}
 
 {include ScientificComputingInLean.Examples}

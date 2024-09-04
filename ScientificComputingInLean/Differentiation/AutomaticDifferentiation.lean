@@ -76,7 +76,7 @@ variable (f g : ℝ → ℝ) (hf : Differentiable ℝ f) (hg : Differentiable �
 example : ↿(∂> (f ∘ g)) = ↿(∂> f) ∘ ↿(∂> g) := by fun_trans[Function.comp,Function.HasUncurry.uncurry]
 ```
 
-In SciLean it is the theorem {lean}`SciLean.FwdFDeriv.comp_rule`.
+In SciLean it is the theorem {lean}`SciLean.fwdFDeriv.comp_rule`.
 
 
 ## autodiff vs fun\_trans

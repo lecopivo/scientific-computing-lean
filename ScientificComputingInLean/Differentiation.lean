@@ -1,7 +1,10 @@
 import ScientificComputingInLean.Meta
 import ScientificComputingInLean.Differentiation.Basic
 import ScientificComputingInLean.Differentiation.AutomaticDifferentiation
-import ScientificComputingInLean.Differentiation.FunctionTransformation
+import ScientificComputingInLean.Differentiation.DerivativeRules
+import ScientificComputingInLean.Differentiation.Imperative
+import ScientificComputingInLean.Differentiation.Variational
+
 import SciLean
 
 open Verso.Genre Manual
@@ -41,4 +44,10 @@ We will cover these topics
 
 {include ScientificComputingInLean.Differentiation.AutomaticDifferentiation}
 
-{include ScientificComputingInLean.Differentiation.FunctionTransformation}
+{include ScientificComputingInLean.Differentiation.DerivativeRules}
+
+{include ScientificComputingInLean.Differentiation.ArrayExpr}
+
+{include ScientificComputingInLean.Differentiation.Imperative}
+
+{include ScientificComputingInLean.Differentiation.Variational}
