@@ -32,9 +32,12 @@ Let's start by defining structures representing primitive functions and constans
 
 A primitive function of arity `r` is represented by the following structure
 ```lean
+open SciLean.IndexType in
 structure Function (arity : Nat) where
   val : (Fin arity → Float) → Float
   name : String
+  toCode : (Fin arity → String) → String := 
+    fun xs => s!"{name}({reduce xs (fun x y => x ++ ", " ++ y)})"
 ```
 `val` is the lean interpretation of this function and `name` is a name of this name of the function in our desired target language.
 
@@ -47,12 +50,14 @@ def add : Function 2 :=
 {
   val := fun xs => xs 0 + xs 1
   name := "add"
+  toCode := fun xs => s!"({xs 0} + {xs 1})"
 }
 
 def mul : Function 2 :=
 {
   val := fun xs => xs 0 * xs 1
   name := "mul"
+  toCode := fun xs => s!"({xs 0} * {xs 1})"
 }
 ```
 
@@ -92,6 +97,7 @@ def ExprRepr.toCCodeBody (e : ExprRepr r) : String :=
   | .fn f => toString f.name
   | .const _ f => toString f.name
   | .comp (.const _ f) _ => toString f.val
+  | .comp (.fn f) gs => f.toCode (fun i => (gs i).toCCodeBody)
   | @comp r _ f gs => Id.run do
     let mut s := s!"{f.toCCodeBody}("
     for i in fullRange (Fin r) do
@@ -121,7 +127,7 @@ Let's compile the previous example
       |>.toCCode "add_self"
 ```
 ```leanOutput addselfcpp
-"float add_self(float x0){\n  return add(x0, x0);\n}"
+"float add_self(float x0){\n  return (x0 + x0);\n}"
 ```
 
 # Compiling from Lean to Expressions
@@ -357,7 +363,7 @@ unsafe def Expr.toCCode {r} (e : Expr r) (name : String) : String :=
   rewrite_by fun_trans |>.toCCode "foo"
 ```
 ```leanOutput compilesimple2
-"float foo(float x0, float x1){\n  return mul(3.141500, add(add(x0, x1), 5));\n}"
+"float foo(float x0, float x1){\n  return (3.141500 * ((x0 + x1) + 5));\n}"
 ```
 
 
@@ -397,13 +403,11 @@ def compile2 (f : Float → Float → Float) : Expr 2 :=
 
 2. Define function transformations for other operations like division, negation or special functions like `sin`, `cos`, `exp`, ..
 
-3. Add support for infix notation for generated C code. 
-
-4. (very hard/research direction) Extend {name}`ExprRepr` to support let bindings and add function transformation for let bindings. 
+3. (very hard/research direction) Extend {name}`ExprRepr` to support let bindings and add function transformation for let bindings. 
 
 (Right now it is not clear to me how to do this.)
 
-5. (very hard/research direction) Generalize this approach to a function of arbitrary types.
+4. (very hard/research direction) Generalize this approach to a function of arbitrary types.
 
 The main idea would be to modify the definition of {name}`Function` and {name}`ExprRepr` to the following
 ```lean
@@ -413,7 +417,8 @@ Structure representing primitive function of type `X 0 × ... × X (r-1) → Y`
 -/
 structure Function (r : Nat) (Xs : Fin r → Type) (Y : Type) where
   val : ((i : Fin r) → Xs i) → Y
-  name : Lean.Name
+  name : String
+  toCode : (Fin r → String) → String
 
 /-- Expression representing function of arity `r` with input types 
 `X 0, ..., X (r-1)` and output type `Y`-/
