@@ -239,8 +239,7 @@ open Classical in
 @[fun_trans]
 noncomputable
 def compile (f : (Fin n → Float) → Float) : Expr n :=
-  if h : ∃ (e : ExprRepr n), 
-           f = e.toLean then
+  if h : ∃ (e : ExprRepr n), f = e.toLean then
     ⟦choose h⟧
   else
     ⟦.const _ default⟧
@@ -358,6 +357,7 @@ unsafe def Expr.toCCode {r} (e : Expr r) (name : String) : String :=
   e.unquot.toCCode name
 ```
 
+Now we can generate correponding C code
 ```lean (name:=compilesimple2)
 #eval (compile (fun x : (Fin 2 → Float) => 3.1415 * (x 0 + x 1 + 5))) 
   rewrite_by fun_trans |>.toCCode "foo"
@@ -403,11 +403,8 @@ def compile2 (f : Float → Float → Float) : Expr 2 :=
 
 2. Define function transformations for other operations like division, negation or special functions like `sin`, `cos`, `exp`, ..
 
-3. (very hard/research direction) Extend {name}`ExprRepr` to support let bindings and add function transformation for let bindings. 
 
-(Right now it is not clear to me how to do this.)
-
-4. (very hard/research direction) Generalize this approach to a function of arbitrary types.
+3. (very hard/research direction) Generalize this approach to a function of arbitrary types.
 
 The main idea would be to modify the definition of {name}`Function` and {name}`ExprRepr` to the following
 ```lean
@@ -433,3 +430,10 @@ where
 
 end Generalization
 ```
+
+4. (very hard/research direction) Extend {name}`ExprRepr` to support let bindings and add function transformation for let bindings. Further more add support for if statements and for loop.
+
+(Right now it is not clear to me how to do this.)
+
+
+
