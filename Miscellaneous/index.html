@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>🚧 Function Transformation</title><link rel="stylesheet" href="../book.css">
+    <title>Miscellaneous</title><link rel="stylesheet" href="../book.css">
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
     <script src="../static/katex/katex.min.js"></script>
     <script src="../static/math.js"></script>
@@ -875,92 +875,74 @@ window.onload = () => {
         </nav>
       <main><section>
           <h1>
-            🚧 Function Transformation</h1>
-          <p>
-            In this chapter we will look under the lid of the tactic <code>fun_trans</code>, a tactic for general function transformation. Explain the main idea behind it, how to define your own function transformations and how does it work internally.</p>
-          <p>
-            Note: One of the main inspiration is Google JAX which is descibed as: "Google JAX is a machine learning framework for transforming numerical functions." </p>
-          <p>
-            So far we have encoutered couple of function transfomations <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-fderiv" data-verso-hover="229">fderiv</span></code>, <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-SciLean.fwdFDeriv" data-verso-hover="361">fwdFDeriv</span></code>, <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-SciLean.revFDeriv" data-verso-hover="391">revFDeriv</span></code>, <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-adjoint" data-verso-hover="272">adjoint</span></code>. In general, function transformation should be a higher order function <code>F</code> taking a function and producing a function that should satisfy</p>
-          <p>
-            $$F(f \circ g) = F(f) \circ F(g)
-$$</p>
-          <p>
-            where the composition \( \circ \) should be some kind of generalized composition.</p>
-          <p>
-            Examples of composition rules for function transformations we have see so far</p>
-          <pre>      (∂ (f ∘ g) x dx) = (∂ f (g x) (∂ g x dx))
-
-     (∂&gt; (f ∘ g) x dx) = let (y,dy) := ∂&gt; g x dx
-                         (∂&gt; f y dy)
-
-        (&lt;∂ (f ∘ g) x) = let (y,dg) := &lt;∂ g x; 
-                         let (z,df) := &lt;∂ f y; 
-                         (z, dg ∘ df)
-
-     adjoint ℝ (A ∘ B) = adjoint ℝ B ∘ adjoint ℝ A
-</pre><p>
-            Also <code>F</code> should preserve identity</p>
-          <p>
-            $$F(\text{id}) = \text{id}
-$$</p>
-          <p>
-            where \( \text{id} \) is some generalized notion of identity function</p>
-          <p>
-            Examples of identity rules for function transformations we have see so far</p>
-          <pre>  (fderiv ℝ (fun x : ℝ =&gt; x)) = (fun _ =&gt; fun dx =&gt;L[ℝ] dx)
-
-        (∂&gt; (fun x : ℝ =&gt; x)) = fun x dx =&gt; (x,dx)
-
-        (&lt;∂ (fun x : ℝ =&gt; x)) = fun x =&gt; (x, fun dx =&gt; dx)
-
- (adjoint ℝ (fun x : ℝ =&gt; x)) = fun x =&gt; x
-</pre><p>
-            (Note: If you are familiar with category theorey then <code>F</code> is often a functor. For example <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-fderiv" data-verso-hover="229">fderiv</span></code> is not really a functor yet it still fits into SciLean's function transformation framework. 
-This categorical viewpoint on automatic differentiation is inspired by the paper <a href="https://arxiv.org/abs/1804.00746">The simple essence of automatic differentiation</a>)</p>
+            Miscellaneous</h1>
           <ol class="section-toc">
             <li>
-              <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation">User Defined Function Transformation</a><ol>
+              <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading">Typeclasses as Interfaces and Function Overloading</a><ol>
                 <li>
-                  <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Lambda-Theorems">Lambda Theorems</a></li>
-                <li>
-                  <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems">Function Theorems</a><ol>
+                  <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading">Function overloading</a><ol>
                     <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--User-Defined-Functions">User Defined Functions</a></li>
+                      <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined">Where is the Overloaded Function Defined?</a><ol>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Finding-the-Definition-Using--missing">Finding the Definition Using <code>#synth</code></a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Alternative-Method-Using--missing">Alternative Method: Using <code>pp.all</code></a></li>
+                        </ol>
+                      </li>
                     <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Function-Theorems--Exercises">Exercises</a></li>
+                      <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type">Defining Functions "Inductively" on the Type</a><ol>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures">Example: Summing Nested Structures</a><ol>
+                            <li>
+                              <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Base-Case-Natural-Numbers">Base Case: Natural Numbers</a></li>
+                            <li>
+                              <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Lists">Inductive Step: Lists</a></li>
+                            <li>
+                              <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Products">Inductive Step: Products</a></li>
+                            <li>
+                              <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Handling-More-Complex-Cases">Handling More Complex Cases</a></li>
+                            </ol>
+                          </li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Working-with-Functions-of-Arbitrary-Arity">Working with Functions of Arbitrary Arity</a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercise">Exercise</a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Polymorphism-Over-Types-and-Terms">Polymorphism Over Types and Terms</a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercises">Exercises</a></li>
+                        </ol>
+                      </li>
                     </ol>
                   </li>
                 <li>
-                  <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems">Free Variable Theorems</a><ol>
+                  <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces">Typeclasses as Interfaces</a><ol>
                     <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Free-Variable-Theorems--Exercises">Exercises</a></li>
-                    </ol>
-                  </li>
-                <li>
-                  <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Morphism-Theorems">Morphism Theorems</a></li>
-                <li>
-                  <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems">Advanced Function Theorems</a><ol>
-                    <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Compositional-form">Compositional form</a></li>
-                    <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--High-Order-Functions">High Order Functions</a></li>
-                    <li>
-                      <a href="../-Function-Transformation/User-Defined-Function-Transformation#Scientific-Computing-in-Lean---Function-Transformation--User-Defined-Function-Transformation--Advanced-Function-Theorems--Recursive-Functions">Recursive Functions</a></li>
+                      <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface">Defining an Array-like Interface</a><ol>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Implementing-the-Interface">Implementing the Interface</a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Extending-the-Interface-to-Other-Types">Extending the Interface to Other Types</a></li>
+                        <li>
+                          <a href="../Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading#Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Conclusion">Conclusion</a></li>
+                        </ol>
+                      </li>
                     </ol>
                   </li>
                 </ol>
               </li>
             <li>
-              <a href="../-Function-Transformation/Expression-Compiler#Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler">Expression Compiler</a><ol>
+              <a href="../Miscellaneous/Working-with-Quotients#Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients">Working with Quotients</a><ol>
                 <li>
-                  <a href="../-Function-Transformation/Expression-Compiler#Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions">Compiling from Lean to Expressions</a><ol>
+                  <a href="../Miscellaneous/Working-with-Quotients#Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Unordered-Pair">Unordered Pair</a></li>
+                <li>
+                  <a href="../Miscellaneous/Working-with-Quotients#Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions">Symbolic Expressions</a><ol>
                     <li>
-                      <a href="../-Function-Transformation/Expression-Compiler#Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Quotient-Intermezzo">Quotient Intermezzo</a></li>
-                    <li>
-                      <a href="../-Function-Transformation/Expression-Compiler#Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Back-to-Compilation">Back to Compilation</a></li>
-                    <li>
-                      <a href="../-Function-Transformation/Expression-Compiler#Scientific-Computing-in-Lean---Function-Transformation--Expression-Compiler--Compiling-from-Lean-to-Expressions--Exercises">Exercises</a></li>
+                      <a href="../Miscellaneous/Working-with-Quotients#Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing">Monoid Structure of <code>ExprMonoid</code></a><ol>
+                        <li>
+                          <a href="../Miscellaneous/Working-with-Quotients#Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing--Example-Usage">Example Usage</a></li>
+                        </ol>
+                      </li>
                     </ol>
                   </li>
                 </ol>

@@ -106,6 +106,288 @@
   [{"id": "Scientific-Computing-in-Lean--Working-with-Arrays",
     "data": ["Scientific Computing in Lean", "Working with Arrays"],
     "address": "/Working-with-Arrays"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Unordered-Pair":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Unordered-Pair",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Working with Quotients",
+     "Unordered Pair"],
+    "address": "/Miscellaneous/Working-with-Quotients"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing--Example-Usage":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing--Example-Usage",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Working with Quotients",
+     "Symbolic Expressions",
+     "Monoid Structure of  <missing>",
+     "Example Usage"],
+    "address": "/Miscellaneous/Working-with-Quotients"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions--Monoid-Structure-of--missing",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Working with Quotients",
+     "Symbolic Expressions",
+     "Monoid Structure of  <missing>"],
+    "address": "/Miscellaneous/Working-with-Quotients"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients--Symbolic-Expressions",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Working with Quotients",
+     "Symbolic Expressions"],
+    "address": "/Miscellaneous/Working-with-Quotients"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients":
+  [{"id": "Scientific-Computing-in-Lean--Miscellaneous--Working-with-Quotients",
+    "data":
+    ["Scientific Computing in Lean", "Miscellaneous", "Working with Quotients"],
+    "address": "/Miscellaneous/Working-with-Quotients"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Implementing-the-Interface":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Implementing-the-Interface",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Typeclasses as Interfaces",
+     "Defining an Array-like Interface",
+     "Implementing the Interface"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Extending-the-Interface-to-Other-Types":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Extending-the-Interface-to-Other-Types",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Typeclasses as Interfaces",
+     "Defining an Array-like Interface",
+     "Extending the Interface to Other Types"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Conclusion":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface--Conclusion",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Typeclasses as Interfaces",
+     "Defining an Array-like Interface",
+     "Conclusion"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces--Defining-an-Array-like-Interface",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Typeclasses as Interfaces",
+     "Defining an Array-like Interface"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Typeclasses-as-Interfaces",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Typeclasses as Interfaces"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Finding-the-Definition-Using--missing":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Finding-the-Definition-Using--missing",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Where is the Overloaded Function Defined?",
+     "Finding the Definition Using  <missing>"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Alternative-Method-Using--missing":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined--Alternative-Method-Using--missing",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Where is the Overloaded Function Defined?",
+     "Alternative Method: Using  <missing>"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Where-is-the-Overloaded-Function-Defined",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Where is the Overloaded Function Defined?"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Working-with-Functions-of-Arbitrary-Arity":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Working-with-Functions-of-Arbitrary-Arity",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Working with Functions of Arbitrary Arity"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Polymorphism-Over-Types-and-Terms":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Polymorphism-Over-Types-and-Terms",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Polymorphism Over Types and Terms"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercises":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercises",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Exercises"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercise":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Exercise",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Exercise"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Products":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Products",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Example: Summing Nested Structures",
+     "Inductive Step: Products"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Lists":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Inductive-Step-Lists",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Example: Summing Nested Structures",
+     "Inductive Step: Lists"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Handling-More-Complex-Cases":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Handling-More-Complex-Cases",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Example: Summing Nested Structures",
+     "Handling More Complex Cases"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Base-Case-Natural-Numbers":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures--Base-Case-Natural-Numbers",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Example: Summing Nested Structures",
+     "Base Case: Natural Numbers"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type--Example-Summing-Nested-Structures",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type",
+     "Example: Summing Nested Structures"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading--Defining-Functions-Inductively-on-the-Type",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading",
+     "Defining Functions \"Inductively\" on the Type"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading--Function-overloading",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading",
+     "Function overloading"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading":
+  [{"id":
+    "Scientific-Computing-in-Lean--Miscellaneous--Typeclasses-as-Interfaces-and-Function-Overloading",
+    "data":
+    ["Scientific Computing in Lean",
+     "Miscellaneous",
+     "Typeclasses as Interfaces and Function Overloading"],
+    "address":
+    "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading"}],
+  "Scientific-Computing-in-Lean--Miscellaneous":
+  [{"id": "Scientific-Computing-in-Lean--Miscellaneous",
+    "data": ["Scientific Computing in Lean", "Miscellaneous"],
+    "address": "/Miscellaneous"}],
   "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--The-Role-of-Dependent-Types":
   [{"id":
     "Scientific-Computing-in-Lean--Introduction--Introduction--Why-Lean-for-Scientific-Computing--The-Role-of-Dependent-Types",
@@ -542,6 +824,15 @@
      "🚧 Differentiation",
      "Derivative Rules",
      "Recursive Functions"],
+    "address": "/-Differentiation/Derivative-Rules"}],
+  "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Polymorphics-Functions":
+  [{"id":
+    "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Polymorphics-Functions",
+    "data":
+    ["Scientific Computing in Lean",
+     "🚧 Differentiation",
+     "Derivative Rules",
+     "Polymorphics Functions"],
     "address": "/-Differentiation/Derivative-Rules"}],
   "Scientific-Computing-in-Lean---Differentiation--Derivative-Rules--Higher-Order-Functions":
   [{"id":
