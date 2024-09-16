@@ -73,3 +73,8 @@ structure Sphere' (R X : Type) where
   r : R
   c : X
 ```
+
+# Polymorphics Functions
+
+Explain that for polymorphic function you have to state all the theorems very
+carefully if you want them in full generality.
