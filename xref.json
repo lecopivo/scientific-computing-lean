@@ -421,10 +421,6 @@
   [{"id": "Scientific-Computing-in-Lean--Introduction--Introduction",
     "data": ["Scientific Computing in Lean", "Introduction", "Introduction"],
     "address": "/Introduction/Introduction"}],
-  "Scientific-Computing-in-Lean--Introduction--About":
-  [{"id": "Scientific-Computing-in-Lean--Introduction--About",
-    "data": ["Scientific Computing in Lean", "Introduction", "About"],
-    "address": "/Introduction/About"}],
   "Scientific-Computing-in-Lean--Introduction":
   [{"id": "Scientific-Computing-in-Lean--Introduction",
     "data": ["Scientific Computing in Lean", "Introduction"],
