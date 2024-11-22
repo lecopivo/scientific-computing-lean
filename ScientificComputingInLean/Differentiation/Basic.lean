@@ -12,8 +12,14 @@ set_option maxHeartbeats 1000000000
 open Lean.MessageSeverity
 open SciLean
 
+attribute [-simp] fderiv_eq_smul_deriv
 
 #doc (Manual) "Symbolic Differentiation" =>
+
+```lean (show:=false)
+section SymbolicDifferentiation
+variable (n : Nat) (x : ℝ)
+```
 
 Differentiation is at the heart of many problems in scientific computing, from optimizing functions to solving differential equations. Computing derivatives is a mechanical process but very error prone when done manually. In this chapter, we will explore how we can compute derivatives of expressions and programs automatically.
 
@@ -30,7 +36,6 @@ The mathematical library *Mathlib* defines derivative {lean}`fderiv` for a gener
 
 One of the simplest examples of a derivative is the derivative of \\(x^n\\) which is equal to \\(n x^\{n-1\}\\). Let's compute it using `fun_trans` tactic
 ```lean (name:=xnderiv)
-variable (n : Nat) (x : ℝ)
 #check (fderiv ℝ (fun (x : ℝ) => x^n) x 1) rewrite_by fun_trans
 ```
 ```leanOutput xnderiv
@@ -41,7 +46,16 @@ variable (n : Nat) (x : ℝ)
 Add a link to an interactive code editor and encourage reader to differentiate more complicated expressions involving sin, cos, exp, ... but warn about log or division.
 :::
 
+```lean (show:=false)
+end SymbolicDifferentiation
+```
+
 # Notation
+
+```lean (show:=false)
+section SymbolicDifferentiationNotation
+variable (n : Nat) (x₀ : ℝ) (u₀ du₀ : ℝ×ℝ)
+```
 
 Writing `fderiv ℝ (fun x => f x)` is somewhat tedious so *SciLean* makes our life easier by introducing a nice notation `∂ x, f x` for differentiating `(f x)` w.r.t. `x`.
 
@@ -55,7 +69,6 @@ Now Lean knows that we want real derivative when we write `∂ x, f x`.
 
 Using this notation we can compute again the above derivative
 ```lean (name:=nxderiv2)
-variable (n : Nat)
 #check (∂ (x : ℝ), x^n) rewrite_by fun_trans
 ```
 ```leanOutput nxderiv2
@@ -63,7 +76,6 @@ fun x => ↑n * x ^ (n - 1) : ℝ → ℝ
 ```
 Because we did not specify the point where we want to compute the derivative we obtained a function in `x`. We can specify the point where we want to compute the derivative with `∂ (x:=x₀), ...`
 ```lean (name:=nxderiv3)
-variable (n : Nat) (x₀ : ℝ)
 #check (∂ (x:=x₀), x^n) rewrite_by fun_trans
 ```
 ```leanOutput nxderiv3
@@ -72,7 +84,6 @@ variable (n : Nat) (x₀ : ℝ)
 
 Writing `rewrite_by fun_trans` every time we want to diferentiate an expression gets a bit tedious. We can add an exclamation mark after `∂` to indicate that we want to run `fun_trans` tactic to compute the derivative.
 ```lean (name:=bangderiv)
-variable (n : Nat)
 #check (∂! (x : ℝ), x^n)
 ```
 ```leanOutput bangderiv
@@ -84,23 +95,23 @@ We can differentiate w.r.t to a vector valued variable `(x : ℝ×ℝ)`
 #check ∂! (x : ℝ×ℝ), ‖x‖₂²
 ```
 ```leanOutput vecderiv1
-fun x => fun dx =>L[ℝ] 2 * ⟪dx, x⟫_ℝ : ℝ × ℝ → ℝ × ℝ →L[ℝ] ℝ
+fun x => fun dx =>L[ℝ] 2 * ⟪dx, x⟫ : ℝ × ℝ → ℝ × ℝ →L[ℝ] ℝ
 ```
 For derivatives w.r.t. a vector valued variable we have to also specify the direction in which we differentiate. Therefore in the above we obtained derivative as a function of the position `x` and direction `dx`. Furthermore, the notation `fun dx =>L[ℝ] ...` indicates that the function is linear function in `dx` and similarly `X →L[ℝ] Y` stands for the space of ℝ-linear functions from `X` to `Y`.
 
 If we want to specify the position and the direction in which we want to compute the derivatives we use the notation `∂ (x:=x₀;dx₀), f x`
 ```lean (name:=vecderiv2)
-variable (x₀ dx₀ : ℝ×ℝ)
-#check ∂! (x:=x₀;dx₀), ‖x‖₂²
+#check ∂! (u:=u₀;du₀), ‖u‖₂²
 ```
 ```leanOutput vecderiv2
-2 * ⟪dx₀, x₀⟫_ℝ : ℝ
+2 * ⟪du₀, u₀⟫ : ℝ
 ```
 
 To summarize all the different variants. For function of a scalar valued argument
+```lean (show:=false)
+variable (f : ℝ → ℝ) (g : ℝ×ℝ → ℝ)
+```
 ```lean
-variable (f : ℝ → ℝ) (x₀ : ℝ)
-
 #check ∂ f
 #check ∂ x, f x
 #check ∂ (x:=x₀), f x
@@ -108,12 +119,10 @@ variable (f : ℝ → ℝ) (x₀ : ℝ)
 
 For function of a vector valued argument
 ```lean
-variable (f : ℝ×ℝ → ℝ) (x₀ dx₀ : ℝ×ℝ)
-
 #check ∂ f
-#check ∂ x, f x
-#check ∂ (x:=x₀), f x
-#check ∂ (x:=x₀;dx₀), f x
+#check ∂ u, g u
+#check ∂ (u:=u₀), g u
+#check ∂ (u:=u₀;du₀), g u
 ```
 
 There is nothing stopping us from applying derivative multiple times to compute higher order derivatives
@@ -129,7 +138,7 @@ fun x => 2 : ℝ → ℝ
 
 1. Express first derivative of `f : ℝ → ℝ → ℝ` in the first and the second argument. Also express derivative in both arguments at the same time.
 
-::: Solution
+:::foldable "Solution"
 ```lean
 variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 
@@ -148,7 +157,7 @@ variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 
 2. For `(g : ℝ×ℝ → ℝ)`, express derivative of `g (x,y)` in `x`.
 
-::: Solution
+:::foldable "Solution"
 ```lean
 variable (g : ℝ×ℝ → ℝ) (x₀ y₀ : ℝ)
 
@@ -160,7 +169,7 @@ variable (g : ℝ×ℝ → ℝ) (x₀ y₀ : ℝ)
 
 3. Express second derivatives of `f : ℝ → ℝ → ℝ` in the first and the second argument.
 
-::: Solution
+:::foldable "Solution"
 ```lean
 variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 #check ∂ (x':= x₀), ∂ (x'':=x'), (f x'' y₀)
@@ -171,9 +180,9 @@ variable (f : ℝ → ℝ → ℝ) (x₀ y₀ : ℝ)
 ```
 :::
 
-4. Let \\(L(t,x)\\) be a function of time and space and `y(t)` a function of time. Express \\( \\frac\{d\}\{dt\} L(t, y(t)) \\) and \\( \\frac\{\\partial\}\{\\partial t\} L(t, y(t)) \\) in Lean. What is the difference between these two expressions? 
+4. Let \\(L(t,x)\\) be a function of time and space and `y(t)` a function of time. Express \\( \\frac\{d\}\{dt\} L(t, y(t)) \\) and \\( \\frac\{\\partial\}\{\\partial t\} L(t, y(t)) \\) in Lean. What is the difference between these two expressions?
 
-::: Solution
+:::foldable "Solution"
 ```lean
 variable (L : ℝ → ℝ → ℝ) (y : ℝ → ℝ) (t : ℝ)
 
@@ -192,17 +201,26 @@ Because SciLean's notation forces you to be a bit more explicit, there is no nee
 \frac{d}{dt} \frac{\partial L}{\partial \dot x}(x(t),\dot x(t)) -  \frac{\partial L}{\partial x}(x(t), \dot x(t))
 ```
 
-::: Solution
+:::foldable "Solution"
 ```lean
 variable (L : ℝ → ℝ → ℝ) (x : ℝ → ℝ) (t : ℝ)
 
-#check 
+#check
   let v := ∂ x
   ∂ (t':=t), (∂ (v':=v t'), L (x t') v') - ∂ (x':=x t), L x' (v t)
 ```
 :::
 
+
+```lean (show:=false)
+end SymbolicDifferentiationNotation
+```
+
 # Examples
+
+```lean (show:=false)
+section SymbolicDifferentiationExamples
+```
 
 Let's put computing derivatives to some practical use. We will demonstrate how to use *SciLean* symbolic differentiations to solve few common tasks in scientific computing and physics.
 
@@ -222,7 +240,7 @@ def mySqrt (steps : Nat) (y : Float) : Float := Id.run do
   let f := fun x => x^2 - y
   let mut x := 1.0
   for _ in [0:steps] do
-    x := x - f x / ((deriv f x) rewrite_by fun_trans[deriv])
+    x := x - f x / (∂! x':=x, f x')
   return x
 
 #eval mySqrt 10 2.0
@@ -230,9 +248,6 @@ def mySqrt (steps : Nat) (y : Float) : Float := Id.run do
 ```leanOutput mysqrt
 1.414214
 ```
-::: TODO
-In {lean}`mySqrt` we should use `(∂! f x)` notation but unfortunatelly it is currently broken for some reason.
-:::
 
 You might feel a bit unconfortable here are we are differentiating a function defined on floating point numbers. If you think that can't be formally correct then you are right. We will discuss this issue in a later chapter "Working with Real Numbers".
 
@@ -245,7 +260,7 @@ You might feel a bit unconfortable here are we are differentiating a function de
 
 3. A difficult exercise is to define a general `newtonSolve` function that takes an arbitrary function `f : Float → Float` and uring elaboration synthesizes its derivative. Add multiple hints, 1. use `infer_var` trick, 2. state explicitly how the arguments should look like
 
-::: Solution
+:::foldable "Solution"
 ```lean
 set_default_scalar Float
 def newtonSolve (steps : Nat) (x₀ : Float)
@@ -258,7 +273,8 @@ def newtonSolve (steps : Nat) (x₀ : Float)
 
 #eval newtonSolve 10 1.0 (fun x => x^2 - 2.0)
 ```
-::: 
+:::
+
 
 ## Kinematics
 
@@ -294,13 +310,11 @@ example (m f : ℝ) (hm : m ≠ 0) :
 :::
 
 
-
-
 ### Exercises
 
 1. show that trajectory `x := fun t => (cos t, sin t)` satisfies differential equation `∂ x t = (- (x t).2, (x t).1)`
 
-::: Solution
+:::foldable "Solution"
 ```lean
 open SciLean Scalar
 def ode (x : ℝ → ℝ×ℝ) := ∀ t, deriv x t = (- (x t).2, (x t).1)
@@ -311,7 +325,7 @@ example : ode (fun t => (cos t, sin t)) := by unfold ode deriv; fun_trans
 
 2. Show that trajectory \\(x(t) = \\sin(\\omega t) \\) corresponds to the force \\(f(x) = - k x \\) with \\(\\omega = \\sqrt\{(k/m)\} \\)
 
-::: Hint
+:::foldable "Hint"
 After differentiation you will have to show that \\(m \\sqrt\{\\frac\{k\}\{m\}\}^2 = k\\). Unfortunatelly Lean is not yet very powerful computer algebra system. So you can finish the proof with
 ```
   ring_nf --  m * (sqrt (k / m) * (sqrt (k / m) ==> m * sqrt (k * m⁻¹) ^ 2
@@ -319,9 +333,9 @@ After differentiation you will have to show that \\(m \\sqrt\{\\frac\{k\}\{m\}\}
   simp[h]
 ```
 where we call `ring_nf` to clean up the expression, then we just assume that ` m * sqrt (k * m⁻¹) ^ 2` is equal to `k` and finally we can finish the proof by running simp
-::: 
+:::
 
-::: Solution
+:::foldable "Solution"
 ```lean
 open SciLean Scalar
 
@@ -344,13 +358,13 @@ example (m k : ℝ) :
 \frac{\partial^2 u}{\partial t^2} = \frac{\partial^2 u}{\partial x^2}
 ```
 
-::: Solution
+:::foldable "Solution"
 ```lean
 open SciLean Scalar
-def WaveEquation (u : ℝ → ℝ → ℝ) := 
+def WaveEquation (u : ℝ → ℝ → ℝ) :=
   ∀ x t, (∂ (∂ (u · x)) t) = (∂ (∂ (u t ·)) x)
 
-example : 
+example :
     WaveEquation (fun t x => sin (x - t)) := by
   unfold WaveEquation deriv
   fun_trans
@@ -361,18 +375,26 @@ example :
 4. solution to heat equation
 
 
+```lean (show:=false)
+end SymbolicDifferentiationExamples
+```
+
+
 # Gradient
 
+```lean (show:=false)
+section SymbolicDifferentiationGradient
+set_default_scalar ℝ
+variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
+variable (f : X → ℝ) (x : X) (g : ℝ×ℝ → ℝ) (x₀ y : X)
+```
 In many practical applications, we need to compute gradient instead of directional derivative. For a function \\(f : \\mathbb\{R\}^n \\rightarrow \\mathbb\{R\} \\) the gradient of \\(f\\) is a vector of all its partial derivatives
 ```latex
 \nabla f = \left(\frac{\partial f}{\partial x_1}, \dots, \frac{\partial f}{\partial x_n} \right)
 ```
 
-A more general way of defining gradient is through linear map transposition/adjoint. The derivative of a function `(f : X → ℝ)` at point `x` is a linear map from `X` to `ℝ`
+A more general way of defining gradient is through linear map transposition/adjoint. The derivative of a function {lean}`f` at point `x` is a linear map from `X` to `ℝ`
 ```lean (name := linmapderiv)
-open SciLean
-variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
-variable (f : X → ℝ) (x : X)
 #check (∂ f x)
 ```
 ```leanOutput linmapderiv
@@ -381,55 +403,36 @@ variable (f : X → ℝ) (x : X)
 
 To obtain gradient we take an adjoint and evaluate it at one. This is exactly how gradient is defined.
 ```lean
-variable (f : X → ℝ) (x : X)
 example : (∇ f x) = adjoint ℝ (∂ f x) 1 := by rfl
 ```
 
-This coincides with the standard notion of gradient that it is a vector of all its partial derivatives. For example for `n=2` we have
-```lean
-variable {n : Nat} (f : ℝ×ℝ → ℝ) (hf : Differentiable ℝ f) (x y : ℝ)
-example : (∇ f (x,y)) = (∂ (x':=x), f (x',y), ∂ (y':=y), f (x,y')) := sorry_proof
-```
-
-::: TODO
-
-*Warning for mathlib users*: SciLean defines its own version of `adjoint` and `gradient`. The reason is that the product type `ℝ×ℝ` and function type `Fin n → ℝ` are not `InnerProductSpace` and therefore it is impossible do use mathlibs `gradient` on functions of type `ℝ×ℝ → ℝ` or `(Fin n → ℝ) → ℝ`. Mathlib's advice is to use `WithLp 2 (ℝ×ℝ)` or `EuclidianSpace n` however this is seriously inconvenient for people that just want to write some code.
-
-SciLean solution to this is to introduce new typeclass `AdjointSpace ℝ X` that is almost the same as `InnerProductSpace ℝ X` but requires that the norm induced by inner product, `‖x‖₂ = ⟪x,x⟫`, is topologically equivalent to the norm `‖x‖`. This way we can provide instance of `AdjointSpace ℝ (X×Y)` and `AdjointSpace ℝ (ι → X)` without causing issues.
-
-:::
-
-
-Few examples of of computing gradients
+Few examples of computing gradients
 ```lean (name:=gradfst)
-variable (x₀ : ℝ×ℝ)
-#check ∇! (x:=x₀), x.1
+#check ∇! x:=(0 : ℝ×ℝ), x.1
 ```
 ```leanOutput gradfst
 (1, 0) : ℝ × ℝ
 ```
 
 ```lean (name:=gradnorm2)
-variable (x₀ : ℝ×ℝ)
 #check ∇! (x:=x₀), ‖x‖₂²
 ```
 ```leanOutput gradnorm2
-2 • x₀ : ℝ × ℝ
+2 • x₀ : X
 ```
 
 ```lean (name:=gradinner)
-variable (x₀ y : ℝ×ℝ)
 #check ∇! (x:=x₀), ⟪x,y⟫
 ```
 ```leanOutput gradinner
-y : ℝ × ℝ
+y : X
 ```
 
 ## Exercises
 
 1. Compute gradient of `x[0]`, `‖x‖₂²`, `⟪x,y⟫` for `x y : Float^[3]` and gradient of `A[0,1]`, `‖A‖₂²`, `⟪A,B⟫` for `A B : Float^[2,2]`. Also evaluate those results for some concrete values.
 
-::: Solution
+:::foldable "Solution"
 
 ```lean
 set_default_scalar Float
@@ -458,15 +461,25 @@ Add solution to gradient descent
 A = \text{argmin}_B \sum_i \| B x_i - y_i \|^2
 ```
 
-::: Solution
+:::foldable "Solution"
 
 ```lean
 set_default_scalar Float
 
-def linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2,2] := 
-  let loss := fun (A : Float^[2,2]) =>  
+partial def linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2,2] := Id.run do
+  let loss := fun (A : Float^[2,2]) =>
     ∑ i, ‖(⊞ i' => ∑ j, A[i',j] * x[i][j]) - y[i]‖₂²
-  sorry
+
+  let rate := 1e-1
+  let mut A : Float^[2,2] := 0
+  let mut err := 1.0
+
+  while err > 1e-6 do
+    let ΔA := rate • (∇! A':=A, loss A')
+    err := ‖ΔA‖₂
+    A := A - ΔA
+
+  return A
 ```
 :::
 
@@ -478,7 +491,7 @@ variable {X} [NormedAddCommGroup X] [AdjointSpace ℝ X] [CompleteSpace X]
 ```
 The explanation of these typeclasses will be discussed in the last section "Abstract Vector Spaces".
 
-::: Solution
+:::foldable "Solution"
 ```lean
 set_default_scalar ℝ
 
@@ -491,21 +504,26 @@ noncomputable
 def NewtonsLaw (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) :=
   m • (∂ (∂ x) t) + (∇ φ (x t))
 
--- example 
+-- example
 --     (x : ℝ → X) (hx : ContDiff ℝ ⊤ x)
 --     (φ : X → ℝ) (hφ : Differentiable ℝ φ) :
 --     EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
 --     =
---     NewtonsLaw m φ x t := by 
+--     NewtonsLaw m φ x t := by
 --   unfold EulerLagrange NewtonsLaw deriv fgradient; fun_trans [smul_smul]
 --   sorry
 ```
 :::
 
 
+```lean (show:=false)
+end SymbolicDifferentiationGradient
+```
+
 # Derivative Rules
 
 ```lean (show:=false)
+section SymbolicDifferentiationRules
 set_default_scalar ℝ
 ```
 
@@ -557,10 +575,10 @@ and add a theorem that the derivative of {lean}`foo` is equal to {lean}`foo_deri
 ```lean
 open SciLean
 @[fun_trans]
-theorem foo_deriv_rule : 
-    fderiv ℝ foo 
-    = 
-    fun x => fun dx =>L[ℝ] dx • foo_deriv x := by 
+theorem foo_deriv_rule :
+    fderiv ℝ foo
+    =
+    fun x => fun dx =>L[ℝ] dx • foo_deriv x := by
   unfold foo foo_deriv; ext x; fun_trans
 ```
 
@@ -621,6 +639,9 @@ It generates these theorems and definition
 The problem of writing appropriate theorems for `fun_trans` and `fun_prop` is quite involved problem and will be discussed in future chapter.
 
 
+```lean (show:=false)
+end SymbolicDifferentiationRules
+```
 
 # Differentiating Division, Log, Sqrt, ...
 
@@ -652,10 +673,11 @@ and the beggining of the trace is saying that `fun_trans` tried to apply theorem
 This makes sense as division `1/x` is well defined and differentiable only away from zero. Therefore we have to differentiate it at a concrete point that is not equal to zero.
 ```lean (name:=divderivsucc)
 variable (x₀ : ℝ) (hx₀ : x₀ ≠ 0)
+set_option trace.Meta.Tactic.fun_trans true in
 #check (∂ (x:=x₀), 1/x) rewrite_by fun_trans (disch:=assumption)
 ```
 ```leanOutput divderivsucc
--(x₀ ^ 2)⁻¹ : ℝ
+-1 / x₀ ^ 2 : ℝ
 ```
 We introduced a point `x₀` and assumption `hx₀` that it is not equal to zero. By default `fun_trans` does not see this assumption and we have to provide discharger. A discharger is any tactic that tries to satisfy(discharge) any assumption of the theorems `fun_trans` is using. In this simple case `assumption` tactic is enough as it just looks through the local context and tries to directly apply any existing assumptions.
 
@@ -665,7 +687,7 @@ variable (x₀ : ℝ) (hx₀ : x₀ ≠ 0)
 #check (∂ (x:=x₀), 1/x^2) rewrite_by fun_trans (disch:=assumption)
 ```
 ```leanOutput divsqderiv
-∂ (x:=x₀), (x ^ 2)⁻¹ : ℝ
+(∂ (x:=x₀), (x ^ 2)⁻¹) 1 : ℝ
 ```
 tracing shows
 ```
@@ -700,7 +722,7 @@ variable (ε : ℝ) (hε : 0 < ε)
   fun_trans (disch:=intro x; nlinarith [norm2_nonneg ℝ x])
 ```
 ```leanOutput smoothnormgrad
-fun w => fun x =>L[ℝ] 2 * ⟪x, w⟫_ℝ / (2 * sqrt (ε + ‖w‖₂²)) : ℝ × ℝ → ℝ × ℝ →L[ℝ] ℝ
+fun w => fun x =>L[ℝ] 2 * ⟪x, w⟫ / (2 * sqrt (ε + ‖w‖₂²)) : ℝ × ℝ → ℝ × ℝ →L[ℝ] ℝ
 ```
 
 ::: TODO
@@ -714,10 +736,10 @@ Create unsafe mode differentiation which assumes that everything works out. Effe
 ## Exercises
 
 1. gradient of energy for n-body system, newton's potential, lenard jones potential
-  - do it for two particles 
+  - do it for two particles
   - do it for n-particles
 
-2. signed distance function 
+2. signed distance function
   - compute gradient of sphere sdf
   - compute mean and gaussian curvature of sphere
 
@@ -725,7 +747,7 @@ Create unsafe mode differentiation which assumes that everything works out. Effe
     - most of them involve functions that are not differentiable everywhere
     - compute derivative in unsafe mode
     - figure out the minimal condition under which it is differentiable
-      
+
 
 # Abstract Vector Spaces
 
@@ -734,7 +756,7 @@ In calculus we usually consider only functions \\((f : \\mathbb\{R\}^n \\rightar
 
 Fortunately mathlib's derivative {lean}`fderiv` is already defined for a function `(f : X → Y)` between two abstract vector spaces `X` and `Y` over a field `𝕜`. Mathlib's way of introducing an abstract vector space is rather involved and we need to spend some time talking about it. This presentation will be rather simplified. For interested reader we provide references at the end of this section that go over mathlib's algebraic stracutes in more detail.
 
-A vector space `X` is a set with operations `+,-,•,0` such that 
+A vector space `X` is a set with operations `+,-,•,0` such that
 ```
   ∀ (x y z : X), x + (y + z) = (x + y) + z
   ∀ (x y : X), x + y = y + x
@@ -752,12 +774,12 @@ in mathlib the axioms talking about addition and negation are captured by the ty
 section AbstractVectroSpacesSec1
 ```
 ```lean
-variable 
+variable
   {𝕜 : Type} [Field 𝕜]
   {X : Type} [AddCommGroup X] [Module 𝕜 X]
 
-example (s r : 𝕜) (x y : X) : 
-    (s + r) • (x + y) = s • x + r • x + s • y + r • y := by 
+example (s r : 𝕜) (x y : X) :
+    (s + r) • (x + y) = s • x + r • x + s • y + r • y := by
   simp only [add_smul,smul_add,add_assoc]
 ```
 ```lean (show := false)
@@ -769,7 +791,7 @@ When we want to differentiate a function `(f : X → Y)` between two vector spac
 section AbstractVectroSpacesSec2
 ```
 ```lean
-variable 
+variable
   {𝕜 : Type} [RCLike 𝕜]
   {X : Type} [NormedAddCommGroup X] [NormedSpace 𝕜 X]
   {Y : Type} [NormedAddCommGroup Y] [NormedSpace 𝕜 Y]
@@ -790,7 +812,7 @@ section AbstractVectroSpacesSec3
 ```
 ```lean
 open SciLean
-variable 
+variable
   {𝕜 : Type} [RCLike 𝕜]
   {X : Type} [NormedAddCommGroup X] [AdjointSpace 𝕜 X] [CompleteSpace X]
   {Y : Type} [NormedAddCommGroup Y] [AdjointSpace 𝕜 Y] [CompleteSpace Y]
@@ -798,7 +820,7 @@ variable
 set_default_scalar 𝕜
 
 example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g) :
-    (∇ x, (f x + g x)) = (∇ f) + (∇ g) := by 
+    (∇ x, (f x + g x)) = (∇ f) + (∇ g) := by
   ext x; unfold adjointFDeriv; fun_trans
 ```
 ```lean (show := false)

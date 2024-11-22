@@ -8,10 +8,11 @@ set_option linter.hashCommand false
 set_option linter.haveLet 0
 
 set_option maxHeartbeats 1000000
+set_option maxRecDepth 10000
 
 open Lean.MessageSeverity
 
-open SciLean
+open SciLean Scalar
 
 #doc (Manual) "Tensor Operations" =>
 
@@ -22,8 +23,8 @@ In this chapter, we will demonstrate more advanced operations with arrays, such 
 One common operation is to transform every element of an array. To do that, we can write a simple for loop. Recall that anytime you want to write imperative-style code, you have to start it with `Id.run do`, and to modify input `x` mutably, we have to introduce a new mutable variable `x'` and assign `x` to it:
 
 ```lean
-open SciLean
-def map {I : Type} [IndexType I] (x : Float^[I]) (f : Float → Float) := Id.run do
+def map {I : Type} [IndexType I]
+    (x : Float^[I]) (f : Float → Float) := Id.run do
   let mut x' := x
   for i in fullRange I do
     x'[i] := f x'[i]
@@ -35,7 +36,6 @@ A new thing here is that we wrote this function polymorphically in the index typ
 In fact, SciLean already provides this function under the name `mapMono`. The "mono" stands for the fact that the function `f` does not change the type; in our case, it accepts and returns `Float`. Also, this function is defined in the `DataArrayN` namespace, and because of that, we can use the familiar dot notation `x.mapMono`. As `mapMono` is polymorphic in the shape of the array, we can call it on vectors:
 
 ```lean (name:=mapmono1)
-open SciLean Scalar
 #eval ⊞[1.0,2.0,3.0].mapMono (fun x => sqrt x)
 ```
 ```leanOutput mapmono1
@@ -45,7 +45,6 @@ open SciLean Scalar
 or matrices:
 
 ```lean (name:=mapmono2)
-open SciLean Scalar
 #eval ⊞[1.0,2.0;3.0,4.0].mapMono (fun x => sqrt x)
 ```
 ```leanOutput mapmono2
@@ -55,15 +54,15 @@ open SciLean Scalar
 or higher-rank arrays:
 
 ```lean (name:=mapmono3type)
-open SciLean Scalar
-#check (⊞ (i j k : Fin 2) => i.1.toFloat + 2 * j.1.toFloat + 4 * k.1.toFloat)
+#check (⊞ (i j k : Fin 2) =>
+          i.1.toFloat + 2 * j.1.toFloat + 4 * k.1.toFloat)
 ```
 ```leanOutput mapmono3type
 ⊞ i j k => (↑i).toFloat + 2 * (↑j).toFloat + 4 * (↑k).toFloat : Float^[2, 2, 2]
 ```
 ```lean (name:=mapmono3)
-open SciLean Scalar
-#eval (⊞ (i j k : Fin 2) => i.1.toFloat + 2 * j.1.toFloat + 4 * k.1.toFloat).mapMono sqrt
+#eval (⊞ (i j k : Fin 2) =>
+         i.1.toFloat + 2 * j.1.toFloat + 4 * k.1.toFloat).mapMono sqrt
 ```
 ```leanOutput mapmono3
 ⊞[0.000000, 1.000000, 1.414214, 1.732051, 2.000000, 2.236068, 2.449490, 2.645751]
@@ -74,8 +73,8 @@ where `IndexType.toFin (i,j,k)` turns a structured index of type `Fin 2 × Fin 2
 An alternative to `mapMono` is `mapIdxMono`, which accepts a function `f : I → X → X`, so you can additionally use the index value to transform the array values:
 
 ```lean (name:=mapmonoidx)
-open SciLean Scalar
-#eval (0 : Float^[3]) |>.mapIdxMono (fun i _ => i.1.toFloat) |>.mapMono (fun x => sqrt x)
+#eval (0 : Float^[3]) |>.mapIdxMono (fun i _ => i.1.toFloat)
+                      |>.mapMono (fun x => sqrt x)
 ```
 ```leanOutput mapmonoidx
 ⊞[0.000000, 1.000000, 1.414214]
@@ -120,7 +119,6 @@ notice that computing the minimal element with `fold` and `init:=0` would give y
 
 Putting it all together we can implement soft-max
 ```lean
-open SciLean Scalar
 def softMax {I : Type} [IndexType I]
   (r : Float) (x : Float^[I]) : Float^[I] := Id.run do
   let m := x.reduce (max · ·)
@@ -185,10 +183,12 @@ The fundamental operation in machine learning is convolution. The first attempt 
 def conv1d {n k : Nat} (x : Float^[n]) (w : Float^[k]) :=
     ⊞ (i : Fin n) => ∑ j : Fin k, w[j] * x[i-j]
 ```
-```leanOutput conv1dattempt
-(deterministic) timeout at `typeclass`, maximum number of heartbeats (20000) has been reached
-Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
-Additional diagnostic information may be available using the `set_option diagnostics true` command.
+```
+failed to synthesize
+    CoeT (Fin k) x (Fin n)
+  (deterministic) timeout at `typeclass`, maximum number of heartbeats (20000) has been reached
+  Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+  Additional diagnostic information may be available using the `set_option diagnostics true` command.
 ```
 TODO: This is a bad error :( It should say that it failed to synthesize `HSub (Fin n) (Fin k) _`
 
@@ -222,11 +222,10 @@ def conv2d {n m k : Nat} (w : Float^[[-k:k],[-k:k]]) (x : Float^[n,m]) :=
 In practice, a convolutional layer takes as input a stack of images `x`, a stack of kernels `w`, and a bias `b`. Let's index images by an arbitrary type `I` and kernels by `J×I`:
 
 ```lean
-open SciLean
 def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
     [IndexType I] [IndexType J] [DecidableEq J]
-    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m]) (x : Float^[I,n,m]) :
-    Float^[J,n,m] :=
+    (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m])
+    (x : Float^[I,n,m]) :  Float^[J,n,m] :=
   ⊞ κ (i : Fin n) (j : Fin m) =>
     b[κ,i,j]
     +
@@ -237,28 +236,25 @@ def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
 
 1. Generalize the function {lean}`Fin.shift`. Mathlib usues notation `x+ᵥy` for "shifting" `(y : Y)` by `(x : X)`. This operation is provided by the typeclass `VAdd X Y`. Define instance `VAdd ℤ (Fin n)` for adding an integer `(j : ℤ)` to number `(i : Fin n)` that wraps around on overflow or underlow. Feel free to use `sorry` for proving that the result is indeed in `Fin n`. Further define `VAdd (Set.Icc a b) (Fin n)` for `(a b : ℤ)` and `VAdd J I → VAdd J' I' → VAdd (J×J') (I×I')`.
 
-::: Solution
+::: solution "solution"
 ```lean
-open SciLean
-instance (n : ℕ) : VAdd ℤ (Fin n) := 
+instance (n : ℕ) : VAdd ℤ (Fin n) :=
   ⟨fun j i => ⟨((Int.ofNat i.1 + j)%n).toNat, sorry_proof⟩⟩
 
-instance (a b : ℤ) (n : ℕ) : VAdd (Set.Icc a b) (Fin n) := 
+instance (a b : ℤ) (n : ℕ) : VAdd (Set.Icc a b) (Fin n) :=
   ⟨fun j i => j.1 +ᵥ i⟩
 
-open SciLean
-instance {I I' J J'} [VAdd J I] [VAdd J' I'] : VAdd (J×J') (I×I') := 
+instance {I I' J J'} [VAdd J I] [VAdd J' I'] : VAdd (J×J') (I×I') :=
   ⟨fun (j,j') (i,i') => (j+ᵥi, j'+ᵥi')⟩
 ```
 :::
 
 2. Implement General convolution for arbitrary rank tensors
 
-::: Solution
+::: solution "solution"
 ```lean
-open SciLean
 def convNd {J : Type} [IndexType J] {I : Type} [IndexType I] [VAdd J I]
-    (w : Float^[J]) (x : Float^[I]) : Float^[I] := 
+    (w : Float^[J]) (x : Float^[I]) : Float^[I] :=
   ⊞ (i : I) => ∑ j, w[j] * x[j +ᵥ i]
 
 variable (w : Float^[[-1:1],[-1:1],[-1:1]]) (x : Float^[10,10,10])
@@ -268,7 +264,7 @@ variable (w : Float^[[-1:1],[-1:1],[-1:1]]) (x : Float^[10,10,10])
 -- #eval convNd (⊞ (i j k : Set.Icc (-1) 1) => 1.0/(1.0 + |Float.ofInt i.1| + |Float.ofInt j.1| + |Float.ofInt k.1|))
 --               (⊞ (i j k : Fin 5) => if i.1 = j.1 ∧ j.1 = k.1 then 1.0 else 0.0)
 ```
-::: 
+:::
 
 3. Generalize the above to a proper general convolution layer which accepts stack of filters, images and biases. Similarly to what we have done to  {lean}`conv2d` previously.
 
@@ -328,7 +324,8 @@ Unfortunately, this does not work. Lean's type checking is not smart enough to a
 The most flexible way of writing the `avgPool` function is as follows:
 
 ```lean
-def avgPool (x : Float^[n]) {m} (h : m = n/2 := by infer_var) : Float^[m] :=
+def avgPool (x : Float^[n])
+    {m} (h : m = n/2 := by infer_var) : Float^[m] :=
   ⊞ (i : Fin m) =>
     let i1 : Fin n := ⟨2*i.1, by omega⟩
     let i2 : Fin n := ⟨2*i.1+1, by omega⟩
@@ -344,18 +341,18 @@ You might be wondering what happens when `n` is odd. Because `n/2` performs natu
 To build a simple neural network, we need a two-dimensional version of the pooling layer:
 
 ```lean
-open SciLean
 variable {n₁ n₂ : Nat} {I : Type} [IndexType I] [DecidableEq I]
 def avgPool2d
     (x : Float^[I,n₁,n₂]) {m₁ m₂ : Nat}
     (h₁ : m₁ = n₁/2 := by infer_var)
     (h₂ : m₂ = n₂/2 := by infer_var) : Float^[I,m₁,m₂] :=
-  ⊞ (ι : I) (i : Fin m₁) (j : Fin m₂) => 0.0
-    -- let i₁ : Fin n₁ := ⟨2*i.1, by omega⟩
-    -- let i₂ : Fin n₁ := ⟨2*i.1+1, by omega⟩
-    -- let j₁ : Fin n₂ := ⟨2*j.1, by omega⟩
-    -- let j₂ : Fin n₂ := ⟨2*j.1+1, by omega⟩
-    -- 0.0
+  ⊞ (ι : I) (i : Fin m₁) (j : Fin m₂) =>
+    let i₁ : Fin n₁ := ⟨2*i.1, by omega⟩
+    let i₂ : Fin n₁ := ⟨2*i.1+1, by omega⟩
+    let j₁ : Fin n₂ := ⟨2*j.1, by omega⟩
+    let j₂ : Fin n₂ := ⟨2*j.1+1, by omega⟩
+    0.25 * (x[ι,i₁,j₁] + x[ι,i₁,j₂] +
+            x[ι,i₂,j₁] + x[ι,i₂,j₂])
 ```
 
 # Simple Neural Network
@@ -365,7 +362,8 @@ We are almost ready to write a simple neural network. The only missing piece is 
 ```lean
 open SciLean
 variable {I : Type} [IndexType I]
-def dense (n : Nat) (A : Float^[n,I]) (b : Float^[n]) (x : Float^[I]) : Float^[n] :=
+def dense (n : Nat) (A : Float^[n,I])
+    (b : Float^[n]) (x : Float^[I]) : Float^[n] :=
   ⊞ (i : Fin n) => b[i] + ∑ j, A[i,j] * x[j]
 ```
 

@@ -198,47 +198,54 @@ For example, to create a matrix, you can first create an array and then convert 
 Here, we also prove that reshaping an array of size four to a two-by-two matrix is valid by calling the tactic `decide`. This tactic works well with concrete numbers, when variables are involved, feel free to omit the proof with `sorry`.
 
 These reshape functions are concrete instances of a general `reshape` function:
-```lean
-open SciLean
-/--
-info: SciLean.DataArrayN.reshape {α : Type} [pd : PlainDataType α] {ι : Type} [IndexType ι] (x : α^[ι]) (κ : Type)
-  [IndexType κ] (hs : size κ = size ι) : α^[κ]
--/
-#guard_msgs in
+```lean (name:=reshape_check)
 #check DataArrayN.reshape
 ```
-which reshapes an array of shape `I` to an array of shape `J`. Using this function for vectors or matrices is cumbersome, as `x.reshape2 n m sorry` is just a shorthand for `x.reshape (Fin n × Fin m) sorry`.
+```lean (show:=false)
+section ReshapeInline
+variable {I J : Type*} [IndexType I] {n m : ℕ} {x : Float^[I]}
+```
+which reshapes an array of shape {lean}`I` to an array of shape {lean}`J`. Using this function for vectors or matrices is cumbersome, as `x.reshape2 n m sorry` is just a shorthand for {lean}`x.reshape (Fin n × Fin m) sorry`.
+```lean (show:=false)
+end ReshapeInline
+```
 
 
 # Exercises
 
-1. write function that computes mean and variance
-  - for data array of floats `Float^[n]` - mean should have type `Float` and variance `Float`
-  - for arbitrarily shaped data `Float^[I]^[n]` - mean should have type `Float^[I]` and covariance `Float^[I,I]`
-```lean
-open SciLean
-variable {n : Nat} {I : Type} [IndexType I] [DecidableEq I]
+```lean (show:=false)
+section Exercises
+variable {n : ℕ} {I : Type*} [IndexType I] [DecidableEq I]
+```
+
+1. Write function that computes mean and variance
+  - For array of floats {lean}`Float^[n]`.
+  - For arbitrarily shaped data {lean}`Float^[I]^[n]`. Mean should have type {lean}`Float^[I]` and covariance should have type {lean}`Float^[I,I]`.
+
+:::foldable "Solution for `Float^[n]`"
+```lean (keep:=false)
+variable {n : Nat}
 
 def mean (x : Float^[n]) : Float := (1/n.toFloat) • ∑ i, x[i]
 
 def variance (x : Float^[n]) : Float :=
   let m := mean x
   (1/(n-1).toFloat) • ∑ i, (x[i] - m)^2
-
-def mean' (x : Float^[I]^[n]) : Float^[I] := (1/n.toFloat) • ∑ i, x[i]
 ```
+:::
 
-```lean
-open SciLean
+:::foldable "Solution for `Float^[I]^[n]`"
+```lean (keep:=false)
 variable {n : Nat} {I : Type} [IndexType I] [DecidableEq I]
 
+def mean (x : Float^[I]^[n]) : Float^[I] := (1/n.toFloat) • ∑ i, x[i]
+
 def covariance (x : Float^[I]^[n]) : Float^[I,I] :=
-  let m := mean' x
+  let m := mean x
   ⊞ i j => ∑ k, (x[k][i] - m[i])*(x[k][j] - m[j])
+```
+:::
 
-def covariance' (x : Float^[I]^[n]) : Float^[I,I] :=
-  let m := mean' x
-  let x := x.uncurry
-  ⊞ i j => ∑ k, (x[k,i] - m[i])*(x[k,j] - m[j])
-
+```lean (show:=false)
+end Exercises
 ```

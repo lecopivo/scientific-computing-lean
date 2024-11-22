@@ -11,7 +11,6 @@ open Lean.MessageSeverity
 
 open SciLean
 
-
 open IndexType in
 @[simp]
 theorem fromFin_toFin {I} [IndexType I] (i : I) :

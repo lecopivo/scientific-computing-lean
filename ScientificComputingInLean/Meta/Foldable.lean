@@ -22,41 +22,41 @@ open Lean.Elab.Tactic.GuardMsgs
 namespace Manual
 
 
-def Block.solution (name : Option String) : Block where
-  name := `Manual.solution
+def Block.foldable (name : Option String) : Block where
+  name := `Manual.foldable
   data := ToJson.toJson (name, (none : Option Tag))
 
-structure SolutionConfig where
+structure FoldableConfig where
   description : Array Syntax
   /-- Name for refs -/
   name : Option String := none
 
 
-def SolutionConfig.parse [Monad m] [MonadInfoTree m] [MonadLiftT CoreM m] [MonadEnv m] [MonadError m] [MonadFileMap m] : ArgParse m SolutionConfig :=
-  SolutionConfig.mk <$> .positional `description .inlinesString <*> .named `name .string true
+def FoldableConfig.parse [Monad m] [MonadInfoTree m] [MonadLiftT CoreM m] [MonadEnv m] [MonadError m] [MonadFileMap m] : ArgParse m FoldableConfig :=
+  FoldableConfig.mk <$> .positional `description .inlinesString <*> .named `name .string true
 
 
-@[directive_expander «solution»]
-def «solution» : DirectiveExpander
+@[directive_expander «foldable»]
+def «foldable» : DirectiveExpander
   | args, contents => do
-    let cfg ← SolutionConfig.parse.run args
+    let cfg ← FoldableConfig.parse.run args
     let description ← cfg.description.mapM elabInline
     -- Elaborate Lean blocks first, so inlines in prior blocks can refer to them
     let blocks ← prioritizedElab (isLeanBlock ·) elabBlock contents
-    -- Solutions are represented using the first block to hold the description. Storing it in the JSON
+    -- Foldables are represented using the first block to hold the description. Storing it in the JSON
     -- entails repeated (de)serialization.
-    pure #[← ``(Block.other (Block.solution $(quote cfg.name)) #[Block.para #[$description,*], $blocks,*])]
+    pure #[← ``(Block.other (Block.foldable $(quote cfg.name)) #[Block.para #[$description,*], $blocks,*])]
 
-@[block_extension «solution»]
-def solution.descr : BlockDescr where
+@[block_extension «foldable»]
+def foldable.descr : BlockDescr where
   traverse id data contents := do
     match FromJson.fromJson? data (α := Option String × Option Tag) with
-    | .error e => logError s!"Error deserializing solution tag: {e}"; pure none
+    | .error e => logError s!"Error deserializing foldable tag: {e}"; pure none
     | .ok (none, _) => pure none
     | .ok (some x, none) =>
       let path ← (·.path) <$> read
       let tag ← Verso.Genre.Manual.externalTag id path x
-      pure <| some <| Block.other {Block.solution none with id := some id, data := toJson (some x, some tag)} contents
+      pure <| some <| Block.other {Block.foldable none with id := some id, data := toJson (some x, some tag)} contents
     | .ok (some _, some _) => pure none
   toTeX :=
     some <| fun _ go _ _ content => do
@@ -67,40 +67,40 @@ def solution.descr : BlockDescr where
     open Verso.Output.Html in
     some <| fun goI goB id _data blocks => do
       if h : blocks.size < 1 then
-        HtmlT.logError "Malformed solution"
+        HtmlT.logError "Malformed foldable"
         pure .empty
       else
         let .para description := blocks[0]
-          | HtmlT.logError "Malformed solution - description not paragraph"; pure .empty
+          | HtmlT.logError "Malformed foldable - description not paragraph"; pure .empty
         let xref ← HtmlT.state
         let attrs := xref.htmlId id
         pure {{
-          <details class="solution" {{attrs}}>
+          <details class="foldable" {{attrs}}>
             <summary class="description">{{← description.mapM goI}}</summary>
             {{← blocks.extract 1 blocks.size |>.mapM goB}}
           </details>
         }}
   extraCss := [
-r#".solution {
+r#".foldable {
   padding: 1.5em;
   border: 1px solid #98B2C0;
   border-radius: 0.5em;
   margin-bottom: 0.75em;
   margin-top: 0.75em;
-  clear: both; /* Don't overlap margin notes with solutions */
+  clear: both; /* Don't overlap margin notes with foldables */
 }
-.solution p:last-child {margin-bottom:0;}
-.solution .description::before {
+.foldable p:last-child {margin-bottom:0;}
+.foldable .description::before {
   content: "";
 }
-.solution[open] .description {
+.foldable[open] .description {
   margin-bottom: 1em;
 }
-.solution .description {
+.foldable .description {
   font-style: italic;
   font-family: var(--verso-structure-font-family);
 }
-.solution .hl.lean.block {
+.foldable .hl.lean.block {
   overflow-x: auto;
 }
 "#

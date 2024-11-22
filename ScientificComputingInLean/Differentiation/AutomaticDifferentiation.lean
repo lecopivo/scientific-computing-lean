@@ -15,7 +15,7 @@ set_default_scalar ℝ
 #doc (Manual) "Automatic Differentiation" =>
 
 
-In scientific computing a common requirement is to compute derivatives of a program. The important requirement is that the resulting program computing the derivative should be efficient. The problem with symbolic differentiation is that it can produce expressions which are really inefficient. So called *automatic differentiation* addresses this issue an computes derivatives that are also efficient to compute. 
+In scientific computing a common requirement is to compute derivatives of a program. The important requirement is that the resulting program computing the derivative should be efficient. The problem with symbolic differentiation is that it can produce expressions which are really inefficient. So called *automatic differentiation* addresses this issue an computes derivatives that are also efficient to compute.
 
 Let's have a look how symbolic differentiation can produce large expressions.
 ```lean
@@ -27,16 +27,16 @@ The last example, symbolic differentiation takes and expression with 9 mulplicat
 
 If we instead use forward mode derivative(one type of automatic differentiation which we will explain in a moment)
 ```lean
-#check (∂>! (x : ℝ), x * x * x * x * x * x * x * x) 
+#check (∂>! (x : ℝ), x * x * x * x * x * x * x * x)
 ```
-we obtain 21 multiplications and 7 additions. 
+we obtain 21 multiplications and 7 additions.
 
 The difference might not seems to big but if you look at the shape of the result you can see that the the expression reulting from `∂` contains a big triangular block of multiplications whose size(in terms of multiplications) grows quadratically in the number of multiplications in the original expression. On the other hand when we use `∂>`, for every multiplication in the original expression we obtain one line with `ydy * x` and one line with `dx * ydy_i + ydy * dx`.
 
 ::: TODO
 
 Add table with number of multplications and additions with growing `n`
-::: 
+:::
 
 
 # Forward Mode
@@ -45,7 +45,7 @@ The issue with symbolic differentiation is that the chain rule
 ```latex
 (f\circ g)'(x) = f'(g(x)) g'(x)
 ```
-repeats \\(g\\) on the right hand side twice which can lead to doubling of computation everytime we apply chainrule. 
+repeats \\(g\\) on the right hand side twice which can lead to doubling of computation everytime we apply chainrule.
 
 The remedy to this problem is to introduce forward mode derivative \\( \\overrightarrow\{\\partial\} \\)
 ```latex
@@ -53,9 +53,9 @@ The remedy to this problem is to introduce forward mode derivative \\( \\overrig
 ```
 The motivation is that the forward mode derivative computes the value \\( f(x) \\) and the derivative \\( f'(x) dx \\) once and at the same time. Both values then can be comnsumed by subsequent computation without ever evaluating \\(f\\) again. The chain rule for forward mode derivative is
 ```latex
-\overrightarrow{\partial} \left( f \circ g \right) =  \overrightarrow{\partial} f  \circ  \overrightarrow{\partial} g  
+\overrightarrow{\partial} \left( f \circ g \right) =  \overrightarrow{\partial} f  \circ  \overrightarrow{\partial} g
 ```
-which does not suffer from the problem of repeating \\( g \\) twice and thus not potentially double the computation. 
+which does not suffer from the problem of repeating \\( g \\) twice and thus not potentially double the computation.
 
 In SciLean, the forward mode derivative is {lean}`fwdFDeriv` which has notaion `∂>`. It is defined as
 ```lean
@@ -67,16 +67,16 @@ In Lean notation the chain rule can be writen as
 ```lean
 open SciLean
 variable (f g : ℝ → ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g) (x dx : ℝ)
-example : (∂> (f ∘ g) x dx) = (let (y,dy) := (∂> g x dx); (∂> f y dy)) := by fun_trans[Function.comp]
+example : (∂> (f ∘ g) x dx) = (let (y,dy) := (∂> g x dx); (∂> f y dy)) := by fun_trans[Function.comp_def]
 ```
 Alternativelly, when we use the notation `↿f` that uncurries any function we can write the chain rule
 ```lean
 open SciLean
 variable (f g : ℝ → ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
-example : ↿(∂> (f ∘ g)) = ↿(∂> f) ∘ ↿(∂> g) := by fun_trans[Function.comp,Function.HasUncurry.uncurry]
+example : ↿(∂> (f ∘ g)) = ↿(∂> f) ∘ ↿(∂> g) := by fun_trans[Function.comp_def,Function.HasUncurry.uncurry]
 ```
 
-In SciLean it is the theorem {lean}`SciLean.fwdFDeriv.comp_rule`.
+In SciLean it is the theorem {lean}`@SciLean.fwdFDeriv.comp_rule`.
 
 
 ## autodiff vs fun\_trans
@@ -94,12 +94,12 @@ The tactic `autodiff` behaves very similarly to `fun_trans` but it carefully han
 
 From now one, the rule of thumb it to use `fun_trans` if you do not care about generating efficient code and want to just prove something using derivatives and to use `autodiff` when you care about the efficiency of the resulting code.
 
-You might have noticed that let bindings are preserved when using `∂!` notation. This is because `∂!` is using the tactic `autodiff` instead of `fun_trans`. 
+You might have noticed that let bindings are preserved when using `∂!` notation. This is because `∂!` is using the tactic `autodiff` instead of `fun_trans`.
 
-Note that when you want to compute efficient derivatives you have to use `autodiff` *and* forward mode derivative `∂>`. Using only one of them will not yield the most efficient code. 
+Note that when you want to compute efficient derivatives you have to use `autodiff` *and* forward mode derivative `∂>`. Using only one of them will not yield the most efficient code.
 
 
-## Relation to Dual Numbers 
+## Relation to Dual Numbers
 
 One common explanation of forward mode derivative is through dual numbers \\(a + \\epsilon b \\). Similarly to complex numbers \\( \\mathbb\{C\}\\), which extend reals numbers with complex unit \\(i\\) that squares to negative one, \\(i^2 = -1\\), the dual numbers \\( \\overline\{\\mathbb\{R\}\}\\) extend real numbers with \\(\\epsilon\\) that squares to zero, \\(\\epsilon^2 = 0\\).
 
@@ -118,7 +118,7 @@ Through power series we can also calculate functions like sin, cos or exp
 \exp(a + \epsilon b) &= \exp(a) + \epsilon b \exp(a)
 \end{align}
 ```
-In general, for an analytical function `(f : ℝ → ℝ)` we can show that 
+In general, for an analytical function `(f : ℝ → ℝ)` we can show that
 ```latex
 f(a + \epsilon b) = f(a) + \epsilon b f'(a)
 ```
@@ -135,7 +135,7 @@ Explain this for general function `f : X → Y` and relate it to complexificatio
 
 ## Exercises
 
-1. In section (??) we defined a function `foo` 
+1. In section (??) we defined a function `foo`
 ```lean (keep:=false)
 def foo (x : ℝ) := x^2 + x
 ```
@@ -151,7 +151,7 @@ In order to compute derivatives with `foo` you need to derivative generate theor
 # Reverse Mode
 
 
-Forward mode derivative `∂> f` is designed to efficiently compute the derivative `∂ f`. To efficiently compute the gradient `∇ f` we have to introduce reverse mode derivative `<∂ f`. 
+Forward mode derivative `∂> f` is designed to efficiently compute the derivative `∂ f`. To efficiently compute the gradient `∇ f` we have to introduce reverse mode derivative `<∂ f`.
 
 
 Recall the that definition of the gradient `∇ f` is adjoint of the derivative
@@ -170,7 +170,7 @@ With this definition we can write down the chain rule for reverse mode derivativ
 ```lean
 variable (f g : ℝ → ℝ) (x : ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
 
-example : 
+example :
   (<∂ (fun x => f (g x)) x)
   =
   let (y,dg') := <∂ g x
@@ -183,12 +183,12 @@ The crucial observation is that the derivative part of `<∂ (f∘g)` composes t
 
 ::: TODO
 
-Talk about 
+Talk about
 1. what is forward pass and reverse pass
 2. memory requirements of reverse mode
-3. forward mode vs reverse mode 
+3. forward mode vs reverse mode
 4. relation to vjp jvp convention
-::: 
+:::
 
 
 ## Exercises
@@ -204,11 +204,3 @@ Talk about
 
 
 # Derivatives of Neural Network Layers
-
-In the chapter 'Working with Arrays' we have constructured a simple neural network. To train it we have to comput its derivative
-
-::: TODO
-
-Differentiate neural network layers from the chapter 'Working with Arrays'
-
-:::
