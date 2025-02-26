@@ -24,11 +24,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # - name: Install BLAS/Linux
-    #   if: runner.os == 'Linux'
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y libopenblas-dev
+    - name: Install BLAS/Linux
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libopenblas-dev
 
     - name: Set up Lean
       uses: leanprover/lean-action@v1
