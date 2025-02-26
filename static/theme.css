@@ -1,69 +1,68 @@
 :root {
-    --verso-structure-font-family: "Inter", Helvetica, Arial, sans-serif;
-    --verso-text-font-family: "Inter", Helvetica, Arial, sans-serif;
-    --verso-code-font-family: "Fira Code", monospace;
-    --lean-blue: #0073a3;
-    --lean-light-blue: #98b2c0;
-    --verso-toc-background-color: var(--lean-blue);
+    --verso-structure-font-family: "Helvetica Neue","Segoe UI",Arial,sans-serif;
+    --verso-text-font-family: Source Serif, Georgia,Times,"Times New Roman",serif;
+    --verso-code-font-family: Source Code Pro, monospace;
 }
 
 p {
     font-feature-settings: "calt" off;
 }
 
-header h1 {
-    background-color: var(--lean-blue);
-    font-weight: 700;
-    color: white;
-    padding: 0.5em;
-    margin: 10px;
+section > p, section > ul, section > ol {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  /* text-transform: uppercase; */
+div.paragraph > p:not(:first-child),
+div.paragraph > ul:not(:first-child),
+div.paragraph > ol:not(:first-child),
+div.paragraph > dl:not(:first-child) {
+  margin-top: 0.5rem;
 }
 
-h1, h2 {
-    font-weight: 800;
-    color: var(--lean-blue);
+div.paragraph > p:not(:last-child),
+div.paragraph > ul:not(:last-child),
+div.paragraph > ol:not(:last-child),
+div.paragraph > dl:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
 
-h3 {
-    font-weight: 700;
-    color: var(--lean-light-blue);
+/*
+Don't impose margins on lists or list items from their contents.
+*/
+li > :first-child {
+  margin-top: 0;
+}
+li > :last-child {
+  margin-bottom: 0;
 }
 
-h4 {
-    font-weight: 600;
+li:not(:first-child) {
+  margin-top: 0.5rem;
+}
+li:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
 
-h5, h6 {
-    font-weight: 500;
-}
-
-#toc, #toc a, #toc a:hover {
-    color: white;
-}
-
-#toc > ol > li {
-    font-weight: 600;
-}
-
-#toc > ol > li > ol {
-    font-weight: 400;
+.hl.lean.block {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0.75em;
 }
 
 /** TODO - make these themeable with variables ***/
 .hl.lean .keyword.token {
-    font-weight: 500 !important;
+    font-weight: 600 !important;
 }
 
 figure {
-    padding: 1em;
+    padding: 0;
+    margin: 1em 0;
 }
 
 figure img {
     width: 100%;
+    max-height: 75vh; /* No scrolling! */
 }
 
 
@@ -92,57 +91,11 @@ figcaption {
 
 /* Different color for information */
 .information pre, .information code {
-    border-color: var(--lean-blue);
+    border-color: #0000c0;
 }
 
-/* TODO: consider upstreaming, but also consider doing section numbering server-side */
-
-#toc ol li::before {
-    text-align: right;
-    padding-right: 0.5ex;
+/* TODO: fix upstream */
+.hl.lean code {
+    font-family: var(--verso-code-font-family) !important;
 }
 
-#toc li > ol {
-    padding: 0;
-}
-
-#toc > ol > li::before {
-    width: 1.5em;
-    position: absolute;
-    left: -1.5em;
-    box-sizing: border-box;
-    font-variant-numeric: tabular-nums;
-}
-
-#toc > ol > li {
-    margin-left: 1.5em;
-    position: relative;
-    margin-bottom: 1ex;
-}
-
-#toc > ol > li > ol > li::before {
-    width: 2.25em;
-    position: absolute;
-    left: -2.25em;
-    box-sizing: border-box;
-    font-variant-numeric: tabular-nums;
-}
-
-#toc > ol > li > ol > li {
-    margin-left: 2.25em;
-    position: relative;
-    margin-bottom: 0.5ex;
-}
-
-#toc > ol > li > ol > li > ol > li::before {
-    width: 3em;
-    position: absolute;
-    left: -3em;
-    box-sizing: border-box;
-    font-variant-numeric: tabular-nums;
-}
-
-#toc > ol > li > ol > li > ol > li {
-    margin-left: 3em;
-    position: relative;
-}
