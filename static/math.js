@@ -1,1 +1,1 @@
-/home/tskrivan/Documents/ScientificComputingInLean/.lake/packages/verso-manual/static/math.js
+../.lake/packages/verso-manual/static/math.js

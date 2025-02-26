@@ -1,1 +1,1 @@
-/home/tskrivan/Documents/ScientificComputingInLean/.lake/packages/verso-manual/static/print.js
+../.lake/packages/verso-manual/static/print.js
