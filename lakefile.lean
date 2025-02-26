@@ -19,6 +19,5 @@ lean_exe sclean where
   supportInterpreter := true
 
 
-require verso from git "https://github.com/leanprover/verso.git" @ "main"
-require scilean from git "https://github.com/lecopivo/scilean.git" @ "master"
-require «verso-manual» from git "https://github.com/leanprover/reference-manual.git" @ "main"
+-- require scilean from git "https://github.com/lecopivo/scilean.git" @ "blas"
+require «verso-manual» from git "https://github.com/leanprover/reference-manual.git" @ "release-2025-02-03"

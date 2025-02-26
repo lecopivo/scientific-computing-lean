@@ -1,6 +1,6 @@
-import ScientificComputingInLean.Intro
-import ScientificComputingInLean.WorkingWithArrays
-import ScientificComputingInLean.Differentiation
+-- import ScientificComputingInLean.Intro
+-- import ScientificComputingInLean.WorkingWithArrays
+-- import ScientificComputingInLean.Differentiation
 -- import ScientificComputingInLean.FunctionTransformation
 -- import ScientificComputingInLean.Miscellaneous
 -- import ScientificComputingInLean.Examples
@@ -21,8 +21,11 @@ Work in progress book on using Lean 4 as a programming language for scientific c
 
 This book in its current form is a draft and is subject to change. Code might not work, explanations might be incomplete or incorrect. Procced with caution.
 
-{include ScientificComputingInLean.Intro}
 
-{include ScientificComputingInLean.WorkingWithArrays}
+```lean
+#check Nat
 
-{include ScientificComputingInLean.Differentiation}
+example (n m : Nat) : n + m = m + n := by
+  simp[Nat.add_comm]
+
+```
