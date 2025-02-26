@@ -573,103 +573,29 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
   border-right-color: white;
 }
 
-</style><script>
-      let xref = {"Verso.Genre.Manual.section":
- {"title": "Sections or chapters of the manual",
-  "description": null,
-  "contents": {}},
- "Verso.Genre.Manual.doc.tech":
- {"title": "Terminology",
-  "description": "Definitions of technical terms",
-  "contents": {}},
- "Verso.Genre.Manual.doc.tactic.conv":
- {"title": "Conversion Tactics",
-  "description": "Tactics for performing targeted rewriting of subterms",
-  "contents": {}},
- "Verso.Genre.Manual.doc.tactic":
- {"title": "Tactic Documentation",
-  "description": "Detailed descriptions of tactics",
-  "contents": {}},
- "Verso.Genre.Manual.doc.option":
- {"title": "Compiler options", "description": null, "contents": {}},
- "Verso.Genre.Manual.doc":
- {"title": "Lean constant reference",
-  "description": "Documentation for Lean constants",
-  "contents": {}},
- "Manual.parserAlias":
- {"title": "Parser Alias Documentation",
-  "description": "Detailed descriptions of parser aliases",
-  "contents": {}},
- "Manual.lakeCommand":
- {"title": "Lake commands",
-  "description": "Detailed descriptions of Lake commands",
-  "contents": {}},
- "Manual.envVar":
- {"title": "Environment Variables", "description": null, "contents": {}}};
-let params = new URLSearchParams(document.location.search);
-let domains = params.getAll("domain");
-let name = params.get("name");
-console.log("Domains: " + domains);
-console.log("name: " + name);
-if(name) {
-    let siteRoot = typeof __versoSiteRoot !== 'undefined' ? __versoSiteRoot : "";
-    let options = [];
-    if (domains && domains.length > 0) {
-        for (const i in domains) {
-            let domain = domains[i];
-            console.log('Considering domain ' + domain);
-            if (xref.hasOwnProperty(domain)) {
-                console.log('Found domain ' + domain);
-                let opts = xref[domain];
-                if (opts['contents'].hasOwnProperty(name)) {
-                    options = opts['contents'][name].map(x => Object.assign(x, {'domain': domain}));
-                }
-            }
-        }
-    } else {
-        for (const [dom, opts] of Object.entries(xref)) {
-            if (opts['contents'].hasOwnProperty(name)) {
-                for (const i of opts['contents'][name]) {
-                    options.push(Object.assign(i, {'domain': dom}));
-                }
-            }
-        }
-    }
-
-    if (options.length == 0) {
-        addEventListener('DOMContentLoaded', event => {
-            document.title = "Not found: '" + name + "'";
-            document.querySelector("#title").innerHTML = "Not found: name '" + name + "'";
-            let allDomains = [];
-            for (const d in xref) {
-                allDomains.push(d);
-            }
-            if (domains.length < 1) {
-                domains = allDomains;
-            }
-            document.querySelector("#message").innerHTML = "<p>Searched domains:</p>" + "<ul>" + domains.map(x => "<li><code>" + x + "</code>: " + xref[x]['title'] + "</li>\n").join('') + "</ul>";
-        });
-    } else if (options.length == 1) {
-        let addr = siteRoot + options[0]['address'] + "#" + options[0]['id'];
-        window.location.replace(addr);
-    } else {
-        addEventListener('DOMContentLoaded', event => {
-            document.title = "Ambiguous: '" + name + "'";
-            document.querySelector("#title").innerHTML = "Ambiguous: name '" + name + "'";
-            document.querySelector("#message").innerHTML = "<p>Options:</p><ul>" +
-                options.map((x, idx) => '<li><p><a href="' + siteRoot + x['address'] + '#' + x['id'] + '">From ' + xref[x['domain']]['title'] + '</a></p></li>').join('\n') +
-                "</ul>";
-        });
-    }
-} else {
-    addEventListener('DOMContentLoaded', event => {
-        document.title = "No name provided";
-        document.querySelector("#title").innerHTML = "No name provided";
-        document.querySelector("#message").innerHTML = "<p>This page expects a 'name' query parameter, along with documentation domains.</p>";
-    });
+</style><style>.foldable {
+  padding: 1.5em;
+  border: 1px solid #98B2C0;
+  border-radius: 0.5em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
+  clear: both; /* Don't overlap margin notes with foldables */
 }
-</script>
-    <script>
+.foldable p:last-child {margin-bottom:0;}
+.foldable .description::before {
+  content: "";
+}
+.foldable[open] .description {
+  margin-bottom: 1em;
+}
+.foldable .description {
+  font-style: italic;
+  font-family: var(--verso-structure-font-family);
+}
+.foldable .hl.lean.block {
+  overflow-x: auto;
+}
+</style><script>
       
 window.onload = () => {
 
@@ -834,6 +760,177 @@ window.onload = () => {
   });
 }
 </script>
+    <script>
+      let xref = {"Verso.Genre.Manual.section":
+ {"title": "Sections or chapters of the manual",
+  "description": null,
+  "contents": {}},
+ "Verso.Genre.Manual.example":
+ {"title": "Verso.Genre.Manual.example",
+  "description": null,
+  "contents":
+  {"variance":
+   [{"id": "mean",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "u":
+   [{"id": "u",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "outerProduct''":
+   [{"id": "outerProduct______",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "outerProduct":
+   [{"id": "outerProduct-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "outerProduct",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "outerProduct-next-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "mean":
+   [{"id": "mean-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "mean",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "fibonacci":
+   [{"id": "fibonacci-next", "data": null, "address": "/Working-with-Arrays/"},
+    {"id": "fibonacci", "data": null, "address": "/Working-with-Arrays/"},
+    {"id": "fibonacci-next-next",
+     "data": null,
+     "address": "/Working-with-Arrays/"}],
+   "dot":
+   [{"id": "dot",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "covariance":
+   [{"id": "mean-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin.val":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin.isLt":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN.h_size":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN.data":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "A":
+   [{"id": "A",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}]}},
+ "Verso.Genre.Manual.doc.tech":
+ {"title": "Terminology",
+  "description": "Definitions of technical terms",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.tactic.conv":
+ {"title": "Conversion Tactics",
+  "description": "Tactics for performing targeted rewriting of subterms",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.tactic":
+ {"title": "Tactic Documentation",
+  "description": "Detailed descriptions of tactics",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.option":
+ {"title": "Compiler options", "description": null, "contents": {}},
+ "Verso.Genre.Manual.doc":
+ {"title": "Lean constant reference",
+  "description": "Documentation for Lean constants",
+  "contents": {}},
+ "Manual.parserAlias":
+ {"title": "Parser Alias Documentation",
+  "description": "Detailed descriptions of parser aliases",
+  "contents": {}},
+ "Manual.lakeCommand":
+ {"title": "Lake commands",
+  "description": "Detailed descriptions of Lake commands",
+  "contents": {}},
+ "Manual.envVar":
+ {"title": "Environment Variables", "description": null, "contents": {}}};
+let params = new URLSearchParams(document.location.search);
+let domains = params.getAll("domain");
+let name = params.get("name");
+console.log("Domains: " + domains);
+console.log("name: " + name);
+if(name) {
+    let siteRoot = typeof __versoSiteRoot !== 'undefined' ? __versoSiteRoot : "";
+    let options = [];
+    if (domains && domains.length > 0) {
+        for (const i in domains) {
+            let domain = domains[i];
+            console.log('Considering domain ' + domain);
+            if (xref.hasOwnProperty(domain)) {
+                console.log('Found domain ' + domain);
+                let opts = xref[domain];
+                if (opts['contents'].hasOwnProperty(name)) {
+                    options = opts['contents'][name].map(x => Object.assign(x, {'domain': domain}));
+                }
+            }
+        }
+    } else {
+        for (const [dom, opts] of Object.entries(xref)) {
+            if (opts['contents'].hasOwnProperty(name)) {
+                for (const i of opts['contents'][name]) {
+                    options.push(Object.assign(i, {'domain': dom}));
+                }
+            }
+        }
+    }
+
+    if (options.length == 0) {
+        addEventListener('DOMContentLoaded', event => {
+            document.title = "Not found: '" + name + "'";
+            document.querySelector("#title").innerHTML = "Not found: name '" + name + "'";
+            let allDomains = [];
+            for (const d in xref) {
+                allDomains.push(d);
+            }
+            if (domains.length < 1) {
+                domains = allDomains;
+            }
+            document.querySelector("#message").innerHTML = "<p>Searched domains:</p>" + "<ul>" + domains.map(x => "<li><code>" + x + "</code>: " + xref[x]['title'] + "</li>\n").join('') + "</ul>";
+        });
+    } else if (options.length == 1) {
+        let addr = siteRoot + options[0]['address'] + "#" + options[0]['id'];
+        window.location.replace(addr);
+    } else {
+        addEventListener('DOMContentLoaded', event => {
+            document.title = "Ambiguous: '" + name + "'";
+            document.querySelector("#title").innerHTML = "Ambiguous: name '" + name + "'";
+            document.querySelector("#message").innerHTML = "<p>Options:</p><ul>" +
+                options.map((x, idx) => '<li><p><a href="' + siteRoot + x['address'] + '#' + x['id'] + '">From ' + xref[x['domain']]['title'] + '</a></p></li>').join('\n') +
+                "</ul>";
+        });
+    }
+} else {
+    addEventListener('DOMContentLoaded', event => {
+        document.title = "No name provided";
+        document.querySelector("#title").innerHTML = "No name provided";
+        document.querySelector("#message").innerHTML = "<p>This page expects a 'name' query parameter, along with documentation domains.</p>";
+    });
+}
+</script>
     </head>
   <body>
     <label for="toggle-toc" id="toggle-toc-click"><span class="line line1"></span><span class="line line2"></span><span class="line line3"></span></label><div class="with-toc">
@@ -845,8 +942,8 @@ window.onload = () => {
           <div class="split-tocs">
             <div class="split-toc book">
               <div class="title">
-                <span class="no-toggle"></span><span class=""><a href="../">Cross-Reference Redirection</a></span></div>
-              </div>
+                <label for="--verso-manual-toc-----bookRoot" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-----bookRoot"></label><span class=""><a href="../">Cross-Reference Redirection</a></span></div>
+              <table><tr class="numbered"><td class="num">1.</td><td><a href="../Working-with-Arrays/#Scientific-Computing-in-Lean--Working-with-Arrays">Working with Arrays</a></td></tr></table></div>
             </div>
           </div>
         <div class="last"></div>

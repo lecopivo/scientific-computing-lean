@@ -2,6 +2,81 @@
  {"title": "Sections or chapters of the manual",
   "description": null,
   "contents": {}},
+ "Verso.Genre.Manual.example":
+ {"title": "Verso.Genre.Manual.example",
+  "description": null,
+  "contents":
+  {"variance":
+   [{"id": "mean",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "u":
+   [{"id": "u",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "outerProduct''":
+   [{"id": "outerProduct______",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "outerProduct":
+   [{"id": "outerProduct-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "outerProduct",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "outerProduct-next-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "mean":
+   [{"id": "mean-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"},
+    {"id": "mean",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "fibonacci":
+   [{"id": "fibonacci-next", "data": null, "address": "/Working-with-Arrays/"},
+    {"id": "fibonacci", "data": null, "address": "/Working-with-Arrays/"},
+    {"id": "fibonacci-next-next",
+     "data": null,
+     "address": "/Working-with-Arrays/"}],
+   "dot":
+   [{"id": "dot",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "covariance":
+   [{"id": "mean-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin.val":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin.isLt":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.Fin":
+   [{"id": "BasicOperations___Fin",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN.h_size":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN.data":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "BasicOperations.DataArrayN":
+   [{"id": "BasicOperations___DataArrayN___h_size",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "A":
+   [{"id": "A",
+     "data": null,
+     "address": "/Working-with-Arrays/Basic-Operations/"}]}},
  "Verso.Genre.Manual.doc.tech":
  {"title": "Terminology",
   "description": "Definitions of technical terms",
