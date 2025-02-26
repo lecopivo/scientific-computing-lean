@@ -1,7 +1,7 @@
 import SciLean
 import ScientificComputingInLean.Meta
 
-open Verso.Genre Manual
+open Verso Genre Manual
 
 set_option pp.rawOnError true
 set_option linter.hashCommand false

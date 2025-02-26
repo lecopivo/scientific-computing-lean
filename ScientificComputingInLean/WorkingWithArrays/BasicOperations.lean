@@ -11,6 +11,7 @@ open Lean.MessageSeverity
 
 open SciLean
 
+
 #doc (Manual) "Basic Operations" =>
 
 What distinguishes Lean from many other programming languages is that Lean is so called dependently typed programming language. This allows us to work with arrays that have their dimensions specified in their type. For example, vector dot product can be defined as
@@ -30,22 +31,20 @@ We can test the function with
 ```
 When calling a function, you have to provide only the arguments with normal braces, such as `(x y : Float^[n])`. Arguments with the curly braces `{n : Nat}` are implicit and will be infered automatically from the other arguments, from `x` and `y` in this case. Lean prevents us from providing arrays of different lenghts
 ```lean (name:=dotfail) (error:=true)
-#eval dot ⊞[1.0,1.0] ⊞[(1.0:Float),1.0,1.0]
+#eval dot ⊞[1.0,1.0] ⊞[1.0,1.0,1.0]
 ```
 ```leanOutput dotfail (severity := error)
-application type mismatch
-  dot ⊞[1.0, 1.0] ⊞[1.0, 1.0, 1.0]
-argument
-  ⊞[1.0, 1.0, 1.0]
-has type
-  Float^[3] : Type
-but is expected to have type
-  Float^[2] : Type
+failed to synthesize
+  OfFn (Float^[2]) (Fin 3) Float
+Additional diagnostic information may be available using the `set_option diagnostics true` command.
 ```
+(TODO: Improve this error message! It is very cryptic.)
 
 Let's back up and talk about the notation `Float^[n]` and how it connects to {lean}`DataArray` we talked about previously. An array `x : Float^[n]` has length `n` and thus can be indexed with number `0..(n-1)`. The type expressing all natural numbers smaller then `n` is denoted with `Fin n`. It is defined as a structure:
+```lean (show:=false)
+namespace BasicOperations -- allows us to define `Fin` and `DataArrayN` again without an error
+```
 ```lean (keep:=false)
-namespace BasicOperations
 structure Fin (n : Nat) where
   val  : Nat
   isLt : val < n
@@ -54,11 +53,14 @@ which holds the value `val` and a proof `isLt` that the value is infact smaller 
 
 `Float^[n]` is just a syntactic sugar for `DataArrayN Float (Fin n)` which is {lean}`DataArray Float` together with a proof that the size of the array is `n`. In general, `Fin n` can be replaced with an arbitrary index type `I`. The definition of {lean}`DataArrayN` is:
 ```lean (keep:=false)
-open SciLean
-namespace BasicOperations
-structure DataArrayN (X : Type) (I : Type) [PlainDataType X] [IndexType I] where
+
+structure DataArrayN (X : Type) (I : Type)
+    [PlainDataType X] [IndexType I] where
   data : DataArray X
   h_size : size I = data.size
+```
+```lean (show:=false)
+end BasicOperations
 ```
 which is an array `data` with a proof that the array size it equal to the size of the index set `I`. In the case of `I = Fin n` we have `size (Fin n) = n.`
 
@@ -138,16 +140,16 @@ variable (f : Fin 10 → Float)
 ```
 Unlike lambda notation, array notation uncurries all of its arguments. This means that `⊞ i j => f i j` creates and matrix indexed by `(i,j)`. For example outer product of two arrays can be defines as
 ```lean (keep:=false)
-def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) : Float^[n,m] :=
+def outerProduct {m n : Nat}
+    (x : Float^[m]) (y : Float^[n]) : Float^[m,n] :=
   ⊞ i j => x[i]*y[j]
 ```
 If you want an array of arrays instead of matrix you would write `⊞ i => (⊞ j => x[i]*y[j])` or `⊞ j => (⊞ i => x[i]*y[j])` depending whether you want the matrix stored as an array of rows or columns.
 
-
 Another way to set up a matrix is to set its elements one by one
 ```lean (keep:=false)
-open SciLean
-def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
+def outerProduct {n m : Nat}
+    (x : Float^[n]) (y : Float^[m]) := Id.run do
   let mut A : Float^[n,m] := 0
   for i in fullRange (Fin n) do
     for j in fullRange (Fin m) do
@@ -156,8 +158,8 @@ def outerProduct {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
 ```
 We first create mutable zero matrix and then set every. The function {lean}`fullRange` creates a range that runs over all the elements of `I`. When working with matrices, one has to be careful if they are in column major or row major ordering and accordingly iterate over `i` first and then over `j`. We will explain later how this is done in *SciLean* so for now it is safe to just iterate over both indices simultaneously and we get the optimal order
 ```lean
-open SciLean
-def outerProduct'' {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
+def outerProduct'' {n m : Nat}
+    (x : Float^[n]) (y : Float^[m]) := Id.run do
   let mut A : Float^[n,m] := 0
   for (i,j) in (fullRange (Fin n × Fin m)) do
     A[i,j] := x[i]*y[j]
@@ -166,16 +168,16 @@ def outerProduct'' {n m : Nat} (x : Float^[n]) (y : Float^[m]) := Id.run do
 
 Of course the above implementation of has the drawback that it first initialized the whole matrix to zero and then go over the matrix again and set it up to the correct value. Sometimes it is much more natural to create the matrix element by element. We can create an array with dynamic size and push element one by one. Once we are done we can fix the dimensions of the matrix.
 ```lean (keep:=false)
-open SciLean
 def outerProduct {n m : Nat}
-    (x : Float^[n]) (y : Float^[m]) : Float^[n,m] := Id.run do
+    (x : Float^[n]) (y : Float^[m]) :
+    Float^[n,m] := Id.run do
   let mut A : DataArray Float := default
   A := A.reserve (n*m)
   for (i,j) in (fullRange (Fin n × Fin m)) do
     A := A.push (x[i]*y[j])
   return { data:= A, h_size:= sorry_proof }
 ```
-Recall that `Float^[n,m]` is just syntax for `DataArrayN Float (Fin n × Fin m)` and `DataArrayN X I` is just a structure holding `data : DataArray X` and a proof `h_size : data.size = size I`. In this case, we provide the matrix `A` and in the second element we should provide a proof that `A.size = size (Fin n × Fin m) = n*m`. Right now, we do not want to focus on proofs to we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize your program and all your proofs are suddently invalid.
+Recall that `Float^[n,m]` is just syntax for `DataArrayN Float (Fin n × Fin m)` and `DataArrayN X I` is just a structure holding `data : DataArray X` and a proof `h_size : data.size = size I`. In this case, we provide the matrix `A` and in the second element we should provide a proof that `A.size = size (Fin n × Fin m) = n*m`. Right now, we do not want to focus on proofs so we just omit it. Deciding when to provide proofs and when to omit them is a crucial skill when writing programs in Lean. Often it is very useful to just state what your program is supposed to do. It is a an amazing tool to clarify in your head what program are you actually writing. On the other hand, providing all the proofs can be really tedious and often a waste of time if you have to reorganize your program and all your proofs are suddently invalid.
 
 
 # Reshaping Arrays
@@ -226,7 +228,8 @@ variable {n : ℕ} {I : Type*} [IndexType I] [DecidableEq I]
 ```lean (keep:=false)
 variable {n : Nat}
 
-def mean (x : Float^[n]) : Float := (1/n.toFloat) • ∑ i, x[i]
+def mean (x : Float^[n]) : Float :=
+  (1/n.toFloat) • ∑ i, x[i]
 
 def variance (x : Float^[n]) : Float :=
   let m := mean x
@@ -238,7 +241,8 @@ def variance (x : Float^[n]) : Float :=
 ```lean (keep:=false)
 variable {n : Nat} {I : Type} [IndexType I] [DecidableEq I]
 
-def mean (x : Float^[I]^[n]) : Float^[I] := (1/n.toFloat) • ∑ i, x[i]
+def mean (x : Float^[I]^[n]) : Float^[I] :=
+  (1/n.toFloat) • ∑ i, x[i]
 
 def covariance (x : Float^[I]^[n]) : Float^[I,I] :=
   let m := mean x

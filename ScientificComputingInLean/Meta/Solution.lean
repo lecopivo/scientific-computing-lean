@@ -21,26 +21,22 @@ open Lean.Elab.Tactic.GuardMsgs
 
 namespace Manual
 
-
 def Block.solution (name : Option String) : Block where
   name := `Manual.solution
   data := ToJson.toJson (name, (none : Option Tag))
 
 structure SolutionConfig where
-  description : Array Syntax
-  /-- Name for refs -/
+  description : FileMap × Array Syntax
   name : Option String := none
-
 
 def SolutionConfig.parse [Monad m] [MonadInfoTree m] [MonadLiftT CoreM m] [MonadEnv m] [MonadError m] [MonadFileMap m] : ArgParse m SolutionConfig :=
   SolutionConfig.mk <$> .positional `description .inlinesString <*> .named `name .string true
-
 
 @[directive_expander «solution»]
 def «solution» : DirectiveExpander
   | args, contents => do
     let cfg ← SolutionConfig.parse.run args
-    let description ← cfg.description.mapM elabInline
+    let description ← cfg.description.2.mapM elabInline
     -- Elaborate Lean blocks first, so inlines in prior blocks can refer to them
     let blocks ← prioritizedElab (isLeanBlock ·) elabBlock contents
     -- Solutions are represented using the first block to hold the description. Storing it in the JSON

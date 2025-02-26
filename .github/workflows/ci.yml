@@ -40,7 +40,7 @@ jobs:
       run: lake build
 
     - name: Build site
-      run: lake exe sclean --output _out/
+      run: lake exe sclean --depth 2 --output _out/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4

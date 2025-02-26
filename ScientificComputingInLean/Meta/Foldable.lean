@@ -7,6 +7,7 @@ import Verso.Doc.Elab.Monad
 import VersoManual
 import Manual.Meta.Figure
 import Manual.Meta.Example
+import Manual.Meta.Figure
 import Manual.Meta.Lean
 import Verso.Code
 
@@ -27,7 +28,7 @@ def Block.foldable (name : Option String) : Block where
   data := ToJson.toJson (name, (none : Option Tag))
 
 structure FoldableConfig where
-  description : Array Syntax
+  description : FileMap × Array Syntax
   /-- Name for refs -/
   name : Option String := none
 
@@ -40,7 +41,7 @@ def FoldableConfig.parse [Monad m] [MonadInfoTree m] [MonadLiftT CoreM m] [Monad
 def «foldable» : DirectiveExpander
   | args, contents => do
     let cfg ← FoldableConfig.parse.run args
-    let description ← cfg.description.mapM elabInline
+    let description ← cfg.description.2.mapM elabInline
     -- Elaborate Lean blocks first, so inlines in prior blocks can refer to them
     let blocks ← prioritizedElab (isLeanBlock ·) elabBlock contents
     -- Foldables are represented using the first block to hold the description. Storing it in the JSON

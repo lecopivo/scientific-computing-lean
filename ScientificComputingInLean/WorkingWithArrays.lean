@@ -1,6 +1,6 @@
 import ScientificComputingInLean.WorkingWithArrays.BasicOperations
-import ScientificComputingInLean.WorkingWithArrays.TensorOperations
-import ScientificComputingInLean.WorkingWithArrays.OptimizingArrays
+-- import ScientificComputingInLean.WorkingWithArrays.TensorOperations
+-- import ScientificComputingInLean.WorkingWithArrays.OptimizingArrays
 
 open Verso.Genre Manual
 open Lean.MessageSeverity
@@ -44,7 +44,6 @@ The great thing about Lean is that the above code actually mutates the array `fi
 
 While {lean}`Array` offers the versatility of storing elements of any data type X, this flexibility comes at a performance cost at it is implemented as array of pointers. This is especially bad for scientific computing, where we often need arrays that store elements in a contiguous block of memory. *SciLean* provides {lean}`DataArray` which is an array capable of storing any type `X` with a fixed byte size. We can replace {lean}`Array` with {lean}`DataArray` in the Fibonacci function if we use {lean}`UInt64` instead of {lean}`Nat`, as {lean}`Nat` arbitrary size number and does not have a fixed byte size.
 ```lean (name:=fib2) (keep:=false)
-open SciLean
 def fibonacci (n : Nat) : DataArray UInt64 := Id.run do
     let mut fib : DataArray UInt64 := DataArray.mkEmpty n
     fib := fib.push 0
@@ -84,7 +83,3 @@ The last data structure we will mention here is product type `Prod X Y` usually 
 
 
 {include ScientificComputingInLean.WorkingWithArrays.BasicOperations}
-
-{include ScientificComputingInLean.WorkingWithArrays.TensorOperations}
-
-{include ScientificComputingInLean.WorkingWithArrays.OptimizingArrays}
