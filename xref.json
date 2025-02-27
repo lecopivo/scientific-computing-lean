@@ -40,10 +40,22 @@
     {"id": "outerProduct-next-next",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "ode":
+   [{"id": "ode",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "nnet":
    [{"id": "nnet",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "newtonSolve":
+   [{"id": "newtonSolve",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "mySqrt":
+   [{"id": "mySqrt",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "mean":
    [{"id": "mean-next",
      "data": null,
@@ -51,6 +63,10 @@
     {"id": "mean",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "matrix1":
+   [{"id": "matrix1",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "matMul":
    [{"id": "matMul",
      "data": null,
@@ -59,10 +75,77 @@
    [{"id": "map",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "linreg":
+   [{"id": "linreg",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "i":
    [{"id": "i",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "fwdFDeriv'.pi_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.linear_rule":
+   [{"id": "fwdFDeriv______linear_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.let_rule":
+   [{"id": "fwdFDeriv______let_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.id_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.const_rule":
+   [{"id": "fwdFDeriv______const_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.comp_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.apply_rule":
+   [{"id": "fwdFDeriv______apply_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.affine_rule":
+   [{"id": "fwdFDeriv______affine_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'":
+   [{"id": "fwdFDeriv___",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fun1.arg_xz.fwdFDeriv'_rule":
+   [{"id": "fun1___arg_xz___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fun1":
+   [{"id": "fun1",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "foo_differentiable":
+   [{"id": "foo_differentiable",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo_deriv_rule":
+   [{"id": "foo_deriv_rule",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo_deriv":
+   [{"id": "foo_deriv",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo":
+   [{"id": "foo-next",
+     "data": null,
+     "address": "/Differentiation/Automatic-Differentiation/"},
+    {"id": "foo",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "fibonacci":
    [{"id": "fibonacci-next", "data": null, "address": "/Working-with-Arrays/"},
     {"id": "fibonacci", "data": null, "address": "/Working-with-Arrays/"},
@@ -113,10 +196,316 @@
     {"id": "avgPool-next",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "WorkingWithQuotients.var":
+   [{"id": "WorkingWithQuotients___var",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.equiv":
+   [{"id": "WorkingWithQuotients___equiv",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.e":
+   [{"id": "WorkingWithQuotients___var",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.UnorderedPair.sum":
+   [{"id": "WorkingWithQuotients___UnorderedPair___sum",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.UnorderedPair":
+   [{"id": "WorkingWithQuotients___UnorderedPair",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprSetoid":
+   [{"id": "WorkingWithQuotients___ExprSetoid",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.toStringRepr":
+   [{"id": "WorkingWithQuotients___ExprMonoid___toStringRepr",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.toString":
+   [{"id": "WorkingWithQuotients___ExprMonoid___toString",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.normalize_eq":
+   [{"id": "WorkingWithQuotients___ExprMonoid___normalize_eq",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.normalize":
+   [{"id": "WorkingWithQuotients___ExprMonoid___normalize",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid":
+   [{"id": "WorkingWithQuotients___ExprMonoid",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.var":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.toString":
+   [{"id": "WorkingWithQuotients___Expr___toString",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.toList":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.one":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.ofList_injective":
+   [{"id": "WorkingWithQuotients___Expr___ofList_injective",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.ofList":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.normalize_normalize":
+   [{"id": "WorkingWithQuotients___Expr___normalize_normalize",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.normalize":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.mul":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WaveEquation":
+   [{"id": "WaveEquation",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "TCInterfaces.ArrayLike.length":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "TCInterfaces.ArrayLike.get":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "TCInterfaces.ArrayLike":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Prod.snd.arg_self.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Prod.mk.arg_fstsnd.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Prod.fst.arg_self.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Overloading.natListSMul":
+   [{"id": "Overloading___natListSMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.listSMul":
+   [{"id": "Overloading___listSMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.Size.size":
+   [{"id": "Overloading___Size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.Size":
+   [{"id": "Overloading___Size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.SMul.smul":
+   [{"id": "Overloading___SMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.SMul":
+   [{"id": "Overloading___SMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.MyMul.mymul":
+   [{"id": "Overloading___MyMul___mymul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.MyMul":
+   [{"id": "Overloading___MyMul___mymul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Size.size":
+   [{"id": "OverloadTypeAndTerm___Size___size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Size":
+   [{"id": "OverloadTypeAndTerm___Size___size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair.pair":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair'":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.First.first?":
+   [{"id": "OverloadTypeAndTerm___First___first___",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.First":
+   [{"id": "OverloadTypeAndTerm___First___first___",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "NewtonsLaw":
+   [{"id": "NewtonsLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "NewtonSecondLaw":
+   [{"id": "NewtonSecondLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "Neg.neg.arg_a0.fwdFDeriv'_rule_compositional":
+   [{"id": "Neg___neg___arg_a0___fwdFDeriv____rule_compositional",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Neg.neg.arg_a0.fwdFDeriv'_rule":
+   [{"id": "Neg___neg___arg_a0___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "InductiveOverload.Uncurry.uncurry":
+   [{"id": "InductiveOverload___Uncurry___uncurry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Uncurry":
+   [{"id": "InductiveOverload___Uncurry___uncurry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Sum.sum":
+   [{"id": "InductiveOverload___Sum___sum",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Sum":
+   [{"id": "InductiveOverload___Sum___sum",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdSize.prodSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdGet.get":
+   [{"id": "InductiveOverload___ProdGet___get",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdGet":
+   [{"id": "InductiveOverload___ProdGet___get",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.FlatProdSize.flatProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.FlatProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Curry.curry":
+   [{"id": "InductiveOverload___Curry___curry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Curry":
+   [{"id": "InductiveOverload___Curry___curry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "HighOrderFunctions.applyTwice.arg_fx.fwdFDeriv_rule":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.applyTwice.arg_fx.Differentiable_rule":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.applyTwice":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply.arg_fx.fwdFDeriv_rule":
+   [{"id": "HighOrderFunctions___apply___arg_fx___fwdFDeriv_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply.arg_fx.Differentiable_rule":
+   [{"id": "HighOrderFunctions___apply___arg_fx___Differentiable_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply":
+   [{"id": "HighOrderFunctions___apply",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HDiv.hDiv.arg_a0a1.fwdFDeriv'_rule_simple":
+   [{"id": "HDiv___hDiv___arg_a0a1___fwdFDeriv____rule_simple",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional":
+   [{"id": "HAdd___hAdd___arg_a0a1___fwdFDeriv____rule_compositional",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule":
+   [{"id": "HAdd___hAdd___arg_a0a1___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
    "Fin.shift":
    [{"id": "Fin___shift",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "EulerLagrange":
+   [{"id": "NewtonsLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "BasicOperations.Fin.val":
    [{"id": "BasicOperations___Fin",
      "data": null,

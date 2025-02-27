@@ -66,72 +66,705 @@
  "<code>Inhabited.default.{u} {α : Sort u} [self : Inhabited α] : α</code><span class=\"sep\"></span><code class=\"docstring\">`default` is a function that produces a \"default\" element of any\n`Inhabited` type. This element does not have any particular specified\nproperties, but it is often an all-zeroes value. </code>",
  "60": "<code>DataArray Float</code>",
  "6": "<code>Id.run.{u_1} {α : Type u_1} (x : Id α) : α</code>",
+ "595": "<code>WorkingWithQuotients.e : ExprMonoid</code>",
+ "594": "<code>WorkingWithQuotients.var (n : ℕ) : ExprMonoid</code>",
+ "593":
+ "<code>WorkingWithQuotients.ExprMonoid.normalize_eq (e : ExprMonoid) : e.normalize = e</code>",
+ "592":
+ "<code>WorkingWithQuotients.ExprMonoid.normalize (e : ExprMonoid) : ExprMonoid</code>",
+ "591":
+ "<code>Quot.unquot.{u_1} {α : Sort u_1} {r : α → α → Prop} : Quot r → α</code><span class=\"sep\"></span><code class=\"docstring\">Unwrap the VM representation of a quotient to obtain an element of the equivalence class.\nComputable but unsound. </code>",
+ "590":
+ "<code>WorkingWithQuotients.ExprMonoid.toStringRepr (e : ExprMonoid) : String</code>",
  "59":
  "<code>outerProduct'' {n m : ℕ} (x : Float^[n]) (y : Float^[m]) : Float^[n, m]</code>",
+ "589": "<code>a.toList = b.toList</code>",
+ "588": "<code>a ≈ b</code>",
+ "587":
+ "<code>Quotient.liftOn.{u, v} {α : Sort u} {β : Sort v} {s : Setoid α} (q : Quotient s) (f : α → β)\n  (c : ∀ (a b : α), a ≈ b → f a = f b) : β</code><span class=\"sep\"></span><code class=\"docstring\">The analogue of `Quot.liftOn`: if `f : α → β` respects the equivalence relation `≈`,\nthen it lifts to a function on `Quotient s` such that `liftOn (mk a) f h = f a`.\n</code>",
+ "586":
+ "<code>WorkingWithQuotients.ExprMonoid.toString (e : ExprMonoid) : String</code>",
+ "585":
+ "<code>List.append_nil.{u} {α : Type u} (as : List α) : as ++ [] = as</code>",
+ "584":
+ "<code>∀ (a : ExprMonoid), a * 1 = a</code><span class=\"sep\"></span><code class=\"docstring\">One is a right neutral element for multiplication </code>",
+ "583":
+ "<code>List.nil_append.{u} {α : Type u} (as : List α) : [] ++ as = as</code>",
+ "582":
+ "<code>∀ (a : ExprMonoid), 1 * a = a</code><span class=\"sep\"></span><code class=\"docstring\">One is a left neutral element for multiplication </code>",
+ "581":
+ "<code>List.append_assoc.{u} {α : Type u} (as bs cs : List α) : as ++ bs ++ cs = as ++ (bs ++ cs)</code>",
+ "580":
+ "<code>congr_arg.{u, v} {α : Sort u} {β : Sort v} {a₁ a₂ : α} (f : α → β) (h : a₁ = a₂) : f a₁ = f a₂</code><span class=\"sep\"></span><code class=\"docstring\">**Alias** of `congrArg`.\n\n---\n\nCongruence in the function argument: if `a₁ = a₂` then `f a₁ = f a₂` for\nany (nondependent) function `f`. This is more powerful than it might look at first, because\nyou can also use a lambda expression for `f` to prove that\n`&lt;something containing a₁&gt; = &lt;something containing a₂&gt;`. This function is used\ninternally by tactics like `congr` and `simp` to apply equalities inside\nsubterms.\n\nFor more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)\n</code>",
  "58": "<code>SciLean.fullRange.{u} (I : Type u) : IndexType.Iterator I</code>",
+ "579":
+ "<code>Quotient.ind.{u} {α : Sort u} {s : Setoid α} {motive : Quotient s → Prop} :\n  (∀ (a : α), motive ⟦a⟧) → ∀ (q : Quotient s), motive q</code><span class=\"sep\"></span><code class=\"docstring\">The analogue of `Quot.ind`: every element of `Quotient s` is of the form `Quotient.mk s a`. </code>",
+ "578":
+ "<code>∀ (a b c : ExprMonoid), a * b * c = a * (b * c)</code><span class=\"sep\"></span><code class=\"docstring\">Multiplication is associative </code>",
+ "577": "<code>Quotient ExprSetoid</code>",
+ "576":
+ "<code class=\"docstring\">Apply congruence (recursively) to goals of the form `⊢ f as = f bs` and `⊢ HEq (f as) (f bs)`.\nThe optional parameter is the depth of the recursive applications.\nThis is useful when `congr` is too aggressive in breaking down the goal.\nFor example, given `⊢ f (g (x + y)) = f (g (y + x))`,\n`congr` produces the goals `⊢ x = y` and `⊢ y = x`,\nwhile `congr 2` produces the intended `⊢ x + y = y + x`.\n</code>",
+ "575": "<code>b.toList = b'.toList</code>",
+ "574":
+ "<code>WorkingWithQuotients.Expr.ofList_injective {l s : List ℕ} (h : Expr.ofList l = Expr.ofList s) : l = s</code>",
+ "573": "<code>a.toList = a'.toList</code>",
+ "572": "<code>Expr.ofList b.toList = Expr.ofList b'.toList</code>",
+ "571": "<code>Expr.ofList a.toList = Expr.ofList a'.toList</code>",
+ "570":
+ "<code>Setoid.r.{u} {α : Sort u} [self : Setoid α] : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">`x ≈ y` is the distinguished equivalence relation of a setoid. </code>",
  "57": "<code>Float^[n, m]</code>",
+ "569":
+ "<code>Quotient.sound.{u} {α : Sort u} {s : Setoid α} {a b : α} : a ≈ b → ⟦a⟧ = ⟦b⟧</code><span class=\"sep\"></span><code class=\"docstring\">The analogue of `Quot.sound`: If `a` and `b` are related by the equivalence relation,\nthen they have equal equivalence classes.\n</code>",
+ "568":
+ "<code class=\"docstring\">The `dsimp` tactic is the definitional simplifier. It is similar to `simp` but only\napplies theorems that hold by reflexivity. Thus, the result is guaranteed to be\ndefinitionally equal to the input.\n</code>",
+ "567": "<code>b ≈ b'</code>",
+ "566": "<code>a ≈ a'</code>",
+ "565":
+ "<code>Quotient.mk.{u} {α : Sort u} (s : Setoid α) (a : α) : Quotient s</code><span class=\"sep\"></span><code class=\"docstring\">The canonical quotient map into a `Quotient`. </code>",
+ "564":
+ "<code>HasEquiv.Equiv.{u, v} {α : Sort u} [self : HasEquiv α] : α → α → Sort v</code><span class=\"sep\"></span><code class=\"docstring\">`x ≈ y` says that `x` and `y` are equivalent. Because this is a typeclass,\nthe notion of equivalence is type-dependent. </code>",
+ "563":
+ "<code>Quotient.liftOn₂.{uA, uB, uC} {α : Sort uA} {β : Sort uB} {φ : Sort uC} {s₁ : Setoid α} {s₂ : Setoid β}\n  (q₁ : Quotient s₁) (q₂ : Quotient s₂) (f : α → β → φ)\n  (c : ∀ (a₁ : α) (b₁ : β) (a₂ : α) (b₂ : β), a₁ ≈ a₂ → b₁ ≈ b₂ → f a₁ b₁ = f a₂ b₂) : φ</code><span class=\"sep\"></span><code class=\"docstring\">Lift a binary function to a quotient on both arguments. </code>",
+ "562": "<code>ExprMonoid</code>",
+ "561":
+ "<code>ExprMonoid → ExprMonoid → ExprMonoid</code><span class=\"sep\"></span><code class=\"docstring\">`a * b` computes the product of `a` and `b`. See `HMul`. </code>",
+ "560":
+ "<code>Monoid.{u} (M : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A `Monoid` is a `Semigroup` with an element `1` such that `1 * a = a * 1 = a`. </code>",
  "56":
  "<code>outerProduct {n m : ℕ} (x : Float^[n]) (y : Float^[m]) : Float^[n, m]</code>",
+ "559": "<code><span class=\"literal string\">\"1\"</span> : String</code>",
+ "558": "<code>WorkingWithQuotients.Expr.toString (e : Expr) : String</code>",
+ "557": "<code>ofList (ofList tail✝).toList = ofList tail✝</code>",
+ "556":
+ "<code>WorkingWithQuotients.Expr.normalize_normalize (e : Expr) : e.normalize.normalize = e.normalize</code>",
+ "555":
+ "<code class=\"docstring\">`rename_i x_1 ... x_n` renames the last `n` inaccessible names using the given names. </code>",
+ "554": "<code>ofList ls = ofList ss</code>",
+ "553": "<code>l = s</code>",
+ "552":
+ "<code class=\"docstring\">Assuming `x` is a variable in the local context with an inductive type,\n`induction x` applies induction on `x` to the main goal,\nproducing one goal for each constructor of the inductive type,\nin which the target is replaced by a general instance of that constructor\nand an inductive hypothesis is added for each recursive argument to the constructor.\nIf the type of an element in the local context depends on `x`,\nthat element is reverted and reintroduced afterward,\nso that the inductive hypothesis incorporates that hypothesis as well.\n\nFor example, given `n : Nat` and a goal with a hypothesis `h : P n` and target `Q n`,\n`induction n` produces one goal with hypothesis `h : P 0` and target `Q 0`,\nand one goal with hypotheses `h : P (Nat.succ a)` and `ih₁ : P a → Q a` and target `Q (Nat.succ a)`.\nHere the names `a` and `ih₁` are chosen automatically and are not accessible.\nYou can use `with` to provide the variables names for each constructor.\n- `induction e`, where `e` is an expression instead of a variable,\n  generalizes `e` in the goal, and then performs induction on the resulting variable.\n- `induction e using r` allows the user to specify the principle of induction that should be used.\n  Here `r` should be a term whose result type must be of the form `C t`,\n  where `C` is a bound variable and `t` is a (possibly empty) sequence of bound variables\n- `induction e generalizing z₁ ... zₙ`, where `z₁ ... zₙ` are variables in the local context,\n  generalizes over `z₁ ... zₙ` before applying the induction but then introduces them in each goal.\n  In other words, the net effect is that each inductive hypothesis is generalized.\n- Given `x : Nat`, `induction x with | zero =&gt; tac₁ | succ x' ih =&gt; tac₂`\n  uses tactic `tac₁` for the `zero` case, and `tac₂` for the `succ` case.\n</code>",
+ "551": "<code>l = s ∧ ofList ls = ofList ss</code>",
+ "550":
+ "<code>List.cons.{u} {α : Type u} (head : α) (tail : List α) : List α</code><span class=\"sep\"></span><code class=\"docstring\">If `a : α` and `l : List α`, then `cons a l`, or `a :: l`, is the\nlist whose first element is `a` and with `l` as the rest of the list. </code>",
  "55": "<code>Fin m</code>",
+ "549": "<code>ofList l✝ = ofList s✝</code>",
+ "548": "<code>ofList (l :: ls) = ofList (s :: ss)</code>",
+ "547":
+ "<code>rfl.{u} {α : Sort u} {a : α} : a = a</code><span class=\"sep\"></span><code class=\"docstring\">`rfl : a = a` is the unique constructor of the equality type. This is the\nsame as `Eq.refl` except that it takes `a` implicitly instead of explicitly.\n\nThis is a more powerful theorem than it may appear at first, because although\nthe statement of the theorem is `a = a`, Lean will allow anything that is\ndefinitionally equal to that type. So, for instance, `2 + 2 = 4` is proven in\nLean by `rfl`, because both sides are the same up to definitional equality.\n</code>",
+ "546": "<code>ofList l = ofList s</code>",
+ "545":
+ "<code>WorkingWithQuotients.Expr.ofList_injective {l s : List ℕ} (h : ofList l = ofList s) : l = s</code>",
+ "544":
+ "<code>Quotient.{u} {α : Sort u} (s : Setoid α) : Sort u</code><span class=\"sep\"></span><code class=\"docstring\">`Quotient α s` is the same as `Quot α r`, but it is specialized to a setoid `s`\n(that is, an equivalence relation) instead of an arbitrary relation.\nPrefer `Quotient` over `Quot` if your relation is actually an equivalence relation.\n</code>",
+ "543": "<code>WorkingWithQuotients.ExprMonoid : Type</code>",
+ "542": "<code>y✝.normalize = z✝.normalize</code>",
+ "541": "<code>x✝.normalize = y✝.normalize</code>",
+ "540":
+ "<code>Equivalence.{u} {α : Sort u} (r : α → α → Prop) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">An equivalence relation `~ : α → α → Prop` is a relation that is:\n\n* reflexive: `x ~ x`\n* symmetric: `x ~ y` implies `y ~ x`\n* transitive: `x ~ y` and `y ~ z` implies `x ~ z`\n\nEquality is an equivalence relation, and equivalence relations share many of\nthe properties of equality. In particular, `Quot α r` is most well behaved\nwhen `r` is an equivalence relation, and in this case we use `Quotient` instead.\n</code>",
  "54": "<code>Float^[m]</code>",
+ "539":
+ "<code>Equivalence fun x y =&gt; x.normalize = y.normalize</code><span class=\"sep\"></span><code class=\"docstring\">The relation `x ≈ y` is an equivalence relation. </code>",
+ "538":
+ "<code>Expr → Expr → Prop</code><span class=\"sep\"></span><code class=\"docstring\">`x ≈ y` is the distinguished equivalence relation of a setoid. </code>",
+ "537":
+ "<code>Setoid.{u} (α : Sort u) : Sort (max 1 u)</code><span class=\"sep\"></span><code class=\"docstring\">A setoid is a type with a distinguished equivalence relation, denoted `≈`.\nThis is mainly used as input to the `Quotient` type constructor.\n</code>",
+ "536": "<code>WorkingWithQuotients.ExprSetoid : Setoid Expr</code>",
+ "535": "<code>WorkingWithQuotients.Expr.normalize (e : Expr) : Expr</code>",
+ "534": "<code>WorkingWithQuotients.Expr.ofList (l : List ℕ) : Expr</code>",
+ "533": "<code>WorkingWithQuotients.Expr.toList (e : Expr) : List ℕ</code>",
+ "532":
+ "<code>Repr.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A typeclass that specifies the standard way of turning values of some type into `Format`.\n\nWhen rendered this `Format` should be as close as possible to something that can be parsed as the\ninput value.\n</code>",
+ "531": "<code>Expr</code>",
+ "530": "<code>WorkingWithQuotients.Expr.mul (x y : Expr) : Expr</code>",
  "53":
  "<code>outerProduct {m n : ℕ} (x : Float^[m]) (y : Float^[n]) : Float^[m, n]</code>",
+ "529": "<code>WorkingWithQuotients.Expr.var (n : ℕ) : Expr</code>",
+ "528": "<code>WorkingWithQuotients.Expr.one : Expr</code>",
+ "527": "<code>WorkingWithQuotients.Expr : Type</code>",
+ "526":
+ "<code class=\"docstring\">In Lean, every concrete type other than the universes\nand every type constructor other than dependent arrows\nis an instance of a general family of type constructions known as inductive types.\nIt is remarkable that it is possible to construct a substantial edifice of mathematics\nbased on nothing more than the type universes, dependent arrow types, and inductive types;\neverything else follows from those.\nIntuitively, an inductive type is built up from a specified list of constructors.\nFor example, `List α` is the list of elements of type `α`, and is defined as follows:\n```\ninductive List (α : Type u) where\n| nil\n| cons (head : α) (tail : List α)\n```\nA list of elements of type `α` is either the empty list, `nil`,\nor an element `head : α` followed by a list `tail : List α`.\nSee [Inductive types](https://lean-lang.org/theorem_proving_in_lean4/inductive_types.html)\nfor more information.\n</code>",
+ "525":
+ "<code>Quot.mk.{u} {α : Sort u} (r : α → α → Prop) (a : α) : Quot r</code><span class=\"sep\"></span><code class=\"docstring\">Given a type `α` and any binary relation `r` on `α`, `Quot.mk` maps `α` to `Quot r`.\nSo that if `r : α → α → Prop` and `a : α`, then `Quot.mk r a` is an element of `Quot r`.\n\nSee `Quot`.\n</code>",
+ "524":
+ "<code>add_comm.{u_1} {G : Type u_1} [AddCommMagma G] (a b : G) : a + b = b + a</code>",
+ "523":
+ "<code>And.right {a b : Prop} (self : a ∧ b) : b</code><span class=\"sep\"></span><code class=\"docstring\">Extract the right conjunct from a conjunction. `h : a ∧ b` then\n`h.right`, also notated as `h.2`, is a proof of `b`. </code>",
+ "522":
+ "<code>And.left {a b : Prop} (self : a ∧ b) : a</code><span class=\"sep\"></span><code class=\"docstring\">Extract the left conjunct from a conjunction. `h : a ∧ b` then\n`h.left`, also notated as `h.1`, is a proof of `a`. </code>",
+ "521":
+ "<code class=\"docstring\">* `case tag =&gt; tac` focuses on the goal with case name `tag` and solves it using `tac`,\n  or else fails.\n* `case tag x₁ ... xₙ =&gt; tac` additionally renames the `n` most recent hypotheses\n  with inaccessible names to the given names.\n* `case tag₁ | tag₂ =&gt; tac` is equivalent to `(case tag₁ =&gt; tac); (case tag₂ =&gt; tac)`.\n</code>",
+ "520": "<code>a = d ∧ b = c</code>",
  "52": "<code>Fin 10</code>",
+ "519": "<code>a = c ∧ b = d</code>",
+ "518":
+ "<code class=\"docstring\">Assuming `x` is a variable in the local context with an inductive type,\n`cases x` splits the main goal, producing one goal for each constructor of the\ninductive type, in which the target is replaced by a general instance of that constructor.\nIf the type of an element in the local context depends on `x`,\nthat element is reverted and reintroduced afterward,\nso that the case split affects that hypothesis as well.\n`cases` detects unreachable cases and closes them automatically.\n\nFor example, given `n : Nat` and a goal with a hypothesis `h : P n` and target `Q n`,\n`cases n` produces one goal with hypothesis `h : P 0` and target `Q 0`,\nand one goal with hypothesis `h : P (Nat.succ a)` and target `Q (Nat.succ a)`.\nHere the name `a` is chosen automatically and is not accessible.\nYou can use `with` to provide the variables names for each constructor.\n- `cases e`, where `e` is an expression instead of a variable, generalizes `e` in the goal,\n  and then cases on the resulting variable.\n- Given `as : List α`, `cases as with | nil =&gt; tac₁ | cons a as' =&gt; tac₂`,\n  uses tactic `tac₁` for the `nil` case, and `tac₂` for the `cons` case,\n  and `a` and `as'` are used as names for the new variables introduced.\n- `cases h : e`, where `e` is a variable or an expression,\n  performs cases on `e` as above, but also adds a hypothesis `h : e = ...` to each hypothesis,\n  where `...` is the constructor instance for that particular case.\n</code>",
+ "517": "<code>a = c ∧ b = d ∨ a = d ∧ b = c</code>",
+ "516":
+ "<code>Or (a b : Prop) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`Or a b`, or `a ∨ b`, is the disjunction of propositions. There are two\nconstructors for `Or`, called `Or.inl : a → a ∨ b` and `Or.inr : b → a ∨ b`,\nand you can use `match` or `cases` to destruct an `Or` assumption into the\ntwo cases.\n</code>",
+ "515":
+ "<code>And (a b : Prop) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`And a b`, or `a ∧ b`, is the conjunction of propositions. It can be\nconstructed and destructed like a pair: if `ha : a` and `hb : b` then\n`⟨ha, hb⟩ : a ∧ b`, and if `h : a ∧ b` then `h.left : a` and `h.right : b`.\n</code>",
+ "514":
+ "<code class=\"docstring\">`simp_all` is a stronger version of `simp [*] at *` where the hypotheses and target\nare simplified multiple times until no simplification is applicable.\nOnly non-dependent propositional hypotheses are considered.\n</code>",
+ "513":
+ "<code>Quot.lift.{u, v} {α : Sort u} {r : α → α → Prop} {β : Sort v} (f : α → β) (a : ∀ (a b : α), r a b → f a = f b) :\n  Quot r → β</code><span class=\"sep\"></span><code class=\"docstring\">Given a type `α`, any binary relation `r` on `α`, a function `f : α → β`, and a proof `h`\nthat `f` respects the relation `r`, then `Quot.lift f h` is the corresponding function on `Quot r`.\n\nThe idea is that for each element `a` in `α`, the function `Quot.lift f h` maps `Quot.mk r a`\n(the `r`-class containing `a`) to `f a`, wherein `h` shows that this function is well defined.\nIn fact, the computation principle is declared as a reduction rule.\n</code>",
+ "512": "<code>UnorderedPair</code>",
+ "511":
+ "<code>WorkingWithQuotients.UnorderedPair.sum (p : UnorderedPair) : ℕ</code>",
+ "510":
+ "<code>Quot.{u} {α : Sort u} (r : α → α → Prop) : Sort u</code><span class=\"sep\"></span><code class=\"docstring\">Let `α` be any type, and let `r` be an equivalence relation on `α`.\nIt is mathematically common to form the \"quotient\" `α / r`, that is, the type of\nelements of `α` \"modulo\" `r`. Set theoretically, one can view `α / r` as the set\nof equivalence classes of `α` modulo `r`. If `f : α → β` is any function that\nrespects the equivalence relation in the sense that for every `x y : α`,\n`r x y` implies `f x = f y`, then f \"lifts\" to a function `f' : α / r → β`\ndefined on each equivalence class `⟦x⟧` by `f' ⟦x⟧ = f x`.\nLean extends the Calculus of Constructions with additional constants that\nperform exactly these constructions, and installs this last equation as a\ndefinitional reduction rule.\n\nGiven a type `α` and any binary relation `r` on `α`, `Quot r` is a type. Note\nthat `r` is not required to be an equivalence relation. `Quot` is the basic\nbuilding block used to construct later the type `Quotient`.\n</code>",
  "51":
  "<code>Fin (n : ℕ) : Type</code><span class=\"sep\"></span><code class=\"docstring\">`Fin n` is a natural number `i` with the constraint that `0 ≤ i &lt; n`.\nIt is the \"canonical type with `n` elements\".\n</code>",
+ "509": "<code>WorkingWithQuotients.UnorderedPair : Type</code>",
+ "508": "<code>WorkingWithQuotients.equiv : ℕ × ℕ → ℕ × ℕ → Prop</code>",
+ "507":
+ "<code>Array.get?.{u} {α : Type u} (a : Array α) (i : ℕ) : Option α</code>",
+ "506": "<code>Array A → ℕ → Option A</code>",
+ "505":
+ "<code>List.get.{u} {α : Type u} (as : List α) : Fin as.length → α</code><span class=\"sep\"></span><code class=\"docstring\">`as.get i` returns the `i`'th element of the list `as`.\nThis version of the function uses `i : Fin as.length` to ensure that it will\nnot index out of bounds.\n</code>",
+ "504": "<code>n &lt; l.length</code>",
+ "503": "<code>List A → ℕ → Option A</code>",
+ "502":
+ "<code>TCInterfaces.ArrayLike.length {Arr : Type} {Elem : outParam Type} [self : ArrayLike Arr Elem] : Arr → ℕ</code>",
+ "501":
+ "<code>TCInterfaces.ArrayLike.get {Arr : Type} {Elem : outParam Type} [self : ArrayLike Arr Elem] : Arr → ℕ → Option Elem</code>",
+ "500":
+ "<code>TCInterfaces.ArrayLike (Arr : Type) (Elem : outParam Type) : Type</code>",
  "50": "<code>Fin 10 → Float</code>",
  "5":
  "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type of natural numbers, starting at zero. It is defined as an\ninductive type freely generated by \"zero is a natural number\" and\n\"the successor of a natural number is a natural number\".\n\nYou can prove a theorem `P n` about `n : Nat` by `induction n`, which will\nexpect a proof of the theorem for `P 0`, and a proof of `P (succ i)` assuming\na proof of `P i`. The same method also works to define functions by recursion\non natural numbers: induction and recursion are two expressions of the same\noperation from Lean's point of view.\n\n```\nopen Nat\nexample (n : Nat) : n &lt; succ n := by\n  induction n with\n  | zero =&gt;\n    show 0 &lt; 1\n    decide\n  | succ i ih =&gt; -- ih : i &lt; succ i\n    show succ i &lt; succ (succ i)\n    exact Nat.succ_lt_succ ih\n```\n\nThis type is special-cased by both the kernel and the compiler:\n* The type of expressions contains \"`Nat` literals\" as a primitive constructor,\n  and the kernel knows how to reduce zero/succ expressions to nat literals.\n* If implemented naively, this type would represent a numeral `n` in unary as a\n  linked list with `n` links, which is horribly inefficient. Instead, the\n  runtime itself has a special representation for `Nat` which stores numbers up\n  to 2^63 directly and larger numbers use an arbitrary precision \"bignum\"\n  library (usually [GMP](https://gmplib.org/)).\n</code>",
+ "499":
+ "<code>OverloadTypeAndTerm.Pair'.mk.{u_1, u_2, u_3} {X : Type u_1} {Y : Type u_2} {x : X} {y : Y} {XY : outParam (Type u_3)}\n  {xy : outParam XY} : Pair' x y xy</code>",
+ "498":
+ "<code>Lean.Elab.Term.elabTerm (stx : Syntax) (expectedType? : Option Expr) (catchExPostpone implicitLambda : Bool := true) :\n  TermElabM Expr</code><span class=\"sep\"></span><code class=\"docstring\">Main function for elaborating terms.\nIt extracts the elaboration methods from the environment using the node kind.\nRecall that the environment has a mapping from `SyntaxNodeKind` to `TermElab` methods.\nIt creates a fresh macro scope for executing the elaboration method.\nAll unlogged trace messages produced by the elaboration method are logged using\nthe position information at `stx`. If the elaboration method throws an `Exception.error` and `errToSorry == true`,\nthe error is logged and a synthetic sorry expression is returned.\nIf the elaboration throws `Exception.postpone` and `catchExPostpone == true`,\na new synthetic metavariable of kind `SyntheticMVarKind.postponed` is created, registered,\nand returned.\nThe option `catchExPostpone == false` is used to implement `resumeElabTerm`\nto prevent the creation of another synthetic metavariable when resuming the elaboration.\n\nIf `implicitLambda == false`, then disable implicit lambdas feature for the given syntax, but not for its subterms.\nWe use this flag to implement, for example, the `@` modifier. If `Context.implicitLambda == false`, then this parameter has no effect.\n</code>",
+ "497":
+ "<code>Lean.TSyntax.raw {ks : SyntaxNodeKinds} (self : TSyntax ks) : Syntax</code><span class=\"sep\"></span><code class=\"docstring\">The underlying `Syntax` value. </code>",
+ "496":
+ "<code>Lean.Elab.Term.elabType (stx : Syntax) : TermElabM Expr</code><span class=\"sep\"></span><code class=\"docstring\">Elaborate `stx` and ensure result is a type. </code>",
+ "495":
+ "<code>Lean.Meta.synthInstance (type : Expr) (maxResultSize? : Option ℕ := none) : MetaM Expr</code>",
+ "494":
+ "<code>Lean.MonadQuotation.withFreshMacroScope {m : Type → Type} [self : MonadQuotation m] {α : Type} : m α → m α</code><span class=\"sep\"></span><code class=\"docstring\">Execute action in a new macro invocation context. This transformer should be\nused at all places that morally qualify as the beginning of a \"macro call\",\ne.g. `elabCommand` and `elabTerm` in the case of the elaborator. However, it\ncan also be used internally inside a \"macro\" if identifiers introduced by\ne.g. different recursive calls should be independent and not collide. While\nreturning an intermediate syntax tree that will recursively be expanded by\nthe elaborator can be used for the same effect, doing direct recursion inside\nthe macro guarded by this transformer is often easier because one is not\nrestricted to passing a single syntax tree. Modelling this helper as a\ntransformer and not just a monadic action ensures that the current macro\nscope before the recursive call is restored after it, as expected.\n</code>",
+ "493": "<code><span class=\"literal string\">\"⊗\"</span> : String</code>",
+ "492":
+ "<code>Lean.Parser.Category.term : Parser.Category</code><span class=\"sep\"></span><code class=\"docstring\">`term` is the builtin syntax category for terms. A term denotes an expression\nin lean's type theory, for example `2 + 2` is a term. The difference between\n`Term` and `Expr` is that the former is a kind of syntax, while the latter is\nthe result of elaboration. For example `by simp` is also a `Term`, but it elaborates\nto different `Expr`s depending on the context. </code>",
+ "491": "<code>TSyntax `term</code>",
+ "490": "<code>outParam XY</code>",
  "49":
  "<code class=\"docstring\">Declares one or more typed variables, or modifies whether already-declared variables are\n  implicit.\n\nIntroduces variables that can be used in definitions within the same `namespace` or `section` block.\nWhen a definition mentions a variable, Lean will add it as an argument of the definition. This is\nuseful in particular when writing many definitions that have parameters in common (see below for an\nexample).\n\nVariable declarations have the same flexibility as regular function parameters. In particular they\ncan be [explicit, implicit][binder docs], or [instance implicit][tpil classes] (in which case they\ncan be anonymous). This can be changed, for instance one can turn explicit variable `x` into an\nimplicit one with `variable {x}`. Note that currently, you should avoid changing how variables are\nbound and declare new variables at the same time; see [issue 2789] for more on this topic.\n\nIn *theorem bodies* (i.e. proofs), variables are not included based on usage in order to ensure that\nchanges to the proof cannot change the statement of the overall theorem. Instead, variables are only\navailable to the proof if they have been mentioned in the theorem header or in an `include` command\nor are instance implicit and depend only on such variables.\n\nSee [*Variables and Sections* from Theorem Proving in Lean][tpil vars] for a more detailed\ndiscussion.\n\n[tpil vars]:\nhttps://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html#variables-and-sections\n(Variables and Sections on Theorem Proving in Lean) [tpil classes]:\nhttps://lean-lang.org/theorem_proving_in_lean4/type_classes.html (Type classes on Theorem Proving in\nLean) [binder docs]:\nhttps://leanprover-community.github.io/mathlib4_docs/Lean/Expr.html#Lean.BinderInfo (Documentation\nfor the BinderInfo type) [issue 2789]: https://github.com/leanprover/lean4/issues/2789 (Issue 2789\non github)\n\n## Examples\n\n```lean\nsection\n  variable\n    {α : Type u}      -- implicit\n    (a : α)           -- explicit\n    [instBEq : BEq α] -- instance implicit, named\n    [Hashable α]      -- instance implicit, anonymous\n\n  def isEqual (b : α) : Bool :=\n    a == b\n\n  #check isEqual\n  -- isEqual.{u} {α : Type u} (a : α) [instBEq : BEq α] (b : α) : Bool\n\n  variable\n    {a} -- `a` is implicit now\n\n  def eqComm {b : α} := a == b ↔ b == a\n\n  #check eqComm\n  -- eqComm.{u} {α : Type u} {a : α} [instBEq : BEq α] {b : α} : Prop\nend\n```\n\nThe following shows a typical use of `variable` to factor out definition arguments:\n\n```lean\nvariable (Src : Type)\n\nstructure Logger where\n  trace : List (Src × String)\n#check Logger\n-- Logger (Src : Type) : Type\n\nnamespace Logger\n  -- switch `Src : Type` to be implicit until the `end Logger`\n  variable {Src}\n\n  def empty : Logger Src where\n    trace := []\n  #check empty\n  -- Logger.empty {Src : Type} : Logger Src\n\n  variable (log : Logger Src)\n\n  def len :=\n    log.trace.length\n  #check len\n  -- Logger.len {Src : Type} (log : Logger Src) : Nat\n\n  variable (src : Src) [BEq Src]\n\n  -- at this point all of `log`, `src`, `Src` and the `BEq` instance can all become arguments\n\n  def filterSrc :=\n    log.trace.filterMap\n      fun (src', str') =&gt; if src' == src then some str' else none\n  #check filterSrc\n  -- Logger.filterSrc {Src : Type} (log : Logger Src) (src : Src) [inst✝ : BEq Src] : List String\n\n  def lenSrc :=\n    log.filterSrc src |&gt;.length\n  #check lenSrc\n  -- Logger.lenSrc {Src : Type} (log : Logger Src) (src : Src) [inst✝ : BEq Src] : Nat\nend Logger\n```\n\nThe following example demonstrates availability of variables in proofs:\n```lean\nvariable\n  {α : Type}    -- available in the proof as indirectly mentioned through `a`\n  [ToString α]  -- available in the proof as `α` is included\n  (a : α)       -- available in the proof as mentioned in the header\n  {β : Type}    -- not available in the proof\n  [ToString β]  -- not available in the proof\n\ntheorem ex : a = a := rfl\n```\nAfter elaboration of the proof, the following warning will be generated to highlight the unused\nhypothesis:\n```\nincluded section variable '[ToString α]' is not used in 'ex', consider excluding it\n```\nIn such cases, the offending variable declaration should be moved down or into a section so that\nonly theorems that do depend on it follow it until the end of the section.\n</code>",
+ "489":
+ "<code>OverloadTypeAndTerm.Pair'.{u_1, u_2, u_3} {X : Type u_1} {Y : Type u_2} (x : X) (y : Y) {XY : outParam (Type u_3)}\n  (xy : outParam XY) : Type</code>",
+ "488": "<code>X × Y</code>",
+ "487": "<code>Type (max u_1 u_2)</code>",
+ "486":
+ "<code>OverloadTypeAndTerm.Pair.pair.{u_1, u_2, u_3} {X : Type u_1} {Y : Type u_2} (x : X) (y : Y) {XY : outParam (Type u_3)}\n  [self : Pair x y XY] : XY</code>",
+ "485": "<code>outParam (Type u_3)</code>",
+ "484":
+ "<code>OverloadTypeAndTerm.Pair.{u_1, u_2, u_3} {X : Type u_1} {Y : Type u_2} (x : X) (y : Y) (XY : outParam (Type u_3)) :\n  Type u_3</code>",
+ "483": "<code>n ≠ 0</code>",
+ "482":
+ "<code class=\"docstring\">\"Dependent\" if-then-else, normally written via the notation `if h : c then t(h) else e(h)`,\nis sugar for `dite c (fun h =&gt; t(h)) (fun h =&gt; e(h))`, and it is the same as\n`if c then t else e` except that `t` is allowed to depend on a proof `h : c`,\nand `e` can depend on `h : ¬c`. (Both branches use the same name for the hypothesis,\neven though it has different types in the two cases.)\n\nWe use this to be able to communicate the if-then-else condition to the branches.\nFor example, `Array.get arr i h` expects a proof `h : i &lt; arr.size` in order to\navoid a bounds check, so you can write `if h : i &lt; arr.size then arr.get i h else ...`\nto avoid the bounds check inside the if branch. (Of course in this case we have only\nlifted the check into an explicit `if`, but we could also use this proof multiple times\nor derive `i &lt; arr.size` from some other proposition that we are checking in the `if`.)\n</code>",
+ "481": "<code>Option (Fin n)</code>",
+ "480":
+ "<code>Option.none.{u} {α : Type u} : Option α</code><span class=\"sep\"></span><code class=\"docstring\">No value. </code>",
  "48": "<code>Fin 2</code>",
+ "479": "<code>Option Empty</code>",
+ "478":
+ "<code>Empty : Type</code><span class=\"sep\"></span><code class=\"docstring\">The empty type. It has no constructors. The `Empty.rec`\neliminator expresses the fact that anything follows from the empty type.\n</code>",
+ "477":
+ "<code>Bool.false : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `false`, not to be confused with the proposition `False`. </code>",
+ "476":
+ "<code>Option.some.{u} {α : Type u} (val : α) : Option α</code><span class=\"sep\"></span><code class=\"docstring\">Some value of type `α`. </code>",
+ "475": "<code>Option Bool</code>",
+ "474":
+ "<code>List.head?.{u} {α : Type u} : List α → Option α</code><span class=\"sep\"></span><code class=\"docstring\">Returns the first element in the list.\n\nIf the list is empty, this function returns `none`.\nAlso see `headD` and `head!`.\n</code>",
+ "473": "<code>Option A</code>",
+ "472":
+ "<code>Option.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">`Option α` is the type of values which are either `some a` for some `a : α`,\nor `none`. In functional programming languages, this type is used to represent\nthe possibility of failure, or sometimes nullability.\n\nFor example, the function `HashMap.get? : HashMap α β → α → Option β` looks up\na specified key `a : α` inside the map. Because we do not know in advance\nwhether the key is actually in the map, the return type is `Option β`, where\n`none` means the value was not in the map, and `some b` means that the value\nwas found and `b` is the value retrieved.\n\nThe `xs[i]` syntax, which is used to index into collections, has a variant\n`xs[i]?` that returns an optional value depending on whether the given index\nis valid. For example, if `m : HashMap α β` and `a : α`, then `m[a]?` is\nequivalent to `HashMap.get? m a`.\n\nTo extract a value from an `Option α`, we use pattern matching:\n```\ndef map (f : α → β) (x : Option α) : Option β :=\n  match x with\n  | some a =&gt; some (f a)\n  | none =&gt; none\n```\nWe can also use `if let` to pattern match on `Option` and get the value\nin the branch:\n```\ndef map (f : α → β) (x : Option α) : Option β :=\n  if let some a := x then\n    some (f a)\n  else\n    none\n```\n</code>",
+ "471":
+ "<code>OverloadTypeAndTerm.First.first?.{u, v} {A : Type u} (a : A) {B : outParam (Type v)} [self : First a B] : Option B</code>",
+ "470": "<code>outParam (Type v)</code>",
  "47": "<code>Float</code>",
+ "469":
+ "<code>OverloadTypeAndTerm.First.{u, v} {A : Type u} (a : A) (B : outParam (Type v)) : Type v</code>",
+ "468":
+ "<code>Bool : Type</code><span class=\"sep\"></span><code class=\"docstring\">`Bool` is the type of boolean values, `true` and `false`. Classically,\nthis is equivalent to `Prop` (the type of propositions), but the distinction\nis important for programming, because values of type `Prop` are erased in the\ncode generator, while `Bool` corresponds to the type called `bool` or `boolean`\nin most programming languages.\n</code>",
+ "467":
+ "<code>Array.size.{u} {α : Type u} (a : Array α) : ℕ</code><span class=\"sep\"></span><code class=\"docstring\">Get the size of an array. This is a cached value, so it is O(1) to access. </code>",
+ "466":
+ "<code>OverloadTypeAndTerm.Size.size.{u} {A : Type u} (a : A) [self : Size a] : ℕ</code>",
+ "465":
+ "<code class=\"docstring\">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code>",
+ "464": "<code>Type u</code>",
+ "463": "<code>OverloadTypeAndTerm.Size.{u} {A : Type u} (a : A) : Type</code>",
+ "462": "<code>X × Xs → Xn</code>",
+ "461": "<code>X × Xs → X</code>",
+ "460": "<code>X → X</code>",
  "46": "<code>A : Float^[2, 2]</code>",
+ "459":
+ "<code>InductiveOverload.ProdGet.get {Xs : Type} (n : ℕ) {Xn : outParam Type} [self : ProdGet Xs n Xn] : Xs → Xn</code>",
+ "458":
+ "<code>InductiveOverload.ProdGet (Xs : Type) (n : ℕ) (Xn : outParam Type) : Type</code>",
+ "457": "<code>X × Xs → Y</code>",
+ "456": "<code>(X × Xs → Y) → X → F</code>",
+ "455":
+ "<code>InductiveOverload.Curry.curry {Xs Y : Type} {F : outParam Type} [self : Curry Xs Y F] : (Xs → Y) → F</code>",
+ "454":
+ "<code>InductiveOverload.Curry (Xs Y : Type) (F : outParam Type) : Type</code>",
+ "453":
+ "<code>InductiveOverload.FlatProdSize.flatProdSize (X : Type) [self : FlatProdSize X] : ℕ</code>",
+ "452": "<code>InductiveOverload.FlatProdSize (X : Type) : Type</code>",
+ "451": "<code>ℕ</code>",
+ "450":
+ "<code>InductiveOverload.ProdSize.prodSize (X : Type) [self : ProdSize X] : ℕ</code>",
  "45": "<code>Fin 3</code>",
+ "449": "<code>InductiveOverload.ProdSize (X : Type) : Type</code>",
+ "448":
+ "<code class=\"docstring\">`native_decide` is a synonym for `decide +native`.\nIt will attempt to prove a goal of type `p` by synthesizing an instance\nof `Decidable p` and then evaluating it to `isTrue ..`. Unlike `decide`, this\nuses `#eval` to evaluate the decidability instance.\n\nThis should be used with care because it adds the entire lean compiler to the trusted\npart, and the axiom `Lean.ofReduceBool` will show up in `#print axioms` for theorems using\nthis method or anything that transitively depends on them. Nevertheless, because it is\ncompiled, this can be significantly more efficient than using `decide`, and for very\nlarge computations this is one way to run external programs and trust the result.\n```lean\nexample : (List.range 1000).length = 1000 := by native_decide\n```\n</code>",
+ "447": "<code>ℕ × ℕ</code>",
+ "446":
+ "<code>Array.foldl.{u, v} {α : Type u} {β : Type v} (f : β → α → β) (init : β) (as : Array α) (start : ℕ := 0)\n  (stop : ℕ := as.size) : β</code>",
+ "445": "<code>Array A</code>",
+ "444": "<code>Array A → ℕ</code>",
+ "443": "<code>Xs</code>",
+ "442": "<code>X → F</code>",
+ "441": "<code>(X → F) → X × Xs → Y</code>",
+ "440": "<code>(X → Y) → X → Y</code>",
  "44": "<code>u : Float^[3]</code>",
+ "439":
+ "<code>InductiveOverload.Uncurry.uncurry {F : Type} {Xs Y : outParam Type} [self : Uncurry F Xs Y] : F → Xs → Y</code>",
+ "438":
+ "<code>InductiveOverload.Uncurry (F : Type) (Xs Y : outParam Type) : Type</code>",
+ "437": "<code>A → ℕ</code>",
+ "436":
+ "<code class=\"docstring\">The standardized \"low\" priority `low = 100`, for things that should be lower than default priority. </code>",
+ "435":
+ "<code><span class=\"literal string\">\"elephant\"</span> : String</code>",
+ "434": "<code><span class=\"literal string\">\"cat\"</span> : String</code>",
+ "433": "<code><span class=\"literal string\">\"dog\"</span> : String</code>",
+ "432": "<code>X × Y → ℕ</code>",
+ "431": "<code>A</code>",
+ "430":
+ "<code>List.foldl.{u, v} {α : Type u} {β : Type v} (f : α → β → α) (init : α) : List β → α</code><span class=\"sep\"></span><code class=\"docstring\">Folds a function over a list from the left:\n`foldl f z [a, b, c] = f (f (f z a) b) c`\n</code>",
  "43":
  "<code>SciLean.DataArray.size.{u_1} {α : Type u_1} [pd : PlainDataType α] (self : DataArray α) : ℕ</code>",
+ "429": "<code>ℕ → ℕ</code>",
+ "428":
+ "<code>InductiveOverload.Sum.sum {A : Type} [self : Sum A] : A → ℕ</code>",
+ "427": "<code>InductiveOverload.Sum (A : Type) : Type</code>",
+ "426": "<code>Int</code>",
+ "425":
+ "<code>pp.all</code><span class=\"sep\"></span><code class=\"docstring\">(pretty printer) display coercions, implicit parameters, proof terms, fully qualified names, universe, and disable beta reduction and notations during pretty printing</code>",
+ "424":
+ "<code>Int.neg (n : ℤ) : ℤ</code><span class=\"sep\"></span><code class=\"docstring\">Negation of an integer.\n\nImplemented by efficient native code. </code>",
+ "423": "<code>Int.instNegInt : Neg ℤ</code>",
+ "422":
+ "<code>Int : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type of integers. It is defined as an inductive type based on the\nnatural number type `Nat` featuring two constructors: \"a natural\nnumber is an integer\", and \"the negation of a successor of a natural\nnumber is an integer\". The former represents integers between `0`\n(inclusive) and `∞`, and the latter integers between `-∞` and `-1`\n(inclusive).\n\nThis type is special-cased by the compiler. The runtime has a special\nrepresentation for `Int` which stores \"small\" signed numbers directly,\nand larger numbers use an arbitrary precision \"bignum\" library\n(usually [GMP](https://gmplib.org/)). A \"small number\" is an integer\nthat can be encoded with 63 bits (31 bits on 32-bits architectures).\n</code>",
+ "421":
+ "<code>Neg.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">The notation typeclass for negation.\nThis enables the notation `-a : α` where `a : α`.\n</code>",
+ "420":
+ "<code>HAppend.hAppend.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HAppend α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a ++ b` is the result of concatenation of `a` and `b`, usually read \"append\".\nThe meaning of this notation is type-dependent. </code>",
  "42": "<code>DataArray X</code>",
+ "419": "<code>Nat</code>",
+ "418":
+ "<code>pp.notation</code><span class=\"sep\"></span><code class=\"docstring\">(pretty printer) disable/enable notation (infix, mixfix, postfix operators and unicode characters)</code>",
+ "417":
+ "<code>HMul.{u, v, w} (α : Type u) (β : Type v) (γ : outParam (Type w)) : Type (max (max u v) w)</code><span class=\"sep\"></span><code class=\"docstring\">The notation typeclass for heterogeneous multiplication.\nThis enables the notation `a * b : γ` where `a : α`, `b : β`.\n</code>",
+ "416":
+ "<code>HAdd.{u, v, w} (α : Type u) (β : Type v) (γ : outParam (Type w)) : Type (max (max u v) w)</code><span class=\"sep\"></span><code class=\"docstring\">The notation typeclass for heterogeneous addition.\nThis enables the notation `a + b : γ` where `a : α`, `b : β`.\n</code>",
+ "415": "<code>Float^[m, k]</code>",
+ "414": "<code>Float^[n, m] → Float^[m, k] → Float^[n, k]</code>",
+ "413":
+ "<code>Overloading.MyMul.mymul {X Y : Type} {Z : outParam Type} [self : MyMul X Y Z] : X → Y → Z</code>",
+ "412":
+ "<code>outParam.{u} (α : Sort u) : Sort u</code><span class=\"sep\"></span><code class=\"docstring\">Gadget for marking output parameters in type classes.\n\nFor example, the `Membership` class is defined as:\n```\nclass Membership (α : outParam (Type u)) (γ : Type v)\n```\nThis means that whenever a typeclass goal of the form `Membership ?α ?γ` comes\nup, Lean will wait to solve it until `?γ` is known, but then it will run\ntypeclass inference, and take the first solution it finds, for any value of `?α`,\nwhich thereby determines what `?α` should be.\n\nThis expresses that in a term like `a ∈ s`, `s` might be a `Set α` or\n`List α` or some other type with a membership operation, and in each case\nthe \"member\" type `α` is determined by looking at the container type.\n</code>",
+ "411": "<code>outParam Type</code>",
+ "410":
+ "<code>Overloading.MyMul (X Y : Type) (Z : outParam Type) : Type</code>",
  "41":
  "<code>SciLean.Size.size.{u} {α : Sort u} (a : α) [self : Size a] : ℕ</code>",
+ "409": "<code>List X</code>",
+ "408":
+ "<code>Overloading.listSMul {R X : Type} [SMul R X] (r : R) (l : List X) : List X</code>",
+ "407":
+ "<code>Overloading.SMul.mk {R X : Type} (smul : R → X → X) : SMul R X</code>",
+ "406": "<code>Overloading.natListSMul (n : ℕ) (l : List ℕ) : List ℕ</code>",
+ "405":
+ "<code class=\"docstring\">Adds names from other namespaces to the current namespace.\n\nThe command `export Some.Namespace (name₁ name₂)` makes `name₁` and `name₂`:\n\n- visible in the current namespace without prefix `Some.Namespace`, like `open`, and\n- visible from outside the current namespace `N` as `N.name₁` and `N.name₂`.\n\n## Examples\n\n```lean\nnamespace Morning.Sky\n  def star := \"venus\"\nend Morning.Sky\n\nnamespace Evening.Sky\n  export Morning.Sky (star)\n  -- `star` is now in scope\n  #check star\nend Evening.Sky\n\n-- `star` is visible in `Evening.Sky`\n#check Evening.Sky.star\n```\n</code>",
+ "404":
+ "<code>Overloading.SMul.smul {R X : Type} [self : SMul R X] : R → X → X</code>",
+ "403": "<code>Overloading.SMul (R X : Type) : Type</code>",
+ "402": "<code>Unit → ℕ</code>",
+ "401":
+ "<code>String.length : String → ℕ</code><span class=\"sep\"></span><code class=\"docstring\">Returns the length of a string in Unicode code points.\n\nExamples:\n* `\"\".length = 0`\n* `\"abc\".length = 3`\n* `\"L∃∀N\".length = 4`\n</code>",
+ "400": "<code>String</code>",
  "40":
  "<code>BasicOperations.DataArrayN.h_size {X I : Type} [PlainDataType X] [IndexType I] (self : DataArrayN X I) :\n  size I = self.data.size</code>",
  "4": "<code>fibonacci (n : ℕ) : Array ℕ</code>",
+ "399": "<code>String → ℕ</code>",
+ "398":
+ "<code>List.length.{u_1} {α : Type u_1} : List α → ℕ</code><span class=\"sep\"></span><code class=\"docstring\">The length of a list: `[].length = 0` and `(a :: l).length = l.length + 1`.\n\nThis function is overridden in the compiler to `lengthTR`, which uses constant\nstack space, while leaving this function to use the \"naive\" recursion which is\neasier for reasoning.\n</code>",
+ "397": "<code>List A</code>",
+ "396": "<code>List A → ℕ</code>",
+ "395": "<code>Overloading.Size.size {A : Type} [self : Size A] : A → ℕ</code>",
+ "394": "<code>Overloading.Size (A : Type) : Type</code>",
+ "393":
+ "<code>HighOrderFunctions.applyTwice.arg_fx.fwdFDeriv_rule.{u_1} {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X]\n  [NormedSpace R X] {W : Type u_1} [NormedAddCommGroup W] [NormedSpace R W] (f : W → X → X) (hf : Differentiable R ↿f)\n  (x : W → X) (hx : Differentiable R x) :\n  ∂&gt; w, applyTwice (f w) (x w) = fun w dw =&gt;\n    let xdx := ∂&gt; x w dw;\n    let f' := fun xdx =&gt; ∂&gt; (↿f) (w, xdx.1) (dw, xdx.2);\n    applyTwice f' xdx</code>",
+ "392":
+ "<code>HighOrderFunctions.applyTwice.arg_fx.Differentiable_rule.{u_1} {R : Type} [RealScalar R] {X : Type}\n  [NormedAddCommGroup X] [NormedSpace R X] {W : Type u_1} [NormedAddCommGroup W] [NormedSpace R W] (f : W → X → X)\n  (hf : Differentiable R ↿f) (x : W → X) (hx : Differentiable R x) : Differentiable R fun w =&gt; applyTwice (f w) (x w)</code>",
+ "391":
+ "<code>HighOrderFunctions.applyTwice {X : Type} (f : X → X) (x : X) : X</code>",
+ "390": "<code>X × X → X × X</code>",
  "39":
  "<code>BasicOperations.DataArrayN.data {X I : Type} [PlainDataType X] [IndexType I] (self : DataArrayN X I) : DataArray X</code>",
+ "389":
+ "<code>HighOrderFunctions.apply.arg_fx.fwdFDeriv_rule.{u_1} {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X]\n  [NormedSpace R X] {W : Type u_1} [NormedAddCommGroup W] [NormedSpace R W] (f : W → X → X) (hf : Differentiable R ↿f)\n  (x : W → X) (hx : Differentiable R x) :\n  ∂&gt; w, apply (f w) (x w) = fun w dw =&gt;\n    let xdx := ∂&gt; x w dw;\n    let f' := fun xdx =&gt; ∂&gt; (↿f) (w, xdx.1) (dw, xdx.2);\n    apply f' xdx</code>",
+ "388": "<code>Differentiable R x</code>",
+ "387": "<code>W → X → X</code>",
+ "386":
+ "<code>HighOrderFunctions.apply.arg_fx.Differentiable_rule.{u_1} {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X]\n  [NormedSpace R X] {W : Type u_1} [NormedAddCommGroup W] [NormedSpace R W] (f : W → X → X) (hf : Differentiable R ↿f)\n  (x : W → X) (hx : Differentiable R x) : Differentiable R fun w =&gt; apply (f w) (x w)</code>",
+ "385": "<code>X → X</code>",
+ "384":
+ "<code>HighOrderFunctions.apply {X : Type} (f : X → X) (x : X) : X</code>",
+ "383":
+ "<code>HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X]\n  [NormedSpace R X] {W : Type} [NormedAddCommGroup W] [NormedSpace R W] (f g : W → X) (hf : Differentiable R f)\n  (hg : Differentiable R g) :\n  (fwdFDeriv' R fun w =&gt; f w + g w) = fun xdx =&gt;\n    let ydy := fwdFDeriv' R f xdx;\n    let zdz := fwdFDeriv' R g xdx;\n    (ydy.1 + zdz.1, ydy.2 + zdz.2)</code>",
+ "382": "<code>NormedSpace R W</code>",
+ "381": "<code>NormedAddCommGroup W</code>",
+ "380": "<code>W × W</code>",
  "38": "<code>SciLean.IndexType.{u} (I : Type u) : Type u</code>",
+ "379": "<code>W</code>",
+ "378": "<code>W → X</code>",
+ "377":
+ "<code>Neg.neg.arg_a0.fwdFDeriv'_rule_compositional {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X]\n  [NormedSpace R X] {W : Type} [NormedAddCommGroup W] [NormedSpace R W] (f : W → X) (hf : Differentiable R f) :\n  (fwdFDeriv' R fun w =&gt; -f w) = fun wdw =&gt;\n    let xdx := fwdFDeriv' R f wdw;\n    (-xdx.1, -xdx.2)</code>",
+ "376": "<code>Type ?u.395</code>",
+ "375":
+ "<code class=\"docstring\">Same as `sorry` but makes sure that the term is of type `Prop`.\n\n`sorry_proof` is very useful when writing programs such that you do not accidantelly add `sorry`\nwhich would prevent compiler fomr generating executable code. </code>",
+ "374":
+ "<code class=\"docstring\">`rw` is like `rewrite`, but also tries to close the goal by \"cheap\" (reducible) `rfl` afterwards.\n</code>",
+ "373": "<code>f = fun x =&gt; g x + f 0</code>",
+ "372":
+ "<code>IsLinearMap.{u, v, w} (R : Type u) {M : Type v} {M₂ : Type w} [Semiring R] [AddCommMonoid M] [AddCommMonoid M₂]\n  [Module R M] [Module R M₂] (f : M → M₂) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A map `f` between modules over a semiring is linear if it satisfies the two properties\n`f (x + y) = f x + f y` and `f (c • x) = c • f x`. The predicate `IsLinearMap R f` asserts this\nproperty. A bundled version is available with `LinearMap`, and should be favored over\n`IsLinearMap` most of the time. </code>",
+ "371":
+ "<code class=\"docstring\">If the main goal's target type is an inductive type, `constructor` solves it with\nthe first matching constructor, or else fails.\n</code>",
+ "370":
+ "<code>Bool.true : Bool</code><span class=\"sep\"></span><code class=\"docstring\">The boolean value `true`, not to be confused with the proposition `True`. </code>",
  "37":
  "<code>SciLean.PlainDataType.{u_1} (α : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">This rougly corresponds to Plain Old Data(POD)/Passive Data known from OOP\n\nwiki: https://en.wikipedia.org/wiki/Passive_data_structure\n\nWe distinguish between two main types of POD. `BitType` a type that is smaller or equal to a byte and `ByteType` that takes up multiple bytes. The main motivation is an efficient storage of `Array Bool` where `Bool` takes up only a single bit, so we can fit 8 bools into a single byte and achieve significant memore reduction.\n\nPotentially surprising edge case is array of fixed length, i.e. the type `{a : Array α // a.size = n}`. It is `PlainDataType` if `α` is `PlainDataType`. However, `Array α` is not `PlainDataType`, even if `α` is `PlainDataType`, as it does not have a fixed byte size.\n</code>",
+ "369":
+ "<code>Bool</code><span class=\"sep\"></span><code class=\"docstring\">When `true` (default: `false`), local definitions are unfolded.\nThat is, given a local context containing entry `x : t := e`, the free variable `x` reduces to `e`.\n</code>",
+ "368": "<code>IsContinuousLinearMap R g</code>",
+ "367":
+ "<code class=\"docstring\">The `let` tactic is for adding definitions to the local context of the main goal.\n* `let x : t := e` adds the definition `x : t := e` if `e` is a term of type `t`.\n* `let x := e` uses the type of `e` for `t`.\n* `let : t := e` and `let := e` use `this` for the name of the hypothesis.\n* `let pat := e` for a pattern `pat` is equivalent to `match e with | pat =&gt; _`,\n  where `_` stands for the tactics that follow this one.\n  It is convenient for types that let only one applicable constructor.\n  For example, given `p : α × β × γ`, `let ⟨x, y, z⟩ := p` produces the\n  local variables `x : α`, `y : β`, and `z : γ`.\n</code>",
+ "366":
+ "<code class=\"docstring\">Apply function extensionality and introduce new hypotheses.\nThe tactic `funext` will keep applying the `funext` lemma until the goal target is not reducible to\n```\n  |-  ((fun x =&gt; ...) = (fun x =&gt; ...))\n```\nThe variant `funext h₁ ... hₙ` applies `funext` `n` times, and uses the given identifiers to name the new hypotheses.\nPatterns can be used like in the `intro` tactic. Example, given a goal\n```\n  |-  ((fun x : Nat × Bool =&gt; ...) = (fun x =&gt; ...))\n```\n`funext (a, b)` applies `funext` once and performs pattern matching on the newly introduced pair.\n</code>",
+ "365":
+ "<code>Continuous.{u, v} {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y] (f : X → Y) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A function between topological spaces is continuous if the preimage\nof every open set is open. Registered as a structure to make sure it is not unfolded by Lean. </code>",
+ "364": "<code>Continuous f</code>",
+ "363":
+ "<code>IsAffineMap.{u_1, u_2, u_3} (R : Type u_1) {X : Type u_2} {Y : Type u_3} [CommRing R] [AddCommGroup X] [Module R X]\n  [AddCommGroup Y] [Module R Y] (f : X → Y) : Prop</code>",
+ "362": "<code>IsAffineMap R f</code>",
+ "361":
+ "<code>fwdFDeriv'.affine_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] (f : X → Y) (hf : IsAffineMap R f) (hf' : Continuous f) :\n  fwdFDeriv' R f = fun xdx =&gt; (f xdx.1, f xdx.2 - f 0)</code>",
+ "360":
+ "<code>SciLean.IsContinuousLinearMap.{u_1, u_2, u_3} (R : Type u_1) [Semiring R] {X : Type u_2} [TopologicalSpace X]\n  [AddCommMonoid X] [Module R X] {Y : Type u_3} [TopologicalSpace Y] [AddCommMonoid Y] [Module R Y] (f : X → Y) : Prop</code>",
  "36": "<code>Type</code>",
+ "359": "<code>IsContinuousLinearMap R f</code>",
+ "358":
+ "<code>fwdFDeriv'.linear_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] (f : X → Y) (hf : IsContinuousLinearMap R f) :\n  fwdFDeriv' R f = fun xdx =&gt; (f xdx.1, f xdx.2)</code>",
+ "357":
+ "<code class=\"docstring\">`apply e` tries to match the current goal against the conclusion of `e`'s type.\nIf it succeeds, then the tactic returns as many subgoals as the number of premises that\nhave not been fixed by type inference or type class resolution.\nNon-dependent premises are added before dependent ones.\n\nThe `apply` tactic uses higher-order pattern matching, type class resolution,\nand first-order unification with dependent types.\n</code>",
+ "356": "<code>((x, y), dx, dy).1.2 ≠ 0</code>",
+ "355": "<code>NormedAddCommGroup.toSeminormedAddCommGroup</code>",
+ "354": "<code>xydxy.1.2 ≠ 0</code>",
+ "353":
+ "<code>HDiv.hDiv.arg_a0a1.fwdFDeriv'_rule_simple {R : Type} [RealScalar R] (xydxy : (R × R) × R × R) (h : xydxy.1.2 ≠ 0) :\n  fwdFDeriv' R (fun xy =&gt; xy.1 / xy.2) xydxy =\n    match xydxy, h with\n    | ((x, y), dx, dy), h =&gt; (x / y, (dx * y - x * dy) / y ^ 2)</code>",
+ "352": "<code>(R × R) × R × R</code>",
+ "351": "<code>R × R</code>",
+ "350":
+ "<code>fun1.arg_xz.fwdFDeriv'_rule {R : Type} [RealScalar R] (y : R) :\n  (fwdFDeriv' R fun xz =&gt; fun1 xz.1 y xz.2) = fun x =&gt;\n    match x with\n    | ((x, z), dx, dz) =&gt; (fun1 x y z, exp x * (dz * cos (z + y)) + dx * exp x * sin (z + y) + dz)</code>",
  "35":
  "<code>BasicOperations.DataArrayN (X I : Type) [PlainDataType X] [IndexType I] : Type</code>",
+ "349": "<code>R</code>",
+ "348": "<code>fun1 {R : Type} [RealScalar R] (x y z : R) : R</code>",
+ "347": "<code>(X × X) × X × X</code>",
+ "346":
+ "<code>HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] :\n  (fwdFDeriv' R fun xy =&gt; xy.1 + xy.2) = fun x =&gt;\n    match x with\n    | ((x, y), dx, dy) =&gt; (x + y, dx + dy)</code>",
+ "345":
+ "<code>Neg.neg.arg_a0.fwdFDeriv'_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] :\n  (fwdFDeriv' R fun x =&gt; -x) = fun x =&gt;\n    match x with\n    | (x, dx) =&gt; (-x, -dx)</code>",
+ "344": "<code>Differentiable R ↿f</code>",
+ "343": "<code>X → Y → Z</code>",
+ "342":
+ "<code>fwdFDeriv'.let_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] {Z : Type} [NormedAddCommGroup Z] [NormedSpace R Z] (f : X → Y → Z)\n  (hf : Differentiable R ↿f) (g : X → Y) (hg : Differentiable R g) :\n  (fwdFDeriv' R fun x =&gt;\n      let y := g x;\n      f x y) =\n    fun xdx =&gt;\n    let ydy := fwdFDeriv' R g xdx;\n    let xydxy := ((xdx.1, ydy.1), xdx.2, ydy.2);\n    fwdFDeriv' R\n      (fun x =&gt;\n        match x with\n        | (x, y) =&gt; f x y)\n      xydxy</code>",
+ "341": "<code>(I → X) × (I → X)</code>",
+ "340": "<code>I → X</code>",
  "34":
  "<code>BasicOperations.Fin.isLt {n : ℕ} (self : Fin n) : self.val &lt; n</code>",
+ "339":
+ "<code>fwdFDeriv'.apply_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {I : Type}\n  [IndexType I] (i : I) : (fwdFDeriv' R fun f =&gt; f i) = fun fdf =&gt; (fdf.1 i, fdf.2 i)</code>",
+ "338":
+ "<code>Prod.snd.arg_self.fwdFDeriv'_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X]\n  {Y : Type} [NormedAddCommGroup Y] [NormedSpace R Y] :\n  (fwdFDeriv' R fun xy =&gt; xy.2) = fun xydxy =&gt; (xydxy.1.2, xydxy.2.2)</code>",
+ "337": "<code>(X × Y) × X × Y</code>",
+ "336": "<code>X × Y</code>",
+ "335":
+ "<code>Prod.fst.arg_self.fwdFDeriv'_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X]\n  {Y : Type} [NormedAddCommGroup Y] [NormedSpace R Y] :\n  (fwdFDeriv' R fun xy =&gt; xy.1) = fun xydxy =&gt; (xydxy.1.1, xydxy.2.1)</code>",
+ "334": "<code>Z × Z</code>",
+ "333": "<code>X → Z</code>",
+ "332":
+ "<code>Prod.mk.arg_fstsnd.fwdFDeriv'_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X]\n  {Y : Type} [NormedAddCommGroup Y] [NormedSpace R Y] {Z : Type} [NormedAddCommGroup Z] [NormedSpace R Z] (g : X → Y)\n  (f : X → Z) (hg : Differentiable R g) (hf : Differentiable R f) :\n  (fwdFDeriv' R fun x =&gt; (g x, f x)) = fun xdx =&gt;\n    let ydy := fwdFDeriv' R g xdx;\n    let zdz := fwdFDeriv' R f xdx;\n    ((ydy.1, zdz.1), ydy.2, zdz.2)</code>",
+ "331":
+ "<code>fwdFDeriv'.const_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] (y : Y) : (fwdFDeriv' R fun x =&gt; y) = fun x =&gt; (y, 0)</code>",
+ "330":
+ "<code>SciLean.fderiv.pi_rule.{u_1, u_2, u_5, u_6} {K : Type u_1} [RCLike K] {X : Type u_2} [NormedAddCommGroup X]\n  [NormedSpace K X] {ι : Type u_5} [Fintype ι] {E : ι → Type u_6} [(i : ι) → NormedAddCommGroup (E i)]\n  [(i : ι) → NormedSpace K (E i)] (f : X → (i : ι) → E i) (hf : ∀ (i : ι), Differentiable K fun x =&gt; f x i) :\n  (∂ fun x i =&gt; f x i) = fun x =&gt; fun x✝ =&gt;L[K] (fun dx i =&gt; (∂ (x:=x), f x i) dx) x✝</code>",
  "33": "<code>BasicOperations.Fin.val {n : ℕ} (self : Fin n) : ℕ</code>",
+ "329": "<code>I → Y × Y</code>",
+ "328": "<code>∀ (i : I), Differentiable R fun x =&gt; f x i</code>",
+ "327": "<code>X → I → Y</code>",
+ "326":
+ "<code>fwdFDeriv'.pi_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] {I : Type} [IndexType I] (f : X → I → Y)\n  (hf : ∀ (i : I), Differentiable R fun x =&gt; f x i) :\n  (fwdFDeriv' R fun x i =&gt; f x i) = fun xdx =&gt;\n    let ydy := fun i =&gt; fwdFDeriv' R (fun x =&gt; f x i) xdx;\n    (fun i =&gt; (ydy i).1, fun i =&gt; (ydy i).2)</code>",
+ "325": "<code>Y × Y</code>",
+ "324": "<code>Differentiable R g</code>",
+ "323": "<code>Differentiable R f</code>",
+ "322": "<code>Y → Z</code>",
+ "321":
+ "<code>fwdFDeriv'.comp_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] {Z : Type} [NormedAddCommGroup Z] [NormedSpace R Z] (f : Y → Z) (g : X → Y)\n  (hf : Differentiable R f) (hg : Differentiable R g) :\n  (fwdFDeriv' R fun x =&gt; f (g x)) = fun xdx =&gt;\n    let ydy := fwdFDeriv' R g xdx;\n    fwdFDeriv' R f ydy</code>",
+ "320":
+ "<code>fwdFDeriv'.id_rule {R : Type} [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] :\n  (fwdFDeriv' R fun x =&gt; x) = fun xdx =&gt; xdx</code>",
  "32": "<code>BasicOperations.Fin (n : ℕ) : Type</code>",
+ "319": "<code>NormedSpace R Z</code>",
+ "318": "<code>NormedAddCommGroup Z</code>",
+ "317": "<code>NormedSpace R Y</code>",
+ "316": "<code>NormedSpace R X</code>",
+ "315":
+ "<code>SciLean.RealScalar.{u_1} (R : Type u_1) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">`R` behaves as real numbers\n\nThis class allows us to write code independent of particular implementation of real numbers.\n\nSee `Scalar` for motivation for this class.\n</code>",
+ "314": "<code>RealScalar R</code>",
+ "313": "<code>X × X</code>",
+ "312":
+ "<code>fwdFDeriv' (R : Type) [RealScalar R] {X : Type} [NormedAddCommGroup X] [NormedSpace R X] {Y : Type}\n  [NormedAddCommGroup Y] [NormedSpace R Y] (f : X → Y) : X × X → Y × Y</code>",
+ "311":
+ "<code>SciLean.revFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace K X]\n  {Y : Type u_3} [NormedAddCommGroup Y] [AdjointSpace K Y] (f : X → Y) (x : X) : Y × (Y → X)</code>",
+ "310": "<code>Differentiable ℝ g✝¹</code>",
  "31": "<code>Fin n</code>",
+ "309": "<code>Differentiable ℝ f✝²</code>",
+ "308": "<code>Differentiable ℝ g✝</code>",
+ "307": "<code>Differentiable ℝ f✝¹</code>",
+ "306": "<code>Differentiable ℝ f✝</code>",
+ "305":
+ "<code>SciLean.fwdFDeriv.comp_rule.{u_1, u_2, u_3, u_4} {K : Type u_1} [RCLike K] {X : Type u_4} [NormedAddCommGroup X]\n  [NormedSpace K X] {Y : Type u_2} [NormedAddCommGroup Y] [NormedSpace K Y] {Z : Type u_3} [NormedAddCommGroup Z]\n  [NormedSpace K Z] (f : Y → Z) (g : X → Y) (hf : Differentiable K f) (hg : Differentiable K g) :\n  ∂&gt; x, f (g x) = fun x dx =&gt;\n    let ydy := ∂&gt; g x dx;\n    let y := ydy.1;\n    let dy := ydy.2;\n    let zdz := ∂&gt; f y dy;\n    zdz</code>",
+ "304":
+ "<code>Function.HasUncurry.uncurry.{u_5, u_6, u_7} {α : Type u_5} {β : outParam (Type u_6)} {γ : outParam (Type u_7)}\n  [self : Function.HasUncurry α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">Uncurrying operator. The most generic use is to recursively uncurry. For instance\n`f : α → β → γ → δ` will be turned into `↿f : α × β × γ → δ`. One can also add instances\nfor bundled maps. </code>",
+ "303":
+ "<code>Function.comp_def.{u_1, u_2, u_3} {α : Sort u_1} {β : Sort u_2} {δ : Sort u_3} (f : β → δ) (g : α → β) :\n  f ∘ g = fun x =&gt; f (g x)</code>",
+ "302":
+ "<code>Function.comp.{u, v, w} {α : Sort u} {β : Sort v} {δ : Sort w} (f : β → δ) (g : α → β) : α → δ</code><span class=\"sep\"></span><code class=\"docstring\">Function composition is the act of pipelining the result of one function, to the input of another, creating an entirely new function.\nExample:\n```\n#eval Function.comp List.reverse (List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nYou can use the notation `f ∘ g` as shorthand for `Function.comp f g`.\n```\n#eval (List.reverse ∘ List.drop 2) [3, 2, 4, 1]\n-- [1, 4]\n```\nA simpler way of thinking about it, is that `List.reverse ∘ List.drop 2`\nis equivalent to `fun xs =&gt; List.reverse (List.drop 2 xs)`,\nthe benefit is that the meaning of composition is obvious,\nand the representation is compact.\n</code>",
+ "301": "<code>Differentiable ℝ g</code>",
+ "300": "<code>Differentiable ℝ f</code>",
  "30": "<code>Float^[n]</code>",
  "3":
  "<code>Array.push.{u} {α : Type u} (a : Array α) (v : α) : Array α</code><span class=\"sep\"></span><code class=\"docstring\">Push an element onto the end of an array. This is amortized O(1) because\n`Array α` is internally a dynamic array.\n</code>",
+ "299":
+ "<code>SciLean.fwdFDeriv.{u_1, u_2, u_3} (K : Type u_1) [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace K X]\n  {Y : Type u_3} [NormedAddCommGroup Y] [NormedSpace K Y] (f : X → Y) (x dx : X) : Y × Y</code>",
+ "298": "<code>Y × (Y → X)</code>",
+ "297": "<code>Y</code>",
+ "296": "<code>CompleteSpace Y</code>",
+ "295": "<code>AdjointSpace 𝕜 Y</code>",
+ "294": "<code>AdjointSpace 𝕜 X</code>",
+ "293":
+ "<code>InnerProductSpace.{u_4, u_5} (𝕜 : Type u_4) (E : Type u_5) [RCLike 𝕜] [SeminormedAddCommGroup E] : Type (max u_4 u_5)</code><span class=\"sep\"></span><code class=\"docstring\">A (pre) inner product space is a vector space with an additional operation called inner product.\nThe (semi)norm could be derived from the inner product, instead we require the existence of a\nseminorm and the fact that `‖x‖^2 = re ⟪x, x⟫` to be able to put instances on `𝕂` or product spaces.\n\nNote that `NormedSpace` does not assume that `‖x‖=0` implies `x=0` (it is rather a seminorm).\n\nTo construct a seminorm from an inner product, see `PreInnerProductSpace.ofCore`.\n</code>",
+ "292": "<code>NormedSpace 𝕜 Y</code>",
+ "291": "<code>NormedAddCommGroup Y</code>",
+ "290": "<code>NormedSpace 𝕜 X</code>",
  "29": "<code>dot {n : ℕ} (x y : Float^[n]) : Float</code>",
+ "289": "<code>RCLike 𝕜</code>",
+ "288": "<code>Differentiable 𝕜 g</code>",
+ "287": "<code>Differentiable 𝕜 f</code>",
+ "286": "<code>X → Y</code>",
+ "285":
+ "<code>RCLike.{u_1} (K : semiOutParam (Type u_1)) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">This typeclass captures properties shared by ℝ and ℂ, with an API that closely matches that of ℂ.\n</code>",
+ "284":
+ "<code>NormedSpace.{u_6, u_7} (𝕜 : Type u_6) (E : Type u_7) [NormedField 𝕜] [SeminormedAddCommGroup E] : Type (max u_6 u_7)</code><span class=\"sep\"></span><code class=\"docstring\">A normed space over a normed field is a vector space endowed with a norm which satisfies the\nequality `‖c • x‖ = ‖c‖ ‖x‖`. We require only `‖c • x‖ ≤ ‖c‖ ‖x‖` in the definition, then prove\n`‖c • x‖ = ‖c‖ ‖x‖` in `norm_smul`.\n\nNote that since this requires `SeminormedAddCommGroup` and not `NormedAddCommGroup`, this\ntypeclass can be used for \"semi normed spaces\" too, just as `Module` can be used for\n\"semi modules\". </code>",
+ "283":
+ "<code>add_assoc.{u_1} {G : Type u_1} [AddSemigroup G] (a b c : G) : a + b + c = a + (b + c)</code>",
+ "282":
+ "<code>smul_add.{u_1, u_3} {M : Type u_1} {A : Type u_3} [AddZeroClass A] [DistribSMul M A] (a : M) (b₁ b₂ : A) :\n  a • (b₁ + b₂) = a • b₁ + a • b₂</code>",
+ "281":
+ "<code>add_smul.{u_1, u_3} {R : Type u_1} {M : Type u_3} [Semiring R] [AddCommMonoid M] [Module R M] (r s : R) (x : M) :\n  (r + s) • x = r • x + s • x</code>",
+ "280": "<code>Module 𝕜 X</code>",
  "28": "<code><span class=\"literal string\">\"hello\"</span> : String</code>",
+ "279": "<code>AddCommGroup X</code>",
+ "278": "<code>Field 𝕜</code>",
+ "277": "<code>𝕜</code>",
+ "276":
+ "<code>Field.{u} (K : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A `Field` is a `CommRing` with multiplicative inverses for nonzero elements.\n\nAn instance of `Field K` includes maps `ratCast : ℚ → K` and `qsmul : ℚ → K → K`.\nThose two fields are needed to implement the `DivisionRing K → Algebra ℚ K` instance since we need\nto control the specific definitions for some special cases of `K` (in particular `K = ℚ` itself).\nSee also note [forgetful inheritance].\n\nIf the field has positive characteristic `p`, our division by zero convention forces\n`ratCast (1 / p) = 1 / 0 = 0`. \n\n[Stacks Tag 09FD](https://stacks.math.columbia.edu/tag/09FD) (first part)</code>",
+ "275":
+ "<code>Module.{u, v} (R : Type u) (M : Type v) [Semiring R] [AddCommMonoid M] : Type (max u v)</code><span class=\"sep\"></span><code class=\"docstring\">A module is a generalization of vector spaces to a scalar semiring.\nIt consists of a scalar semiring `R` and an additive monoid of \"vectors\" `M`,\nconnected by a \"scalar multiplication\" operation `r • x : M`\n(where `r : R` and `x : M`) with some natural associativity and\ndistributivity axioms similar to those on a ring. </code>",
+ "274":
+ "<code>AddCommGroup.{u} (G : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">An additive commutative group is an additive group with commutative `(+)`. </code>",
+ "273":
+ "<code>SciLean.norm2_nonneg.{u_5, u_6} (R : Type u_5) [RealScalar R] {X : Type u_6} [NormedAddCommGroup X] [AdjointSpace R X]\n  (x : X) : 0 ≤ ‖x‖₂²</code>",
+ "272":
+ "<code class=\"docstring\">An extension of `linarith` with some preprocessing to allow it to solve some nonlinear arithmetic\nproblems. (Based on Coq's `nra` tactic.) See `linarith` for the available syntax of options,\nwhich are inherited by `nlinarith`; that is, `nlinarith!` and `nlinarith only [h1, h2]` all work as\nin `linarith`. The preprocessing is as follows:\n\n* For every subterm `a ^ 2` or `a * a` in a hypothesis or the goal,\n  the assumption `0 ≤ a ^ 2` or `0 ≤ a * a` is added to the context.\n* For every pair of hypotheses `a1 R1 b1`, `a2 R2 b2` in the context, `R1, R2 ∈ {&lt;, ≤, =}`,\n  the assumption `0 R' (b1 - a1) * (b2 - a2)` is added to the context (non-recursively),\n  where `R ∈ {&lt;, ≤, =}` is the appropriate comparison derived from `R1, R2`.\n</code>",
+ "271":
+ "<code class=\"docstring\">Introduces one or more hypotheses, optionally naming and/or pattern-matching them.\nFor each hypothesis to be introduced, the remaining main goal's target type must\nbe a `let` or function type.\n\n* `intro` by itself introduces one anonymous hypothesis, which can be accessed\n  by e.g. `assumption`.\n* `intro x y` introduces two hypotheses and names them. Individual hypotheses\n  can be anonymized via `_`, or matched against a pattern:\n  ```lean\n  -- ... ⊢ α × β → ...\n  intro (a, b)\n  -- ..., a : α, b : β ⊢ ...\n  ```\n* Alternatively, `intro` can be combined with pattern matching much like `fun`:\n  ```lean\n  intro\n  | n + 1, 0 =&gt; tac\n  | ...\n  ```\n</code>",
+ "270": "<code>0 &lt; ε</code>",
  "27":
  "<code>String : Type</code><span class=\"sep\"></span><code class=\"docstring\">`String` is the type of (UTF-8 encoded) strings.\n\nThe compiler overrides the data representation of this type to a byte sequence,\nand both `String.utf8ByteSize` and `String.length` are cached and O(1).\n</code>",
+ "269":
+ "<code>SciLean.norm₂.{u_1, u_2, u_3} (K : Type u_1) {R : Type u_2} {X : Type u_3} [Scalar R K] [Norm2 K X] (x : X) : K</code>",
+ "268": "<code>x₀✝² ≠ 0</code>",
+ "267": "<code>x₀✝¹ ≠ 0</code>",
+ "266":
+ "<code class=\"docstring\">`aesop &lt;clause&gt;*` tries to solve the current goal by applying a set of rules\nregistered with the `@[aesop]` attribute. See [its\nREADME](https://github.com/JLimperg/aesop#readme) for a tutorial and a\nreference.\n\nThe variant `aesop?` prints the proof it found as a `Try this` suggestion.\n\nClauses can be used to customise the behaviour of an Aesop call. Available\nclauses are:\n\n- `(add &lt;phase&gt; &lt;priority&gt; &lt;builder&gt; &lt;rule&gt;)` adds a rule. `&lt;phase&gt;` is\n  `unsafe`, `safe` or `norm`. `&lt;priority&gt;` is a percentage for unsafe rules and\n  an integer for safe and norm rules. `&lt;rule&gt;` is the name of a declaration or\n  local hypothesis. `&lt;builder&gt;` is the rule builder used to turn `&lt;rule&gt;` into\n  an Aesop rule. Example: `(add unsafe 50% apply Or.inl)`.\n- `(erase &lt;rule&gt;)` disables a globally registered Aesop rule. Example: `(erase\n  Aesop.BuiltinRules.assumption)`.\n- `(rule_sets := [&lt;ruleset&gt;,*])` enables or disables named sets of rules for\n  this Aesop call. Example: `(rule_sets := [-builtin, MyRuleSet])`.\n- `(config { &lt;opt&gt; := &lt;value&gt; })` adjusts Aesop's search options. See\n  `Aesop.Options`.\n- `(simp_config { &lt;opt&gt; := &lt;value&gt; })` adjusts options for Aesop's built-in\n  `simp` rule. The given options are directly passed to `simp`. For example,\n  `(simp_config := { zeta := false })` makes Aesop use\n  `simp (config := { zeta := false })`.\n</code>",
+ "265": "<code>x₀✝ ≠ 0</code>",
+ "264":
+ "<code class=\"docstring\">`assumption` tries to solve the main goal using a hypothesis of compatible type, or else fails.\nNote also the `‹t›` term notation, which is a shorthand for `show t by assumption`.\n</code>",
+ "263": "<code>x₀ ≠ 0</code>",
+ "262":
+ "<code>HDiv.hDiv.arg_a0a1.fderiv_rule_at.{u_1, u_2} {K : Type u_1} [RCLike K] {X : Type u_2} [NormedAddCommGroup X]\n  [NormedSpace K X] (x : X) (f g : X → K) (hf : DifferentiableAt K f x) (hg : DifferentiableAt K g x) (hx : g x ≠ 0) :\n  ∂ (x:=x), f x / g x =\n    let y := f x;\n    let z := g x;\n    fun dx =&gt;L[K]\n      let dy := (∂ f x) dx;\n      let dz := (∂ g x) dx;\n      (dy * z - y * dz) / z ^ 2</code>",
+ "261": "<code>foo.arg_x.fderiv_rule : ∂ foo = foo.arg_x.fderiv</code>",
+ "260": "<code>foo.arg_x.fderiv (x : ℝ) : ℝ →L[ℝ] ℝ</code>",
  "26":
  "<code>Float : Type</code><span class=\"sep\"></span><code class=\"docstring\">Native floating point type, corresponding to the IEEE 754 *binary64* format\n(`double` in C or `f64` in Rust). </code>",
+ "259": "<code>foo.arg_x.Differentiable_rule : Differentiable ℝ foo</code>",
+ "258":
+ "<code class=\"docstring\">* `unfold id` unfolds all occurrences of definition `id` in the target.\n* `unfold id1 id2 ...` is equivalent to `unfold id1; unfold id2; ...`.\n\nDefinitions can be either global or local definitions.\n\nFor non-recursive global definitions, this tactic is identical to `delta`.\nFor recursive global definitions, it uses the \"unfolding lemma\" `id.eq_def`,\nwhich is generated for each recursive definition, to unfold according to the recursive definition given by the user.\nOnly one level of unfolding is performed, in contrast to `simp only [id]`, which unfolds definition `id` recursively.\n\nThis is the `conv` version of the `unfold` tactic.\n</code>",
+ "257":
+ "<code class=\"docstring\">Define function transformation, the command\n</code>",
+ "256":
+ "<code class=\"docstring\">Command `def_fun_prop (c : ℝ) : Continuous (fun x =&gt; foo c x) by unfold foo; fun_prop`\nwill define a new `fun_prop` theorem for function `foo` about continuity in `x`.\n</code>",
+ "255": "<code class=\"docstring\">Tactic to prove function properties </code>",
+ "254": "<code>foo_differentiable : Differentiable ℝ foo</code>",
+ "253":
+ "<code>SciLean.fderiv.comp_rule.{u_1, u_2, u_3, u_4} {K : Type u_1} [RCLike K] {X : Type u_2} [NormedAddCommGroup X]\n  [NormedSpace K X] {Y : Type u_3} [NormedAddCommGroup Y] [NormedSpace K Y] {Z : Type u_4} [NormedAddCommGroup Z]\n  [NormedSpace K Z] (f : Y → Z) (g : X → Y) (hf : Differentiable K f) (hg : Differentiable K g) :\n  ∂ x, f (g x) = fun x =&gt;\n    let y := g x;\n    fun dx =&gt;L[K]\n      let dy := (∂ g x) dx;\n      let dz := (∂ f y) dy;\n      dz</code>",
+ "252":
+ "<code class=\"docstring\">Applies extensionality lemmas that are registered with the `@[ext]` attribute.\n* `ext pat*` applies extensionality theorems as much as possible,\n  using the patterns `pat*` to introduce the variables in extensionality theorems using `rintro`.\n  For example, the patterns are used to name the variables introduced by lemmas such as `funext`.\n* Without patterns,`ext` applies extensionality lemmas as much\n  as possible but introduces anonymous hypotheses whenever needed.\n* `ext pat* : n` applies ext theorems only up to depth `n`.\n\nThe `ext1 pat*` tactic is like `ext pat*` except that it only applies a single extensionality theorem.\n\nUnused patterns will generate warning.\nPatterns that don't match the variables will typically result in the introduction of anonymous hypotheses.\n</code>",
+ "251":
+ "<code>foo_deriv_rule : ∂ foo = fun x =&gt; fun dx =&gt;L[ℝ] dx • foo_deriv x</code>",
+ "250": "<code>foo_deriv (x : ℝ) : ℝ</code>",
  "25":
  "<code class=\"docstring\">Pattern matching. `match e, ... with | p, ... =&gt; f | ...` matches each given\nterm `e` against each pattern `p` of a match alternative. When all patterns\nof an alternative match, the `match` term evaluates to the value of the\ncorresponding right-hand side `f` with the pattern variables bound to the\nrespective matched values.\nIf used as `match h : e, ... with | p, ... =&gt; f | ...`, `h : e = p` is available\nwithin `f`.\n\nWhen not constructing a proof, `match` does not automatically substitute variables\nmatched on in dependent variables' types. Use `match (generalizing := true) ...` to\nenforce this.\n\nSyntax quotations can also be used in a pattern match.\nThis matches a `Syntax` value against quotations, pattern variables, or `_`.\n\nQuoted identifiers only match identical identifiers - custom matching such as by the preresolved\nnames only should be done explicitly.\n\n`Syntax.atom`s are ignored during matching by default except when part of a built-in literal.\nFor users introducing new atoms, we recommend wrapping them in dedicated syntax kinds if they\nshould participate in matching.\nFor example, in\n```lean\nsyntax \"c\" (\"foo\" &lt;|&gt; \"bar\") ...\n```\n`foo` and `bar` are indistinguishable during matching, but in\n```lean\nsyntax foo := \"foo\"\nsyntax \"c\" (foo &lt;|&gt; \"bar\") ...\n```\nthey are not.\n</code>",
+ "249":
+ "<code>isContinuousLinearMap_fderiv.{u_1, u_2, u_3} {K : Type u_1} [RCLike K] {X : Type u_2} [NormedAddCommGroup X]\n  [NormedSpace K X] {Y : Type u_3} [NormedAddCommGroup Y] [NormedSpace K Y] (f : X → Y)\n  (hf : IsContinuousLinearMap K f) : ∂ f = fun x =&gt; fun dx =&gt;L[K] f dx</code>",
+ "248":
+ "<code>trace.Meta.Tactic.fun_trans</code><span class=\"sep\"></span><code class=\"docstring\">enable/disable tracing for the given module and submodules</code>",
+ "247":
+ "<code class=\"docstring\">`set_option &lt;id&gt; &lt;value&gt;` sets the option `&lt;id&gt;` to `&lt;value&gt;`. Depending on the type of the option,\nthe value can be `true`, `false`, a string, or a numeral. Options are used to configure behavior of\nLean as well as user-defined extensions. The setting is active until the end of the current `section`\nor `namespace` or the end of the file.\nAuto-completion is available for `&lt;id&gt;` to list available options.\n\n`set_option &lt;id&gt; &lt;value&gt; in &lt;command&gt;` sets the option for just a single command:\n```\nset_option pp.all true in\n#check 1 + 1\n```\nSimilarly, `set_option &lt;id&gt; &lt;value&gt; in` can also be used inside terms and tactics to set an option\nonly in a single term or tactic.\n</code>",
+ "246": "<code>foo (x : ℝ) : ℝ</code>",
+ "245":
+ "<code class=\"docstring\">The `sorry` tactic is a temporary placeholder for an incomplete tactic proof,\nclosing the main goal using `exact sorry`.\n\nThis is intended for stubbing-out incomplete parts of a proof while still having a syntactically correct proof skeleton.\nLean will give a warning whenever a proof uses `sorry`, so you aren't likely to miss it,\nbut you can double check if a theorem depends on `sorry` by looking for `sorryAx` in the output\nof the `#print axioms my_thm` command, the axiom used by the implementation of `sorry`.\n</code>",
+ "244":
+ "<code>smul_smul.{u_1, u_5} {M : Type u_1} {α : Type u_5} [Monoid M] [MulAction M α] (a₁ a₂ : M) (b : α) :\n  a₁ • a₂ • b = (a₁ * a₂) • b</code>",
+ "243":
+ "<code>SciLean.fgradient.{u_1, u_2} {K : Type u_1} [RCLike K] {X : Type u_2} [NormedAddCommGroup X] [AdjointSpace K X]\n  (f : X → K) (x : X) : X</code>",
+ "242":
+ "<code>Top.top.{u_1} {α : Type u_1} [self : Top α] : α</code><span class=\"sep\"></span><code class=\"docstring\">The top (`⊤`, `\\top`) element </code>",
+ "241":
+ "<code>Differentiable.{u_1, u_2, u_3} (𝕜 : Type u_1) [NontriviallyNormedField 𝕜] {E : Type u_2} [AddCommGroup E] [Module 𝕜 E]\n  [TopologicalSpace E] {F : Type u_3} [AddCommGroup F] [Module 𝕜 F] [TopologicalSpace F] (f : E → F) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`Differentiable 𝕜 f` means that `f` is differentiable at any point. </code>",
+ "240": "<code>Differentiable ℝ φ</code>",
  "24": "<code>List ℕ</code>",
+ "239":
+ "<code>ContDiff.{u, uE, uF} (𝕜 : Type u) [NontriviallyNormedField 𝕜] {E : Type uE} [NormedAddCommGroup E] [NormedSpace 𝕜 E]\n  {F : Type uF} [NormedAddCommGroup F] [NormedSpace 𝕜 F] (n : WithTop ℕ∞) (f : E → F) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A function is continuously differentiable up to `n` if it admits derivatives up to\norder `n`, which are continuous. Contrary to the case of definitions in domains (where derivatives\nmight not be unique) we do not need to localize the definition in space or time.\n</code>",
+ "238": "<code>ContDiff ℝ ⊤ x</code>",
+ "237":
+ "<code>NewtonsLaw.{u_1} {X : Type u_1} [NormedAddCommGroup X] [AdjointSpace ℝ X] (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) : X</code>",
+ "236": "<code>ℝ → X</code>",
+ "235": "<code>X → X → ℝ</code>",
+ "234":
+ "<code>EulerLagrange.{u_1} {X : Type u_1} [NormedAddCommGroup X] [AdjointSpace ℝ X] (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) : X</code>",
+ "233":
+ "<code>SciLean.MatrixType.Dense.outerprodAdd.{u_1, u_2, u_3, u_4, u_5, u_6, u_7} {M : Type u_1} {m : outParam (Type u_2)}\n  {n : outParam (Type u_3)} {x✝ : outParam (IndexType m)} {x✝¹ : outParam (IndexType n)} {R : outParam (Type u_4)}\n  {K : outParam (Type u_5)} {x✝² : outParam (RealScalar R)} {x✝³ : outParam (Scalar R K)} {X : outParam (Type u_6)}\n  {Y : outParam (Type u_7)} {x✝⁴ : outParam (VectorType.Base X n K)} {x✝⁵ : outParam (VectorType.Base Y m K)}\n  {inst✝ : MatrixType.Base M X Y} [self : MatrixType.Dense M] (alpha : K) (y : Y) (x : X) (A : M) : M</code><span class=\"sep\"></span><code class=\"docstring\">Add outer product of two vectors to a matrix\n\n`outerprdoAdd a y x A = a • y * xᴴ + A`\n\nImpementable using BLAS `ger`, `geru`, `gerc`. </code>",
+ "232": "<code>Float^[2]</code>",
+ "231":
+ "<code>SciLean.MatrixType.Base.gemv.{u_1, u_2, u_3, u_4, u_5, u_6, u_7} {M : Type u_1} {m : outParam (Type u_2)}\n  {n : outParam (Type u_3)} {inst✝ : IndexType m} {inst✝¹ : IndexType n} {R : outParam (Type u_4)}\n  {K : outParam (Type u_5)} {inst✝² : RealScalar R} {inst✝³ : Scalar R K} {X : outParam (Type u_6)}\n  {Y : outParam (Type u_7)} {inst✝⁴ : VectorType.Base X n K} {inst✝⁵ : VectorType.Base Y m K}\n  [self : MatrixType.Base M X Y] (alpha beta : K) (A : M) (x : X) (y : Y) : Y</code><span class=\"sep\"></span><code class=\"docstring\">Matrix vector multiplication.\n\n-- todo: rename to -- mulVecAdd\nImplementable using BLAS `gemv`. </code>",
+ "230":
+ "<code>HSMul.hSMul.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HSMul α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a • b` computes the product of `a` and `b`.\nThe meaning of this notation is type-dependent, but it is intended to be used for left actions. </code>",
  "23":
  "<code>List.reverse.{u} {α : Type u} (as : List α) : List α</code><span class=\"sep\"></span><code class=\"docstring\">`O(|as|)`. Reverse of a list:\n* `[1, 2, 3, 4].reverse = [4, 3, 2, 1]`\n\nNote that because of the \"functional but in place\" optimization implemented by Lean's compiler,\nthis function works without any allocations provided that the input list is unshared:\nit simply walks the linked list and reverses all the node pointers.\n</code>",
+ "229":
+ "<code>MProd.{u} (α β : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">Similar to `Prod`, but `α` and `β` are in the same universe.\nWe say `MProd` is the universe monomorphic product type.\n</code>",
+ "228": "<code>MProd (Float^[2, 2]) Float</code>",
+ "227":
+ "<code>Unit : Type</code><span class=\"sep\"></span><code class=\"docstring\">The unit type, the canonical type with one element, named `unit` or `()`.\nIn other words, it describes only a single value, which consists of said constructor applied\nto no arguments whatsoever.\nThe `Unit` type is similar to `void` in languages derived from C.\n\n`Unit` is actually defined as `PUnit.{1}` where `PUnit` is the universe\npolymorphic version. The `Unit` should be preferred over `PUnit` where possible to avoid\nunnecessary universe parameters.\n\nIn functional programming, `Unit` is the return type of things that \"return\nnothing\", since a type with one element conveys no additional information.\nWhen programming with monads, the type `m Unit` represents an action that has\nsome side effects but does not return a value, while `m α` would be an action\nthat has side effects and returns a value of type `α`.\n</code>",
+ "226": "<code>Unit</code>",
+ "225": "<code>Lean.Loop.mk : Lean.Loop</code>",
+ "224": "<code>Lean.Loop : Type</code>",
+ "223": "<code>Lean.Loop</code>",
+ "222": "<code>Type ?u.782</code>",
+ "221":
+ "<code class=\"docstring\">`simp [thm]` performs simplification using `thm` and marked `@[simp]` lemmas.\nSee the `simp` tactic for more information. </code>",
+ "220": "<code>Float^[2, 2] → Float</code>",
  "22": "<code>fibonacci.go (n : ℕ) (l : List ℕ) : List ℕ</code>",
+ "219": "<code>Float^[2]^[n]</code>",
+ "218": "<code>linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2, 2]</code>",
+ "217": "<code>Float^[2, 2]</code>",
+ "216": "<code>matrix1 : Float^[2, 2]</code>",
+ "215":
+ "<code class=\"docstring\">This tactic applies to a goal whose target has the form `x ~ x`,\nwhere `~` is equality, heterogeneous equality or any relation that\nhas a reflexivity lemma tagged with the attribute @[refl].\n</code>",
+ "214":
+ "<code>CompleteSpace.{u} (α : Type u) [UniformSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A complete space is defined here using uniformities. A uniform space\nis complete if every Cauchy filter converges. </code>",
+ "213": "<code>CompleteSpace X</code>",
+ "212":
+ "<code>AdjointSpace.{u_1, u_2} (𝕜 : Type u_1) (E : Type u_2) [RCLike 𝕜] [NormedAddCommGroup E] : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">This is almost `InnerProductSpace` but we do not require that norm originates from the inner product.\n\nThe reason for this class it to be able to have inner product on spaces line `ℝ×ℝ` and `ι → ℝ`\nas they are by default equiped by max norm which is not compatible with inner product. </code>",
+ "211": "<code>AdjointSpace ℝ X</code>",
+ "210":
+ "<code>NormedAddCommGroup.{u_8} (E : Type u_8) : Type u_8</code><span class=\"sep\"></span><code class=\"docstring\">A normed group is an additive group endowed with a norm for which `dist x y = ‖x - y‖` defines a\nmetric space structure. </code>",
  "21": "<code>fibonacci (n : ℕ) : List ℕ</code>",
+ "209": "<code>NormedAddCommGroup X</code>",
+ "208":
+ "<code>adjoint.{u_1, u_2, u_3} (𝕜 : Type u_1) {E : Type u_2} {F : Type u_3} [RCLike 𝕜] [NormedAddCommGroup E]\n  [NormedAddCommGroup F] [AdjointSpace 𝕜 E] [AdjointSpace 𝕜 F] (f : E → F) (y : F) : E</code><span class=\"sep\"></span><code class=\"docstring\">The adjoint of a bounded operator from Hilbert space `E` to Hilbert space `F`. </code>",
+ "207": "<code>X</code>",
+ "206": "<code>X → ℝ</code>",
+ "205": "<code>WaveEquation (u : ℝ → ℝ → ℝ) : Prop</code>",
+ "204":
+ "<code class=\"docstring\">The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or\nnon-dependent hypotheses. It has many variants:\n- `simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.\n- `simp [h₁, h₂, ..., hₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]` and the given `hᵢ`'s, where the `hᵢ`'s are expressions.-\n- If an `hᵢ` is a defined constant `f`, then `f` is unfolded. If `f` has equational lemmas associated\n  with it (and is not a projection or a `reducible` definition), these are used to rewrite with `f`.\n- `simp [*]` simplifies the main goal target using the lemmas tagged with the\n  attribute `[simp]` and all hypotheses.\n- `simp only [h₁, h₂, ..., hₙ]` is like `simp [h₁, h₂, ..., hₙ]` but does not use `[simp]` lemmas.\n- `simp [-id₁, ..., -idₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]`, but removes the ones named `idᵢ`.\n- `simp at h₁ h₂ ... hₙ` simplifies the hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. If\n  the target or another hypothesis depends on `hᵢ`, a new simplified hypothesis\n  `hᵢ` is introduced, but the old one remains in the local context.\n- `simp at *` simplifies all the hypotheses and the target.\n- `simp [*] at *` simplifies target and all (propositional) hypotheses using the\n  other hypotheses.\n</code>",
+ "203": "<code>m * sqrt (k * m⁻¹) ^ 2 = k</code>",
+ "202":
+ "<code class=\"docstring\">The `have` tactic is for adding hypotheses to the local context of the main goal.\n* `have h : t := e` adds the hypothesis `h : t` if `e` is a term of type `t`.\n* `have h := e` uses the type of `e` for `t`.\n* `have : t := e` and `have := e` use `this` for the name of the hypothesis.\n* `have pat := e` for a pattern `pat` is equivalent to `match e with | pat =&gt; _`,\n  where `_` stands for the tactics that follow this one.\n  It is convenient for types that have only one applicable constructor.\n  For example, given `h : p ∧ q ∧ r`, `have ⟨h₁, h₂, h₃⟩ := h` produces the\n  hypotheses `h₁ : p`, `h₂ : q`, and `h₃ : r`.\n</code>",
+ "201":
+ "<code>Inv.inv.{u} {α : Type u} [self : Inv α] : α → α</code><span class=\"sep\"></span><code class=\"docstring\">Invert an element of α, denoted by `a⁻¹`. </code>",
+ "200":
+ "<code class=\"docstring\">Simplification tactic for expressions in the language of commutative (semi)rings,\nwhich rewrites all ring expressions into a normal form.\n* `ring_nf!` will use a more aggressive reducibility setting to identify atoms.\n* `ring_nf (config := cfg)` allows for additional configuration:\n  * `red`: the reducibility setting (overridden by `!`)\n  * `recursive`: if true, `ring_nf` will also recurse into atoms\n* `ring_nf` works as both a tactic and a conv tactic.\n  In tactic mode, `ring_nf at h` can be used to rewrite in a hypothesis.\n\nThis can be used non-terminally to normalize ring expressions in the goal such as\n`⊢ P (x + x + x)` ~&gt; `⊢ P (x * 3)`, as well as being able to prove some equations that\n`ring` cannot because they involve ring reasoning inside a subterm, such as\n`sin (x + y) + sin (y + x) = 2 * sin (x + y)`.\n</code>",
  "20":
  "<code>List.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">`List α` is the type of ordered lists with elements of type `α`.\nIt is implemented as a linked list.\n\n`List α` is isomorphic to `Array α`, but they are useful for different things:\n* `List α` is easier for reasoning, and\n  `Array α` is modeled as a wrapper around `List α`\n* `List α` works well as a persistent data structure, when many copies of the\n  tail are shared. When the value is not shared, `Array α` will have better\n  performance because it can do destructive updates.\n</code>",
  "2": "<code>ℕ</code>",
+ "199":
+ "<code>Neg.neg.{u} {α : Type u} [self : Neg α] : α → α</code><span class=\"sep\"></span><code class=\"docstring\">`-a` computes the negative or opposite of `a`.\nThe meaning of this notation is type-dependent. </code>",
+ "198":
+ "<code>SciLean.Scalar.sin.{u_1, u_2} {R : outParam (Type u_1)} {K : Type u_2} [self : Scalar R K] (x : K) : K</code>",
+ "197":
+ "<code>SciLean.Scalar.cos.{u_1, u_2} {R : outParam (Type u_1)} {K : Type u_2} [self : Scalar R K] (x : K) : K</code>",
+ "196": "<code>ℝ → ℝ × ℝ</code>",
+ "195": "<code>ode (x : ℝ → ℝ × ℝ) : Prop</code>",
+ "194":
+ "<code class=\"docstring\">Tactic for evaluating expressions in *commutative* (semi)rings, allowing for variables in the\nexponent. If the goal is not appropriate for `ring` (e.g. not an equality) `ring_nf` will be\nsuggested.\n\n* `ring!` will use a more aggressive reducibility setting to determine equality of atoms.\n* `ring1` fails if the target is not an equality.\n\nFor example:\n```\nexample (n : ℕ) (m : ℤ) : 2^(n+1) * m = 2 * 2^n * m := by ring\nexample (a b : ℤ) (n : ℕ) : (a + b)^(n + 2) = (a^2 + b^2 + a * b + b * a) * (a + b)^n := by ring\nexample (x y : ℕ) : x + id y = y + id x := by ring!\nexample (x : ℕ) (h : x * 2 &gt; 5): x + x &gt; 5 := by ring; assumption -- suggests ring_nf\n```\n</code>",
+ "193":
+ "<code class=\"docstring\">The goal of `field_simp` is to reduce an expression in a field to an expression of the form `n / d`\nwhere neither `n` nor `d` contains any division symbol, just using the simplifier (with a carefully\ncrafted simpset named `field_simps`) to reduce the number of division symbols whenever possible by\niterating the following steps:\n\n- write an inverse as a division\n- in any product, move the division to the right\n- if there are several divisions in a product, group them together at the end and write them as a\n  single division\n- reduce a sum to a common denominator\n\nIf the goal is an equality, this simpset will also clear the denominators, so that the proof\ncan normally be concluded by an application of `ring`.\n\n`field_simp [hx, hy]` is a short form for\n`simp (disch := field_simp_discharge) [-one_div, -one_divp, -mul_eq_zero, hx, hy, field_simps]`\n\nNote that this naive algorithm will not try to detect common factors in denominators to reduce the\ncomplexity of the resulting expression. Instead, it relies on the ability of `ring` to handle\ncomplicated expressions in the next step.\n\nAs always with the simplifier, reduction steps will only be applied if the preconditions of the\nlemmas can be checked. This means that proofs that denominators are nonzero should be included. The\nfact that a product is nonzero when all factors are, and that a power of a nonzero number is\nnonzero, are included in the simpset, but more complicated assertions (especially dealing with sums)\nshould be given explicitly. If your expression is not completely reduced by the simplifier\ninvocation, check the denominators of the resulting expression and provide proofs that they are\nnonzero to enable further progress.\n\nTo check that denominators are nonzero, `field_simp` will look for facts in the context, and\nwill try to apply `norm_num` to close numerical goals.\n\nThe invocation of `field_simp` removes the lemma `one_div` from the simpset, as this lemma\nworks against the algorithm explained above. It also removes\n`mul_eq_zero : x * y = 0 ↔ x = 0 ∨ y = 0`, as `norm_num` can not work on disjunctions to\nclose goals of the form `24 ≠ 0`, and replaces it with `mul_ne_zero : x ≠ 0 → y ≠ 0 → x * y ≠ 0`\ncreating two goals instead of a disjunction.\n\nFor example,\n```lean\nexample (a b c d x y : ℂ) (hx : x ≠ 0) (hy : y ≠ 0) :\n    a + b / x + c / x^2 + d / x^3 = a + x⁻¹ * (y * b / y + (d / x + c) / x) := by\n  field_simp\n  ring\n```\n\nMoreover, the `field_simp` tactic can also take care of inverses of units in\na general (commutative) monoid/ring and partial division `/ₚ`, see `Algebra.Group.Units`\nfor the definition. Analogue to the case above, the lemma `one_divp` is removed from the simpset\nas this works against the algorithm. If you have objects with an `IsUnit x` instance like\n`(x : R) (hx : IsUnit x)`, you should lift them with\n`lift x to Rˣ using id hx; rw [IsUnit.unit_of_val_units] clear hx`\nbefore using `field_simp`.\n\nSee also the `cancel_denoms` tactic, which tries to do a similar simplification for expressions\nthat have numerals in denominators.\nThe tactics are not related: `cancel_denoms` will only handle numeric denominators, and will try to\nentirely remove (numeric) division from the expression by multiplying by a factor.\n</code>",
+ "192":
+ "<code>Ne.{u} {α : Sort u} (a b : α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`a ≠ b`, or `Ne a b` is defined as `¬ (a = b)` or `a = b → False`,\nand asserts that `a` and `b` are not equal.\n</code>",
+ "191": "<code>m ≠ 0</code>",
+ "190":
+ "<code>deriv.{u, v} {𝕜 : Type u} [NontriviallyNormedField 𝕜] {F : Type v} [AddCommGroup F] [Module 𝕜 F] [TopologicalSpace F]\n  (f : 𝕜 → F) (x : 𝕜) : F</code><span class=\"sep\"></span><code class=\"docstring\">Derivative of `f` at the point `x`, if it exists.  Zero otherwise.\n\nIf the derivative exists (i.e., `∃ f', HasDerivAt f f' x`), then\n`f x' = f x + (x' - x) • deriv f x + o(x' - x)` where `x'` converges to `x`.\n</code>",
  "19":
  "<code>SciLean.DataArrayN.{u_3, u_4} (α : Type u_3) [pd : PlainDataType α] (ι : Type u_4) [IndexType ι] : Type</code>",
+ "189": "<code>NewtonSecondLaw (m : ℝ) (x F : ℝ → ℝ) : Prop</code>",
+ "188":
+ "<code class=\"docstring\">* `unfold id` unfolds all occurrences of definition `id` in the target.\n* `unfold id1 id2 ...` is equivalent to `unfold id1; unfold id2; ...`.\n* `unfold id at h` unfolds at the hypothesis `h`.\n\nDefinitions can be either global or local definitions.\n\nFor non-recursive global definitions, this tactic is identical to `delta`.\nFor recursive global definitions, it uses the \"unfolding lemma\" `id.eq_def`,\nwhich is generated for each recursive definition, to unfold according to the recursive definition given by the user.\nOnly one level of unfolding is performed, in contrast to `simp only [id]`, which unfolds definition `id` recursively.\n</code>",
+ "187": "<code>autoParam (f' = ∂ f) _auto✝</code>",
+ "186":
+ "<code>newtonSolve (steps : ℕ) (x₀ : Float) (f : Float → Float) {f' : Float → Float}\n  (hf : f' = ∂ f := by unfold deriv; fun_trans; infer_var ) : Float</code>",
+ "185": "<code>mySqrt (steps : ℕ) (y : Float) : Float</code>",
+ "184": "<code>ℝ → ℝ → ℝ</code>",
+ "183": "<code>ℝ × ℝ → ℝ</code>",
+ "182": "<code>ℝ → ℝ</code>",
+ "181": "<code>ℝ × ℝ</code>",
+ "180":
+ "<code>HSub.hSub.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HSub α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a - b` computes the difference of `a` and `b`.\nThe meaning of this notation is type-dependent.\n* For natural numbers, this operator saturates at 0: `a - b = 0` when `a ≤ b`. </code>",
  "18": "<code>UInt64</code>",
+ "179":
+ "<code>HPow.hPow.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HPow α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a ^ b` computes `a` to the power of `b`.\nThe meaning of this notation is type-dependent. </code>",
+ "178":
+ "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
+ "177": "<code>ℝ</code>",
+ "176":
+ "<code>fderiv.{u_4, u_5, u_6} (𝕜 : Type u_4) [NontriviallyNormedField 𝕜] {E : Type u_5} [AddCommGroup E] [Module 𝕜 E]\n  [TopologicalSpace E] {F : Type u_6} [AddCommGroup F] [Module 𝕜 F] [TopologicalSpace F] (f : E → F) (x : E) : E →L[𝕜] F</code><span class=\"sep\"></span><code class=\"docstring\">If `f` has a derivative at `x`, then `fderiv 𝕜 f x` is such a derivative. Otherwise, it is\nset to `0`. </code>",
  "175":
  "<code>Float^[8, 1, [-1:1], [-1:1]] × Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10]</code>",
  "174": "<code>DecidableEq I✝</code>",

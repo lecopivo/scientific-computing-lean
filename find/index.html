@@ -573,6 +573,748 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
   border-right-color: white;
 }
 
+</style><style>
+.namedocs {
+  position: relative;
+  border: solid 2px #99b3c0;
+  background-color: #99b3c0;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px;
+  padding-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.namedocs .text {
+  background-color: white;
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.namedocs .text > pre {
+  overflow-x: auto;
+}
+
+.namedocs .signature {
+  font-family: var(--verso-code-font-family);
+  font-size: larger;
+  margin-top: 0 !important;
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem;
+}
+
+.namedocs .label {
+  font-size: smaller;
+  font-family: var(--verso-structure-font-family);
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+/* Sticking content into the right margin is not good on narrow screens,
+   so move the label to the left to make space for the permalink widget. */
+
+@media screen and (max-width: 700px) {
+  .namedocs:has(.permalink-widget.block) .label {
+    right: 1.5rem;
+  }
+}
+
+.namedocs h1 {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.namedocs > .text .constructor {
+  padding-left: 0.5rem;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.namedocs > .text .constructor::before {
+  content: '| ';
+  display: block;
+  font-family: var(--verso-code-font-family);
+  font-weight: bold;
+  float: left;
+  width: 0.5rem;
+  white-space: pre;
+}
+
+.namedocs > .text .constructor .name-and-type {
+  padding-left: 0.5rem;
+  float: left;
+  margin-top: 0;
+}
+.namedocs > .text .constructor .docs {
+  clear: both;
+  padding-left: 1rem;
+}
+
+
+.namedocs .methods td, .namedocs .fields td {
+  vertical-align: top;
+}
+.namedocs .inheritance {
+  vertical-align: top;
+  font-size: smaller;
+  font-family: var(--verso-structure-font-family);
+}
+.namedocs .inheritance ol {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+.namedocs .inheritance ol li {
+  list-style-type: none;
+  display: inline-block;
+}
+.namedocs .inheritance ol li::after {
+  content: " > "
+}
+.namedocs .inheritance ol li:last-child::after {
+  content: "";
+}
+
+.namedocs .extends {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.namedocs .extends li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.namedocs .extends li label {
+  padding-right: 1rem;
+}
+
+.namedocs .subdocs .name-and-type {
+  font-size: 1rem;
+  margin-left: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+}
+
+.namedocs .subdocs .docs {
+  margin-left: 1.5rem;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+}
+
+.namedocs:has(input[data-parent-idx]) [data-inherited-from] {
+  transition-property: opacity, display;
+  transition-duration: 0.4s;
+  transition-behavior: allow-discrete;
+  @starting-style { opacity: 0 !important; }
+}
+.namedocs:has(input[data-parent-idx="0"]) [data-inherited-from="0"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="0"]:checked) [data-inherited-from="0"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="0"]:checked):has(.inheritance[data-inherited-from="0"]:hover) [data-inherited-from]:not([data-inherited-from="0"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="1"]) [data-inherited-from="1"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="1"]:checked) [data-inherited-from="1"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="1"]:checked):has(.inheritance[data-inherited-from="1"]:hover) [data-inherited-from]:not([data-inherited-from="1"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="2"]) [data-inherited-from="2"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="2"]:checked) [data-inherited-from="2"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="2"]:checked):has(.inheritance[data-inherited-from="2"]:hover) [data-inherited-from]:not([data-inherited-from="2"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="3"]) [data-inherited-from="3"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="3"]:checked) [data-inherited-from="3"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="3"]:checked):has(.inheritance[data-inherited-from="3"]:hover) [data-inherited-from]:not([data-inherited-from="3"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="4"]) [data-inherited-from="4"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="4"]:checked) [data-inherited-from="4"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="4"]:checked):has(.inheritance[data-inherited-from="4"]:hover) [data-inherited-from]:not([data-inherited-from="4"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="5"]) [data-inherited-from="5"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="5"]:checked) [data-inherited-from="5"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="5"]:checked):has(.inheritance[data-inherited-from="5"]:hover) [data-inherited-from]:not([data-inherited-from="5"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="6"]) [data-inherited-from="6"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="6"]:checked) [data-inherited-from="6"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="6"]:checked):has(.inheritance[data-inherited-from="6"]:hover) [data-inherited-from]:not([data-inherited-from="6"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="7"]) [data-inherited-from="7"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="7"]:checked) [data-inherited-from="7"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="7"]:checked):has(.inheritance[data-inherited-from="7"]:hover) [data-inherited-from]:not([data-inherited-from="7"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="8"]) [data-inherited-from="8"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="8"]:checked) [data-inherited-from="8"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="8"]:checked):has(.inheritance[data-inherited-from="8"]:hover) [data-inherited-from]:not([data-inherited-from="8"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="9"]) [data-inherited-from="9"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="9"]:checked) [data-inherited-from="9"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="9"]:checked):has(.inheritance[data-inherited-from="9"]:hover) [data-inherited-from]:not([data-inherited-from="9"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="10"]) [data-inherited-from="10"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="10"]:checked) [data-inherited-from="10"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="10"]:checked):has(.inheritance[data-inherited-from="10"]:hover) [data-inherited-from]:not([data-inherited-from="10"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="11"]) [data-inherited-from="11"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="11"]:checked) [data-inherited-from="11"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="11"]:checked):has(.inheritance[data-inherited-from="11"]:hover) [data-inherited-from]:not([data-inherited-from="11"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="12"]) [data-inherited-from="12"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="12"]:checked) [data-inherited-from="12"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="12"]:checked):has(.inheritance[data-inherited-from="12"]:hover) [data-inherited-from]:not([data-inherited-from="12"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="13"]) [data-inherited-from="13"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="13"]:checked) [data-inherited-from="13"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="13"]:checked):has(.inheritance[data-inherited-from="13"]:hover) [data-inherited-from]:not([data-inherited-from="13"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="14"]) [data-inherited-from="14"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="14"]:checked) [data-inherited-from="14"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="14"]:checked):has(.inheritance[data-inherited-from="14"]:hover) [data-inherited-from]:not([data-inherited-from="14"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="15"]) [data-inherited-from="15"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="15"]:checked) [data-inherited-from="15"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="15"]:checked):has(.inheritance[data-inherited-from="15"]:hover) [data-inherited-from]:not([data-inherited-from="15"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="16"]) [data-inherited-from="16"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="16"]:checked) [data-inherited-from="16"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="16"]:checked):has(.inheritance[data-inherited-from="16"]:hover) [data-inherited-from]:not([data-inherited-from="16"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="17"]) [data-inherited-from="17"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="17"]:checked) [data-inherited-from="17"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="17"]:checked):has(.inheritance[data-inherited-from="17"]:hover) [data-inherited-from]:not([data-inherited-from="17"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="18"]) [data-inherited-from="18"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="18"]:checked) [data-inherited-from="18"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="18"]:checked):has(.inheritance[data-inherited-from="18"]:hover) [data-inherited-from]:not([data-inherited-from="18"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="19"]) [data-inherited-from="19"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="19"]:checked) [data-inherited-from="19"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="19"]:checked):has(.inheritance[data-inherited-from="19"]:hover) [data-inherited-from]:not([data-inherited-from="19"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="20"]) [data-inherited-from="20"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="20"]:checked) [data-inherited-from="20"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="20"]:checked):has(.inheritance[data-inherited-from="20"]:hover) [data-inherited-from]:not([data-inherited-from="20"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="21"]) [data-inherited-from="21"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="21"]:checked) [data-inherited-from="21"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="21"]:checked):has(.inheritance[data-inherited-from="21"]:hover) [data-inherited-from]:not([data-inherited-from="21"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="22"]) [data-inherited-from="22"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="22"]:checked) [data-inherited-from="22"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="22"]:checked):has(.inheritance[data-inherited-from="22"]:hover) [data-inherited-from]:not([data-inherited-from="22"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="23"]) [data-inherited-from="23"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="23"]:checked) [data-inherited-from="23"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="23"]:checked):has(.inheritance[data-inherited-from="23"]:hover) [data-inherited-from]:not([data-inherited-from="23"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="24"]) [data-inherited-from="24"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="24"]:checked) [data-inherited-from="24"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="24"]:checked):has(.inheritance[data-inherited-from="24"]:hover) [data-inherited-from]:not([data-inherited-from="24"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="25"]) [data-inherited-from="25"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="25"]:checked) [data-inherited-from="25"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="25"]:checked):has(.inheritance[data-inherited-from="25"]:hover) [data-inherited-from]:not([data-inherited-from="25"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="26"]) [data-inherited-from="26"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="26"]:checked) [data-inherited-from="26"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="26"]:checked):has(.inheritance[data-inherited-from="26"]:hover) [data-inherited-from]:not([data-inherited-from="26"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="27"]) [data-inherited-from="27"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="27"]:checked) [data-inherited-from="27"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="27"]:checked):has(.inheritance[data-inherited-from="27"]:hover) [data-inherited-from]:not([data-inherited-from="27"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="28"]) [data-inherited-from="28"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="28"]:checked) [data-inherited-from="28"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="28"]:checked):has(.inheritance[data-inherited-from="28"]:hover) [data-inherited-from]:not([data-inherited-from="28"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="29"]) [data-inherited-from="29"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="29"]:checked) [data-inherited-from="29"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="29"]:checked):has(.inheritance[data-inherited-from="29"]:hover) [data-inherited-from]:not([data-inherited-from="29"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="30"]) [data-inherited-from="30"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="30"]:checked) [data-inherited-from="30"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="30"]:checked):has(.inheritance[data-inherited-from="30"]:hover) [data-inherited-from]:not([data-inherited-from="30"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="31"]) [data-inherited-from="31"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="31"]:checked) [data-inherited-from="31"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="31"]:checked):has(.inheritance[data-inherited-from="31"]:hover) [data-inherited-from]:not([data-inherited-from="31"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="32"]) [data-inherited-from="32"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="32"]:checked) [data-inherited-from="32"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="32"]:checked):has(.inheritance[data-inherited-from="32"]:hover) [data-inherited-from]:not([data-inherited-from="32"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="33"]) [data-inherited-from="33"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="33"]:checked) [data-inherited-from="33"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="33"]:checked):has(.inheritance[data-inherited-from="33"]:hover) [data-inherited-from]:not([data-inherited-from="33"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="34"]) [data-inherited-from="34"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="34"]:checked) [data-inherited-from="34"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="34"]:checked):has(.inheritance[data-inherited-from="34"]:hover) [data-inherited-from]:not([data-inherited-from="34"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="35"]) [data-inherited-from="35"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="35"]:checked) [data-inherited-from="35"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="35"]:checked):has(.inheritance[data-inherited-from="35"]:hover) [data-inherited-from]:not([data-inherited-from="35"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="36"]) [data-inherited-from="36"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="36"]:checked) [data-inherited-from="36"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="36"]:checked):has(.inheritance[data-inherited-from="36"]:hover) [data-inherited-from]:not([data-inherited-from="36"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="37"]) [data-inherited-from="37"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="37"]:checked) [data-inherited-from="37"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="37"]:checked):has(.inheritance[data-inherited-from="37"]:hover) [data-inherited-from]:not([data-inherited-from="37"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="38"]) [data-inherited-from="38"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="38"]:checked) [data-inherited-from="38"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="38"]:checked):has(.inheritance[data-inherited-from="38"]:hover) [data-inherited-from]:not([data-inherited-from="38"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="39"]) [data-inherited-from="39"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="39"]:checked) [data-inherited-from="39"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="39"]:checked):has(.inheritance[data-inherited-from="39"]:hover) [data-inherited-from]:not([data-inherited-from="39"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="40"]) [data-inherited-from="40"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="40"]:checked) [data-inherited-from="40"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="40"]:checked):has(.inheritance[data-inherited-from="40"]:hover) [data-inherited-from]:not([data-inherited-from="40"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="41"]) [data-inherited-from="41"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="41"]:checked) [data-inherited-from="41"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="41"]:checked):has(.inheritance[data-inherited-from="41"]:hover) [data-inherited-from]:not([data-inherited-from="41"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="42"]) [data-inherited-from="42"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="42"]:checked) [data-inherited-from="42"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="42"]:checked):has(.inheritance[data-inherited-from="42"]:hover) [data-inherited-from]:not([data-inherited-from="42"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="43"]) [data-inherited-from="43"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="43"]:checked) [data-inherited-from="43"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="43"]:checked):has(.inheritance[data-inherited-from="43"]:hover) [data-inherited-from]:not([data-inherited-from="43"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="44"]) [data-inherited-from="44"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="44"]:checked) [data-inherited-from="44"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="44"]:checked):has(.inheritance[data-inherited-from="44"]:hover) [data-inherited-from]:not([data-inherited-from="44"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="45"]) [data-inherited-from="45"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="45"]:checked) [data-inherited-from="45"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="45"]:checked):has(.inheritance[data-inherited-from="45"]:hover) [data-inherited-from]:not([data-inherited-from="45"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="46"]) [data-inherited-from="46"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="46"]:checked) [data-inherited-from="46"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="46"]:checked):has(.inheritance[data-inherited-from="46"]:hover) [data-inherited-from]:not([data-inherited-from="46"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="47"]) [data-inherited-from="47"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="47"]:checked) [data-inherited-from="47"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="47"]:checked):has(.inheritance[data-inherited-from="47"]:hover) [data-inherited-from]:not([data-inherited-from="47"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="48"]) [data-inherited-from="48"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="48"]:checked) [data-inherited-from="48"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="48"]:checked):has(.inheritance[data-inherited-from="48"]:hover) [data-inherited-from]:not([data-inherited-from="48"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="49"]) [data-inherited-from="49"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="49"]:checked) [data-inherited-from="49"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="49"]:checked):has(.inheritance[data-inherited-from="49"]:hover) [data-inherited-from]:not([data-inherited-from="49"]) {
+  opacity: 0.5;
+}
 </style><style>.solution {
   padding: 1.5em;
   border: 1px solid #98B2C0;
@@ -594,6 +1336,21 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
 }
 .solution .hl.lean.block {
   overflow-x: auto;
+}
+</style><style>
+div.TODO {
+  border: 5px solid red;
+  position: relative;
+}
+div.TODO::before {
+  content: "TODO";
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+  font-size: large;
+  font-weight: bold;
+  transform: rotate(-90deg) translate(-2em);
 }
 </style><style>.foldable {
   padding: 1.5em;
@@ -660,10 +1417,22 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
     {"id": "outerProduct-next-next",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "ode":
+   [{"id": "ode",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "nnet":
    [{"id": "nnet",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "newtonSolve":
+   [{"id": "newtonSolve",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "mySqrt":
+   [{"id": "mySqrt",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "mean":
    [{"id": "mean-next",
      "data": null,
@@ -671,6 +1440,10 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
     {"id": "mean",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "matrix1":
+   [{"id": "matrix1",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "matMul":
    [{"id": "matMul",
      "data": null,
@@ -679,10 +1452,77 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
    [{"id": "map",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "linreg":
+   [{"id": "linreg",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "i":
    [{"id": "i",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "fwdFDeriv'.pi_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.linear_rule":
+   [{"id": "fwdFDeriv______linear_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.let_rule":
+   [{"id": "fwdFDeriv______let_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.id_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.const_rule":
+   [{"id": "fwdFDeriv______const_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.comp_rule":
+   [{"id": "fwdFDeriv______pi_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.apply_rule":
+   [{"id": "fwdFDeriv______apply_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'.affine_rule":
+   [{"id": "fwdFDeriv______affine_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fwdFDeriv'":
+   [{"id": "fwdFDeriv___",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fun1.arg_xz.fwdFDeriv'_rule":
+   [{"id": "fun1___arg_xz___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "fun1":
+   [{"id": "fun1",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "foo_differentiable":
+   [{"id": "foo_differentiable",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo_deriv_rule":
+   [{"id": "foo_deriv_rule",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo_deriv":
+   [{"id": "foo_deriv",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "foo":
+   [{"id": "foo-next",
+     "data": null,
+     "address": "/Differentiation/Automatic-Differentiation/"},
+    {"id": "foo",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "fibonacci":
    [{"id": "fibonacci-next", "data": null, "address": "/Working-with-Arrays/"},
     {"id": "fibonacci", "data": null, "address": "/Working-with-Arrays/"},
@@ -733,10 +1573,316 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
     {"id": "avgPool-next",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "WorkingWithQuotients.var":
+   [{"id": "WorkingWithQuotients___var",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.equiv":
+   [{"id": "WorkingWithQuotients___equiv",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.e":
+   [{"id": "WorkingWithQuotients___var",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.UnorderedPair.sum":
+   [{"id": "WorkingWithQuotients___UnorderedPair___sum",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.UnorderedPair":
+   [{"id": "WorkingWithQuotients___UnorderedPair",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprSetoid":
+   [{"id": "WorkingWithQuotients___ExprSetoid",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.toStringRepr":
+   [{"id": "WorkingWithQuotients___ExprMonoid___toStringRepr",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.toString":
+   [{"id": "WorkingWithQuotients___ExprMonoid___toString",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.normalize_eq":
+   [{"id": "WorkingWithQuotients___ExprMonoid___normalize_eq",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid.normalize":
+   [{"id": "WorkingWithQuotients___ExprMonoid___normalize",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.ExprMonoid":
+   [{"id": "WorkingWithQuotients___ExprMonoid",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.var":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.toString":
+   [{"id": "WorkingWithQuotients___Expr___toString",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.toList":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.one":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.ofList_injective":
+   [{"id": "WorkingWithQuotients___Expr___ofList_injective",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.ofList":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.normalize_normalize":
+   [{"id": "WorkingWithQuotients___Expr___normalize_normalize",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.normalize":
+   [{"id": "WorkingWithQuotients___Expr___toList",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr.mul":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WorkingWithQuotients.Expr":
+   [{"id": "WorkingWithQuotients___Expr___one",
+     "data": null,
+     "address": "/Miscellaneous/Working-with-Quotients/"}],
+   "WaveEquation":
+   [{"id": "WaveEquation",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "TCInterfaces.ArrayLike.length":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "TCInterfaces.ArrayLike.get":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "TCInterfaces.ArrayLike":
+   [{"id": "TCInterfaces___ArrayLike___length",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Prod.snd.arg_self.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Prod.mk.arg_fstsnd.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Prod.fst.arg_self.fwdFDeriv'_rule":
+   [{"id": "Prod___fst___arg_self___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Overloading.natListSMul":
+   [{"id": "Overloading___natListSMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.listSMul":
+   [{"id": "Overloading___listSMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.Size.size":
+   [{"id": "Overloading___Size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.Size":
+   [{"id": "Overloading___Size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.SMul.smul":
+   [{"id": "Overloading___SMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.SMul":
+   [{"id": "Overloading___SMul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.MyMul.mymul":
+   [{"id": "Overloading___MyMul___mymul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "Overloading.MyMul":
+   [{"id": "Overloading___MyMul___mymul",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Size.size":
+   [{"id": "OverloadTypeAndTerm___Size___size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Size":
+   [{"id": "OverloadTypeAndTerm___Size___size",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair.pair":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair'":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.Pair":
+   [{"id": "OverloadTypeAndTerm___Pair",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.First.first?":
+   [{"id": "OverloadTypeAndTerm___First___first___",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "OverloadTypeAndTerm.First":
+   [{"id": "OverloadTypeAndTerm___First___first___",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "NewtonsLaw":
+   [{"id": "NewtonsLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "NewtonSecondLaw":
+   [{"id": "NewtonSecondLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
+   "Neg.neg.arg_a0.fwdFDeriv'_rule_compositional":
+   [{"id": "Neg___neg___arg_a0___fwdFDeriv____rule_compositional",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "Neg.neg.arg_a0.fwdFDeriv'_rule":
+   [{"id": "Neg___neg___arg_a0___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "InductiveOverload.Uncurry.uncurry":
+   [{"id": "InductiveOverload___Uncurry___uncurry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Uncurry":
+   [{"id": "InductiveOverload___Uncurry___uncurry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Sum.sum":
+   [{"id": "InductiveOverload___Sum___sum",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Sum":
+   [{"id": "InductiveOverload___Sum___sum",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdSize.prodSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdGet.get":
+   [{"id": "InductiveOverload___ProdGet___get",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.ProdGet":
+   [{"id": "InductiveOverload___ProdGet___get",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.FlatProdSize.flatProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.FlatProdSize":
+   [{"id": "InductiveOverload___ProdSize___prodSize",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Curry.curry":
+   [{"id": "InductiveOverload___Curry___curry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "InductiveOverload.Curry":
+   [{"id": "InductiveOverload___Curry___curry",
+     "data": null,
+     "address":
+     "/Miscellaneous/Typeclasses-as-Interfaces-and-Function-Overloading/"}],
+   "HighOrderFunctions.applyTwice.arg_fx.fwdFDeriv_rule":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.applyTwice.arg_fx.Differentiable_rule":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.applyTwice":
+   [{"id": "HighOrderFunctions___applyTwice",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply.arg_fx.fwdFDeriv_rule":
+   [{"id": "HighOrderFunctions___apply___arg_fx___fwdFDeriv_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply.arg_fx.Differentiable_rule":
+   [{"id": "HighOrderFunctions___apply___arg_fx___Differentiable_rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HighOrderFunctions.apply":
+   [{"id": "HighOrderFunctions___apply",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HDiv.hDiv.arg_a0a1.fwdFDeriv'_rule_simple":
+   [{"id": "HDiv___hDiv___arg_a0a1___fwdFDeriv____rule_simple",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional":
+   [{"id": "HAdd___hAdd___arg_a0a1___fwdFDeriv____rule_compositional",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
+   "HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule":
+   [{"id": "HAdd___hAdd___arg_a0a1___fwdFDeriv____rule",
+     "data": null,
+     "address": "/Differentiation/Function-Transformation/"}],
    "Fin.shift":
    [{"id": "Fin___shift",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "EulerLagrange":
+   [{"id": "NewtonsLaw",
+     "data": null,
+     "address": "/Differentiation/Symbolic-Differentiation/"}],
    "BasicOperations.Fin.val":
    [{"id": "BasicOperations___Fin",
      "data": null,
@@ -1037,7 +2183,7 @@ window.onload = () => {
             <div class="split-toc book">
               <div class="title">
                 <label for="--verso-manual-toc-----bookRoot" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-----bookRoot"></label><span class=""><a href="../">Cross-Reference Redirection</a></span></div>
-              <table><tr class="numbered"><td class="num">1.</td><td><a href="../Working-with-Arrays/#Scientific-Computing-in-Lean--Working-with-Arrays">Working with Arrays</a></td></tr></table></div>
+              <table><tr class="numbered"><td class="num">1.</td><td><a href="../Working-with-Arrays/#Scientific-Computing-in-Lean--Working-with-Arrays">Working with Arrays</a></td></tr><tr class="numbered"><td class="num">2.</td><td><a href="../Differentiation/#Scientific-Computing-in-Lean--Differentiation">Differentiation</a></td></tr><tr class="numbered"><td class="num">3.</td><td><a href="../Miscellaneous/#Scientific-Computing-in-Lean--Miscellaneous">Miscellaneous</a></td></tr></table></div>
             </div>
           </div>
         <div class="last"></div>
