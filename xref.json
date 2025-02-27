@@ -22,10 +22,16 @@
    [{"id": "trace",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "solver":
+   [{"id": "solver",
+     "data": null,
+     "address": "/Examples/Harmonic-Oscillator/"}],
    "softMax":
    [{"id": "softMax",
      "data": null,
      "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "sim":
+   [{"id": "sim", "data": null, "address": "/Examples/Harmonic-Oscillator/"}],
    "outerProduct''":
    [{"id": "outerProduct______",
      "data": null,
@@ -498,6 +504,8 @@
    [{"id": "HAdd___hAdd___arg_a0a1___fwdFDeriv____rule",
      "data": null,
      "address": "/Differentiation/Function-Transformation/"}],
+   "H":
+   [{"id": "H", "data": null, "address": "/Examples/Harmonic-Oscillator/"}],
    "Fin.shift":
    [{"id": "Fin___shift",
      "data": null,
