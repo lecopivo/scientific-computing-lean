@@ -70,7 +70,6 @@ This produces `0 + 5`, as only the rewrite rule `add_zero` is allowed.
 This theorem illustrates the concept of loop fusion, which is relevant to program optimization. Consider the theorem:
 
 ```lean
-open SciLean
 theorem mapMono_mapMono {I : Type} [IndexType I]
     (x : Float^[I]) (f g : Float → Float) :
     (x.mapMono f |>.mapMono g) = x.mapMono fun x => g (f x) := by ext; simp
@@ -90,7 +89,7 @@ open SciLean
 def saxpy {n} (a : Float) (x y : Float^[n]) := (a•x+y)
   rewrite_by
     simp only [HAdd.hAdd, Add.add, HSMul.hSMul, SMul.smul]
-    simp only [mapMono_mapIdxMono]
+    simp [vector_optimize]
 ```
 
 The `saxpy` function computes `a•x+y`, and by adding `rewrite_by ...`, we rewrite `a•x+y` to:

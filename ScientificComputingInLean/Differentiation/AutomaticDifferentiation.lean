@@ -20,14 +20,14 @@ In scientific computing a common requirement is to compute derivatives of a prog
 Let's have a look how symbolic differentiation can produce large expressions.
 ```lean
 open SciLean Scalar
-#check (∂! (x : ℝ), x * x * x * x * x * x * x * x)
+#check ∂! (x : ℝ), x * x * x * x * x * x * x * x
 ```
 
 The last example, symbolic differentiation takes and expression with 9 mulplications and produces an expression with 27 multiplications and 7 additions.
 
 If we instead use forward mode derivative(one type of automatic differentiation which we will explain in a moment)
 ```lean
-#check (∂>! (x : ℝ), x * x * x * x * x * x * x * x)
+#check ∂>! (x : ℝ), x * x * x * x * x * x * x * x
 ```
 we obtain 21 multiplications and 7 additions.
 
@@ -59,21 +59,25 @@ which does not suffer from the problem of repeating \\( g \\) twice and thus not
 
 In SciLean, the forward mode derivative is {lean}`fwdFDeriv` which has notaion `∂>`. It is defined as
 ```lean
-open SciLean
-variable (f : ℝ → ℝ) (x dx : ℝ)
+variable (f g : ℝ → ℝ) (x dx : ℝ)
+  (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
+
 example : (∂> f x dx) = (f x, ∂ f x dx) := by rfl
 ```
 In Lean notation the chain rule can be writen as
 ```lean
-open SciLean
-variable (f g : ℝ → ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g) (x dx : ℝ)
-example : (∂> (f ∘ g) x dx) = (let (y,dy) := (∂> g x dx); (∂> f y dy)) := by fun_trans[Function.comp_def]
+example : (∂> (f ∘ g) x dx)
+          =
+          let (y,dy) := (∂> g x dx)
+          (∂> f y dy) := by
+  fun_trans[Function.comp_def]
 ```
 Alternativelly, when we use the notation `↿f` that uncurries any function we can write the chain rule
 ```lean
-open SciLean
-variable (f g : ℝ → ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
-example : ↿(∂> (f ∘ g)) = ↿(∂> f) ∘ ↿(∂> g) := by fun_trans[Function.comp_def,Function.HasUncurry.uncurry]
+example : ↿(∂> (f ∘ g))
+          =
+          ↿(∂> f) ∘ ↿(∂> g) := by
+  fun_trans[Function.comp_def,Function.HasUncurry.uncurry]
 ```
 
 In SciLean it is the theorem {lean}`@SciLean.fwdFDeriv.comp_rule`.
@@ -161,14 +165,17 @@ example : (∇ f x) = adjoint ℝ (∂ f x) 1 := by rfl
 ```
 One might naively do the same trick as with forward mode derivative and define reverse mode by putting together the function value and the derivative together i.e. `<∂ f x dy = (f x, adjoint ℝ (∂ f x) dy)`. However, it is not possible to write down a good chain rule for this operation. The only way to do this is to postpone the argument `dy` and define the reverse mode derivative as
 ```
-variable (f : ℝ → ℝ) (x : ℝ)
+variable (f g : ℝ → ℝ) (x : ℝ)
+  (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
+
 example : (<∂ f x) = (f x, fun dy => adjoint ℝ (∂ f x) dy) := by rfl
 ```
 The reverse mode derivative at point `x` computes the value `f x` and a function that can compute the adjoint of the derivative.
 
 With this definition we can write down the chain rule for reverse mode derivative
 ```lean
-variable (f g : ℝ → ℝ) (x : ℝ) (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
+variable (f g : ℝ → ℝ) (x : ℝ)
+  (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
 
 example :
   (<∂ (fun x => f (g x)) x)
@@ -201,6 +208,3 @@ Talk about
   - sphere
   - pick something from
     https://iquilezles.org/articles/distfunctions/
-
-
-# Derivatives of Neural Network Layers

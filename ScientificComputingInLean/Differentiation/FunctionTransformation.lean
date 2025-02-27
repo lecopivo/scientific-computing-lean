@@ -181,14 +181,15 @@ theorem Prod.mk.arg_fstsnd.fwdFDeriv'_rule
    fun xdx =>
      let ydy := fwdFDeriv' R g xdx
      let zdz := fwdFDeriv' R f xdx
-     ((ydy.1,zdz.1),(ydy.2,zdz.2)) := by unfold fwdFDeriv'; fun_trans
+     ((ydy.1,zdz.1),(ydy.2,zdz.2)) := by
+  unfold fwdFDeriv'; fun_trans
 
 @[fun_trans]
-theorem Prod.fst.arg_self.fwdFDeriv'_rule
-    :
-  fwdFDeriv' R (fun (xy : X×Y) => xy.1)
-  =
-  fun xydxy => (xydxy.1.1,xydxy.2.1) := by unfold fwdFDeriv'; fun_trans
+theorem Prod.fst.arg_self.fwdFDeriv'_rule :
+    fwdFDeriv' R (fun (xy : X×Y) => xy.1)
+    =
+    fun xydxy => (xydxy.1.1,xydxy.2.1) := by
+  unfold fwdFDeriv'; fun_trans
 
 @[fun_trans]
 theorem Prod.snd.arg_self.fwdFDeriv'_rule
@@ -218,7 +219,7 @@ theorem fwdFDeriv'.apply_rule {I} [IndexType I] (i : I) :
 ```lean
 @[fun_trans]
 theorem fwdFDeriv'.let_rule
-    (f : X → Y → Z) (hf : Differentiable R (fun (x,y) => f x y))
+    (f : X → Y → Z) (hf : Differentiable R ↿f)
     (g : X → Y)  (hg : Differentiable R g) :
     fwdFDeriv' R (fun x => let y := g x; f x y)
     =
@@ -268,7 +269,9 @@ theorem fun1.arg_xz.fwdFDeriv'_rule (y : R) :
     =
     fun ((x,z),(dx,dz)) =>
       (fun1 x y z,
-       exp x * (dz * cos (z + y)) + dx * exp x * sin (z + y) + dz) := by
+       exp x * (dz * cos (z + y))
+       +
+       dx * exp x * sin (z + y) + dz) := by
   unfold fwdFDeriv' fun1; fun_trans
 ```
 Writing rules for user defined functions like {name}`fun1` is tedious and because {name}`fun1` is defined in terms of known function the right hands side of this rule should be automatically generated anyway. We will discuss this how to do this a bit later. Here we just wanted to demonstrate that you can indeed formulate the transformation rule only for a subset of the input arguments. The important rule is that the order of the arguments should be maintained e.g. the left hand side should *not* be `fwdFDeriv' R (fun (zx : R×R) => fun1 zx.2 y zx.1)`.
@@ -316,8 +319,8 @@ These theorems are potentially dangerous as the left hand side of the theorem ca
 ::: solution "Solution"
 ```lean
 @[fun_trans]
-theorem fwdFDeriv'.affine_rule
-    (f : X → Y) (hf : IsAffineMap R f) (hf' : Continuous f) :
+theorem fwdFDeriv'.affine_rule (f : X → Y)
+    (hf : IsAffineMap R f) (hf' : Continuous f) :
     fwdFDeriv' R f
     =
     fun xdx => (f xdx.1, f xdx.2 - f 0) := by
@@ -328,7 +331,8 @@ theorem fwdFDeriv'.affine_rule
     constructor
     · apply hf.1
     · unfold autoParam; fun_prop
-  have h : f = fun x => g x + f 0 := by simp (config:={zetaDelta:=true})
+  have h : f = fun x => g x + f 0 := by
+    simp (config:={zetaDelta:=true})
   rw[h]
   fun_trans -- this does not seem to work :(
   sorry_proof
@@ -373,7 +377,8 @@ The "compositional form" of this theorem is
 ```lean
 @[fun_trans]
 theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional
-    (f g : W → X) (hf : Differentiable R f) (hg : Differentiable R g) :
+    (f g : W → X)
+    (hf : Differentiable R f) (hg : Differentiable R g) :
     (fwdFDeriv' R fun w : W => f w + g w)
     =
     fun xdx =>
@@ -388,6 +393,7 @@ theorem HAdd.hAdd.arg_a0a1.fwdFDeriv'_rule_compositional
 
 ```lean (show:=false)
 namespace HighOrderFunctions
+set_default_scalar Float
 ```
 
 Higher order functions are functions that accept function as an input. For example {lean}`@DataArrayN.mapMono` is a function that accepts an array and a function that is applied to every element of that array. It can happen that the function depends on a parameter we are differentiating with respect to. For example
@@ -425,33 +431,12 @@ theorem apply.arg_fx.fwdFDeriv_rule
     =
     fun w dw =>
       let xdx := fwdFDeriv R x w dw
-      let f' := fun xdx : X×X => fwdFDeriv R (↿f) (w,xdx.1) (dw,xdx.2)
+      let f' := fun xdx : X×X =>
+        fwdFDeriv R (↿f) (w,xdx.1) (dw,xdx.2)
       apply f' xdx := by
   fun_trans[apply,Function.HasUncurry.uncurry]
 ```
 
-
-
-
-
-
-```lean
-@[fun_trans]
-theorem DataArrayN.mapMono.arg_xf.fwdFDeriv_rule
-    [PlainDataType X] {I : Type} [IndexType I]
-    (x : W → X^[I]) (hx : Differentiable R x)
-    (f : W → X → X) (hf : Differentiable R fun (w,x) => f w x) :
-    (fwdFDeriv R fun w : W => (x w).mapMono (f w))
-    =
-    fun w dw =>
-      let xdx := fwdFDeriv R x w dw
-      let x := xdx.1; let dx := xdx.2
-      (x.mapMono (f w),
-       dx.mapIdxMono (fun (i : I) (dxi : X) =>
-         let xi := x[i]
-         let ydy := fwdFDeriv R (↿f) (w,xi) (dw,dxi)
-         ydy.2)) := sorry_proof
-```
 
 
 ## Exercises
@@ -467,8 +452,9 @@ def applyTwice (f : X → X) (x : X) := f (f x)
 theorem applyTwice.arg_fx.Differentiable_rule
     (f : W → X → X) (hf : Differentiable R (↿f))
     (x : W → X) (hx : Differentiable R x) :
-    Differentiable R (fun w => applyTwice (f w) (x w)) by
-  fun_prop[applyTwice]
+    Differentiable R (fun w => applyTwice (f w) (x w)) := by
+  unfold applyTwice
+  fun_prop
 
 @[fun_trans]
 theorem applyTwice.arg_fx.fwdFDeriv_rule
@@ -478,12 +464,12 @@ theorem applyTwice.arg_fx.fwdFDeriv_rule
     =
     fun w dw =>
       let xdx := fwdFDeriv R x w dw
-      let f' := fun xdx : X×X => (fwdFDeriv R ↿f) (w,xdx.1) (dw,xdx.2)
+      let f' := fun xdx : X×X =>
+        (fwdFDeriv R ↿f) (w,xdx.1) (dw,xdx.2)
       applyTwice f' xdx := by
   fun_trans[applyTwice,Function.HasUncurry.uncurry]
 ```
 :::
-
 
 
 We can't even state the simple version of this theorems
@@ -491,57 +477,3 @@ We can't even state the simple version of this theorems
 ```lean (show:=false)
 end HighOrderFunctions
 ```
-
-
-# Recursive Functions
-
-
-
-
-```lean
-
-def applyNTimes (n : Nat) (f : X → X) (x : X) :=
-  match n with
-  | 0 => x
-  | n+1 => applyNTimes n f (f x)
-
-def_fun_prop (n : Nat) (f : X → X) (hf : Differentiable R f) :
-    Differentiable R (applyNTimes n f) by
-  induction n <;> fun_prop[applyNTimes]
-
-set_default_scalar R
--- TODO: make this work
--- def_fun_trans (n : Nat) (f : X → X) (hf : Differentiable R f) :
---     (∂> x, applyNTimes n f x) by
---   induction n n' f' eq
---   · fun_trans [applyNTimes]
---   · fun_trans [applyNTimes]
-
-variable (n : ℕ)
-#check (∂> x, applyNTimes n (fun y : R => y^2) x)
-  rewrite_by
-    induction n n' f' eq
-    · fun_trans [applyNTimes]
-    · fun_trans [applyNTimes]
-
-
--- variable (n : ℕ) (f : R → R) (f' : R → R → R)
---   (hf : Differentiable R f)
---   (hf' : (fwdFDeriv R f) = f')
-
--- #check (∂> x, applyNTimes n f x)
---   rewrite_by
---     induction n n' f' eq
---     · fun_trans [applyNTimes]
---     · fun_trans [applyNTimes]
-
-
--- variable (n : ℕ)
--- #check (fderiv ℝ (fun x => applyNTimes n (fun x : ℝ => x^2) x))
---   rewrite_by
---     induction n n' f' eq
---     · fun_trans [applyNTimes]
---     · fun_trans [applyNTimes]
-```
-
-Making `applyNTimes` differentiable in `f` is still work in progress.

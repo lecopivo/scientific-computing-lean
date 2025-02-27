@@ -1,5 +1,7 @@
 import SciLean
 import ScientificComputingInLean.WorkingWithArrays
+import ScientificComputingInLean.Differentiation
+import ScientificComputingInLean.Miscellaneous
 
 import Manual.Meta
 
@@ -19,3 +21,7 @@ This book in its current form is a draft and is subject to change. Code might no
 
 
 {include ScientificComputingInLean.WorkingWithArrays}
+
+{include ScientificComputingInLean.Differentiation}
+
+{include ScientificComputingInLean.Miscellaneous}

@@ -8,6 +8,7 @@ set_option linter.hashCommand false
 set_option linter.haveLet 0
 
 set_option maxHeartbeats 1000000000
+set_option maxRecDepth 5000
 
 open Lean.MessageSeverity
 open SciLean
@@ -265,7 +266,9 @@ You might feel a bit unconfortable here are we are differentiating a function de
 set_default_scalar Float
 def newtonSolve (steps : Nat) (x₀ : Float)
     (f : Float → Float) {f' : Float → Float}
-    (hf : f' = (∂ f) := by unfold deriv; fun_trans; infer_var) : Float := Id.run do
+    (hf : f' = (∂ f) := by
+        unfold deriv; fun_trans; infer_var) :
+    Float := Id.run do
   let mut x := x₀
   for _ in [0:steps] do
     x := x - f x / f' x
@@ -284,8 +287,8 @@ set_default_scalar ℝ
 
 We can also use *SciLean*'s symbolic differentiation to prove some basic theorems from physics. For example we can state the second Newton's law
 ```lean
-
-def NewtonSecondLaw (m : ℝ) (x : ℝ → ℝ) (F : ℝ → ℝ) : Prop :=
+def NewtonSecondLaw (m : ℝ)
+    (x : ℝ → ℝ) (F : ℝ → ℝ) : Prop :=
   ∀ t, m * deriv (∂ x) t = F t
 ```
 saying that for a particle with mass `m` under the influence of force `F` has trajectory `x` if the mass times the acceleration `deriv (∂ x) t`, i.e. the second derivative of trajectory, is equal to the force `F t`.
@@ -294,7 +297,8 @@ saying that for a particle with mass `m` under the influence of force `F` has tr
 We can show that under constant force `f` a particle with mass `m` has trajectory `(fun t => 1/2 * f/m * t^2)`
 ```lean
 example (m f : ℝ) (hm : m ≠ 0) :
-    NewtonSecondLaw m (fun t => 1/2 * f/m * t^2) (fun _ => f) := by
+    NewtonSecondLaw m (fun t => f/(2*m) * t^2) (fun _ => f)
+    := by
 
   unfold NewtonSecondLaw
   -- compute derivatives
@@ -317,9 +321,11 @@ example (m f : ℝ) (hm : m ≠ 0) :
 :::foldable "Solution"
 ```lean
 open SciLean Scalar
-def ode (x : ℝ → ℝ×ℝ) := ∀ t, deriv x t = (- (x t).2, (x t).1)
+def ode (x : ℝ → ℝ×ℝ) :=
+  ∀ t, deriv x t = (- (x t).2, (x t).1)
 
-example : ode (fun t => (cos t, sin t)) := by unfold ode deriv; fun_trans
+example : ode (fun t => (cos t, sin t)) := by
+  unfold ode deriv; fun_trans
 ```
 :::
 
@@ -368,7 +374,6 @@ example :
     WaveEquation (fun t x => sin (x - t)) := by
   unfold WaveEquation deriv
   fun_trans
-
 ```
 :::
 
@@ -466,16 +471,18 @@ A = \text{argmin}_B \sum_i \| B x_i - y_i \|^2
 ```lean
 set_default_scalar Float
 
-partial def linreg {n : ℕ} (x y : Float^[2]^[n]) : Float^[2,2] := Id.run do
+partial def linreg {n : ℕ} (x y : Float^[2]^[n]) :
+    Float^[2,2] := Id.run do
   let loss := fun (A : Float^[2,2]) =>
-    ∑ i, ‖(⊞ i' => ∑ j, A[i',j] * x[i][j]) - y[i]‖₂²
+    ∑ i, ‖A * x[i] - y[i]‖₂²
 
   let rate := 1e-1
   let mut A : Float^[2,2] := 0
   let mut err := 1.0
 
   while err > 1e-6 do
-    let ΔA := rate • (∇! A':=A, loss A')
+    let ΔA := (rate • ∇ A':=A, loss A')
+      rewrite_by simp[loss]; autodiff
     err := ‖ΔA‖₂
     A := A - ΔA
 
@@ -498,20 +505,23 @@ set_default_scalar ℝ
 noncomputable
 def EulerLagrange (L : X → X → ℝ) (x : ℝ → X) (t : ℝ) :=
   let v := ∂ x
-  ∂ (t':=t), (∇ (v':=v t'), L (x t') v') - ∇ (x':=x t), L x' (v t)
+  ∂ (t':=t), (∇ (v':=v t'), L (x t') v')
+  -
+  ∇ (x':=x t), L x' (v t)
 
 noncomputable
 def NewtonsLaw (m : ℝ) (φ : X → ℝ) (x : ℝ → X) (t : ℝ) :=
   m • (∂ (∂ x) t) + (∇ φ (x t))
 
--- example
---     (x : ℝ → X) (hx : ContDiff ℝ ⊤ x)
---     (φ : X → ℝ) (hφ : Differentiable ℝ φ) :
---     EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
---     =
---     NewtonsLaw m φ x t := by
---   unfold EulerLagrange NewtonsLaw deriv fgradient; fun_trans [smul_smul]
---   sorry
+example
+    (x : ℝ → X) (hx : ContDiff ℝ ⊤ x)
+    (φ : X → ℝ) (hφ : Differentiable ℝ φ) :
+    EulerLagrange (fun x v => m/2 * ‖v‖₂² - φ x) x t
+    =
+    NewtonsLaw m φ x t := by
+  unfold EulerLagrange NewtonsLaw deriv fgradient
+  fun_trans [smul_smul]
+  sorry
 ```
 :::
 
@@ -821,7 +831,7 @@ set_default_scalar 𝕜
 
 example (f g : X → Y) (hf : Differentiable 𝕜 f) (hg : Differentiable 𝕜 g) :
     (∇ x, (f x + g x)) = (∇ f) + (∇ g) := by
-  ext x; unfold adjointFDeriv; fun_trans
+  ext x; autodiff; rfl
 ```
 ```lean (show := false)
 end AbstractVectroSpacesSec3

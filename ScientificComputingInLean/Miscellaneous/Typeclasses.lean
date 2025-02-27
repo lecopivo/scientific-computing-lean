@@ -125,8 +125,8 @@ Lean already comes with a variety of typeclasses for **heterogeneous operations*
 
 ```lean
 set_option pp.notation false in
-#check 2 + 3 
-#eval 2 + 3 
+#check 2 + 3
+#eval 2 + 3
 set_option pp.notation false in
 #check [1, 2, 3] ++ [4, 5, 6]
 #eval [1, 2, 3] ++ [4, 5, 6]
@@ -171,7 +171,7 @@ This tells us that the instance for negation on integers is {name}`Int.instNegIn
 The output will provide the definition of the instance:
 
 ```
-def Int.instNegInt : Neg ℤ := { neg := Int.neg } 
+def Int.instNegInt : Neg ℤ := { neg := Int.neg }
 ```
 
 Here, {name}`Int.instNegInt` is defined as an instance of the {name}`Neg` typeclass for integers, with `neg` being implemented by the function {name}`Int.neg`. This shows how the `-` operator for integers is handled.
@@ -245,7 +245,7 @@ This instance uses `foldl` to accumulate the sum of a list by applying the `sum`
 Now, we can compute the sum of lists of natural numbers:
 
 ```lean
-#eval sum [1, 2, 3, 4] 
+#eval sum [1, 2, 3, 4]
 #eval sum [[1, 2, 3], [4]]
 ```
 
@@ -335,16 +335,16 @@ This general `uncurry` function is already provided by mathlib with {name}`Funct
 
 1. Privide overload of `sum` for {name}`Array`. The following whould work
 ```
-example : sum (#[1,3,4], [#[(10,5),(20,8)], #[100]], 1000) = 1251 := by 
+example : sum (#[1,3,4], [#[(10,5),(20,8)], #[100]], 1000) = 1251 := by
   native_decide
 ```
-::: Solution
+::: foldable "Solution"
 
 ```lean
 instance [Sum A] : Sum (Array A) where
   sum l := l.foldl (fun acc a => acc + sum a) 0
 
-example : sum (#[1,3,4], [#[(10,5),(20,8)], #[100]], 1000) = 1251 := by   
+example : sum (#[1,3,4], [#[(10,5),(20,8)], #[100]], 1000) = 1251 := by
   native_decide
 ```
 
@@ -357,17 +357,17 @@ example : sum (#[1,3,4], [#[(10,5),(20,8)], #[100]], 1000) = 1251 := by
 ```
 example : prodSize (Nat × Nat × Nat) = 3 := by decide
 example : prodSize ((Nat × Nat) × Nat) = 2 := by decide
-   
+
 example : flatProdSize (Nat x Nat x Nat) = 3 := by decide
 example : flatProdSize ((Nat x Nat) x Nat) = 3 := by decide
 ```
 
-::: Solution
+::: foldable "Solution"
 
 ```lean
 class ProdSize (X : Type) where
   prodSize : Nat
-  
+
 export ProdSize (prodSize)
 
 instance (priority:=low) {X} : ProdSize X where
@@ -381,13 +381,13 @@ example : prodSize ((Nat × Nat) × Nat) = 2 := by decide
 
 class FlatProdSize (X : Type) where
   flatProdSize : Nat
-  
+
 export FlatProdSize (flatProdSize)
 
 instance (priority:=low) {X} : FlatProdSize X where
   flatProdSize := 1
 
-instance (priority:=low) {X Y} [FlatProdSize X] [FlatProdSize Y] : 
+instance (priority:=low) {X Y} [FlatProdSize X] [FlatProdSize Y] :
     FlatProdSize (X×Y) where
   flatProdSize := flatProdSize X + flatProdSize Y
 
@@ -396,10 +396,10 @@ example : flatProdSize ((Nat × Nat) × Nat) = 3 := by decide
 ```
 
 :::
- 
+
 3. Define function curry that takes a function `f : X₁ × ... × Xₙ → Y` and produces function `g : X₁ → ... → Xₙ → Y`.
 
-::: Solution
+::: foldable "Solution"
 ```lean
 class Curry (Xs Y : Type) (F : outParam Type) where
   curry : (Xs → Y) → F
@@ -418,7 +418,7 @@ instance [Curry Xs Y F] : Curry (X×Xs) Y (X→F) where
 4. Define function that returns i-th element of product type `X₁ × ... × Xₙ`. This is somewhat tricky as you have to do induction in `i` and `n`.
 
 
-::: Solution
+::: foldable "Solution"
 ```lean
 class ProdGet (Xs : Type) (n : Nat) (Xn : outParam Type) where
   get : Xs -> Xn
@@ -483,7 +483,7 @@ To see this in action, you can run the following command:
 #check Type
 ```
 ```leanOutput typetype
-Type : Type 1 
+Type : Type 1
 ```
 
 This tells us that `Type` itself lives in `Type 1`, meaning that `Type 0 : Type 1`. More generally, `Type u` refers to a type in any universe level `u`, where `Type u : Type (u+1)`. By using `A : Type u`, we allow `A` to belong to **any universe level**, making `Size` more flexible and applicable to a wider range of types, including types themselves like `Bool`, `Unit`, and `Empty`.
@@ -500,7 +500,7 @@ example : first? ([] : List ℕ) = none := by decide
 example : first? Empty = none := by decide
 ```
 
-::: Solution
+::: foldable "Solution"
 
 ```lean
 class First {A : Type u} (a : A) (B : outParam (Type v)) where
@@ -539,10 +539,10 @@ example {X Y : Type} : pair X Y = X × Y := by rfl
 example {X Y : Type} (x : X) (y : Y) : pair x y = (x,y) := by rfl
 ```
 
-::: Solution
+::: foldable "Solution"
 ```lean
 
-class Pair {X Y : Type*} (x : X) (y : Y) 
+class Pair {X Y : Type*} (x : X) (y : Y)
            (XY : outParam Type*) where
   pair : XY
 
@@ -559,11 +559,11 @@ example {X Y : Type} : pair X Y = (X × Y) := by rfl
 example {X Y : Type} (x : X) (y : Y) : pair x y = (x,y) := by rfl
 
 
--- Alternative definition together with notation which requires some knowledge 
+-- Alternative definition together with notation which requires some knowledge
 -- of metaprogramming.
--- Have a look at this Zulip thread for motivation 
+-- Have a look at this Zulip thread for motivation
 -- https://leanprover.zulipchat.com/#narrow/stream/270676-lean4/topic/.E2.8A.97.20notation.20for.20types.20and.20elements/near/321358639
-class Pair' {X Y : Type*} (x : X) (y : Y) 
+class Pair' {X Y : Type*} (x : X) (y : Y)
             {XY : outParam Type*} (xy : outParam XY) where
 
 open Lean Elab Term Meta in

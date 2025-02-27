@@ -2,7 +2,7 @@ import ScientificComputingInLean.Meta
 import ScientificComputingInLean.Differentiation.Basic
 import ScientificComputingInLean.Differentiation.AutomaticDifferentiation
 import ScientificComputingInLean.Differentiation.FunctionTransformation
-import ScientificComputingInLean.Differentiation.ArrayExpr
+-- import ScientificComputingInLean.Differentiation.ArrayExpr
 -- import ScientificComputingInLean.Differentiation.Imperative
 -- import ScientificComputingInLean.Differentiation.Variational
 
@@ -47,8 +47,7 @@ open SciLean
 -- 6. differentiating imperative and monadic code
 -- 7. variational calclus
 
-#doc (Manual) "🚧 Differentiation" =>
-
+#doc (Manual) "Differentiation" =>
 
 {include ScientificComputingInLean.Differentiation.Basic}
 
