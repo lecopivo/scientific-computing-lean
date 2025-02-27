@@ -164,11 +164,11 @@ variable (f : ℝ×ℝ → ℝ) (x : ℝ×ℝ)
 example : (∇ f x) = adjoint ℝ (∂ f x) 1 := by rfl
 ```
 One might naively do the same trick as with forward mode derivative and define reverse mode by putting together the function value and the derivative together i.e. `<∂ f x dy = (f x, adjoint ℝ (∂ f x) dy)`. However, it is not possible to write down a good chain rule for this operation. The only way to do this is to postpone the argument `dy` and define the reverse mode derivative as
-```
+```lean
 variable (f g : ℝ → ℝ) (x : ℝ)
   (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
 
-example : (<∂ f x) = (f x, fun dy => adjoint ℝ (∂ f x) dy) := by rfl
+example : (<∂ f x) = (f x, fun dy => adjoint ℝ (fderiv ℝ f x) dy) := by rfl
 ```
 The reverse mode derivative at point `x` computes the value `f x` and a function that can compute the adjoint of the derivative.
 
