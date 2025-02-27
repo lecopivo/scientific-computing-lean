@@ -574,6 +574,28 @@ window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
   border-right-color: white;
 }
 
+</style><style>.solution {
+  padding: 1.5em;
+  border: 1px solid #98B2C0;
+  border-radius: 0.5em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
+  clear: both; /* Don't overlap margin notes with solutions */
+}
+.solution p:last-child {margin-bottom:0;}
+.solution .description::before {
+  content: "";
+}
+.solution[open] .description {
+  margin-bottom: 1em;
+}
+.solution .description {
+  font-style: italic;
+  font-family: var(--verso-structure-font-family);
+}
+.solution .hl.lean.block {
+  overflow-x: auto;
+}
 </style><style>.foldable {
   padding: 1.5em;
   border: 1px solid #98B2C0;
@@ -768,7 +790,7 @@ window.onload = () => {
       <nav id="toc">
         <input type="checkbox" id="toggle-toc" checked="checked"><div class="first">
           <a href="../../" id="logo"><img src="../../static/lean_logo.svg"></a><nav id="local-buttons">
-            <a class="local-button active" href="../#Scientific-Computing-in-Lean--Working-with-Arrays" rel="prev" title="1. Working with Arrays"><span class="arrow">←</span><span class="where">Prev</span></a><a class="local-button active" href="../#Scientific-Computing-in-Lean--Working-with-Arrays" title="1. Working with Arrays"><span class="arrow">↑</span><span class="where">Up</span></a><span class="local-button inactive"><span class="where">Next</span><span class="arrow">→</span></span></nav>
+            <a class="local-button active" href="../#Scientific-Computing-in-Lean--Working-with-Arrays" rel="prev" title="1. Working with Arrays"><span class="arrow">←</span><span class="where">Prev</span></a><a class="local-button active" href="../#Scientific-Computing-in-Lean--Working-with-Arrays" title="1. Working with Arrays"><span class="arrow">↑</span><span class="where">Up</span></a><a class="local-button active" href="../Tensor-Operations/#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations" rel="next" title="1.2. Tensor Operations"><span class="where">Next</span><span class="arrow">→</span></a></nav>
           <div class="split-tocs">
             <div class="split-toc book">
               <div class="title">
@@ -777,7 +799,7 @@ window.onload = () => {
             <div class="split-toc">
               <div class="title">
                 <label for="--verso-manual-toc-Scientific-Computing-in-Lean--Working-with-Arrays" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-Scientific-Computing-in-Lean--Working-with-Arrays"></label><span class="number">1.</span> <span class=""><a href="../#Scientific-Computing-in-Lean--Working-with-Arrays">Working with Arrays</a></span></div>
-              <table><tr class="current numbered"><td class="num">1.1.</td><td><a href="#Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations">Basic Operations</a></td></tr></table></div>
+              <table><tr class="current numbered"><td class="num">1.1.</td><td><a href="#Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations">Basic Operations</a></td></tr><tr class="numbered"><td class="num">1.2.</td><td><a href="../Tensor-Operations/#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations">Tensor Operations</a></td></tr></table></div>
             <div class="split-toc">
               <div class="title">
                 <label for="--verso-manual-toc-Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations" checked="checked"></label><span class="number">1.1.</span> <span class="current"><a href="#Scientific-Computing-in-Lean--Working-with-Arrays--Basic-Operations">Basic Operations</a></span></div>

@@ -6,7 +6,11 @@
  {"title": "Verso.Genre.Manual.example",
   "description": null,
   "contents":
-  {"variance":
+  {"x":
+   [{"id": "B",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "variance":
    [{"id": "mean",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
@@ -14,6 +18,14 @@
    [{"id": "u",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "trace":
+   [{"id": "trace",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "softMax":
+   [{"id": "softMax",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "outerProduct''":
    [{"id": "outerProduct______",
      "data": null,
@@ -28,6 +40,10 @@
     {"id": "outerProduct-next-next",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "nnet":
+   [{"id": "nnet",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "mean":
    [{"id": "mean-next",
      "data": null,
@@ -35,6 +51,18 @@
     {"id": "mean",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "matMul":
+   [{"id": "matMul",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "map":
+   [{"id": "map",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "i":
+   [{"id": "i",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "fibonacci":
    [{"id": "fibonacci-next", "data": null, "address": "/Working-with-Arrays/"},
     {"id": "fibonacci", "data": null, "address": "/Working-with-Arrays/"},
@@ -45,10 +73,50 @@
    [{"id": "dot",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "dense":
+   [{"id": "dense",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "covariance":
    [{"id": "mean-next",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "convNd":
+   [{"id": "convNd",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "conv2d":
+   [{"id": "conv2d",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"},
+    {"id": "conv2d-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "conv1d":
+   [{"id": "conv1d",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"},
+    {"id": "conv1d-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "avgPool2d":
+   [{"id": "avgPool2d",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "avgPool":
+   [{"id": "avgPool",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"},
+    {"id": "avgPool-next-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"},
+    {"id": "avgPool-next",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
+   "Fin.shift":
+   [{"id": "Fin___shift",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "BasicOperations.Fin.val":
    [{"id": "BasicOperations___Fin",
      "data": null,
@@ -73,6 +141,10 @@
    [{"id": "BasicOperations___DataArrayN___h_size",
      "data": null,
      "address": "/Working-with-Arrays/Basic-Operations/"}],
+   "B":
+   [{"id": "B",
+     "data": null,
+     "address": "/Working-with-Arrays/Tensor-Operations/"}],
    "A":
    [{"id": "A",
      "data": null,

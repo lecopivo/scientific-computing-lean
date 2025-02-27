@@ -1,5 +1,28 @@
-{"9":
+{"99": "<code>x : Float^[4]</code>",
+ "98":
+ "<code>SciLean.Scalar.exp.{u_1, u_2} {R : outParam (Type u_1)} {K : Type u_2} [self : Scalar R K] (x : K) : K</code>",
+ "97":
+ "<code>Max.max.{u} {α : Type u} [self : Max α] : α → α → α</code><span class=\"sep\"></span><code class=\"docstring\">The maximum operation: `max x y`. </code>",
+ "96":
+ "<code>softMax {I : Type} [IndexType I] (r : Float) (x : Float^[I]) : Float^[I]</code>",
+ "95":
+ "<code>Min.min.{u} {α : Type u} [self : Min α] : α → α → α</code><span class=\"sep\"></span><code class=\"docstring\">The minimum operation: `min x y`. </code>",
+ "94":
+ "<code>SciLean.DataArrayN.reduce.{u_1, u_2} {X : Type u_1} [PlainDataType X] {I : Type u_2} [IndexType I] [Inhabited X]\n  (op : X → X → X) (xs : X^[I]) : X</code><span class=\"sep\"></span><code class=\"docstring\">Reduce elements of `xs : X^[I]` using `op : X → X → X`.\n\nIt is just and abbreviation for a call to `IndexType.reduce` which does reduction over the index\ntype `I`. </code>",
+ "93":
+ "<code>SciLean.DataArrayN.foldl.{u_1, u_2, u_3} {X : Type u_1} [PlainDataType X] {I : Type u_2} [IndexType I] {α : Type u_3}\n  (op : α → X → α) (init : α) (xs : X^[I]) : α</code><span class=\"sep\"></span><code class=\"docstring\">Fold elements of `xs : X^[I]` using `op : α → X → α`.\n\nIt is just and abbreviation for a call to `IndexType.foldl` which runs a fold over the index\ntype `I`. </code>",
+ "92":
+ "<code>SciLean.DataArrayN.mapIdxMono.{u_1, u_2} {X : Type u_1} [PlainDataType X] {I : Type u_2} [IndexType I] (f : I → X → X)\n  (xs : X^[I]) : X^[I]</code><span class=\"sep\"></span><code class=\"docstring\">Transform all elements of `xs^[I]` using `f : I → X → X`. </code>",
+ "91": "<code>Float^[3]</code>",
+ "90":
+ "<code>SciLean.Scalar.sqrt.{u_1, u_2} {R : outParam (Type u_1)} {K : Type u_2} [self : Scalar R K] (x : K) : K</code>",
+ "9":
  "<code class=\"docstring\">`for x in e do s`  iterates over `e` assuming `e`'s type has an instance of the `ForIn` typeclass.\n`break` and `continue` are supported inside `for` loops.\n`for x in e, x2 in e2, ... do s` iterates of the given collections in parallel,\nuntil at least one of them is exhausted.\nThe types of `e2` etc. must implement the `ToStream` typeclass.\n</code>",
+ "89":
+ "<code>SciLean.DataArrayN.mapMono.{u_1, u_2} {X : Type u_1} [PlainDataType X] {I : Type u_2} [IndexType I] (f : X → X)\n  (xs : X^[I]) : X^[I]</code><span class=\"sep\"></span><code class=\"docstring\">Transform all elements of `xs^[I]` using `f : X → X`. </code>",
+ "88": "<code>Float → Float</code>",
+ "87":
+ "<code>map {I : Type} [IndexType I] (x : Float^[I]) (f : Float → Float) : Float^[I]</code>",
  "86": "<code>I</code>",
  "85":
  "<code>covariance {n : ℕ} {I : Type} [IndexType I] (x : Float^[I]^[n]) : Float^[I, I]</code>",
@@ -109,18 +132,120 @@
  "19":
  "<code>SciLean.DataArrayN.{u_3, u_4} (α : Type u_3) [pd : PlainDataType α] (ι : Type u_4) [IndexType ι] : Type</code>",
  "18": "<code>UInt64</code>",
+ "175":
+ "<code>Float^[8, 1, [-1:1], [-1:1]] × Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10]</code>",
+ "174": "<code>DecidableEq I✝</code>",
+ "173": "<code>IndexType I✝</code>",
+ "172": "<code>Float^[28, 28]</code>",
+ "171": "<code>Float^[10]</code>",
+ "170": "<code>Float^[10, 30]</code>",
  "17":
  "<code>SciLean.DataArray.push.{u_1} {α : Type u_1} [pd : PlainDataType α] (arr : DataArray α) (val : α) (k : ℕ := 1) :\n  DataArray α</code>",
+ "169": "<code>Float^[30]</code>",
+ "168": "<code>Float^[30, 8, 14, 14]</code>",
+ "167": "<code>Float^[8, 28, 28]</code>",
+ "166": "<code>Float^[8, 1, [-1:1], [-1:1]]</code>",
+ "165":
+ "<code>nnet :\n  Float^[8, 1, [-1:1], [-1:1]] × Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10] →\n    (x : Float^[28, 28]) → Float^[10]</code>",
+ "164": "<code>Float^[n, I]</code>",
+ "163":
+ "<code>dense {I : Type} [IndexType I] (n : ℕ) (A : Float^[n, I]) (b : Float^[n]) (x : Float^[I]) : Float^[n]</code>",
+ "162":
+ "<code class=\"docstring\">Makes names from other namespaces visible without writing the namespace prefix.\n\nNames that are made available with `open` are visible within the current `section` or `namespace`\nblock. This makes referring to (type) definitions and theorems easier, but note that it can also\nmake [scoped instances], notations, and attributes from a different namespace available.\n\nThe `open` command can be used in a few different ways:\n\n* `open Some.Namespace.Path1 Some.Namespace.Path2` makes all non-protected names in\n  `Some.Namespace.Path1` and `Some.Namespace.Path2` available without the prefix, so that\n  `Some.Namespace.Path1.x` and `Some.Namespace.Path2.y` can be referred to by writing only `x` and\n  `y`.\n\n* `open Some.Namespace.Path hiding def1 def2` opens all non-protected names in `Some.Namespace.Path`\n  except `def1` and `def2`.\n\n* `open Some.Namespace.Path (def1 def2)` only makes `Some.Namespace.Path.def1` and\n  `Some.Namespace.Path.def2` available without the full prefix, so `Some.Namespace.Path.def3` would\n  be unaffected.\n\n  This works even if `def1` and `def2` are `protected`.\n\n* `open Some.Namespace.Path renaming def1 → def1', def2 → def2'` same as `open Some.Namespace.Path\n  (def1 def2)` but `def1`/`def2`'s names are changed to `def1'`/`def2'`.\n\n  This works even if `def1` and `def2` are `protected`.\n\n* `open scoped Some.Namespace.Path1 Some.Namespace.Path2` **only** opens [scoped instances],\n  notations, and attributes from `Namespace1` and `Namespace2`; it does **not** make any other name\n  available.\n\n* `open &lt;any of the open shapes above&gt; in` makes the names `open`-ed visible only in the next\n  command or expression.\n\n[scoped instance]: https://lean-lang.org/theorem_proving_in_lean4/type_classes.html#scoped-instances\n(Scoped instances in Theorem Proving in Lean)\n\n\n## Examples\n\n```lean\n/-- SKI combinators https://en.wikipedia.org/wiki/SKI_combinator_calculus -/\nnamespace Combinator.Calculus\n  def I (a : α) : α := a\n  def K (a : α) : β → α := fun _ =&gt; a\n  def S (x : α → β → γ) (y : α → β) (z : α) : γ := x z (y z)\nend Combinator.Calculus\n\nsection\n  -- open everything under `Combinator.Calculus`, *i.e.* `I`, `K` and `S`,\n  -- until the section ends\n  open Combinator.Calculus\n\n  theorem SKx_eq_K : S K x = I := rfl\nend\n\n-- open everything under `Combinator.Calculus` only for the next command (the next `theorem`, here)\nopen Combinator.Calculus in\ntheorem SKx_eq_K' : S K x = I := rfl\n\nsection\n  -- open only `S` and `K` under `Combinator.Calculus`\n  open Combinator.Calculus (S K)\n\n  theorem SKxy_eq_y : S K x y = y := rfl\n\n  -- `I` is not in scope, we have to use its full path\n  theorem SKxy_eq_Iy : S K x y = Combinator.Calculus.I y := rfl\nend\n\nsection\n  open Combinator.Calculus\n    renaming\n      I → identity,\n      K → konstant\n\n  #check identity\n  #check konstant\nend\n\nsection\n  open Combinator.Calculus\n    hiding S\n\n  #check I\n  #check K\nend\n\nsection\n  namespace Demo\n    inductive MyType\n    | val\n\n    namespace N1\n      scoped infix:68 \" ≋ \" =&gt; BEq.beq\n\n      scoped instance : BEq MyType where\n        beq _ _ := true\n\n      def Alias := MyType\n    end N1\n  end Demo\n\n  -- bring `≋` and the instance in scope, but not `Alias`\n  open scoped Demo.N1\n\n  #check Demo.MyType.val == Demo.MyType.val\n  #check Demo.MyType.val ≋ Demo.MyType.val\n  -- #check Alias -- unknown identifier 'Alias'\nend\n```\n</code>",
+ "161": "<code>Fin n₂</code>",
+ "160": "<code>DecidableEq I</code>",
  "16":
  "<code>SciLean.DataArray.mkEmpty.{u_1} {α : Type u_1} [pd : PlainDataType α] (capacity : ℕ) : DataArray α</code>",
+ "159": "<code>IndexType I</code>",
+ "158": "<code>Fin n₁</code>",
+ "157": "<code>Fin m₂</code>",
+ "156": "<code>Fin m₁</code>",
+ "155": "<code>autoParam (m₂ = n₂ / 2) _auto✝</code>",
+ "154": "<code>autoParam (m₁ = n₁ / 2) _auto✝</code>",
+ "153": "<code>Float^[I, n₁, n₂]</code>",
+ "152":
+ "<code>avgPool2d {n₁ n₂ : ℕ} {I : Type} [IndexType I] (x : Float^[I, n₁, n₂]) {m₁ m₂ : ℕ} (h₁ : m₁ = n₁ / 2 := by infer_var )\n  (h₂ : m₂ = n₂ / 2 := by infer_var ) : Float^[I, m₁, m₂]</code>",
+ "151": "<code>_auto✝ : Lean.Syntax</code>",
+ "150":
+ "<code>autoParam.{u} (α : Sort u) (tactic : Lean.Syntax) : Sort u</code><span class=\"sep\"></span><code class=\"docstring\">Gadget for automatic parameter support. This is similar to the `optParam` gadget, but it uses\nthe given tactic.\nLike `optParam`, this gadget only affects elaboration.\nFor example, the tactic will *not* be invoked during type class resolution. </code>",
  "15": "<code>DataArray UInt64</code>",
+ "149": "<code>autoParam (m = n / 2) _auto✝</code>",
+ "148":
+ "<code>avgPool {n : ℕ} (x : Float^[n]) {m : ℕ} (h : m = n / 2 := by infer_var ) : Float^[m]</code>",
+ "147": "<code>Fin (2 * n)</code>",
+ "146": "<code>Float^[2 * n]</code>",
+ "145": "<code>avgPool {n : ℕ} (x : Float^[2 * n]) : Float^[n]</code>",
+ "144": "<code>i : Fin 10</code>",
+ "143":
+ "<code>HAdd.hAdd.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HAdd α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a + b` computes the sum of `a` and `b`.\nThe meaning of this notation is type-dependent. </code>",
+ "142":
+ "<code class=\"docstring\">The `omega` tactic, for resolving integer and natural linear arithmetic problems.\n\nIt is not yet a full decision procedure (no \"dark\" or \"grey\" shadows),\nbut should be effective on many problems.\n\nWe handle hypotheses of the form `x = y`, `x &lt; y`, `x ≤ y`, and `k ∣ x` for `x y` in `Nat` or `Int`\n(and `k` a literal), along with negations of these statements.\n\nWe decompose the sides of the inequalities as linear combinations of atoms.\n\nIf we encounter `x / k` or `x % k` for literal integers `k` we introduce new auxiliary variables\nand the relevant inequalities.\n\nOn the first pass, we do not perform case splits on natural subtraction.\nIf `omega` fails, we recursively perform a case split on\na natural subtraction appearing in a hypothesis, and try again.\n\nThe options\n```\nomega +splitDisjunctions +splitNatSub +splitNatAbs +splitMinMax\n```\ncan be used to:\n* `splitDisjunctions`: split any disjunctions found in the context,\n  if the problem is not otherwise solvable.\n* `splitNatSub`: for each appearance of `((a - b : Nat) : Int)`, split on `a ≤ b` if necessary.\n* `splitNatAbs`: for each appearance of `Int.natAbs a`, split on `0 ≤ a` if necessary.\n* `splitMinMax`: for each occurrence of `min a b`, split on `min a b = a ∨ min a b = b`\nCurrently, all of these are on by default.\n</code>",
+ "141":
+ "<code>LT.lt.{u} {α : Type u} [self : LT α] : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">The less-than relation: `x &lt; y` </code>",
+ "140":
+ "<code>HMul.hMul.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HMul α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a * b` computes the product of `a` and `b`.\nThe meaning of this notation is type-dependent. </code>",
  "14": "<code>fibonacci (n : ℕ) : DataArray UInt64</code>",
+ "139":
+ "<code>HDiv.hDiv.{u, v, w} {α : Type u} {β : Type v} {γ : outParam (Type w)} [self : HDiv α β γ] : α → β → γ</code><span class=\"sep\"></span><code class=\"docstring\">`a / b` computes the result of dividing `a` by `b`.\nThe meaning of this notation is type-dependent.\n* For most types like `Nat`, `Int`, `Rat`, `Real`, `a / 0` is defined to be `0`.\n* For `Nat`, `a / b` rounds downwards.\n* For `Int`, `a / b` rounds downwards if `b` is positive or upwards if `b` is negative.\n  It is implemented as `Int.ediv`, the unique function satisfying\n  `a % b + b * (a / b) = a` and `0 ≤ a % b &lt; natAbs b` for `b ≠ 0`.\n  Other rounding conventions are available using the functions\n  `Int.fdiv` (floor rounding) and `Int.div` (truncation rounding).\n* For `Float`, `a / 0` follows the IEEE 754 semantics for division,\n  usually resulting in `inf` or `nan`. </code>",
+ "138": "<code>Fin (n / 2)</code>",
+ "137": "<code>avgPool {n : ℕ} (x : Float^[n]) : Float^[n / 2]</code>",
+ "136": "<code>Float^[J]</code>",
+ "135":
+ "<code>convNd {J : Type} [IndexType J] {I : Type} [IndexType I] [VAdd J I] (w : Float^[J]) (x : Float^[I]) : Float^[I]</code>",
+ "134": "<code>I'</code>",
+ "133": "<code>J'</code>",
+ "132": "<code>Type u_4</code>",
+ "131": "<code>Type u_3</code>",
+ "130": "<code>Type u_2</code>",
  "13":
  "<code>UInt64 : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type of unsigned 64-bit integers. This type has special support in the\ncompiler to make it actually 64 bits rather than wrapping a `Nat`.\n</code>",
+ "129": "<code>Type u_1</code>",
+ "128": "<code>↑(Set.Icc a b)</code>",
+ "127":
+ "<code>Set.Icc.{u_1} {α : Type u_1} [Preorder α] (a b : α) : Set α</code><span class=\"sep\"></span><code class=\"docstring\">`Icc a b` is the left-closed right-closed interval $[a, b]$. </code>",
+ "126":
+ "<code>Fin.mk {n : ℕ} (val : ℕ) (isLt : val &lt; n) : Fin n</code><span class=\"sep\"></span><code class=\"docstring\">Creates a `Fin n` from `i : Nat` and a proof that `i &lt; n`. </code>",
+ "125":
+ "<code>VAdd.mk.{u, v} {G : Type u} {P : Type v} (vadd : G → P → P) : VAdd G P</code>",
+ "124":
+ "<code>VAdd.{u, v} (G : Type u) (P : Type v) : Type (max u v)</code><span class=\"sep\"></span><code class=\"docstring\">Type class for the `+ᵥ` notation. </code>",
+ "123": "<code>J</code>",
+ "122": "<code>Float^[I, n, m]</code>",
+ "121": "<code>Float^[J, n, m]</code>",
+ "120": "<code>Float^[J, I, [-k:k], [-k:k]]</code>",
  "12":
  "<code>SciLean.DataArray.{u_1} (α : Type u_1) [pd : PlainDataType α] : Type</code>",
+ "119":
+ "<code>conv2d {n m : ℕ} (k : ℤ) (J : Type) {I : Type} [IndexType I] [IndexType J] [DecidableEq J]\n  (w : Float^[J, I, [-k:k], [-k:k]]) (b : Float^[J, n, m]) (x : Float^[I, n, m]) : Float^[J, n, m]</code>",
+ "118": "<code>Float^[[-k:k], [-k:k]]</code>",
+ "117":
+ "<code>conv2d {n m : ℕ} {k : ℤ} (w : Float^[[-k:k], [-k:k]]) (x : Float^[n, m]) : Float^[n, m]</code>",
+ "116": "<code>↑(Set.Icc (-k) k)</code>",
+ "115": "<code>Float^[[-k:k]]</code>",
+ "114":
+ "<code>conv1d {n : ℕ} {k : ℤ} (w : Float^[[-k:k]]) (x : Float^[n]) : Float^[n]</code>",
+ "113":
+ "<code>((Int.ofNat ↑i + j) % ↑n).toNat &lt; n</code><span class=\"sep\"></span><code class=\"docstring\">If `i : Fin n`, then `i.2` is a proof that `i.1 &lt; n`. </code>",
+ "112":
+ "<code>Int.toNat : ℤ → ℕ</code><span class=\"sep\"></span><code class=\"docstring\">Turns an integer into a natural number, negative numbers become\n`0`.\n\n```\n#eval (7 : Int).toNat -- 7\n#eval (0 : Int).toNat -- 0\n#eval (-7 : Int).toNat -- 0\n```\n</code>",
+ "111":
+ "<code>Int.ofNat : ℕ → ℤ</code><span class=\"sep\"></span><code class=\"docstring\">A natural number is an integer (`0` to `∞`). </code>",
+ "110":
+ "<code>ℕ</code><span class=\"sep\"></span><code class=\"docstring\">If `i : Fin n`, then `i.val : ℕ` is the described number. It can also be\nwritten as `i.1` or just `i` when the target type is known. </code>",
  "11":
  "<code class=\"docstring\">`#eval e` evaluates the expression `e` by compiling and evaluating it.\n\n* The command attempts to use `ToExpr`, `Repr`, or `ToString` instances to print the result.\n* If `e` is a monadic value of type `m ty`, then the command tries to adapt the monad `m`\n  to one of the monads that `#eval` supports, which include `IO`, `CoreM`, `MetaM`, `TermElabM`, and `CommandElabM`.\n  Users can define `MonadEval` instances to extend the list of supported monads.\n\nThe `#eval` command gracefully degrades in capability depending on what is imported.\nImporting the `Lean.Elab.Command` module provides full capabilities.\n\nDue to unsoundness, `#eval` refuses to evaluate expressions that depend on `sorry`, even indirectly,\nsince the presence of `sorry` can lead to runtime instability and crashes.\nThis check can be overridden with the `#eval! e` command.\n\nOptions:\n* If `eval.pp` is true (default: true) then tries to use `ToExpr` instances to make use of the\n  usual pretty printer. Otherwise, only tries using `Repr` and `ToString` instances.\n* If `eval.type` is true (default: false) then pretty prints the type of the evaluated value.\n* If `eval.derive.repr` is true (default: true) then attempts to auto-derive a `Repr` instance\n  when there is no other way to print the result.\n\nSee also: `#reduce e` for evaluation by term reduction.\n</code>",
+ "109": "<code>ℤ</code>",
+ "108": "<code>Fin.shift {n : ℕ} (i : Fin n) (j : ℤ) : Fin n</code>",
+ "107": "<code>Fin k</code>",
+ "106": "<code>Float^[k]</code>",
+ "105":
+ "<code>conv1d {n k : ℕ} (x : Float^[n]) (w : Float^[k]) : Float^[n]</code>",
+ "104": "<code>Float^[n, n]</code>",
+ "103": "<code>trace {n : ℕ} (A : Float^[n, n]) : Float</code>",
+ "102":
+ "<code>matMul {n m : ℕ} (A : Float^[n, m]) (x : Float^[m]) : Float^[n]</code>",
+ "101": "<code>Fin 4</code>",
+ "100": "<code>B : Float^[2, 2]</code>",
  "10":
  "<code class=\"docstring\">`return e` inside of a `do` block makes the surrounding block evaluate to `pure e`,\nskipping any further statements.\nNote that uses of the `do` keyword in other syntax like in `for _ in _ do`\ndo not constitute a surrounding block in this sense;\nin supported editors, the corresponding `do` keyword of the surrounding block\nis highlighted when hovering over `return`.\n\n`return` not followed by a term starting on the same line is equivalent to `return ()`.\n</code>",
  "1":
