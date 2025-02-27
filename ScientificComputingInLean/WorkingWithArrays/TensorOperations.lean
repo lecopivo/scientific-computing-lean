@@ -48,7 +48,7 @@ or matrices:
 #eval ⊞[1.0,2.0;3.0,4.0].mapMono (fun x => sqrt x)
 ```
 ```leanOutput mapmono2
-⊞[1.000000, 1.732051, 1.414214, 2.000000]
+⊞[1.000000, 1.414214, 1.732051, 2.000000]
 ```
 
 or higher-rank arrays:
@@ -65,7 +65,7 @@ or higher-rank arrays:
          i.1.toFloat + 2 * j.1.toFloat + 4 * k.1.toFloat).mapMono sqrt
 ```
 ```leanOutput mapmono3
-⊞[0.000000, 1.000000, 1.414214, 1.732051, 2.000000, 2.236068, 2.449490, 2.645751]
+⊞[0.000000, 2.000000, 1.414214, 2.449490, 1.000000, 2.236068, 1.732051, 2.645751]
 ```
 
 where `IndexType.toFin (i,j,k)` turns a structured index of type `Fin 2 × Fin 2 × Fin 2` to a linear index of type `Fin 8`, `.toFloat` converts it to `Float`, and finally `.map (fun x => sqrt x)` computes the square root of every element.
@@ -82,14 +82,12 @@ An alternative to `mapMono` is `mapIdxMono`, which accepts a function `f : I →
 
 where `0 : Float^[3]` creates a zero array of size 3, then `mapIdxMono (fun i _ => i.toFloat)` initializes every element to the value of its index, and finally `map (fun x => sqrt x)` computes the square root of every element.
 
-The next important operation with arrays is reduction, which runs over elements and reduces them using a provided binary operation. There are two main reductions, `x.foldl op init` and `x.reduceD op default`. The difference is that {name}`SciLean.DataArrayN.foldl` uses `init` as the initial value that is updated with elements of the array `x`, while {name}`SciLean.DataArrayN.reduceD` uses only the elements of `x` and returns `default` if `x` happens to be empty:
+The next important operation with arrays is reduction, which runs over elements and reduces them using a provided binary operation. There are two main reductions, `x.foldl op init` and `x.reduce op`. The difference is that {name}`DataArrayN.foldl` uses `init` as the initial value that is updated with elements of the array `x`, while {name}`DataArrayN.reduce` uses only the elements of `x` and returns `{name}default` if `x` happens to be empty:
 
 ```
 x.fold op init = (op ... (op (op init x[0]) x[1]) ...n)
-x.reduceD op default = (op ... (op (op x[0] x[1]) x[2]) ...)
+x.reduce op = (op ... (op (op x[0] x[1]) x[2]) ...)
 ```
-
-There are also versions `x.reduce` where you do not have to provide the default element, but it is required that the element type `X` of the array `x : X^I` has an instance {name}`Inhabited`, which allows you to call {name}`Inhabited.default`, returning a default element of `X`. For example, {lean}`(default : Float)` returns `0.0`.
 
 To sum all elements of an array:
 
@@ -117,7 +115,7 @@ notice that computing the minimal element with `fold` and `init:=0` would give y
 ```
 
 
-Putting it all together we can implement soft-max
+Putting it all together we can implement softmax function
 ```lean
 def softMax {I : Type} [IndexType I]
   (r : Float) (x : Float^[I]) : Float^[I] := Id.run do
@@ -183,14 +181,11 @@ The fundamental operation in machine learning is convolution. The first attempt 
 def conv1d {n k : Nat} (x : Float^[n]) (w : Float^[k]) :=
     ⊞ (i : Fin n) => ∑ j : Fin k, w[j] * x[i-j]
 ```
-```
+```leanOutput conv1dattempt
 failed to synthesize
-    CoeT (Fin k) x (Fin n)
-  (deterministic) timeout at `typeclass`, maximum number of heartbeats (20000) has been reached
-  Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
-  Additional diagnostic information may be available using the `set_option diagnostics true` command.
+  HSub (Fin n) (Fin k) ?m.2106
+Additional diagnostic information may be available using the `set_option diagnostics true` command.
 ```
-TODO: This is a bad error :( It should say that it failed to synthesize `HSub (Fin n) (Fin k) _`
 
 This error arises because Lean can't infer the subtraction operation between the types `Fin n` and `Fin k`, which would produce some unknown type `?m`. This makes sense, what does it mean to subtract `j : Fin k` from `i : Fin n`? Because we are accessing elements of `x`, we probably want the result to be `Fin n`, but what do we do if `i - j` is smaller than zero? We need to do something more involved when performing operations on indices that have their range specified in their type.
 
@@ -208,21 +203,23 @@ Here, `%` is positive modulo on integers, and we again omitted the proof that th
 Now we can write one-dimensional convolution as:
 
 ```lean
-def conv1d {n k : Nat} (w : Float^[[-k:k]]) (x : Float^[n]) :=
-    ⊞ (i : Fin n) => ∑ j, w[j] * x[i.shift j]
+def conv1d {n : ℕ} {k : ℤ}
+    (w : Float^[[-k:k]]) (x : Float^[n]) :=
+  ⊞ (i : Fin n) => ∑ j, w[j] * x[i.shift j]
 ```
 
 This immediately generalizes to two dimensions:
 
 ```lean (keep:=false)
-def conv2d {n m k : Nat} (w : Float^[[-k:k],[-k:k]]) (x : Float^[n,m]) :=
-    ⊞ (i : Fin n) (j : Fin m) => ∑ a b, w[a,b] * x[i.shift a, j.shift b]
+def conv2d {n m : ℕ} {k : ℤ}
+    (w : Float^[[-k:k],[-k:k]]) (x : Float^[n,m]) :=
+  ⊞ (i : Fin n) (j : Fin m) => ∑ a b, w[a,b] * x[i.shift a, j.shift b]
 ```
 
 In practice, a convolutional layer takes as input a stack of images `x`, a stack of kernels `w`, and a bias `b`. Let's index images by an arbitrary type `I` and kernels by `J×I`:
 
 ```lean
-def conv2d {n m : Nat} (k : Nat) (J : Type) {I : Type}
+def conv2d {n m : Nat} (k : ℤ) (J : Type) {I : Type}
     [IndexType I] [IndexType J] [DecidableEq J]
     (w : Float^[J,I,[-k:k],[-k:k]]) (b : Float^[J,n,m])
     (x : Float^[I,n,m]) :  Float^[J,n,m] :=
@@ -244,7 +241,8 @@ instance (n : ℕ) : VAdd ℤ (Fin n) :=
 instance (a b : ℤ) (n : ℕ) : VAdd (Set.Icc a b) (Fin n) :=
   ⟨fun j i => j.1 +ᵥ i⟩
 
-instance {I I' J J'} [VAdd J I] [VAdd J' I'] : VAdd (J×J') (I×I') :=
+instance {I I' J J'} [VAdd J I] [VAdd J' I'] :
+    VAdd (J×J') (I×I') :=
   ⟨fun (j,j') (i,i') => (j+ᵥi, j'+ᵥi')⟩
 ```
 :::
@@ -253,16 +251,12 @@ instance {I I' J J'} [VAdd J I] [VAdd J' I'] : VAdd (J×J') (I×I') :=
 
 ::: solution "solution"
 ```lean
-def convNd {J : Type} [IndexType J] {I : Type} [IndexType I] [VAdd J I]
+def convNd
+    {J : Type} [IndexType J]
+    {I : Type} [IndexType I] [VAdd J I]
     (w : Float^[J]) (x : Float^[I]) : Float^[I] :=
   ⊞ (i : I) => ∑ j, w[j] * x[j +ᵥ i]
 
-variable (w : Float^[[-1:1],[-1:1],[-1:1]]) (x : Float^[10,10,10])
-
-#check convNd w x
-
--- #eval convNd (⊞ (i j k : Set.Icc (-1) 1) => 1.0/(1.0 + |Float.ofInt i.1| + |Float.ofInt j.1| + |Float.ofInt k.1|))
---               (⊞ (i j k : Fin 5) => if i.1 = j.1 ∧ j.1 = k.1 then 1.0 else 0.0)
 ```
 :::
 
@@ -341,7 +335,9 @@ You might be wondering what happens when `n` is odd. Because `n/2` performs natu
 To build a simple neural network, we need a two-dimensional version of the pooling layer:
 
 ```lean
-variable {n₁ n₂ : Nat} {I : Type} [IndexType I] [DecidableEq I]
+variable {n₁ n₂ : ℕ}
+  {I : Type} [IndexType I] [DecidableEq I]
+
 def avgPool2d
     (x : Float^[I,n₁,n₂]) {m₁ m₂ : Nat}
     (h₁ : m₁ = n₁/2 := by infer_var)
@@ -388,13 +384,10 @@ When we check the type of `nnet`:
 ```
 ```leanOutput nnettype
 nnet :
-  Float^[8, 1, ↑(Set.Icc (-↑1) ↑1), ↑(Set.Icc (-↑1) ↑1)] ×
-      Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10] →
-    Float^[28, 28] → Float^[10]
+  Float^[8, 1, [-1:1], [-1:1]] × Float^[8, 28, 28] × Float^[30, 8, 14, 14] × Float^[30] × Float^[10, 30] × Float^[10] →
+    (x : Float^[28, 28]) → Float^[10]
 ```
 
 You can see that the type of all the weights is automatically inferred.
-
-TODO: improve unexpander for `↑(Set.Icc (-↑1) ↑1)`
 
 The input image has type `Float^[28,28]`, and the output is an array of ten elements `Float^[10]`. As you might have guessed from the dimensions, later in the book, we will train this network to classify handwritten digits from the MNIST database.

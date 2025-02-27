@@ -1,5 +1,5 @@
 import ScientificComputingInLean.WorkingWithArrays.BasicOperations
--- import ScientificComputingInLean.WorkingWithArrays.TensorOperations
+import ScientificComputingInLean.WorkingWithArrays.TensorOperations
 -- import ScientificComputingInLean.WorkingWithArrays.OptimizingArrays
 
 open Verso.Genre Manual
@@ -83,3 +83,5 @@ The last data structure we will mention here is product type `Prod X Y` usually 
 
 
 {include ScientificComputingInLean.WorkingWithArrays.BasicOperations}
+
+{include ScientificComputingInLean.WorkingWithArrays.TensorOperations}
