@@ -14,6 +14,10 @@ set_default_scalar Float
 
 #doc (Manual) "Harmonic Oscillator" =>
 
+```lean (show := false)
+namespace HarOsc
+```
+
 ```lean (show:=false)
 open SciLean
 ```

@@ -1,4 +1,5 @@
 import ScientificComputingInLean.Examples.HarmonicOscillator
+import ScientificComputingInLean.Examples.HarmonicOscillatorOptimization
 
 open Verso.Genre Manual
 
@@ -13,3 +14,5 @@ variable (X : Type)
 #doc (Manual) "Examples" =>
 
 {include ScientificComputingInLean.Examples.HarmonicOscillator}
+
+{include ScientificComputingInLean.Examples.HarmonicOscillatorOptimization}
