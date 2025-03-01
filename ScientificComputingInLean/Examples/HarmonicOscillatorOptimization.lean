@@ -144,7 +144,7 @@ by
           (method := (default : LBFGS Float 1))]
 
   -- consume limit by `Approx`
-  approx_limit opts sorry_proof
+  approx_limit opts (by sorry_proof)
 
   conv =>
     -- focus on the specification again
@@ -159,11 +159,11 @@ by
     autodiff
 
   -- approximate both ODEs with RK4
-  simp -zeta only [odeSolve_fixed_dt rungeKutta4 sorry_proof]
+  simp -zeta only [odeSolve_fixed_dt rungeKutta4 (by sorry_proof)]
 
   -- choose the same number of steps for both ODE solvers
   -- and consume the corresponding limin in `Approx`
-  approx_limit steps sorry_proof
+  approx_limit steps (by sorry_proof)
 ```
 
 ```lean
@@ -177,4 +177,25 @@ by
 
 ```lean
 #eval 4*π^2
+```
+
+
+Original differential equation
+```latex
+\begin{align}
+\dot x &= \frac{p}{m} \\
+\dot p &= -k x \\
+x(0) &= x_0 \qquad p(0) = p_0
+\end{align}
+```
+Derived differential equation that also solves for two additional variables \\(x_k\\) and \\(p_k\\) which are derivatives of the solution w.r.t. \\(k\\).
+The `autodiff` tactic uses the theorem {name}`odeSolve.arg_ft₀tx₀.fwdDeriv_rule` that states what happends when we differentiate the solution of differential equation w.r.t. to parameter, inital condition or initial and terminal time.
+```latex
+\begin{align}
+\dot x &= \frac{p}{m} \\
+\dot p &= -k x \\
+\dot x_k &= \frac{p_k}{m} \\
+\dot p_k &= -x - k x_k \\
+x(0) = x_0 \qquad p(0) &= p_0 \qquad x_k(0) = 0 \qquad p_k(0) = 0
+\end{align}
 ```
