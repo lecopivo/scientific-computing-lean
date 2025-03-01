@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      (function(){
+  const {protocol:proto, host:hostName, pathname:path, search:srch, hash:hsh} = window.location;
+  if (!(path.endsWith("/") || path.endsWith(".html"))) {
+    window.location.replace(`${proto}//${hostName}${path}/${srch}${hsh}`);
+  }
+})()</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>🚧 Harmonic Oscillator Optimization</title><link rel="stylesheet" href="../../book.css">
+    <script>
+      
+function saveCheckboxesInit() {
+  for (checkbox of document.querySelectorAll('#toc input[type="checkbox"]')) {
+    const value = localStorage.getItem(checkbox.id);
+
+    // Treat the ToC toggle specially, because it should always default to
+    // closed on mobile-width screens but respect user preference on desktop-width.
+    if (checkbox.id === "toggle-toc" && window.matchMedia("(max-width: 700px)").matches) {
+        checkbox.checked = false;
+    } else if (value === "true") {
+        checkbox.checked = true;
+    } else if (value === "false") {
+        checkbox.checked = false;
+    } // if not found, do nothing
+
+    checkbox.addEventListener("change", persistCheckbox);
+  }
+}
+
+function persistCheckbox() {
+  const value = this.checked; // in a handler, 'this' is the element with the handler on it
+  const id = this.id;
+  localStorage.setItem(this.id, value ? "true" : "false");
+}
+
+window.addEventListener("DOMContentLoaded", saveCheckboxesInit);
+</script>
+    <script>
+      const __versoSiteRoot = "./../../"</script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
+    <script src="../../static/katex/katex.min.js"></script>
+    <script src="../../static/math.js"></script>
+    <script src="../../static/print.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../-verso-js/popper.js"></script>
+    <script src="../../-verso-js/tippy.js"></script>
+    <link rel="stylesheet" href="../../static/colors.css">
+    <link rel="stylesheet" href="../../static/theme.css">
+    <link rel="stylesheet" href="../../static/print.css">
+    <link rel="stylesheet" href="../../static/fonts/source-serif/source-serif-text.css">
+    <link rel="stylesheet" href="../../static/fonts/source-code-pro/source-code-pro.css">
+    <link rel="stylesheet" href="../../static/katex/katex.min.css">
+    <link rel="stylesheet" href="../../-verso-css/tippy-border.css">
+    <style>
+
+.hl.lean {
+  white-space: pre;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hl.lean .keyword {
+  font-weight : bold;
+}
+
+.hl.lean .var {
+  font-style: italic;
+  position: relative;
+}
+
+.hover-container {
+  width: 0;
+  height: 0;
+  position: relative;
+  display: inline;
+}
+
+.hl.lean a {
+  color: inherit;
+  text-decoration: currentcolor underline dotted;
+}
+
+.hl.lean a:hover {
+  text-decoration: currentcolor underline solid;
+}
+
+.hl.lean .hover-info {
+  white-space: normal;
+}
+
+.hl.lean .token .hover-info {
+  display: none;
+  position: absolute;
+  background-color: #e5e5e5;
+  border: 1px solid black;
+  padding: 0.5rem;
+  z-index: 300;
+  font-size: inherit;
+}
+
+.hl.lean .hover-info.messages {
+  max-height: 10rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  padding: 0 0.5rem 0 0;
+  display: block;
+}
+
+.hl.lean .hover-info code {
+  white-space: pre-wrap;
+}
+
+.hl.lean .hover-info.messages > code {
+  padding: 0.5rem;
+  display: block;
+  width: fit-content;
+}
+
+.hl.lean .hover-info.messages > code:only-child {
+  margin: 0;
+}
+
+.hl.lean .hover-info.messages > code {
+  margin: 0.1rem;
+}
+
+.hl.lean .hover-info.messages > code:not(:first-child) {
+  margin-top: 0rem;
+}
+
+/*
+@media (hover: hover) {
+  .hl.lean .has-info:hover > .hover-container > .hover-info:not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .has-info:hover > .hover-container > .hover-info,
+  .hl.lean .token:hover > .hover-container > .hover-info:not(.has-info *):not(.tactic *),
+  .hl.lean .tactic:has(> .tactic-toggle:checked) .token:hover > .hover-container > .hover-info:not(.has-info *) {
+    display: inline-block;
+    position: absolute;
+    top: 1rem;
+    font-weight: normal;
+    font-style: normal;
+    width: min-content;
+  }
+}
+*/
+
+.hl.lean.block {
+  display: block;
+}
+
+.hl.lean.inline {
+  display: inline;
+  white-space: pre-wrap;
+}
+
+.hl.lean .token {
+  transition: all 0.25s; /* Slight fade for highlights */
+}
+
+@media (hover: hover) {
+  .hl.lean .token.binding-hl, .hl.lean .literal.string:hover, .hl.lean .token.typed:hover {
+    background-color: #eee;
+    border-radius: 2px;
+    transition: none;
+  }
+}
+
+
+.hl.lean .has-info {
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.1rem;
+}
+
+.hl.lean .has-info .hover-info {
+  display: none;
+  position: absolute;
+  transform: translate(0.25rem, 0.3rem);
+  border: 1px solid black;
+  padding: 0.5rem;
+  z-index: 400;
+  text-align: left;
+}
+
+.hl.lean .has-info.error {
+  text-decoration-color: red;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.error:hover {
+    background-color: #ffb3b3;
+  }
+}
+
+.hl.lean .hover-info.messages > code.error {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid #ffb3b3;
+}
+
+.tippy-box[data-theme~='error'] .hl.lean .hover-info.messages > code.error {
+  background: none;
+  border: none;
+}
+
+.error pre {
+    color: red;
+}
+
+.hl.lean .has-info.warning {
+  text-decoration-color: #efd871;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.warning:hover {
+    background-color: #efd871;
+  }
+}
+
+.hl.lean .hover-info.messages > code.warning {
+  background-color: #efd871;
+}
+
+.hl.lean .hover-info.messages > code.error {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid #efd871;
+}
+
+.tippy-box[data-theme~='warning'] .hl.lean .hover-info.messages > code.warning {
+  background: none;
+  border: none;
+}
+
+
+.hl.lean .has-info.info {
+  text-decoration-color: blue;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.info:hover {
+    background-color: #4777ff;
+  }
+}
+
+
+.hl.lean .hover-info.messages > code.info {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid #4777ff;
+}
+
+.tippy-box[data-theme~='info'] .hl.lean .hover-info.messages > code.info {
+  background: none;
+  border: none;
+}
+
+.hl.lean div.docstring {
+  font-family: sans-serif;
+  white-space: normal;
+  max-width: 40rem;
+  width: max-content;
+}
+
+.hl.lean div.docstring > :last-child {
+  margin-bottom: 0;
+}
+
+.hl.lean .hover-info .sep {
+  display: block;
+  width: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  height: 1px;
+  border-top: 1px solid #ccc;
+}
+
+.hl.lean code {
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state {
+  display: none;
+  position: relative;
+  left: 2rem;
+  width: fit-content;
+  border: 1px solid #888888;
+  border-radius: 0.1rem;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  z-index: 200;
+}
+
+.hl.lean.popup .tactic-state {
+  position: static;
+  display: block;
+  width: auto;
+  border: none;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+
+.hl.lean .tactic {
+  position: relative;
+}
+
+.hl.lean .tactic-toggle:checked ~ .tactic-state {
+  display: block;
+}
+
+/*
+@media (hover: hover) {
+  .hl.lean .tactic:hover > .tactic-toggle:not(:checked) ~ .tactic-state {
+    display: block;
+    position: absolute;
+    left: 0;
+    transform: translate(0.25rem, 0);
+    z-index: 250;
+  }
+}
+*/
+
+.hl.lean .tactic > label {
+  position: relative;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover {
+    border-bottom: 1px dotted #bbbbbb;
+  }
+}
+
+.hl.lean .tactic-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  z-index: -10;
+}
+
+.hl.lean .tactic > label::after {
+  content: "";
+  border: 1px solid #bbbbbb;
+  border-radius: 1rem;
+  height: 0.25rem;
+  vertical-align: middle;
+  width: 0.6rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  display: inline-block;
+  transition: all 0.5s;
+}
+
+/*
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover::after {
+    border: 1px solid #aaaaaa;
+    background-color: #aaaaaa;
+    transition: all 0.5s;
+  }
+}
+*/
+
+.hl.lean .tactic > label:has(+ .tactic-toggle:checked)::after {
+  border: 1px solid #999999;
+  background-color: #999999;
+  transition: all 0.5s;
+}
+
+.hl.lean .tactic-state .goal + .goal {
+  margin-top: 1.5rem;
+}
+
+.hl.lean .tactic-state summary {
+  margin-left: -0.5rem;
+}
+
+.hl.lean .tactic-state details {
+  padding-left: 0.5rem;
+}
+
+.hl.lean .case-label {
+  display: block;
+  position: relative;
+}
+
+.hl.lean .case-label input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  z-index: -10;
+}
+
+.hl.lean .case-label:has(input[type="checkbox"])::before {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  background-color: black;
+  content: ' ';
+  transition: ease 0.2s;
+  margin-right: 0.7rem;
+  clip-path: polygon(100% 0, 0 0, 50% 100%);
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]:not(:checked))::before {
+  transform: rotate(-90deg);
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]) {
+
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]:checked) {
+
+}
+
+
+.hl.lean .tactic-state .labeled-case > :not(:first-child) {
+  max-height: 0px;
+  display: block;
+  overflow: hidden;
+  transition: max-height 0.1s ease-in;
+  margin-left: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.hl.lean .labeled-case:has(.case-label input[type="checkbox"]:checked) > :not(:first-child) {
+  max-height: 100%;
+}
+
+
+.hl.lean .tactic-state .goal-name::before {
+  font-style: normal;
+  content: "case ";
+}
+
+.hl.lean .tactic-state .goal-name {
+  font-style: italic;
+  font-family: monospace;
+}
+
+.hl.lean .tactic-state .hypotheses {
+  display: table;
+}
+
+.hl.lean .tactic-state .hypothesis {
+  display: table-row;
+}
+
+.hl.lean .tactic-state .hypothesis > * {
+  display: table-cell;
+}
+
+
+.hl.lean .tactic-state .hypotheses .colon {
+  text-align: center;
+  min-width: 1rem;
+}
+
+.hl.lean .tactic-state .hypotheses .name {
+  text-align: right;
+}
+
+.hl.lean .tactic-state .hypotheses .name,
+.hl.lean .tactic-state .hypotheses .type,
+.hl.lean .tactic-state .conclusion .type {
+  font-family: monospace;
+}
+
+.tippy-box[data-theme~='lean'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 1px solid black;
+}
+.tippy-box[data-theme~='lean'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #e5e5e5;
+}
+
+.tippy-box[data-theme~='message'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #e5e5e5;
+  border-width: 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='top'] > .tippy-arrow::after {
+  bottom: -11px;
+  border-width: 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-width: 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='bottom'] > .tippy-arrow::after {
+  top: -11px;
+  border-width: 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #e5e5e5;
+  border-width: 11px 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='left'] > .tippy-arrow::after {
+  right: -11px;
+  border-width: 11px 0 11px 11px;
+}
+
+.tippy-box[data-theme~='message'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #e5e5e5;
+  border-width: 11px 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='right'] > .tippy-arrow::after {
+  left: -11px;
+  border-width: 11px 11px 11px 0;
+}
+
+
+
+.tippy-box[data-theme~='warning'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid #efd871;
+}
+
+.tippy-box[data-theme~='error'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid #f7a7af;
+}
+
+.tippy-box[data-theme~='info'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid #99b3c2;
+}
+
+
+
+.tippy-box[data-theme~='tactic'] {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: white;
+}
+
+</style><style>
+.namedocs {
+  position: relative;
+  border: solid 2px #99b3c0;
+  background-color: #99b3c0;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px;
+  padding-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.namedocs .text {
+  background-color: white;
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.namedocs .text > pre {
+  overflow-x: auto;
+}
+
+.namedocs .signature {
+  font-family: var(--verso-code-font-family);
+  font-size: larger;
+  margin-top: 0 !important;
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem;
+}
+
+.namedocs .label {
+  font-size: smaller;
+  font-family: var(--verso-structure-font-family);
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+/* Sticking content into the right margin is not good on narrow screens,
+   so move the label to the left to make space for the permalink widget. */
+
+@media screen and (max-width: 700px) {
+  .namedocs:has(.permalink-widget.block) .label {
+    right: 1.5rem;
+  }
+}
+
+.namedocs h1 {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.namedocs > .text .constructor {
+  padding-left: 0.5rem;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.namedocs > .text .constructor::before {
+  content: '| ';
+  display: block;
+  font-family: var(--verso-code-font-family);
+  font-weight: bold;
+  float: left;
+  width: 0.5rem;
+  white-space: pre;
+}
+
+.namedocs > .text .constructor .name-and-type {
+  padding-left: 0.5rem;
+  float: left;
+  margin-top: 0;
+}
+.namedocs > .text .constructor .docs {
+  clear: both;
+  padding-left: 1rem;
+}
+
+
+.namedocs .methods td, .namedocs .fields td {
+  vertical-align: top;
+}
+.namedocs .inheritance {
+  vertical-align: top;
+  font-size: smaller;
+  font-family: var(--verso-structure-font-family);
+}
+.namedocs .inheritance ol {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+.namedocs .inheritance ol li {
+  list-style-type: none;
+  display: inline-block;
+}
+.namedocs .inheritance ol li::after {
+  content: " > "
+}
+.namedocs .inheritance ol li:last-child::after {
+  content: "";
+}
+
+.namedocs .extends {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.namedocs .extends li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.namedocs .extends li label {
+  padding-right: 1rem;
+}
+
+.namedocs .subdocs .name-and-type {
+  font-size: 1rem;
+  margin-left: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+}
+
+.namedocs .subdocs .docs {
+  margin-left: 1.5rem;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+}
+
+.namedocs:has(input[data-parent-idx]) [data-inherited-from] {
+  transition-property: opacity, display;
+  transition-duration: 0.4s;
+  transition-behavior: allow-discrete;
+  @starting-style { opacity: 0 !important; }
+}
+.namedocs:has(input[data-parent-idx="0"]) [data-inherited-from="0"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="0"]:checked) [data-inherited-from="0"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="0"]:checked):has(.inheritance[data-inherited-from="0"]:hover) [data-inherited-from]:not([data-inherited-from="0"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="1"]) [data-inherited-from="1"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="1"]:checked) [data-inherited-from="1"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="1"]:checked):has(.inheritance[data-inherited-from="1"]:hover) [data-inherited-from]:not([data-inherited-from="1"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="2"]) [data-inherited-from="2"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="2"]:checked) [data-inherited-from="2"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="2"]:checked):has(.inheritance[data-inherited-from="2"]:hover) [data-inherited-from]:not([data-inherited-from="2"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="3"]) [data-inherited-from="3"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="3"]:checked) [data-inherited-from="3"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="3"]:checked):has(.inheritance[data-inherited-from="3"]:hover) [data-inherited-from]:not([data-inherited-from="3"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="4"]) [data-inherited-from="4"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="4"]:checked) [data-inherited-from="4"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="4"]:checked):has(.inheritance[data-inherited-from="4"]:hover) [data-inherited-from]:not([data-inherited-from="4"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="5"]) [data-inherited-from="5"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="5"]:checked) [data-inherited-from="5"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="5"]:checked):has(.inheritance[data-inherited-from="5"]:hover) [data-inherited-from]:not([data-inherited-from="5"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="6"]) [data-inherited-from="6"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="6"]:checked) [data-inherited-from="6"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="6"]:checked):has(.inheritance[data-inherited-from="6"]:hover) [data-inherited-from]:not([data-inherited-from="6"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="7"]) [data-inherited-from="7"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="7"]:checked) [data-inherited-from="7"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="7"]:checked):has(.inheritance[data-inherited-from="7"]:hover) [data-inherited-from]:not([data-inherited-from="7"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="8"]) [data-inherited-from="8"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="8"]:checked) [data-inherited-from="8"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="8"]:checked):has(.inheritance[data-inherited-from="8"]:hover) [data-inherited-from]:not([data-inherited-from="8"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="9"]) [data-inherited-from="9"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="9"]:checked) [data-inherited-from="9"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="9"]:checked):has(.inheritance[data-inherited-from="9"]:hover) [data-inherited-from]:not([data-inherited-from="9"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="10"]) [data-inherited-from="10"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="10"]:checked) [data-inherited-from="10"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="10"]:checked):has(.inheritance[data-inherited-from="10"]:hover) [data-inherited-from]:not([data-inherited-from="10"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="11"]) [data-inherited-from="11"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="11"]:checked) [data-inherited-from="11"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="11"]:checked):has(.inheritance[data-inherited-from="11"]:hover) [data-inherited-from]:not([data-inherited-from="11"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="12"]) [data-inherited-from="12"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="12"]:checked) [data-inherited-from="12"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="12"]:checked):has(.inheritance[data-inherited-from="12"]:hover) [data-inherited-from]:not([data-inherited-from="12"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="13"]) [data-inherited-from="13"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="13"]:checked) [data-inherited-from="13"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="13"]:checked):has(.inheritance[data-inherited-from="13"]:hover) [data-inherited-from]:not([data-inherited-from="13"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="14"]) [data-inherited-from="14"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="14"]:checked) [data-inherited-from="14"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="14"]:checked):has(.inheritance[data-inherited-from="14"]:hover) [data-inherited-from]:not([data-inherited-from="14"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="15"]) [data-inherited-from="15"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="15"]:checked) [data-inherited-from="15"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="15"]:checked):has(.inheritance[data-inherited-from="15"]:hover) [data-inherited-from]:not([data-inherited-from="15"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="16"]) [data-inherited-from="16"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="16"]:checked) [data-inherited-from="16"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="16"]:checked):has(.inheritance[data-inherited-from="16"]:hover) [data-inherited-from]:not([data-inherited-from="16"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="17"]) [data-inherited-from="17"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="17"]:checked) [data-inherited-from="17"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="17"]:checked):has(.inheritance[data-inherited-from="17"]:hover) [data-inherited-from]:not([data-inherited-from="17"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="18"]) [data-inherited-from="18"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="18"]:checked) [data-inherited-from="18"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="18"]:checked):has(.inheritance[data-inherited-from="18"]:hover) [data-inherited-from]:not([data-inherited-from="18"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="19"]) [data-inherited-from="19"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="19"]:checked) [data-inherited-from="19"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="19"]:checked):has(.inheritance[data-inherited-from="19"]:hover) [data-inherited-from]:not([data-inherited-from="19"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="20"]) [data-inherited-from="20"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="20"]:checked) [data-inherited-from="20"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="20"]:checked):has(.inheritance[data-inherited-from="20"]:hover) [data-inherited-from]:not([data-inherited-from="20"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="21"]) [data-inherited-from="21"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="21"]:checked) [data-inherited-from="21"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="21"]:checked):has(.inheritance[data-inherited-from="21"]:hover) [data-inherited-from]:not([data-inherited-from="21"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="22"]) [data-inherited-from="22"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="22"]:checked) [data-inherited-from="22"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="22"]:checked):has(.inheritance[data-inherited-from="22"]:hover) [data-inherited-from]:not([data-inherited-from="22"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="23"]) [data-inherited-from="23"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="23"]:checked) [data-inherited-from="23"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="23"]:checked):has(.inheritance[data-inherited-from="23"]:hover) [data-inherited-from]:not([data-inherited-from="23"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="24"]) [data-inherited-from="24"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="24"]:checked) [data-inherited-from="24"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="24"]:checked):has(.inheritance[data-inherited-from="24"]:hover) [data-inherited-from]:not([data-inherited-from="24"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="25"]) [data-inherited-from="25"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="25"]:checked) [data-inherited-from="25"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="25"]:checked):has(.inheritance[data-inherited-from="25"]:hover) [data-inherited-from]:not([data-inherited-from="25"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="26"]) [data-inherited-from="26"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="26"]:checked) [data-inherited-from="26"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="26"]:checked):has(.inheritance[data-inherited-from="26"]:hover) [data-inherited-from]:not([data-inherited-from="26"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="27"]) [data-inherited-from="27"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="27"]:checked) [data-inherited-from="27"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="27"]:checked):has(.inheritance[data-inherited-from="27"]:hover) [data-inherited-from]:not([data-inherited-from="27"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="28"]) [data-inherited-from="28"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="28"]:checked) [data-inherited-from="28"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="28"]:checked):has(.inheritance[data-inherited-from="28"]:hover) [data-inherited-from]:not([data-inherited-from="28"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="29"]) [data-inherited-from="29"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="29"]:checked) [data-inherited-from="29"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="29"]:checked):has(.inheritance[data-inherited-from="29"]:hover) [data-inherited-from]:not([data-inherited-from="29"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="30"]) [data-inherited-from="30"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="30"]:checked) [data-inherited-from="30"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="30"]:checked):has(.inheritance[data-inherited-from="30"]:hover) [data-inherited-from]:not([data-inherited-from="30"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="31"]) [data-inherited-from="31"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="31"]:checked) [data-inherited-from="31"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="31"]:checked):has(.inheritance[data-inherited-from="31"]:hover) [data-inherited-from]:not([data-inherited-from="31"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="32"]) [data-inherited-from="32"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="32"]:checked) [data-inherited-from="32"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="32"]:checked):has(.inheritance[data-inherited-from="32"]:hover) [data-inherited-from]:not([data-inherited-from="32"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="33"]) [data-inherited-from="33"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="33"]:checked) [data-inherited-from="33"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="33"]:checked):has(.inheritance[data-inherited-from="33"]:hover) [data-inherited-from]:not([data-inherited-from="33"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="34"]) [data-inherited-from="34"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="34"]:checked) [data-inherited-from="34"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="34"]:checked):has(.inheritance[data-inherited-from="34"]:hover) [data-inherited-from]:not([data-inherited-from="34"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="35"]) [data-inherited-from="35"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="35"]:checked) [data-inherited-from="35"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="35"]:checked):has(.inheritance[data-inherited-from="35"]:hover) [data-inherited-from]:not([data-inherited-from="35"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="36"]) [data-inherited-from="36"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="36"]:checked) [data-inherited-from="36"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="36"]:checked):has(.inheritance[data-inherited-from="36"]:hover) [data-inherited-from]:not([data-inherited-from="36"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="37"]) [data-inherited-from="37"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="37"]:checked) [data-inherited-from="37"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="37"]:checked):has(.inheritance[data-inherited-from="37"]:hover) [data-inherited-from]:not([data-inherited-from="37"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="38"]) [data-inherited-from="38"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="38"]:checked) [data-inherited-from="38"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="38"]:checked):has(.inheritance[data-inherited-from="38"]:hover) [data-inherited-from]:not([data-inherited-from="38"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="39"]) [data-inherited-from="39"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="39"]:checked) [data-inherited-from="39"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="39"]:checked):has(.inheritance[data-inherited-from="39"]:hover) [data-inherited-from]:not([data-inherited-from="39"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="40"]) [data-inherited-from="40"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="40"]:checked) [data-inherited-from="40"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="40"]:checked):has(.inheritance[data-inherited-from="40"]:hover) [data-inherited-from]:not([data-inherited-from="40"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="41"]) [data-inherited-from="41"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="41"]:checked) [data-inherited-from="41"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="41"]:checked):has(.inheritance[data-inherited-from="41"]:hover) [data-inherited-from]:not([data-inherited-from="41"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="42"]) [data-inherited-from="42"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="42"]:checked) [data-inherited-from="42"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="42"]:checked):has(.inheritance[data-inherited-from="42"]:hover) [data-inherited-from]:not([data-inherited-from="42"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="43"]) [data-inherited-from="43"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="43"]:checked) [data-inherited-from="43"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="43"]:checked):has(.inheritance[data-inherited-from="43"]:hover) [data-inherited-from]:not([data-inherited-from="43"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="44"]) [data-inherited-from="44"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="44"]:checked) [data-inherited-from="44"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="44"]:checked):has(.inheritance[data-inherited-from="44"]:hover) [data-inherited-from]:not([data-inherited-from="44"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="45"]) [data-inherited-from="45"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="45"]:checked) [data-inherited-from="45"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="45"]:checked):has(.inheritance[data-inherited-from="45"]:hover) [data-inherited-from]:not([data-inherited-from="45"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="46"]) [data-inherited-from="46"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="46"]:checked) [data-inherited-from="46"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="46"]:checked):has(.inheritance[data-inherited-from="46"]:hover) [data-inherited-from]:not([data-inherited-from="46"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="47"]) [data-inherited-from="47"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="47"]:checked) [data-inherited-from="47"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="47"]:checked):has(.inheritance[data-inherited-from="47"]:hover) [data-inherited-from]:not([data-inherited-from="47"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="48"]) [data-inherited-from="48"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="48"]:checked) [data-inherited-from="48"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="48"]:checked):has(.inheritance[data-inherited-from="48"]:hover) [data-inherited-from]:not([data-inherited-from="48"]) {
+  opacity: 0.5;
+}
+.namedocs:has(input[data-parent-idx="49"]) [data-inherited-from="49"] {
+  display: none;
+  opacity: 0;
+}
+.namedocs:has(input[data-parent-idx="49"]:checked) [data-inherited-from="49"] {
+  display: table-row;
+  transform: none;
+  opacity: 1;
+}
+.namedocs:has(input[data-parent-idx="49"]:checked):has(.inheritance[data-inherited-from="49"]:hover) [data-inherited-from]:not([data-inherited-from="49"]) {
+  opacity: 0.5;
+}
+</style><style>.solution {
+  padding: 1.5em;
+  border: 1px solid #98B2C0;
+  border-radius: 0.5em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
+  clear: both; /* Don't overlap margin notes with solutions */
+}
+.solution p:last-child {margin-bottom:0;}
+.solution .description::before {
+  content: "";
+}
+.solution[open] .description {
+  margin-bottom: 1em;
+}
+.solution .description {
+  font-style: italic;
+  font-family: var(--verso-structure-font-family);
+}
+.solution .hl.lean.block {
+  overflow-x: auto;
+}
+</style><style>
+div.TODO {
+  border: 5px solid red;
+  position: relative;
+}
+div.TODO::before {
+  content: "TODO";
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+  font-size: large;
+  font-weight: bold;
+  transform: rotate(-90deg) translate(-2em);
+}
+</style><style>.foldable {
+  padding: 1.5em;
+  border: 1px solid #98B2C0;
+  border-radius: 0.5em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
+  clear: both; /* Don't overlap margin notes with foldables */
+}
+.foldable p:last-child {margin-bottom:0;}
+.foldable .description::before {
+  content: "";
+}
+.foldable[open] .description {
+  margin-bottom: 1em;
+}
+.foldable .description {
+  font-style: italic;
+  font-family: var(--verso-structure-font-family);
+}
+.foldable .hl.lean.block {
+  overflow-x: auto;
+}
+</style><script>
+      
+window.onload = () => {
+
+    // Don't show hovers inside of closed tactic states
+    function blockedByTactic(elem) {
+      let parent = elem.parentNode;
+      while (parent && "classList" in parent) {
+        if (parent.classList.contains("tactic")) {
+          const toggle = parent.querySelector("input.tactic-toggle");
+          if (toggle) {
+            return !toggle.checked;
+          }
+        }
+        parent = parent.parentNode;
+      }
+      return false;
+    }
+
+    function blockedByTippy(elem) {
+      // Don't show a new hover until the old ones are all closed.
+      // Scoped to the nearest "top-level block" to avoid being O(n) in the size of the document.
+      var block = elem;
+      const topLevel = new Set(["section", "body", "html", "nav", "header"]);
+      while (block.parentNode && !topLevel.has(block.parentNode.nodeName.toLowerCase())) {
+        block = block.parentNode;
+      }
+      for (const child of block.querySelectorAll(".token, .has-info")) {
+        if (child._tippy && child._tippy.state.isVisible) { return true };
+      }
+      return false;
+    }
+
+    for (const c of document.querySelectorAll(".hl.lean .token")) {
+        if (c.dataset.binding != "") {
+            c.addEventListener("mouseover", (event) => {
+                if (blockedByTactic(c)) {return;}
+                const context = c.closest(".hl.lean").dataset.leanContext;
+                for (const example of document.querySelectorAll(".hl.lean")) {
+                    if (example.dataset.leanContext == context) {
+                        for (const tok of example.querySelectorAll(".token")) {
+                            if (c.dataset.binding == tok.dataset.binding) {
+                                tok.classList.add("binding-hl");
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        c.addEventListener("mouseout", (event) => {
+            for (const tok of document.querySelectorAll(".hl.lean .token")) {
+                tok.classList.remove("binding-hl");
+            }
+        });
+    }
+    /* Render docstrings */
+    if ('undefined' !== typeof marked) {
+        for (const d of document.querySelectorAll("code.docstring, pre.docstring")) {
+            const str = d.innerText;
+            const html = marked.parse(str);
+            const rendered = document.createElement("div");
+            rendered.classList.add("docstring");
+            rendered.innerHTML = html;
+            d.parentNode.replaceChild(rendered, d);
+        }
+    }
+    // Add hovers
+    let siteRoot = typeof __versoSiteRoot !== 'undefined' ? __versoSiteRoot : "/";
+    fetch(siteRoot + "-verso-docs.json").then((resp) => resp.json()).then((versoDocData) => {
+
+      const defaultTippyProps = {
+        /* DEBUG -- remove the space: * /
+        onHide(any) { return false; },
+        trigger: "click",
+        // */
+        theme: "lean",
+        maxWidth: "none",
+        appendTo: () => document.body,
+        interactive: true,
+        delay: [100, null],
+        ignoreAttributes: true,
+        onShow(inst) {
+          if (inst.reference.querySelector(".hover-info") || "versoHover" in inst.reference.dataset) {
+            if (blockedByTactic(inst.reference)) { return false };
+            if (blockedByTippy(inst.reference)) { return false; }
+          } else { // Nothing to show here!
+            return false;
+          }
+        },
+        content (tgt) {
+          const content = document.createElement("span");
+          content.className = "hl lean";
+          content.style.display = "block";
+          content.style.maxHeight = "300px";
+          content.style.overflowY = "auto";
+          content.style.overflowX = "hidden";
+          const hoverId = tgt.dataset.versoHover;
+          const hoverInfo = tgt.querySelector(".hover-info");
+          if (hoverId) { // Docstrings from the table
+            // TODO stop doing an implicit conversion from string to number here
+            let data = versoDocData[hoverId];
+            if (data) {
+              const info = document.createElement("span");
+              info.className = "hover-info";
+              info.style.display = "block";
+              info.innerHTML = data;
+              content.appendChild(info);
+              /* Render docstrings - TODO server-side */
+              if ('undefined' !== typeof marked) {
+                  for (const d of content.querySelectorAll("code.docstring, pre.docstring")) {
+                      const str = d.innerText;
+                      const html = marked.parse(str);
+                      const rendered = document.createElement("div");
+                      rendered.classList.add("docstring");
+                      rendered.innerHTML = html;
+                      d.parentNode.replaceChild(rendered, d);
+                  }
+              }
+            } else {
+              content.innerHTML = "Failed to load doc ID: " + hoverId;
+            }
+          } else if (hoverInfo) { // The inline info, still used for compiler messages
+            content.appendChild(hoverInfo.cloneNode(true));
+          }
+          return content;
+        }
+      };
+
+      const addTippy = (selector, props) => {
+        tippy(selector, Object.assign({}, defaultTippyProps, props));
+      };
+      addTippy('.hl.lean .const.token, .hl.lean .keyword.token, .hl.lean .literal.token, .hl.lean .option.token, .hl.lean .var.token, .hl.lean .typed.token', {theme: 'lean'});
+      addTippy('.hl.lean .has-info.warning', {theme: 'warning message'});
+      addTippy('.hl.lean .has-info.info', {theme: 'info message'});
+      addTippy('.hl.lean .has-info.error', {theme: 'error message'});
+
+      tippy('.hl.lean .tactic', {
+        allowHtml: true,
+        /* DEBUG -- remove the space: * /
+        onHide(any) { return false; },
+        trigger: "click",
+        // */
+        maxWidth: "none",
+        onShow(inst) {
+          const toggle = inst.reference.querySelector("input.tactic-toggle");
+          if (toggle && toggle.checked) {
+            return false;
+          }
+          if (blockedByTippy(inst.reference)) { return false; }
+        },
+        theme: "tactic",
+        placement: 'bottom-start',
+        content (tgt) {
+          const content = document.createElement("span");
+          const state = tgt.querySelector(".tactic-state").cloneNode(true);
+          state.style.display = "block";
+          content.appendChild(state);
+          content.style.display = "block";
+          content.className = "hl lean popup";
+          return content;
+        }
+      });
+  });
+}
+</script>
+    </head>
+  <body>
+    <label for="toggle-toc" id="toggle-toc-click"><span class="line line1"></span><span class="line line2"></span><span class="line line3"></span></label><div class="with-toc">
+      <div class="toc-backdrop" onclick="document.getElementById('toggle-toc-click')?.click()"></div>
+      <nav id="toc">
+        <input type="checkbox" id="toggle-toc" checked="checked"><div class="first">
+          <a href="../../" id="logo"><img src="../../static/lean_logo.svg"></a><nav id="local-buttons">
+            <a class="local-button active" href="../Harmonic-Oscillator/#Scientific-Computing-in-Lean--Examples--Harmonic-Oscillator" rel="prev" title="4.1. Harmonic Oscillator"><span class="arrow">←</span><span class="where">Prev</span></a><a class="local-button active" href="../#Scientific-Computing-in-Lean--Examples" title="4. Examples"><span class="arrow">↑</span><span class="where">Up</span></a><span class="local-button inactive"><span class="where">Next</span><span class="arrow">→</span></span></nav>
+          <div class="split-tocs">
+            <div class="split-toc book">
+              <div class="title">
+                <label for="--verso-manual-toc-----bookRoot" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-----bookRoot"></label><span class=""><a href="../../">Scientific Computing in Lean</a></span></div>
+              <table><tr class="numbered"><td class="num">1.</td><td><a href="../../Working-with-Arrays/#Scientific-Computing-in-Lean--Working-with-Arrays">Working with Arrays</a></td></tr><tr class="numbered"><td class="num">2.</td><td><a href="../../Differentiation/#Scientific-Computing-in-Lean--Differentiation">Differentiation</a></td></tr><tr class="numbered"><td class="num">3.</td><td><a href="../../Miscellaneous/#Scientific-Computing-in-Lean--Miscellaneous">Miscellaneous</a></td></tr><tr class="current numbered"><td class="num">4.</td><td><a href="../#Scientific-Computing-in-Lean--Examples">Examples</a></td></tr></table></div>
+            <div class="split-toc">
+              <div class="title">
+                <label for="--verso-manual-toc-Scientific-Computing-in-Lean--Examples" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-Scientific-Computing-in-Lean--Examples"></label><span class="number">4.</span> <span class=""><a href="../#Scientific-Computing-in-Lean--Examples">Examples</a></span></div>
+              <table><tr class="numbered"><td class="num">4.1.</td><td><a href="../Harmonic-Oscillator/#Scientific-Computing-in-Lean--Examples--Harmonic-Oscillator">Harmonic Oscillator</a></td></tr><tr class="current numbered"><td class="num">4.2.</td><td><a href="#Scientific-Computing-in-Lean--Examples--___-Harmonic-Oscillator-Optimization">🚧 Harmonic Oscillator Optimization</a></td></tr></table></div>
+            <div class="split-toc">
+              <div class="title">
+                <span class="no-toggle"></span><span class="number">4.2.</span> <span class="current"><a href="#Scientific-Computing-in-Lean--Examples--___-Harmonic-Oscillator-Optimization">🚧 Harmonic Oscillator Optimization</a></span></div>
+              </div>
+            </div>
+          </div>
+        <div class="last"></div>
+        </nav>
+      <main><section>
+          <h1>
+            4.2. 🚧 Harmonic Oscillator Optimization</h1>
+          <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-2952">def</span> <span class="const token" data-binding="const-HarOscOpt.H" data-verso-hover="617" id="HarOscOpt___H">H</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="47">k</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.6" data-verso-hover="47">x</span> <span class="var token" data-binding="var-_uniq.8" data-verso-hover="47">p</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">(</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">/</span><span class="unknown token" data-binding="">(</span><span class="typed token" data-binding="" data-verso-hover="47">2</span><span class="unknown token" data-binding="">*</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="47">m</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">*</span> <span class="var token" data-binding="var-_uniq.8" data-verso-hover="47">p</span><span class="unknown token" data-binding="">^</span><span class="typed token" data-binding="" data-verso-hover="2">2</span> <span class="unknown token" data-binding="">+</span> <span class="var token" data-binding="var-_uniq.4" data-verso-hover="47">k</span><span class="unknown token" data-binding="">/</span><span class="typed token" data-binding="" data-verso-hover="47">2</span> <span class="unknown token" data-binding="">*</span> <span class="var token" data-binding="var-_uniq.6" data-verso-hover="47">x</span><span class="unknown token" data-binding="">^</span><span class="typed token" data-binding="" data-verso-hover="2">2</span>
+
+<span class="keyword token" data-binding="kw-occ-SciLean.«command_Approx__:_:=_By_»-3018">approx</span> <span class="const token" data-binding="const-HarOscOpt.solver" data-verso-hover="618" id="HarOscOpt___H">solver</span> <span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">:=</span>
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.let-3058" data-verso-hover="81">let</span> <span class="unknown token" data-binding="">y</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">holdLet</span> <span class="unknown token" data-binding="">&lt;|</span> <span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.fun-3078">fun</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">k</span> <span class="unknown token" data-binding="">:</span> <span class="unknown token" data-binding="">Float</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">=&gt;</span>
+    <span class="unknown token" data-binding="">odeSolve</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">t₀</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">0</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">t</span><span class="unknown token" data-binding="">:=</span><span class="unknown token" data-binding="">T</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">x₀</span><span class="unknown token" data-binding="">:=</span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">X</span><span class="unknown token" data-binding="">,</span><span class="unknown token" data-binding="">0</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span>
+      <span class="unknown token" data-binding="">(</span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.fun-3150">fun</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">t</span> <span class="unknown token" data-binding="">:</span> <span class="unknown token" data-binding="">Float</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">x</span><span class="unknown token" data-binding="">,</span><span class="unknown token" data-binding="">p</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">=&gt;</span>
+        <span class="unknown token" data-binding="">(</span> <span class="unknown token" data-binding="">∇</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">p'</span><span class="unknown token" data-binding="">:=</span><span class="unknown token" data-binding="">p</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">,</span> <span class="unknown token" data-binding="">H</span> <span class="unknown token" data-binding="">m</span> <span class="unknown token" data-binding="">k</span> <span class="unknown token" data-binding="">x</span>  <span class="unknown token" data-binding="">p'</span><span class="unknown token" data-binding="">,</span>
+         <span class="unknown token" data-binding="">-</span><span class="unknown token" data-binding="">∇</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">x'</span><span class="unknown token" data-binding="">:=</span><span class="unknown token" data-binding="">x</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">,</span> <span class="unknown token" data-binding="">H</span> <span class="unknown token" data-binding="">m</span> <span class="unknown token" data-binding="">k</span> <span class="unknown token" data-binding="">x'</span> <span class="unknown token" data-binding="">p</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span>
+  <span class="keyword token" data-binding="kw-occ-SciLean.«termSolve_,_»-3249" data-verso-hover="619">solve</span> <span class="unknown token" data-binding="">k</span><span class="unknown token" data-binding="">,</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">y</span> <span class="unknown token" data-binding="">k</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="unknown token" data-binding="">1</span> <span class="unknown token" data-binding="">=</span> <span class="unknown token" data-binding="">X</span>
+<span class="keyword token" data-binding="kw-occ-SciLean.«command_Approx__:_:=_By_»-3018">by</span>
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.conv-3275" data-verso-hover="620">conv</span> <span class="unknown token" data-binding="">=&gt;</span>
+    -- focus on the specification
+    <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.enter-3321" data-verso-hover="621">enter</span><span class="unknown token" data-binding="">[</span><span class="unknown token" data-binding="">2</span><span class="unknown token" data-binding="">]</span>
+
+    -- Unfold Hamiltonian and compute gradients
+    <span class="tactic"><label for="tactic-state-4435322838700666064-3383-3391"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.unfold-3383" data-verso-hover="258">unfold</span> <a href="#HarOscOpt___H"><span class="const token" data-binding="const-HarOscOpt.H" data-verso-hover="617">H</span></a></label><input type="checkbox" class="tactic-toggle" id="tactic-state-4435322838700666064-3383-3391"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type"><span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117719" data-verso-hover="622">y</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117518" data-verso-hover="47">k</span> =&gt;
+    <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span>
+      (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117542" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117544" data-verso-hover="602">x</span> =&gt;
+        <span class="keyword token" data-binding="">match</span> <span class="var token" data-binding="var-_uniq.117544" data-verso-hover="602">x</span> <span class="keyword token" data-binding="">with</span>
+        | (<span class="var token" data-binding="var-_uniq.117708" data-verso-hover="47">x</span>, <span class="var token" data-binding="var-_uniq.117709" data-verso-hover="47">p</span>) =&gt;
+          (∇ (<span class="var token" data-binding="var-_uniq.117569" data-verso-hover="47">p'</span>:=<span class="var token" data-binding="var-_uniq.117548" data-verso-hover="47">p</span>), (1<span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117569" data-verso-hover="47">p'</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2<span class="const token" data-binding="const-HAdd.hAdd" data-verso-hover="143"> + </span><span class="var token" data-binding="var-_uniq.117518" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117547" data-verso-hover="47">x</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>∇ (<span class="var token" data-binding="var-_uniq.117656" data-verso-hover="47">x'</span>:=<span class="var token" data-binding="var-_uniq.117547" data-verso-hover="47">x</span>), (1<span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117548" data-verso-hover="47">p</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2<span class="const token" data-binding="const-HAdd.hAdd" data-verso-hover="143"> + </span><span class="var token" data-binding="var-_uniq.117518" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117656" data-verso-hover="47">x'</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2)))
+      0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+solve <span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">k</span>, (<span class="var token" data-binding="var-_uniq.117719" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">k</span>).1<span class="const token" data-binding="const-Eq" data-verso-hover="69"> = </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span></span></span></span></span><span class="unknown token" data-binding="">;</span> <span class="tactic"><label for="tactic-state-997616893366279112-3393-3401"><span class="keyword token" data-binding="kw-occ-SciLean.Tactic.lautodiffConvStx-3393">autodiff</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-997616893366279112-3393-3401"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type"><span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117614" data-verso-hover="622">y</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117518" data-verso-hover="47">k</span> =&gt;
+    <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span>
+      (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117540" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117541" data-verso-hover="602">x</span> =&gt;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117560" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117561" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117541" data-verso-hover="602">x</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117574" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117518" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117575" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117541" data-verso-hover="602">x</span>.1;
+        (<span class="var token" data-binding="var-_uniq.117560" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117561" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117574" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117575" data-verso-hover="47">ydf_3</span>))))
+      0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+solve <span class="var token" data-binding="var-_uniq.117625" data-verso-hover="47">k</span>, (<span class="var token" data-binding="var-_uniq.117614" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117625" data-verso-hover="47">k</span>).1<span class="const token" data-binding="const-Eq" data-verso-hover="69"> = </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span></span></span></span></span>
+
+    <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.convConvSeq-3407" data-verso-hover="624">conv</span> <span class="unknown token" data-binding="">=&gt;</span>
+      -- focus on solve k, (y k).1 = X
+      <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.enter-3460" data-verso-hover="621">enter</span><span class="unknown token" data-binding="">[</span><span class="tactic"><label for="tactic-state-5806567326147805602-3466-3467"><span class="unknown token" data-binding="">y</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-5806567326147805602-3466-3467"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="const token" data-binding="const-Prod" data-verso-hover="68"> × </span><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type">solve <span class="var token" data-binding="var-_uniq.117521" data-verso-hover="47">k</span>, (<span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117521" data-verso-hover="47">k</span>).1<span class="const token" data-binding="const-Eq" data-verso-hover="69"> = </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span></span></span></span></span><span class="unknown token" data-binding="">]</span>
+
+      -- reformulate as minimization problem
+      <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.convRw__-3521" data-verso-hover="625">rw</span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-solve_eq_argmin_norm2" data-verso-hover="626">solve_eq_argmin_norm2</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="unknown token" data-binding="">(</span><span class="tactic"><label for="tactic-state-6960983083127404011-3553-3555"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-3553" data-verso-hover="67">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-6960983083127404011-3553-3555"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="const token" data-binding="const-Prod" data-verso-hover="68"> × </span><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-SciLean.HasUniqueSolution" data-verso-hover="627">HasUniqueSolution</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117515" data-verso-hover="47">x</span> =&gt; (<span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117515" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-Eq" data-verso-hover="69"> = </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span></span></span></span></span> <span class="tactic"><label for="tactic-state-7-3556-3567"><span class="keyword token" data-binding="kw-occ-SciLean.tacticSorry_proof-3556" data-verso-hover="375">sorry_proof</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-3556-3567"><span class="tactic-state">All goals completed! 🐙</span></span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">]</span>
+
+      -- approximate by gradient descrent
+      <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.convRw__-3619" data-verso-hover="625">rw</span><span class="unknown token" data-binding="">[</span><span class="tactic"><label for="tactic-state-769375933093163824-3622-3730"><span class="const token" data-binding="const-argmin_eq_limit_optimize" data-verso-hover="628">argmin_eq_limit_optimize</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">R</span><span class="unknown token" data-binding="">:=</span><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="unknown token" data-binding="">)</span>
+          <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">x₀</span> <span class="unknown token" data-binding="">:=</span> <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span><span class="unknown token" data-binding="">)</span>
+          <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">method</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="unknown token" data-binding="">:</span> <span class="const token" data-binding="const-SciLean.Optimjl.LBFGS" data-verso-hover="629">LBFGS</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="typed token" data-binding="" data-verso-hover="2">1</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-769375933093163824-3622-3730"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span><span class="const token" data-binding="const-Prod" data-verso-hover="68"> × </span><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type">limit <span class="var token" data-binding="var-_uniq.117529" data-verso-hover="630">opts</span> ∈ <span class="const token" data-binding="const-Options.filter" data-verso-hover="631">Options.filter</span>,
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117569" data-verso-hover="632">f'</span> := <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> (&lt;∂ <span class="var token" data-binding="var-_uniq.117548" data-verso-hover="47">x</span>, ‖(<span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117548" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117630" data-verso-hover="633">r</span> :=
+    <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117593" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.25643" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117593" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.117529" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+  <span class="var token" data-binding="var-_uniq.117630" data-verso-hover="633">r</span>.minimizer</span></span></span></span></span><span class="unknown token" data-binding="">]</span>
+
+  -- consume limit by `Approx`
+  -- approx limit is not respecting leading let binding!
+  -- I thing this is because of the final apply `Approx.limit _ _`
+  <span class="tactic"><label for="tactic-state-9159297210205616693-3890-3919"><span class="keyword token" data-binding="kw-occ-SciLean.approx_limit_tactic-3890" data-verso-hover="608">approx_limit</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span> <span class="keyword token" data-binding="kw-occ-SciLean.termSorry_proof-3908" data-verso-hover="65">sorry_proof</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-9159297210205616693-3890-3919"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-SciLean.Optimjl.Options" data-verso-hover="637">Options</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-SciLean.Approx" data-verso-hover="599">Approx</span> (<span class="const token" data-binding="const-Filter.atTop" data-verso-hover="600">Filter.atTop</span><span class="const token" data-binding="const-SProd.sprod" data-verso-hover="601"> ×ˢ </span>?m.117111 <span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>)
+  (<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117636" data-verso-hover="622">y</span> :=
+    <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117540" data-verso-hover="47">k</span> =&gt;
+      <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span>
+        (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117562" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117563" data-verso-hover="602">x</span> =&gt;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117582" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117583" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117563" data-verso-hover="602">x</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117596" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117540" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117597" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117563" data-verso-hover="602">x</span>.1;
+          (<span class="var token" data-binding="var-_uniq.117582" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117583" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117596" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117597" data-verso-hover="47">ydf_3</span>))))
+        0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117674" data-verso-hover="632">f'</span> := <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> (&lt;∂ <span class="var token" data-binding="var-_uniq.117653" data-verso-hover="47">x</span>, ‖(<span class="var token" data-binding="var-_uniq.117636" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117653" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117735" data-verso-hover="633">r</span> :=
+    <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.117636" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+  <span class="var token" data-binding="var-_uniq.117735" data-verso-hover="633">r</span>.minimizer)</span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="sort token" data-binding="">Type</span></span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type">(<span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m </span><span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T </span><span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X </span><span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span> : <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span>) → <span class="const token" data-binding="const-Filter" data-verso-hover="609">Filter</span> (<span class="const token" data-binding="const-Nat" data-verso-hover="5">ℕ</span><span class="const token" data-binding="const-Prod" data-verso-hover="68"> × </span>?m.117109 <span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span>)</span></span></span></span></span>
+
+  <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.conv-3923" data-verso-hover="620">conv</span> <span class="unknown token" data-binding="">=&gt;</span>
+    -- focus on the specification again
+    <span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.enter-3975" data-verso-hover="621">enter</span><span class="unknown token" data-binding="">[</span><span class="unknown token" data-binding="">2</span><span class="unknown token" data-binding="">]</span>
+
+    -- rewrite reverse mode AD (&lt;∂) as forward mode AD (∂&gt;)
+    -- this is possible because we are differentiating scalar function `Float → Float`
+    <span class="tactic"><label for="tactic-state-12142796178021012110-4142-4182"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.Conv.simp-4142" data-verso-hover="221">simp</span> <span class="unknown token" data-binding="">-</span><span class="const token" data-binding="const-Lean.Meta.Simp.Config.zeta" data-verso-hover="604">zeta</span> <span class="keyword token" data-binding="kw-occ-null-4153">only</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-revFDeriv_eq_fwdFDeriv" data-verso-hover="638">revFDeriv_eq_fwdFDeriv</span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-12142796178021012110-4142-4182"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-SciLean.Optimjl.Options" data-verso-hover="637">Options</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type"><span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117616" data-verso-hover="622">y</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117520" data-verso-hover="47">k</span> =&gt;
+    <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span>
+      (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117542" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span> =&gt;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117562" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117563" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117576" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117520" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117577" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span>.1;
+        (<span class="var token" data-binding="var-_uniq.117562" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117563" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117576" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117577" data-verso-hover="47">ydf_3</span>))))
+      0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117671" data-verso-hover="632">f'</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117622" data-verso-hover="47">x</span> =&gt;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117656" data-verso-hover="602">x</span> := ∂&gt; (<span class="var token" data-binding="var-_uniq.117635" data-verso-hover="47">x</span>:=<span class="var token" data-binding="var-_uniq.117622" data-verso-hover="47">x</span>;1), ‖(<span class="var token" data-binding="var-_uniq.117616" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117635" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117657" data-verso-hover="47">y</span> := <span class="var token" data-binding="var-_uniq.117656" data-verso-hover="602">x</span>.1;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117658" data-verso-hover="47">dy</span> := <span class="var token" data-binding="var-_uniq.117656" data-verso-hover="602">x</span>.2;
+    (<span class="var token" data-binding="var-_uniq.117657" data-verso-hover="47">y</span>, <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117664" data-verso-hover="47">dy'</span> =&gt; <span class="var token" data-binding="var-_uniq.117658" data-verso-hover="47">dy</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117664" data-verso-hover="47">dy'</span>);
+<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117732" data-verso-hover="633">r</span> :=
+  <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.117616" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+<span class="var token" data-binding="var-_uniq.117732" data-verso-hover="633">r</span>.minimizer</span></span></span></span></span>
+
+    -- run forward mode AD
+    -- this will formulate a new ODE that solves for `x`, `p`, `dx/dk` and `dp/dk`
+    <span class="tactic"><label for="tactic-state-14862236017704157877-4298-4306"><span class="keyword token" data-binding="kw-occ-SciLean.Tactic.lautodiffConvStx-4298">autodiff</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-14862236017704157877-4298-4306"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-SciLean.Optimjl.Options" data-verso-hover="637">Options</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">| </span><span class="type"><span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117616" data-verso-hover="622">y</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117520" data-verso-hover="47">k</span> =&gt;
+    <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span>
+      (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117542" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span> =&gt;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117562" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117563" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117576" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117520" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117577" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117543" data-verso-hover="602">x</span>.1;
+        (<span class="var token" data-binding="var-_uniq.117562" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117563" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117576" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117577" data-verso-hover="47">ydf_3</span>))))
+      0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117829" data-verso-hover="632">f'</span> :=
+  <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117622" data-verso-hover="47">x</span> =&gt;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117632" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117751" data-verso-hover="639">F</span> :=
+      <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117638" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117639" data-verso-hover="640">xdx</span> =&gt;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117640" data-verso-hover="602">x_1</span> := <span class="var token" data-binding="var-_uniq.117639" data-verso-hover="640">xdx</span>.1;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117641" data-verso-hover="602">dx</span> := <span class="var token" data-binding="var-_uniq.117639" data-verso-hover="640">xdx</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117642" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117640" data-verso-hover="602">x_1</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117643" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117641" data-verso-hover="602">dx</span>.2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117650" data-verso-hover="47">zdz_2</span> := <span class="var token" data-binding="var-_uniq.117622" data-verso-hover="47">x</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117654" data-verso-hover="47">zdz_3</span> := 2<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117655" data-verso-hover="47">zdz_4</span> := <span class="var token" data-binding="var-_uniq.117640" data-verso-hover="602">x_1</span>.1;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117656" data-verso-hover="47">zdz_5</span> := <span class="var token" data-binding="var-_uniq.117641" data-verso-hover="602">dx</span>.1;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117663" data-verso-hover="47">zdz</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117642" data-verso-hover="47">zdz</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117670" data-verso-hover="47">zdz_6</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117643" data-verso-hover="47">zdz_1</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117677" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117632" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117663" data-verso-hover="47">zdz</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117684" data-verso-hover="47">zdz_7</span> := <span class="var token" data-binding="var-_uniq.117632" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117670" data-verso-hover="47">zdz_6</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117691" data-verso-hover="47">zdz_8</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117655" data-verso-hover="47">zdz_4</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">zdz_9</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117656" data-verso-hover="47">zdz_5</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117705" data-verso-hover="47">zdz_10</span> := <span class="var token" data-binding="var-_uniq.117650" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117691" data-verso-hover="47">zdz_8</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">zdz_11</span> := <span class="var token" data-binding="var-_uniq.117650" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">zdz_9</span><span class="const token" data-binding="const-HAdd.hAdd" data-verso-hover="143"> + </span><span class="var token" data-binding="var-_uniq.117654" data-verso-hover="47">zdz_3</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117691" data-verso-hover="47">zdz_8</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117734" data-verso-hover="47">zdz_12</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117705" data-verso-hover="47">zdz_10</span>;
+        <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117738" data-verso-hover="47">zdz_13</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">zdz_11</span>;
+        ((<span class="var token" data-binding="var-_uniq.117677" data-verso-hover="47">zdz</span>, <span class="var token" data-binding="var-_uniq.117734" data-verso-hover="47">zdz_12</span>), <span class="var token" data-binding="var-_uniq.117684" data-verso-hover="47">zdz_7</span>, <span class="var token" data-binding="var-_uniq.117738" data-verso-hover="47">zdz_13</span>);
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117769" data-verso-hover="640">xdx</span> := <span class="const token" data-binding="const-SciLean.odeSolve" data-verso-hover="597">odeSolve</span> <span class="var token" data-binding="var-_uniq.117751" data-verso-hover="639">F</span> 0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> ((<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0), 0);
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117770" data-verso-hover="602">y</span> := <span class="var token" data-binding="var-_uniq.117769" data-verso-hover="640">xdx</span>.1;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117771" data-verso-hover="602">dy</span> := <span class="var token" data-binding="var-_uniq.117769" data-verso-hover="640">xdx</span>.2;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117772" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117770" data-verso-hover="602">y</span>.1;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117773" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117771" data-verso-hover="602">dy</span>.1;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117786" data-verso-hover="47">ydy</span> := <span class="var token" data-binding="var-_uniq.117772" data-verso-hover="47">zdz</span><span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117799" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117786" data-verso-hover="47">ydy</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2;
+    <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117816" data-verso-hover="47">zdz_2</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>⟪<span class="var token" data-binding="var-_uniq.117773" data-verso-hover="47">zdz_1</span>, <span class="var token" data-binding="var-_uniq.117786" data-verso-hover="47">ydy</span>⟫;
+    (<span class="var token" data-binding="var-_uniq.117799" data-verso-hover="47">zdz</span>, <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117822" data-verso-hover="47">dy'</span> =&gt; <span class="var token" data-binding="var-_uniq.117816" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117822" data-verso-hover="47">dy'</span>);
+<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117895" data-verso-hover="633">r</span> :=
+  <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117854" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.117616" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117854" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+<span class="var token" data-binding="var-_uniq.117895" data-verso-hover="633">r</span>.minimizer</span></span></span></span></span>
+
+  -- approximate both ODEs with RK4
+  <span class="tactic"><label for="tactic-state-11707843264534838099-4346-4405"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.simp-4346" data-verso-hover="204">simp</span> <span class="unknown token" data-binding="">-</span><span class="const token" data-binding="const-Lean.Meta.Simp.Config.zeta" data-verso-hover="604">zeta</span> <span class="keyword token" data-binding="kw-occ-null-4357">only</span> <span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-SciLean.odeSolve_fixed_dt" data-verso-hover="605">odeSolve_fixed_dt</span> <span class="const token" data-binding="const-SciLean.rungeKutta4" data-verso-hover="606">rungeKutta4</span> <span class="keyword token" data-binding="kw-occ-SciLean.termSorry_proof-4393" data-verso-hover="65">sorry_proof</span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-11707843264534838099-4346-4405"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-SciLean.Optimjl.Options" data-verso-hover="637">Options</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-SciLean.Approx" data-verso-hover="599">Approx</span> (<span class="const token" data-binding="const-Filter.atTop" data-verso-hover="600">Filter.atTop</span><span class="const token" data-binding="const-SProd.sprod" data-verso-hover="601"> ×ˢ </span>?m.117111 <span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>)
+  (<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117672" data-verso-hover="622">y</span> :=
+    <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117540" data-verso-hover="47">k</span> =&gt;
+      limit <span class="var token" data-binding="var-_uniq.117557" data-verso-hover="2">n</span> → ∞,
+        <span class="const token" data-binding="const-SciLean.odeSolveFixedStep" data-verso-hover="607">odeSolveFixedStep</span>
+          (<span class="const token" data-binding="const-SciLean.rungeKutta4" data-verso-hover="606">rungeKutta4</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117598" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117599" data-verso-hover="602">x</span> =&gt;
+            <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117618" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+            <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117619" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117599" data-verso-hover="602">x</span>.2;
+            <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117632" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117540" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+            <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117633" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117599" data-verso-hover="602">x</span>.1;
+            (<span class="var token" data-binding="var-_uniq.117618" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117619" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117632" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117633" data-verso-hover="47">ydf_3</span>))))
+          <span class="var token" data-binding="var-_uniq.117557" data-verso-hover="2">n</span> 0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117903" data-verso-hover="632">f'</span> :=
+    <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117678" data-verso-hover="47">x</span> =&gt;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117688" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117807" data-verso-hover="639">F</span> :=
+        <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117694" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="640">xdx</span> =&gt;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117696" data-verso-hover="602">x_1</span> := <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="640">xdx</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117697" data-verso-hover="602">dx</span> := <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="640">xdx</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117696" data-verso-hover="602">x_1</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117699" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117697" data-verso-hover="602">dx</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117706" data-verso-hover="47">zdz_2</span> := <span class="var token" data-binding="var-_uniq.117678" data-verso-hover="47">x</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117710" data-verso-hover="47">zdz_3</span> := 2<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117711" data-verso-hover="47">zdz_4</span> := <span class="var token" data-binding="var-_uniq.117696" data-verso-hover="602">x_1</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117712" data-verso-hover="47">zdz_5</span> := <span class="var token" data-binding="var-_uniq.117697" data-verso-hover="602">dx</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117719" data-verso-hover="47">zdz</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117698" data-verso-hover="47">zdz</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117726" data-verso-hover="47">zdz_6</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117699" data-verso-hover="47">zdz_1</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117733" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117688" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117719" data-verso-hover="47">zdz</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117740" data-verso-hover="47">zdz_7</span> := <span class="var token" data-binding="var-_uniq.117688" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117726" data-verso-hover="47">zdz_6</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117747" data-verso-hover="47">zdz_8</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117711" data-verso-hover="47">zdz_4</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117754" data-verso-hover="47">zdz_9</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117712" data-verso-hover="47">zdz_5</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117761" data-verso-hover="47">zdz_10</span> := <span class="var token" data-binding="var-_uniq.117706" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117747" data-verso-hover="47">zdz_8</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117786" data-verso-hover="47">zdz_11</span> := <span class="var token" data-binding="var-_uniq.117706" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117754" data-verso-hover="47">zdz_9</span><span class="const token" data-binding="const-HAdd.hAdd" data-verso-hover="143"> + </span><span class="var token" data-binding="var-_uniq.117710" data-verso-hover="47">zdz_3</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117747" data-verso-hover="47">zdz_8</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117790" data-verso-hover="47">zdz_12</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117761" data-verso-hover="47">zdz_10</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117794" data-verso-hover="47">zdz_13</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117786" data-verso-hover="47">zdz_11</span>;
+          ((<span class="var token" data-binding="var-_uniq.117733" data-verso-hover="47">zdz</span>, <span class="var token" data-binding="var-_uniq.117790" data-verso-hover="47">zdz_12</span>), <span class="var token" data-binding="var-_uniq.117740" data-verso-hover="47">zdz_7</span>, <span class="var token" data-binding="var-_uniq.117794" data-verso-hover="47">zdz_13</span>);
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117843" data-verso-hover="640">xdx</span> := limit <span class="var token" data-binding="var-_uniq.117817" data-verso-hover="2">n</span> → ∞, <span class="const token" data-binding="const-SciLean.odeSolveFixedStep" data-verso-hover="607">odeSolveFixedStep</span> (<span class="const token" data-binding="const-SciLean.rungeKutta4" data-verso-hover="606">rungeKutta4</span> <span class="var token" data-binding="var-_uniq.117807" data-verso-hover="639">F</span>) <span class="var token" data-binding="var-_uniq.117817" data-verso-hover="2">n</span> 0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> ((<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0), 0);
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117844" data-verso-hover="602">y</span> := <span class="var token" data-binding="var-_uniq.117843" data-verso-hover="640">xdx</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117845" data-verso-hover="602">dy</span> := <span class="var token" data-binding="var-_uniq.117843" data-verso-hover="640">xdx</span>.2;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117846" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117844" data-verso-hover="602">y</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117847" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117845" data-verso-hover="602">dy</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117860" data-verso-hover="47">ydy</span> := <span class="var token" data-binding="var-_uniq.117846" data-verso-hover="47">zdz</span><span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117873" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117860" data-verso-hover="47">ydy</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117890" data-verso-hover="47">zdz_2</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>⟪<span class="var token" data-binding="var-_uniq.117847" data-verso-hover="47">zdz_1</span>, <span class="var token" data-binding="var-_uniq.117860" data-verso-hover="47">ydy</span>⟫;
+      (<span class="var token" data-binding="var-_uniq.117873" data-verso-hover="47">zdz</span>, <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117896" data-verso-hover="47">dy'</span> =&gt; <span class="var token" data-binding="var-_uniq.117890" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117896" data-verso-hover="47">dy'</span>);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117969" data-verso-hover="633">r</span> :=
+    <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117928" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.117672" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117928" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+  <span class="var token" data-binding="var-_uniq.117969" data-verso-hover="633">r</span>.minimizer)</span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="sort token" data-binding="">Type</span></span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type">(<span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m </span><span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T </span><span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X </span><span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span> : <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span>) → <span class="const token" data-binding="const-Filter" data-verso-hover="609">Filter</span> (<span class="const token" data-binding="const-Nat" data-verso-hover="5">ℕ</span><span class="const token" data-binding="const-Prod" data-verso-hover="68"> × </span>?m.117109 <span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span>)</span></span></span></span></span>
+
+  -- choose the same number of steps for both ODE solvers
+  -- and consume the corresponding limin in `Approx`
+  <span class="tactic"><label for="tactic-state-4996762258273547632-4520-4550"><span class="keyword token" data-binding="kw-occ-SciLean.approx_limit_tactic-4520" data-verso-hover="608">approx_limit</span> <span class="var token" data-binding="var-_uniq.117152" data-verso-hover="2">steps</span> <span class="keyword token" data-binding="kw-occ-SciLean.termSorry_proof-4539" data-verso-hover="65">sorry_proof</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-4996762258273547632-4520-4550"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-SciLean.Optimjl.Options" data-verso-hover="637">Options</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.117152" data-verso-hover="2">steps</span></span><span class="colon">:</span><span class="type"><span class="const token" data-binding="const-Nat" data-verso-hover="5">ℕ</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-SciLean.Approx" data-verso-hover="599">Approx</span> (?m.117111 <span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>)
+  (<span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117641" data-verso-hover="622">y</span> :=
+    <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117526" data-verso-hover="47">k</span> =&gt;
+      <span class="const token" data-binding="const-SciLean.odeSolveFixedStep" data-verso-hover="607">odeSolveFixedStep</span>
+        (<span class="const token" data-binding="const-SciLean.rungeKutta4" data-verso-hover="606">rungeKutta4</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117567" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117568" data-verso-hover="602">x</span> =&gt;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117587" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117588" data-verso-hover="47">ydf_1</span> := <span class="var token" data-binding="var-_uniq.117568" data-verso-hover="602">x</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117601" data-verso-hover="47">ydf_2</span> := <span class="var token" data-binding="var-_uniq.117526" data-verso-hover="47">k</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117602" data-verso-hover="47">ydf_3</span> := <span class="var token" data-binding="var-_uniq.117568" data-verso-hover="602">x</span>.1;
+          (<span class="var token" data-binding="var-_uniq.117587" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117588" data-verso-hover="47">ydf_1</span>), <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span>(<span class="var token" data-binding="var-_uniq.117601" data-verso-hover="47">ydf_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>(2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117602" data-verso-hover="47">ydf_3</span>))))
+        <span class="var token" data-binding="var-_uniq.117152" data-verso-hover="2">steps</span> 0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> (<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117862" data-verso-hover="632">f'</span> :=
+    <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117647" data-verso-hover="47">x</span> =&gt;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117657" data-verso-hover="47">ydf</span> := (2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.1517" data-verso-hover="47">m</span>)<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117776" data-verso-hover="639">F</span> :=
+        <span class="const token" data-binding="const-SciLean.holdLet" data-verso-hover="623">holdLet</span> <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117663" data-verso-hover="47">t</span> <span class="var token" data-binding="var-_uniq.117664" data-verso-hover="640">xdx</span> =&gt;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117665" data-verso-hover="602">x_1</span> := <span class="var token" data-binding="var-_uniq.117664" data-verso-hover="640">xdx</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117666" data-verso-hover="602">dx</span> := <span class="var token" data-binding="var-_uniq.117664" data-verso-hover="640">xdx</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117667" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117665" data-verso-hover="602">x_1</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117668" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117666" data-verso-hover="602">dx</span>.2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117675" data-verso-hover="47">zdz_2</span> := <span class="var token" data-binding="var-_uniq.117647" data-verso-hover="47">x</span><span class="const token" data-binding="const-HDiv.hDiv" data-verso-hover="139"> / </span>2;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117679" data-verso-hover="47">zdz_3</span> := 2<span class="const token" data-binding="const-Inv.inv" data-verso-hover="201">⁻¹</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117680" data-verso-hover="47">zdz_4</span> := <span class="var token" data-binding="var-_uniq.117665" data-verso-hover="602">x_1</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117681" data-verso-hover="47">zdz_5</span> := <span class="var token" data-binding="var-_uniq.117666" data-verso-hover="602">dx</span>.1;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117688" data-verso-hover="47">zdz</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117667" data-verso-hover="47">zdz</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117695" data-verso-hover="47">zdz_6</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117668" data-verso-hover="47">zdz_1</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117702" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117657" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117688" data-verso-hover="47">zdz</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117709" data-verso-hover="47">zdz_7</span> := <span class="var token" data-binding="var-_uniq.117657" data-verso-hover="47">ydf</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117695" data-verso-hover="47">zdz_6</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117716" data-verso-hover="47">zdz_8</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117680" data-verso-hover="47">zdz_4</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117723" data-verso-hover="47">zdz_9</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117681" data-verso-hover="47">zdz_5</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">zdz_10</span> := <span class="var token" data-binding="var-_uniq.117675" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117716" data-verso-hover="47">zdz_8</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117755" data-verso-hover="47">zdz_11</span> := <span class="var token" data-binding="var-_uniq.117675" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117723" data-verso-hover="47">zdz_9</span><span class="const token" data-binding="const-HAdd.hAdd" data-verso-hover="143"> + </span><span class="var token" data-binding="var-_uniq.117679" data-verso-hover="47">zdz_3</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117716" data-verso-hover="47">zdz_8</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117759" data-verso-hover="47">zdz_12</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117730" data-verso-hover="47">zdz_10</span>;
+          <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117763" data-verso-hover="47">zdz_13</span> := <span class="const token" data-binding="const-Neg.neg" data-verso-hover="199">-</span><span class="var token" data-binding="var-_uniq.117755" data-verso-hover="47">zdz_11</span>;
+          ((<span class="var token" data-binding="var-_uniq.117702" data-verso-hover="47">zdz</span>, <span class="var token" data-binding="var-_uniq.117759" data-verso-hover="47">zdz_12</span>), <span class="var token" data-binding="var-_uniq.117709" data-verso-hover="47">zdz_7</span>, <span class="var token" data-binding="var-_uniq.117763" data-verso-hover="47">zdz_13</span>);
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117802" data-verso-hover="640">xdx</span> := <span class="const token" data-binding="const-SciLean.odeSolveFixedStep" data-verso-hover="607">odeSolveFixedStep</span> (<span class="const token" data-binding="const-SciLean.rungeKutta4" data-verso-hover="606">rungeKutta4</span> <span class="var token" data-binding="var-_uniq.117776" data-verso-hover="639">F</span>) <span class="var token" data-binding="var-_uniq.117152" data-verso-hover="2">steps</span> 0 <span class="var token" data-binding="var-_uniq.1519" data-verso-hover="47">T</span> ((<span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>, 0), 0);
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117803" data-verso-hover="602">y</span> := <span class="var token" data-binding="var-_uniq.117802" data-verso-hover="640">xdx</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117804" data-verso-hover="602">dy</span> := <span class="var token" data-binding="var-_uniq.117802" data-verso-hover="640">xdx</span>.2;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117805" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117803" data-verso-hover="602">y</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117806" data-verso-hover="47">zdz_1</span> := <span class="var token" data-binding="var-_uniq.117804" data-verso-hover="602">dy</span>.1;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117819" data-verso-hover="47">ydy</span> := <span class="var token" data-binding="var-_uniq.117805" data-verso-hover="47">zdz</span><span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117832" data-verso-hover="47">zdz</span> := <span class="var token" data-binding="var-_uniq.117819" data-verso-hover="47">ydy</span><span class="const token" data-binding="const-HPow.hPow" data-verso-hover="179"> ^ </span>2;
+      <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117849" data-verso-hover="47">zdz_2</span> := 2<span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span>⟪<span class="var token" data-binding="var-_uniq.117806" data-verso-hover="47">zdz_1</span>, <span class="var token" data-binding="var-_uniq.117819" data-verso-hover="47">ydy</span>⟫;
+      (<span class="var token" data-binding="var-_uniq.117832" data-verso-hover="47">zdz</span>, <span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117855" data-verso-hover="47">dy'</span> =&gt; <span class="var token" data-binding="var-_uniq.117849" data-verso-hover="47">zdz_2</span><span class="const token" data-binding="const-HMul.hMul" data-verso-hover="140"> * </span><span class="var token" data-binding="var-_uniq.117855" data-verso-hover="47">dy'</span>);
+  <span class="keyword token" data-binding="">let</span> <span class="var token" data-binding="var-_uniq.117928" data-verso-hover="633">r</span> :=
+    <span class="const token" data-binding="const-SciLean.Optimjl.optimize'" data-verso-hover="634">optimize'</span> (<span class="const token" data-binding="const-SciLean.Optimjl.ObjectiveFunction.mk" data-verso-hover="635">ObjectiveFunction.mk</span> (<span class="keyword token" data-binding="">fun</span> <span class="var token" data-binding="var-_uniq.117887" data-verso-hover="47">x</span> =&gt; ‖(<span class="var token" data-binding="var-_uniq.117641" data-verso-hover="622">y</span> <span class="var token" data-binding="var-_uniq.117887" data-verso-hover="47">x</span>).1<span class="const token" data-binding="const-HSub.hSub" data-verso-hover="180"> - </span><span class="var token" data-binding="var-_uniq.1521" data-verso-hover="47">X</span>‖₂²) ⋯) (<span class="const token" data-binding="const-SciLean.Optimjl.AbstractOptimizer.setOptions" data-verso-hover="636">AbstractOptimizer.setOptions</span> <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> <span class="const token" data-binding="const-Inhabited.default" data-verso-hover="61">default</span> <span class="var token" data-binding="var-_uniq.27978" data-verso-hover="630">opts</span>) <span class="var token" data-binding="var-_uniq.1523" data-verso-hover="47">k₀</span>;
+  <span class="var token" data-binding="var-_uniq.117928" data-verso-hover="633">r</span>.minimizer)</span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span> → <span class="sort token" data-binding="">Type</span></span></span></span><span class="goal"><span class="conclusion"><span class="prefix">⊢ </span><span class="type">(<span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m </span><span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T </span><span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X </span><span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span> : <span class="const token" data-binding="const-Float" data-verso-hover="26">Float</span>) → <span class="const token" data-binding="const-Filter" data-verso-hover="609">Filter</span> (?m.117109 <span class="var token" data-binding="var-_uniq.117512" data-verso-hover="47">m</span> <span class="var token" data-binding="var-_uniq.117514" data-verso-hover="47">T</span> <span class="var token" data-binding="var-_uniq.117516" data-verso-hover="47">X</span> <span class="var token" data-binding="var-_uniq.117517" data-verso-hover="47">k₀</span>)</span></span></span></span></span>
+
+<span class="unknown token" data-binding=""></span></code><code class="hl lean block" data-lean-context="examples"><span class="has-info info"><span class="hover-container"><span class="hover-info messages"><code class="message info">40.630976</code><code class="message info">n	xₙ	xₙ₊₁	f(xₙ)	∇f(xₙ)	sₙ	α
+0	60.000000	59.885489	0.796012	0.114511	-0.114511	1.000000
+1	59.885489	45.884652	0.782952	0.113582	-14.000838	1.000000
+2	45.884652	44.794390	0.013916	0.008206	-1.090262	1.000000
+3	44.794390	43.157959	0.006848	0.004925	-1.636431	1.000000
+4	43.157959	42.256268	0.001657	0.001750	-0.901691	1.000000
+5	42.256268	41.530985	0.000553	0.000780	-0.725283	1.000000
+6	41.530985	41.017465	0.000168	0.000323	-0.513520	1.000000
+7	41.017465	40.630976	0.000054	0.000139	-0.386489	1.000000
+ * Status: success
+
+ * Candidate solution
+    Minimizer:                 40.630976
+    Final objective value:     0.000017
+
+ * Found with
+    Algorithm:     (TODO: implement this)
+
+ * Convergence measures
+    |x - x'|               = 0.149374 ≰ 0.000000
+    |x - x'|               = 0.000090 ≰ 0.000000
+    |f(x) - f(x')|         = 0.000037 ≰ 0.000000
+    |f(x) - f(x')|/|f(x')| = 2.145904 ≰ 0.000000
+    |g(x)|                 = 0.000000 ≤ 0.000000
+
+ * Work counters
+    Seconds run:   0ns   (vs limit ∞ns)
+    Iterations:    8
+    f(x) calls:    9
+    ∇f(x) calls:   9
+    ∇²f(x) calls:  0
+
+</code></span></span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.eval-4566" data-verso-hover="11">#eval</span></span> <a href="#HarOscOpt___H"><span class="const token" data-binding="const-HarOscOpt.solver" data-verso-hover="618">solver</span></a> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">m</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">T</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">X</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">k₀</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">60</span><span class="unknown token" data-binding="">)</span>
+        <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">{</span><span class="const token" data-binding="const-SciLean.Optimjl.Options.show_trace" data-verso-hover="641">show_trace</span> <span class="unknown token" data-binding="">:=</span> <span class="const token" data-binding="const-Bool.true" data-verso-hover="370">true</span><span class="unknown token" data-binding="">,</span> <span class="const token" data-binding="const-SciLean.Optimjl.Options.result_trace" data-verso-hover="641">result_trace</span> <span class="unknown token" data-binding="">:=</span> <span class="const token" data-binding="const-Bool.true" data-verso-hover="370">true</span><span class="unknown token" data-binding="">}</span><span class="unknown token" data-binding="">,</span><span class="typed token" data-binding="" data-verso-hover="2">200</span><span class="unknown token" data-binding="">,</span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code><code class="hl lean block" data-lean-context="examples"><span class="has-info info"><span class="hover-container"><span class="hover-info messages"><code class="message info">39.478418</code><code class="message info">n	xₙ	xₙ₊₁	f(xₙ)	∇f(xₙ)	sₙ	α
+0	60.000000	58.854894	0.796012	0.114511	-0.114511	10.000000
+1	58.854894	46.282550	0.670303	0.104951	-12.572344	1.000000
+2	46.282550	33.550581	0.017464	0.009651	-1.273197	10.000000
+3	33.550581	39.903360	0.013945	-0.009611	6.352779	1.000000
+4	39.903360	39.883303	0.000000	0.000003	-0.002006	10.000000
+5	39.883303	39.651510	0.000000	0.000003	-0.129118	1.795197
+6	39.651510	39.453444	0.000000	0.000000	-0.019807	10.000000
+7	39.453444	39.459417	0.000000	-0.000000	0.000597	10.000000
+8	39.459417	39.476498	0.000000	-0.000000	0.004704	3.631341
+9	39.476498	39.476694	0.000000	-0.000000	0.000020	10.000000
+10	39.476694	39.477708	0.000000	-0.000000	0.000563	1.799959
+11	39.477708	39.478993	0.000000	-0.000000	0.000129	10.000000
+12	39.478993	39.478484	0.000000	0.000000	-0.000509	1.000000
+13	39.478484	39.478422	0.000000	0.000000	-0.000035	1.762461
+14	39.478422	39.478418	0.000000	0.000000	-0.000004	1.009536
+15	39.478418	39.478418	0.000000	0.000000	-0.000000	0.001000
+ * Status: success
+
+ * Candidate solution
+    Minimizer:                 39.478418
+    Final objective value:     0.000000
+
+ * Found with
+    Algorithm:     (TODO: implement this)
+
+ * Convergence measures
+    |x - x'|               = 0.000000 ≤ 0.000000
+    |x - x'|               = 0.000000 ≰ 0.000000
+    |f(x) - f(x')|         = 0.000000 ≤ 0.000000
+    |f(x) - f(x')|/|f(x')| = 0.000000 ≤ 0.000000
+    |g(x)|                 = 0.000000 ≰ 0.000000
+
+ * Work counters
+    Seconds run:   0ns   (vs limit ∞ns)
+    Iterations:    16
+    f(x) calls:    17
+    ∇f(x) calls:   17
+    ∇²f(x) calls:  0
+
+</code></span></span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.eval-4684" data-verso-hover="11">#eval</span></span> <a href="#HarOscOpt___H"><span class="const token" data-binding="const-HarOscOpt.solver" data-verso-hover="618">solver</span></a> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">m</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">T</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">X</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">1</span><span class="unknown token" data-binding="">)</span> <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">k₀</span><span class="unknown token" data-binding="">:=</span><span class="typed token" data-binding="" data-verso-hover="47">60</span><span class="unknown token" data-binding="">)</span>
+        <span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">{</span><span class="const token" data-binding="const-SciLean.Optimjl.Options.x_abstol" data-verso-hover="642">x_abstol</span> <span class="unknown token" data-binding="">:=</span> <span class="unknown token" data-binding="">1e-16</span><span class="unknown token" data-binding="">,</span> <span class="const token" data-binding="const-SciLean.Optimjl.Options.g_abstol" data-verso-hover="642">g_abstol</span> <span class="unknown token" data-binding="">:=</span> <span class="typed token" data-binding="" data-verso-hover="47">0</span><span class="unknown token" data-binding="">,</span> <span class="const token" data-binding="const-SciLean.Optimjl.Options.init_alpha" data-verso-hover="642">init_alpha</span> <span class="unknown token" data-binding="">:=</span> <span class="typed token" data-binding="" data-verso-hover="47">10</span><span class="unknown token" data-binding="">,</span>
+          <span class="const token" data-binding="const-SciLean.Optimjl.Options.show_trace" data-verso-hover="641">show_trace</span> <span class="unknown token" data-binding="">:=</span> <span class="const token" data-binding="const-Bool.true" data-verso-hover="370">true</span><span class="unknown token" data-binding="">,</span> <span class="const token" data-binding="const-SciLean.Optimjl.Options.result_trace" data-verso-hover="641">result_trace</span> <span class="unknown token" data-binding="">:=</span> <span class="const token" data-binding="const-Bool.true" data-verso-hover="370">true</span><span class="unknown token" data-binding="">}</span><span class="unknown token" data-binding="">,</span><span class="typed token" data-binding="" data-verso-hover="2">200</span><span class="unknown token" data-binding="">,</span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span>
+<span class="unknown token" data-binding=""></span></code><code class="hl lean block" data-lean-context="examples"><span class="has-info info"><span class="hover-container"><span class="hover-info messages"><code class="message info">39.478418</code></span></span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.eval-4864" data-verso-hover="11">#eval</span></span> <span class="typed token" data-binding="" data-verso-hover="47">4</span><span class="unknown token" data-binding="">*</span><span class="unknown token" data-binding="">π</span><span class="unknown token" data-binding="">^</span><span class="typed token" data-binding="" data-verso-hover="2">2</span>
+<span class="unknown token" data-binding=""></span></code></section>
+        </main></div>
+    </body>
+  </html>
+

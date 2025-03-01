@@ -58,10 +58,53 @@
  "<code>SciLean.DataArrayN.reshape.{u_1, u_3, u_4} {α : Type u_1} [pd : PlainDataType α] {ι : Type u_4} [IndexType ι]\n  (x : α^[ι]) (κ : Type u_3) [IndexType κ] (hs : size κ = size ι) : α^[κ]</code>",
  "65":
  "<code class=\"docstring\">Same as `sorry` but makes sure that the term is of type `Prop`.\n\n`sorry_proof` is very useful when writing programs such that you do not accidantelly add `sorry`\nwhich would prevent compiler from generating executable code. </code>",
+ "642": "<code>Float</code>",
+ "641": "<code>Bool</code>",
+ "640": "<code>(Float × Float) × Float × Float</code>",
  "64": "<code>size (Fin n × Fin m) = A.size</code>",
+ "639":
+ "<code>Float → (Float × Float) × Float × Float → (Float × Float) × Float × Float</code>",
+ "638":
+ "<code>revFDeriv_eq_fwdFDeriv.{u_1} {R : Type u_1} [RealScalar R] {f : R → R} :\n  &lt;∂ f = fun x =&gt;\n    let x := ∂&gt; f x 1;\n    let y := x.1;\n    let dy := x.2;\n    (y, fun dy' =&gt; dy * dy')</code>",
+ "637": "<code>SciLean.Optimjl.Options (R : Type) [RealScalar R] : Type</code>",
+ "636":
+ "<code>SciLean.Optimjl.AbstractOptimizer.setOptions.{u_1} {Method : Type u_1} {State : outParam Type} {R : Type} (X : Type)\n  {inst✝ : RealScalar R} {inst✝¹ : NormedAddCommGroup X} {inst✝² : AdjointSpace R X} {inst✝³ : CompleteSpace X}\n  [self : AbstractOptimizer Method State R X] : Method → Options R → Method</code>",
+ "635":
+ "<code>SciLean.Optimjl.ObjectiveFunction.mk {R X : Type} [RealScalar R] [NormedAddCommGroup X] [AdjointSpace R X] (f : X → R)\n  {f' : X → R × (R → X)} (hf : HasRevFDeriv R f f') : ObjectiveFunction R X</code>",
+ "634":
+ "<code>SciLean.Optimjl.optimize'.{u_1} {R : Type} [RealScalar R] [ToString R] {X : Type} [NormedAddCommGroup X]\n  [AdjointSpace R X] [CompleteSpace X] [ToString X] {Method : Type u_1} {State : Type}\n  [AbstractOptimizer Method State R X] (d : ObjectiveFunction R X) (method : Method) (x₀ : X) :\n  MultivariateOptimizationResults R X</code>",
+ "633": "<code>MultivariateOptimizationResults Float Float</code>",
+ "632": "<code>Float → Float × (Float → Float)</code>",
+ "631":
+ "<code>Options.filter {R : Type} [RealScalar R] : Filter (Options R)</code>",
+ "630": "<code>Options Float</code>",
  "63": "<code>DataArray Float</code>",
+ "629":
+ "<code>SciLean.Optimjl.LBFGS (R : Type) [RealScalar R] [ToString R] (m : ℕ) : Type 1</code>",
+ "628":
+ "<code>argmin_eq_limit_optimize.{u_1} {R : Type} [RealScalar R] [ToString R] {X : Type} [NormedAddCommGroup X]\n  [AdjointSpace R X] [CompleteSpace X] [ToString X] {Method : Type u_1} {State : outParam Type}\n  [AbstractOptimizer Method State R X] (method : Method) (x₀ : X) {f : X → R} :\n  (Function.argmin ↿fun x =&gt; f x) =\n    limit opts ∈ Options.filter,\n      let f' := holdLet (&lt;∂ f);\n      let r := optimize' (ObjectiveFunction.mk f ⋯) (AbstractOptimizer.setOptions X method opts) x₀;\n      r.minimizer</code>",
+ "627":
+ "<code>SciLean.HasUniqueSolution.{u_1, u_2} {F : Sort u_1} {Xs : Sort u_2} [UncurryAll F Xs Prop] (P : F) : Prop</code>",
+ "626":
+ "<code>solve_eq_argmin_norm2.{u_1, u_2, u_3} (R : Type u_1) [RealScalar R] {X : Type u_2} [NormedAddCommGroup X]\n  [AdjointSpace R X] [CompleteSpace X] {Y : Type u_3} [NormedAddCommGroup Y] [AdjointSpace R Y] [CompleteSpace Y]\n  {f : X → Y} {y : Y} (hf : HasUniqueSolution fun x =&gt; f x = y) :\n  (solve x, f x = y) = Function.argmin ↿fun x =&gt; ‖f x - y‖₂²</code>",
+ "625":
+ "<code class=\"docstring\">`rw [rules]` applies the given list of rewrite rules to the target.\nSee the `rw` tactic for more information. </code>",
+ "624":
+ "<code class=\"docstring\">`conv =&gt; cs` runs `cs` in sequence on the target `t`,\nresulting in `t'`, which becomes the new target subgoal. </code>",
+ "623":
+ "<code>SciLean.holdLet.{u} {α : Type u} (a : α) : α</code><span class=\"sep\"></span><code class=\"docstring\">`holdLet` is just identity function with a special support from some tactics.\n\nTactics like `autodiff`, `lsimp`, `lfun_trans` inline let bindings of functions, for examples\n```\nlet f := fun x =&gt; x*x\nf 2\n```\nwould get simplified to `2*2` even with option `zeta:=false`. This reduction is important for\nreverse mode AD.\n\nFunction `holdLet` is useful for preventing this reduction, so adding `holdLet`\n```\nlet f := holdLet &lt;| fun x =&gt; x*x\nf 2\n```\nwill prevent `lsimp` to remove the let.  </code>",
+ "622": "<code>Float → Float × Float</code>",
+ "621":
+ "<code class=\"docstring\">`enter [arg, ...]` is a compact way to describe a path to a subterm.\nIt is a shorthand for other conv tactics as follows:\n* `enter [i]` is equivalent to `arg i`.\n* `enter [@i]` is equivalent to `arg @i`.\n* `enter [x]` (where `x` is an identifier) is equivalent to `ext x`.\nFor example, given the target `f (g a (fun x =&gt; x b))`, `enter [1, 2, x, 1]`\nwill traverse to the subterm `b`. </code>",
+ "620":
+ "<code class=\"docstring\">`conv =&gt; ...` allows the user to perform targeted rewriting on a goal or hypothesis,\nby focusing on particular subexpressions.\n\nSee &lt;https://lean-lang.org/theorem_proving_in_lean4/conv.html&gt; for more details.\n\nBasic forms:\n* `conv =&gt; cs` will rewrite the goal with conv tactics `cs`.\n* `conv at h =&gt; cs` will rewrite hypothesis `h`.\n* `conv in pat =&gt; cs` will rewrite the first subexpression matching `pat` (see `pattern`).\n</code>",
  "62":
  "<code>SciLean.DataArray.reserve.{u_1} {α : Type u_1} [pd : PlainDataType α] (arr : DataArray α) (capacity : ℕ) : DataArray α</code><span class=\"sep\"></span><code class=\"docstring\">Makes sure that `arr` fits at least `n` elements of `α` </code>",
+ "619":
+ "<code class=\"docstring\">Expresses the unique solution of a system of equations if it exists\n\nFor example\n\n```\nsolve x y, x + y = a ∧ x - y = b\n```\nreturns a pair `(x,y)` that solve the above system\n\nThe returned value is not specified if the system does not have an unique solution.\n</code>",
+ "618":
+ "<code>HarOscOpt.solver (m T X k₀ : Float) :\n  Approx (Options.filter ×ˢ Filter.atTop ×ˢ ⊤)\n    (let y :=\n      holdLet fun k =&gt;\n        odeSolve\n          (fun t x =&gt;\n            match x with\n            | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))\n          0 T (X, 0);\n    solve k, (y k).1 = X)</code>",
+ "617": "<code>HarOscOpt.H (m k x p : Float) : Float</code>",
  "616": "<code><span class=\"literal string\">\"\"</span> : String</code>",
  "615":
  "<code>IO.println.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
@@ -69,7 +112,7 @@
  "613":
  "<code>IO.print.{u_1} {α : Type u_1} [ToString α] (s : α) : IO Unit</code>",
  "612": "<code>IO : Type → Type</code>",
- "611": "<code>sim : IO Unit</code>",
+ "611": "<code>HarOsc.sim : IO Unit</code>",
  "610": "<code>ℕ × Unit</code>",
  "61":
  "<code>Inhabited.default.{u} {α : Sort u} [self : Inhabited α] : α</code><span class=\"sep\"></span><code class=\"docstring\">`default` is a function that produces a \"default\" element of any\n`Inhabited` type. This element does not have any particular specified\nproperties, but it is often an all-zeroes value. </code>",
@@ -97,10 +140,10 @@
  "599":
  "<code>SciLean.Approx.{u_1} {α : Type u_1} [TopologicalSpace α] [Nonempty α] {N : outParam Type} (lN : Filter N) (a : α) :\n  Type (max 1 u_1)</code>",
  "598":
- "<code>solver (m k : Float) :\n  Approx (Filter.atTop ×ˢ ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
+ "<code>HarOsc.solver (m k : Float) :\n  Approx (Filter.atTop ×ˢ ⊤)\n    (odeSolve fun t x =&gt;\n      match x with\n      | (x, p) =&gt; (∇ (p':=p), H m k x p', -∇ (x':=x), H m k x' p))</code>",
  "597":
  "<code>SciLean.odeSolve.{u_1, u_2} {R : Type u_1} [RCLike R] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X]\n  (f : R → X → X) (t₀ t : R) (x₀ : X) : X</code>",
- "596": "<code>H (m k x p : Float) : Float</code>",
+ "596": "<code>HarOsc.H (m k x p : Float) : Float</code>",
  "595": "<code>WorkingWithQuotients.e : ExprMonoid</code>",
  "594": "<code>WorkingWithQuotients.var (n : ℕ) : ExprMonoid</code>",
  "593":
