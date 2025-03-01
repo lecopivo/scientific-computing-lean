@@ -58,14 +58,16 @@
  "<code>SciLean.DataArrayN.reshape.{u_1, u_3, u_4} {α : Type u_1} [pd : PlainDataType α] {ι : Type u_4} [IndexType ι]\n  (x : α^[ι]) (κ : Type u_3) [IndexType κ] (hs : size κ = size ι) : α^[κ]</code>",
  "65":
  "<code class=\"docstring\">Same as `sorry` but makes sure that the term is of type `Prop`.\n\n`sorry_proof` is very useful when writing programs such that you do not accidantelly add `sorry`\nwhich would prevent compiler from generating executable code. </code>",
+ "649":
+ "<code>SciLean.odeSolve.arg_ft₀tx₀.fwdDeriv_rule.{u_1, u_2, u_3} {R : Type u_1} [RCLike R] {W : Type u_3}\n  [NormedAddCommGroup W] [NormedSpace R W] {X : Type u_2} [NormedAddCommGroup X] [NormedSpace R X] (f : W → R → X → X)\n  (t₀ t : W → R) (x₀ : W → X)\n  (hf :\n    Differentiable R fun x =&gt;\n      match x with\n      | (w, t, x) =&gt; f w t x)\n  (ht₀ : Differentiable R t₀) (ht : Differentiable R t) (hx : Differentiable R x₀) :\n  ∂&gt; w, odeSolve (f w) (t₀ w) (t w) (x₀ w) = fun w dw =&gt;\n    let t₀dt₀ := ∂&gt; t₀ w dw;\n    let tdt := ∂&gt; t w dw;\n    let x₀dx₀ := ∂&gt; x₀ w dw;\n    let Tf := ∂&gt; wkx, f wkx.1 wkx.2.1 wkx.2.2;\n    let F :=\n      holdLet fun t xdx =&gt;\n        let x := xdx.1;\n        let dx := xdx.2;\n        Tf (w, t, x) (dw, t₀dt₀.2, dx);\n    let xdx := odeSolve F t₀dt₀.1 tdt.1 x₀dx₀;\n    (xdx.1, xdx.2 + tdt.2 • f w tdt.1 xdx.1)</code>",
  "648": "<code>Bool</code>",
  "647": "<code>Float</code>",
  "646": "<code>(Float × Float) × Float × Float</code>",
  "645":
  "<code>Float → (Float × Float) × Float × Float → (Float × Float) × Float × Float</code>",
- "644":
+ "644": "<code>SciLean.Optimjl.Options (R : Type) [RealScalar R] : Type</code>",
+ "643":
  "<code>revFDeriv_eq_fwdFDeriv.{u_1} {R : Type u_1} [RealScalar R] {f : R → R} :\n  &lt;∂ f = fun x =&gt;\n    let x := ∂&gt; f x 1;\n    let y := x.1;\n    let dy := x.2;\n    (y, fun dy' =&gt; dy * dy')</code>",
- "643": "<code>SciLean.Optimjl.Options (R : Type) [RealScalar R] : Type</code>",
  "642":
  "<code>SciLean.Optimjl.AbstractOptimizer.setOptions.{u_1} {Method : Type u_1} {State : outParam Type} {R : Type} (X : Type)\n  {inst✝ : RealScalar R} {inst✝¹ : NormedAddCommGroup X} {inst✝² : AdjointSpace R X} {inst✝³ : CompleteSpace X}\n  [self : AbstractOptimizer Method State R X] : Method → Options R → Method</code>",
  "641":
